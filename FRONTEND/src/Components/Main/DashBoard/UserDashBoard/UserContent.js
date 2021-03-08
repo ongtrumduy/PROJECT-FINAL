@@ -1,9 +1,10 @@
 import React from "react";
-import Activities from "../../../Content/Activities";
-import Assignments from "../../../Content/Assignments";
-import Chats from "../../../Content/Chats";
-import Excercises from "../../../Content/Excercises";
-import Teams from "../../../Content/Teams";
+import Activities from "../../../Content/UserPage/Activities/Activities";
+import Assignments from "../../../Content/UserPage/Assignments/Assignments";
+import Chats from "../../../Content/UserPage/Chats/Chats";
+import Excercises from "../../../Content/UserPage/Excercises/Excercises";
+import Teams from "../../../Content/UserPage/Teams/Teams";
+import Reminders from "../../../Content/UserPage/Reminders/Reminders";
 
 export default class UserContent extends React.Component {
   constructor(props) {
@@ -23,6 +24,8 @@ export default class UserContent extends React.Component {
         return <Assignments />;
       case "excercises":
         return <Excercises />;
+      case "reminders":
+        return <Reminders />;
       default:
         return <Teams />;
     }

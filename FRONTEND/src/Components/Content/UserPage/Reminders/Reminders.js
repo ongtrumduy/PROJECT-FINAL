@@ -1,12 +1,12 @@
 import React from "react";
 
-export default class Teams extends React.Component {
+export default class Reminders extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    return <div>Teams</div>;
+    return <div>Reminders</div>;
   }
 }

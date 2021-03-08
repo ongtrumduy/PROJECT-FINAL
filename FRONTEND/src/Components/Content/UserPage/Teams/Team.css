@@ -1,0 +1,98 @@
+.user-teams {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    flex-grow: 0;
+}
+
+.user-teams_control {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(218, 218, 218);
+}
+
+.user-teams_control__title {
+    width: 60%;
+    text-align: left;
+    font-weight: bold;
+    margin: 0 0 0 24px;
+}
+
+.user-teams_control__button {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.user-teams_control__button button {
+    height: 32px;
+    margin: 0 32px 0 -28px;
+    border-style: groove;
+    border-radius: 4px;
+}
+
+.user-teams_list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+}
+
+.user-teams_list div {
+    height: 260px;
+    width: 260px;
+    background-color: rgb(197, 194, 194);
+    margin: 20px 20px 20px 28px;
+    cursor: pointer;
+}
+
+/* .user-teams_list div::hover {
+    background-color: red;
+} */
+
+.user-team {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    flex-grow: 0;
+}
+
+.user-team_name {
+    border: 1px solid rgb(196, 196, 196);
+    background-color: white;
+    width: 24%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.user-team_name__title {
+    background-color: rgb(218, 218, 218);
+    width: 100%;
+}
+
+.user-team_name__content {
+    background-color: violet;
+    width: 100%;
+    flex: 1;
+}
+
+.user-team_content {
+    border: 1px solid rgb(173, 169, 169);
+    background-color: white;
+    flex: 1;
+    height: 100%;
+}

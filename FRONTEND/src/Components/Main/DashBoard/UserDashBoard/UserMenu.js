@@ -93,6 +93,21 @@ export default class UserMenu extends React.Component {
               this.updateRenderContent("excercises");
             }}
           >
+            &#xe22b;
+          </i>
+        </div>
+        <div className="user-dashboard_container__menu___icon">
+          <i
+            class="material-icons"
+            style={{
+              fontSize: "48px",
+              cursor: "pointer",
+              color: (this.state.setColor === "reminders" && "green") || "black"
+            }}
+            onClick={() => {
+              this.updateRenderContent("reminders");
+            }}
+          >
             &#xe614;
           </i>
         </div>
