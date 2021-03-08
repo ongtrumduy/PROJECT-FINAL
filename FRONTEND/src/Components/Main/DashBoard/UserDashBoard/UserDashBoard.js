@@ -8,7 +8,7 @@ import UserMenu from "./UserMenu";
 export default class UserDashBoard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { contentState: "" };
+    this.state = { contentState: "teams" };
   }
 
   updateContentState = state => {

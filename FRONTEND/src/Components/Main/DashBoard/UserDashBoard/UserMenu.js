@@ -3,7 +3,7 @@ import React from "react";
 export default class UserMenu extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { setColor: "" };
+    this.state = { setColor: "teams" };
   }
 
   updateRenderContent = state => {

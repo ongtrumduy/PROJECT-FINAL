@@ -1,4 +1,6 @@
 import React from "react";
+import defaultavatar from "../../Image-Icons/default-avatar.png";
+import logopage from "../../Image-Icons/logo.png";
 
 export default class UserHeader extends React.Component {
   constructor(props) {
@@ -18,12 +20,15 @@ export default class UserHeader extends React.Component {
   render() {
     return (
       <div className="user-dashboard_header">
+        <div className="user-dashboard_header__logo">
+          <img src={logopage} />
+        </div>
         <div className="user-dashboard_header__search">
           <input type="text" placeholder=" Tìm kiếm tên nhóm..." />
         </div>
         <div className="user-dashboard_header__infor">
           <div className="user-dashboard_header__infor___avatar">
-            {/* <img src={require("../../Main/Image-Icons/search.png")} /> */}
+            <img src={defaultavatar} />
           </div>
           <div className="user-dashboard_header__infor___fullname">
             <button>Phạm Duy</button>

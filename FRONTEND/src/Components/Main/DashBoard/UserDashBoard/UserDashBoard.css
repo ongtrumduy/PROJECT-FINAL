@@ -18,13 +18,22 @@
     justify-content: flex-start;
 }
 
+.user-dashboard_header__logo {
+    margin: 8px 0 0 28px;
+}
+
+.user-dashboard_header__logo img {
+    height: 56px;
+    width: 180px;
+}
+
 .user-dashboard_header__search {
-    margin: 0 0 0 132px;
+    margin: 0 0 0 28px;
 }
 
 .user-dashboard_header__search input {
     height: 32px;
-    width: 560px;
+    width: 480px;
     border-radius: 4px;
     font-size: 16px;
     border-style: groove;
@@ -38,7 +47,10 @@
     justify-content: flex-end;
 }
 
-.user-dashboard_header__infor___avatar {}
+.user-dashboard_header__infor___avatar img {
+    height: 40px;
+    width: 40px;
+}
 
 .user-dashboard_header__infor___fullname button {
     height: 36px;
@@ -46,6 +58,7 @@
     font-weight: bold;
     border-style: groove;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .user-dashboard_container {

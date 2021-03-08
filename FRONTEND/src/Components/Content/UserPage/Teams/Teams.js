@@ -3,7 +3,7 @@ import "./Team.css";
 import TeamAddCodeTeam from "./TeamAddCodeTeam";
 import TeamAllContent from "./TeamAllContent";
 import TeamCreateTeam from "./TeamCreateTeam";
-import TeamContent from "./TeamContent";
+import Team from "./Team";
 
 export default class Teams extends React.Component {
   constructor(props) {
@@ -32,9 +32,7 @@ export default class Teams extends React.Component {
           />
         );
       case "teamcontent":
-        return (
-          <TeamContent updateRenderTeamControl={this.updateRenderTeamControl} />
-        );
+        return <Team updateRenderTeamControl={this.updateRenderTeamControl} />;
       case "teamall":
         return (
           <TeamAllContent

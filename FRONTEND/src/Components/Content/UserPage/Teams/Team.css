@@ -36,6 +36,7 @@
     margin: 0 32px 0 -28px;
     border-style: groove;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .user-teams_all__list {
@@ -96,4 +97,114 @@
     background-color: white;
     flex: 1;
     height: 100%;
+}
+
+.user-teams_create {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    flex-grow: 0;
+}
+
+.user-teams_create__backtoteamall {
+    margin: 40px 0 0 40px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0 2px tomato;
+    transition: box-shadow 0.3s;
+}
+
+.user-teams_create__backtoteamall:hover {
+    box-shadow: 0 3px rgb(0, 255, 64);
+}
+
+.user-teams_create__team {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.user-teams_create__team___form {
+    background-color: rgb(255, 255, 255);
+    width: 52%;
+    margin: 32px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.user-teams_create__team___form div:first-child {
+    margin: 0 0 0 20px;
+}
+
+.user-teams_create__team___form div:last-child {
+    margin: 48px 0 0 160px;
+}
+
+.user-teams_create__team___form div:last-child button {
+    border-style: groove;
+    border-radius: 4px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.user-teams_create__team___form div:last-child button:focus {
+    background-color: rgb(196, 196, 196);
+}
+
+.user-teams_create__team___form p {
+    font-weight: bold;
+    text-align: left;
+}
+
+.user-teams_create__team___form input {
+    border: none;
+    vertical-align: left;
+    border-bottom: groove;
+    width: 180%;
+    border-color: rgb(226, 226, 226);
+}
+
+.user-teams_create__team___form input:focus {
+    outline: none;
+    border-color: green
+}
+
+.user-teams_create__team___form select {
+    width: 80%;
+    margin: 0 0 0 4px;
+    border: none;
+    border-bottom: groove;
+}
+
+.user-teams_create__team___form option {
+    border-color: rgb(226, 226, 226);
+}
+
+.user-teams_create__team___form select:focus {
+    outline: none;
+    border-color: green
+}
+
+.user-teams_create__team___logo div:first-child {
+    border: groove;
+}
+
+.user-teams_create__team___logo div:first-child img {
+    height: 200px;
+    width: 200px;
+}
+
+.user-teams_create__team___logo div:last-child p {
+    font-weight: bold;
 }
