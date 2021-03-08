@@ -11,7 +11,7 @@ export default class TeamAllList extends React.Component {
 
   render() {
     return (
-      <div className="user-teams_list">
+      <div className="user-teams_all__list">
         <div>
           <img
             style={{ height: "120px", width: "120px", margin: "32px 0 0 0" }}

@@ -1,13 +1,13 @@
-.user-teams {
+.user-teams_all {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     height: 100%;
-    flex-grow: 0;
+    overflow: auto;
 }
 
-.user-teams_control {
+.user-teams_all__control {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -16,14 +16,14 @@
     background-color: rgb(218, 218, 218);
 }
 
-.user-teams_control__title {
+.user-teams_all__control___title {
     width: 60%;
     text-align: left;
     font-weight: bold;
     margin: 0 0 0 24px;
 }
 
-.user-teams_control__button {
+.user-teams_all__control___button {
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -31,23 +31,24 @@
     align-items: center;
 }
 
-.user-teams_control__button button {
+.user-teams_all__control___button button {
     height: 32px;
     margin: 0 32px 0 -28px;
     border-style: groove;
     border-radius: 4px;
 }
 
-.user-teams_list {
+.user-teams_all__list {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     overflow: auto;
+    height: 460px
 }
 
-.user-teams_list div {
+.user-teams_all__list div {
     height: 260px;
     width: 260px;
     background-color: rgb(197, 194, 194);
@@ -55,9 +56,9 @@
     cursor: pointer;
 }
 
-/* .user-teams_list div::hover {
-    background-color: red;
-} */
+.user-teams_all__list div:hover {
+    background-color: rgb(219, 219, 219);
+}
 
 .user-team {
     display: flex;

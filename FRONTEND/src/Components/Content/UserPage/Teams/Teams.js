@@ -1,27 +1,56 @@
 import React from "react";
 import "./Team.css";
-import TeamAllList from "./TeamAllList";
+import TeamAddCodeTeam from "./TeamAddCodeTeam";
+import TeamAllContent from "./TeamAllContent";
+import TeamCreateTeam from "./TeamCreateTeam";
+import TeamContent from "./TeamContent";
 
-export default class Chats extends React.Component {
+export default class Teams extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { setTeamRender: "" };
   }
 
+  updateRenderTeamControl = state => {
+    this.setState({
+      setTeamRender: state
+    });
+  };
+
+  renderTeamControlContent = () => {
+    switch (this.state.setTeamRender) {
+      case "create":
+        return (
+          <TeamCreateTeam
+            updateRenderTeamControl={this.updateRenderTeamControl}
+          />
+        );
+      case "addcode":
+        return (
+          <TeamAddCodeTeam
+            updateRenderTeamControl={this.updateRenderTeamControl}
+          />
+        );
+      case "teamcontent":
+        return (
+          <TeamContent updateRenderTeamControl={this.updateRenderTeamControl} />
+        );
+      case "teamall":
+        return (
+          <TeamAllContent
+            updateRenderTeamControl={this.updateRenderTeamControl}
+          />
+        );
+      default:
+        return (
+          <TeamAllContent
+            updateRenderTeamControl={this.updateRenderTeamControl}
+          />
+        );
+    }
+  };
+
   render() {
-    return (
-      <div className="user-teams">
-        <div className="user-teams_control">
-          <div className="user-teams_control__title">
-            <p>Tất cả nhóm</p>
-          </div>
-          <div className="user-teams_control__button">
-            <button>Tạo nhóm</button>
-            <button>Tham gia nhóm bằng mã</button>
-          </div>
-        </div>
-        <TeamAllList />
-      </div>
-    );
+    return <div className="user-teams">{this.renderTeamControlContent()}</div>;
   }
 }
