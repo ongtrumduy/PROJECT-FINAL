@@ -13,7 +13,7 @@ export default class UserHeader extends React.Component {
       setColor: "logout"
     });
     setTimeout(() => {
-      this.props.updateLogPage();
+      this.props.updateRenderLogPage("Log");
     }, 1000);
   };
 

@@ -18,7 +18,7 @@ export default class UserDashBoard extends React.Component {
   renderUserDashBoard = () => {
     return (
       <div className="user-dashboard">
-        <UserHeader updateLogPage={this.props.updateLogPage} />
+        <UserHeader updateRenderLogPage={this.props.updateRenderLogPage} />
         <div className="user-dashboard_container">
           <UserMenu updateContentState={this.updateContentState} />
           <UserContent contentState={this.state.contentState} />

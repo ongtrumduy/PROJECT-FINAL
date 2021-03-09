@@ -1,12 +1,12 @@
 import React from "react";
-import request from "request";
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      setHiddenPass: false
     };
   }
 
@@ -24,54 +24,81 @@ export default class Login extends React.Component {
 
   pressEnterUsername = event => {
     if (event.key === "Enter") {
-      this.props.updateUserDashBoard();
+      this.props.updateRenderLogPage("User");
     }
   };
 
   pressEnterPassword = event => {
     if (event.key === "Enter") {
-      this.props.updateUserDashBoard();
+      this.props.updateRenderLogPage("User");
     }
   };
 
-  loginForm = () => {
+  setStateHiddenPass = () => {
+    if (this.state.setHiddenPass) {
+      this.setState({
+        setHiddenPass: false
+      });
+    } else {
+      this.setState({
+        setHiddenPass: true
+      });
+    }
+  };
+
+  renderLoginForm = () => {
     return (
-      <div>
-        <div className="login">
-          <p>Tên đăng nhập (*)</p>
+      <div className="user-login">
+        <div className="user-login_form">
+          <p>
+            Tên đăng nhập <span>(*)</span>
+          </p>
           <input
             type="text"
             onChange={this.handleUsernameChange}
             value={this.state.username}
             onKeyPress={this.pressEnterUsername}
           />
-          <p>Mật khẩu (*)</p>
+          <p>
+            Mật khẩu <span>(*)</span>
+          </p>
           <input
-            type="password"
+            style={{ width: "240px" }}
+            type={(this.state.setHiddenPass && "text") || "password"}
             onChange={this.handlePasswordChange}
             value={this.state.password}
             onKeyPress={this.pressEnterPassword}
           />
-          <div className="login-button">
+          <i
+            class="material-icons"
+            style={{ cursor: "pointer" }}
+            onClick={() => this.setStateHiddenPass()}
+          >
+            {(this.state.setHiddenPass && "visibility") || "visibility_off"}
+          </i>
+        </div>
+
+        <div className="user-login_button">
+          <div className="user-login_button__loginbutton">
             <input
               type="button"
               value="Đăng nhập"
-              onClick={() => this.props.updateUserDashBoard()}
+              onClick={() => this.props.updateRenderLogPage("User")}
             />
           </div>
-          <div className="forest-button">
-            <div className="forgotpass-button">
+          <div>
+            <div className="user-login_button__forgotbutton">
               <input
                 type="button"
                 value="Quên mật khẩu?"
-                onClick={() => this.props.updateForgotPassPage()}
+                onClick={() => this.props.updateLoginPage("forgot")}
               />
             </div>
-            <div className="register-button">
+            <div className="user-login_button__registerbutton">
               <input
                 type="button"
                 value="Đăng kí"
-                onClick={() => this.props.updateRegisterPage()}
+                onClick={() => this.props.updateLoginPage("register")}
               />
             </div>
           </div>
@@ -81,6 +108,6 @@ export default class Login extends React.Component {
   };
 
   render() {
-    return <div>{this.loginForm()}</div>;
+    return <div>{this.renderLoginForm()}</div>;
   }
 }

@@ -19,34 +19,26 @@ export default class LogPage extends React.Component {
         return <Register updateLoginPage={this.updateLoginPage} />;
       case "forgot":
         return <ForgotPass updateLoginPage={this.updateLoginPage} />;
+      case "login":
+        return (
+          <Login
+            updateLoginPage={this.updateLoginPage}
+            updateRenderLogPage={this.props.updateRenderLogPage}
+          />
+        );
       default:
         return (
           <Login
             updateLoginPage={this.updateLoginPage}
-            updateAdminDashBoard={this.props.updateAdminDashBoard}
-            updateUserDashBoard={this.props.updateUserDashBoard}
-            updateRegisterPage={this.updateRegisterPage}
-            updateForgotPassPage={this.updateForgotPassPage}
+            updateRenderLogPage={this.props.updateRenderLogPage}
           />
         );
     }
   };
 
-  updateLoginPage = () => {
+  updateLoginPage = state => {
     this.setState({
-      checkSign: "login"
-    });
-  };
-
-  updateRegisterPage = () => {
-    this.setState({
-      checkSign: "register"
-    });
-  };
-
-  updateForgotPassPage = () => {
-    this.setState({
-      checkSign: "forgot"
+      checkSign: state
     });
   };
 

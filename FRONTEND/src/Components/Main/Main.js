@@ -12,27 +12,33 @@ export default class Main extends React.Component {
     };
   }
 
-  updateMain = () => {
+  updateRenderMain = () => {
     switch (this.state.updateLog) {
       case "Admin":
         return (
           <AdminDashBoard
-            updateLogPage={this.updateLogPage}
+            updateRenderLogPage={this.updateRenderLogPage}
             socket={this.socket}
           />
         );
       case "User":
         return (
           <UserDashBoard
-            updateLogPage={this.updateLogPage}
+            updateRenderLogPage={this.updateRenderLogPage}
+            socket={this.socket}
+          />
+        );
+      case "Log":
+        return (
+          <LogPage
+            updateRenderLogPage={this.updateRenderLogPage}
             socket={this.socket}
           />
         );
       default:
         return (
           <LogPage
-            updateUserDashBoard={this.updateUserDashBoard}
-            updateAdminDashBoard={this.updateAdminDashBoard}
+            updateRenderLogPage={this.updateRenderLogPage}
             socket={this.socket}
           />
         );
@@ -43,25 +49,13 @@ export default class Main extends React.Component {
     this.socket = ioclient("http://localhost:8081");
   };
 
-  updateLogPage = () => {
+  updateRenderLogPage = state => {
     this.setState({
-      updateLog: "Log"
-    });
-  };
-
-  updateAdminDashBoard = () => {
-    this.setState({
-      updateLog: "Admin"
-    });
-  };
-
-  updateUserDashBoard = () => {
-    this.setState({
-      updateLog: "User"
+      updateLog: state
     });
   };
 
   render() {
-    return <div>{this.updateMain()}</div>;
+    return <div>{this.updateRenderMain()}</div>;
   }
 }
