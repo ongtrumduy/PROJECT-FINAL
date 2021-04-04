@@ -1,7 +1,7 @@
 import React from "react";
 import ChatList from "./ChatList";
 import ChatContent from "./ChatContent";
-import "./Chat.css";
+import "./Chats.css";
 
 export default class Chats extends React.Component {
   constructor(props) {

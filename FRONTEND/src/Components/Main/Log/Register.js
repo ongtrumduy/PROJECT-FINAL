@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Login extends React.Component {
+export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -9,7 +9,7 @@ export default class Login extends React.Component {
       lastname: "",
       phonenumber: "",
       password: "",
-      birth: "",
+      birthday: "",
       gender: "",
       setHiddenPass: false
     };
@@ -59,7 +59,7 @@ export default class Login extends React.Component {
 
   handleBirthChange = event => {
     this.setState({
-      birth: event.target.value
+      birthday: event.target.value
     });
   };
 
@@ -69,105 +69,111 @@ export default class Login extends React.Component {
     });
   };
 
+  handleRegisterSubmit = () => {
+    this.props.updateLoginPage("login");
+  };
+
   renderRegisterForm = () => {
     return (
       <div className="user-register">
-        <div className="user-register_form">
-          <div
-            className="user-register_button__returnloginbutton"
-            onClick={() => this.props.updateLoginPage("login")}
-          >
-            <div>
-              <i class="material-icons"> &#xe5c4;</i>
-            </div>
-            <div>Quay lại</div>
-          </div>
-
-          <div className="user-register_form__form1">
-            <p>
-              Tên đăng nhập <span>(*)</span>
-            </p>
-            <input
-              type="text"
-              onChange={this.handleUsernameChange}
-              value={this.state.username}
-            />
-            <p>
-              Họ và tên <span>(*)</span>
-            </p>
-            <div className="user-register_form__fullname">
-              <div className="user-register_form__fullname___firstname">
-                <input
-                  type="text"
-                  onChange={this.handleLastnameChange}
-                  value={this.state.lastname}
-                  placeholder="Họ"
-                />
-              </div>
-              <div className="user-register_form__fullname___lastname">
-                <input
-                  type="text"
-                  onChange={this.handleFirstnameChange}
-                  value={this.state.firstname}
-                  placeholder="Tên"
-                />
-              </div>
-            </div>
-
-            <p>
-              Giới tính <span>(*)</span>
-            </p>
-            <div className="user-register_form__genderchoose">
-              <select onChange={this.handleGenderChange}>
-                <option value="">Chọn</option>
-                <option value="Nam">Nam</option>
-                <option value="Nữ">Nữ</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="user-register_form__form2">
-            <p>
-              Số điện thoại <span>(*)</span>
-            </p>
-            <input
-              type="text"
-              onChange={this.handlePhonenumberChange}
-              value={this.state.usernumber}
-            />
-            <p>
-              Mật khẩu <span>(*)</span>
-            </p>
-            <input
-              style={{ width: "240px" }}
-              type={(this.state.setHiddenPass && "text") || "password"}
-              onChange={this.handlePasswordChange}
-              value={this.state.password}
-            />
-            <i
-              class="material-icons"
-              style={{ cursor: "pointer" }}
-              onClick={() => this.setStateHiddenPass()}
+        <form onSubmit={() => this.handleRegisterSubmit()}>
+          <div className="user-register_form">
+            <div
+              className="user-register_button__returnloginbutton"
+              onClick={() => this.props.updateLoginPage("login")}
             >
-              {(this.state.setHiddenPass && "visibility") || "visibility_off"}
-            </i>
-            <p>
-              Ngày sinh <span>(*)</span>
-            </p>
+              <div>
+                <i class="material-icons"> &#xe5c4;</i>
+              </div>
+              <div>Quay lại</div>
+            </div>
+
+            <div className="user-register_form__form1">
+              <p>
+                Tên đăng nhập <span>(*)</span>
+              </p>
+              <input
+                type="text"
+                onChange={this.handleUsernameChange}
+                value={this.state.username}
+              />
+              <p>
+                Họ và tên <span>(*)</span>
+              </p>
+              <div className="user-register_form__fullname">
+                <div className="user-register_form__fullname___firstname">
+                  <input
+                    type="text"
+                    onChange={this.handleLastnameChange}
+                    value={this.state.lastname}
+                    placeholder="Họ"
+                  />
+                </div>
+                <div className="user-register_form__fullname___lastname">
+                  <input
+                    type="text"
+                    onChange={this.handleFirstnameChange}
+                    value={this.state.firstname}
+                    placeholder="Tên"
+                  />
+                </div>
+              </div>
+
+              <p>
+                Giới tính <span>(*)</span>
+              </p>
+              <div className="user-register_form__genderchoose">
+                <select onChange={this.handleGenderChange}>
+                  <option value="">Chọn</option>
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="user-register_form__form2">
+              <p>
+                Số điện thoại <span>(*)</span>
+              </p>
+              <input
+                type="text"
+                onChange={this.handlePhonenumberChange}
+                value={this.state.usernumber}
+              />
+              <p>
+                Mật khẩu <span>(*)</span>
+              </p>
+              <input
+                style={{ width: "240px" }}
+                type={(this.state.setHiddenPass && "text") || "password"}
+                onChange={this.handlePasswordChange}
+                value={this.state.password}
+              />
+              <i
+                class="material-icons"
+                style={{ cursor: "pointer" }}
+                onClick={() => this.setStateHiddenPass()}
+              >
+                {(this.state.setHiddenPass && "visibility") || "visibility_off"}
+              </i>
+              <p>
+                Ngày sinh <span>(*)</span>
+              </p>
+              <input
+                type="date"
+                onChange={this.handleBirthdayChange}
+                value={this.state.birth}
+              />
+            </div>
+          </div>
+          <div className="user-register_button__registerbutton">
             <input
-              type="date"
-              onChange={this.handleBirthChange}
-              value={this.state.birth}
+              type="submit"
+              value="Đăng kí"
+              //   onClick={() => this.onRegisterNewUser()}
             />
           </div>
-        </div>
-        <div className="user-register_button__registerbutton">
-          <input
-            type="button"
-            value="Đăng kí"
-            //   onClick={() => this.onRegisterNewUser()}
-          />
-        </div>
+        </form>
       </div>
     );
   };

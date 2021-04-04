@@ -14,10 +14,6 @@ export default class UserFooter extends React.Component {
           <a href="https://www.facebook.com/thoiloanhhung">Phạm Duy</a> - Đại
           học Bách khoa Hà Nội
         </p>
-        <p>
-          Hanoi University of Science and Technology - No. 1, Dai Co Viet Str.,
-          Hanoi, Vietnam
-        </p>
       </div>
     );
   }

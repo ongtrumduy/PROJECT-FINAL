@@ -16,7 +16,7 @@ export default class TeamAllList extends React.Component {
         <div onClick={() => this.props.updateRenderTeamControl("teamcontent")}>
           <img
             style={{ height: "120px", width: "120px", margin: "32px 0 0 0" }}
-            src={logo11}
+            src={logo22}
           />
           <p style={{ fontWeight: "bold" }}>Học lập trình</p>
         </div>

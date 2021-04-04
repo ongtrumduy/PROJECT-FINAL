@@ -62,3 +62,63 @@
     flex: 1;
     height: 100%;
 }
+
+.user-chat_content__menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.user-chat_content__menu img {
+    height: 54px;
+    width: 60px;
+    margin: 4px 0 0 12px;
+}
+
+.user-chat_content__menu p {
+    font-weight: bold;
+    margin: 0 0 0 12px;
+}
+
+.user-chat_content__menu button {
+    border: none;
+    font-size: 16px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.user-chat_content__menu button:hover {
+    color: red;
+}
+
+.user-chat_content__menu button:focus {
+    color: blue;
+    border-bottom: groove;
+    outline: none;
+    border-bottom-color: rgb(216, 215, 215);
+    font-weight: bold;
+}
+
+.user-chat_content__menu button:first-child {
+    margin: 0 0 0 32px;
+}
+
+.user-chat_content__callsetting {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+    flex: 1;
+}
+
+.user-chat_content__callsetting___call {
+    margin: 0 12px 0 0;
+    width: 60px;
+}
+
+.user-chat_content__callsetting___setting {
+    margin: 0 40px 0 0;
+}

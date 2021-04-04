@@ -27,7 +27,7 @@
     border: none;
     outline: none;
     border-bottom: groove;
-    margin: 0 0 0 20px;
+    margin: 0 0 0 16px;
     font-size: 16px;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .user-login_button__loginbutton {
-    margin: 72px 0 24px 40px;
+    margin: 72px 0 24px 20px;
 }
 
 .user-login_button__loginbutton input {

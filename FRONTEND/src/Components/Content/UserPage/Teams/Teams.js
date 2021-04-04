@@ -1,9 +1,9 @@
 import React from "react";
-import "./Team.css";
+import "./Teams.css";
 import TeamAddCodeTeam from "./TeamAddCodeTeam";
 import TeamAllContent from "./TeamAllContent";
 import TeamCreateTeam from "./TeamCreateTeam";
-import Team from "./Team";
+import Team from "./../Team/Team";
 
 export default class Teams extends React.Component {
   constructor(props) {

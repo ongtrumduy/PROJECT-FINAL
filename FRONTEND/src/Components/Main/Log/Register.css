@@ -82,17 +82,14 @@
     margin: 0 16px 0 0;
 }
 
-.user-register_button__registerbutton {
-    margin: 40px auto;
-    border: groove;
-    border-radius: 4px;
-}
-
 .user-register_button__registerbutton input {
     cursor: pointer;
     width: 120px;
     font-weight: bold;
     height: 32px;
+    border: groove;
+    border-radius: 4px;
+    margin: 40px 0 40px 60px;
 }
 
 .user-register_button__registerbutton input:hover {
