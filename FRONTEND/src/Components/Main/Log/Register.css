@@ -38,6 +38,21 @@
     align-items: flex-start;
 }
 
+.user-register_form__validate {
+    color: red;
+    text-align: left;
+}
+
+.user-register_form__response-register {
+    text-align: center;
+}
+
+.user-register_form__response-register span {
+    font-weight: bold;
+    color: green;
+    text-align: center;
+}
+
 .user-register_form__form1 {
     margin: 60px 20px 20px 20px;
 }

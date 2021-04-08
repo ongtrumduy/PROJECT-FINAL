@@ -1,37 +1,39 @@
 import React from "react";
+import axios from "axios";
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      setHiddenPass: false
+      Username: "",
+      PassWord: "",
+      setHiddenPass: false,
+      checkValidate: ""
     };
   }
 
-  handleUsernameChange = event => {
+  handleValueChange = event => {
     this.setState({
-      username: event.target.value
-    });
-  };
-
-  handlePasswordChange = event => {
-    this.setState({
-      password: event.target.value
+      [event.target.name]: event.target.value
     });
   };
 
   pressEnterUsername = event => {
     if (event.key === "Enter") {
-      this.props.updateRenderLogPage("User");
+      this.sendRequestToLogin();
     }
   };
 
   pressEnterPassword = event => {
     if (event.key === "Enter") {
-      this.props.updateRenderLogPage("User");
+      this.sendRequestToLogin();
     }
+  };
+
+  handleLoginSubmit = event => {
+    this.sendRequestToLogin();
+
+    event.preventDefault();
   };
 
   setStateHiddenPass = () => {
@@ -46,41 +48,94 @@ export default class Login extends React.Component {
     }
   };
 
-  handleLoginSubmit = () => {
-    this.props.updateRenderLogPage("User");
+  checkValidateLoginForm = type => {
+    switch (type) {
+      case "incorrect-password":
+        return <span>Mật khẩu của bạn không đúng !!!</span>;
+        break;
+      case "non-existed-username":
+        return <span>Tài khoản của bạn không tồn tại !!!</span>;
+        break;
+      case "success-login":
+        return <span>Bạn đã đăng nhập thành công !!!</span>;
+        break;
+      case "username":
+        return <small>Tên đăng nhập không được để trống</small>;
+        break;
+      case "password":
+        return <small>Mật khẩu không được để trống</small>;
+        break;
+      default:
+    }
+  };
+
+  renderValidateNotify = type => {
+    if (this.state.checkValidate === type) {
+      return <div>{this.checkValidateLoginForm(type)}</div>;
+    }
+  };
+
+  sendRequestToLogin = () => {
+    axios
+      .post("http://localhost:8081/login", {
+        Username: this.state.Username,
+        PassWord: this.state.PassWord
+      })
+      .then(res => {
+        this.setState({
+          checkValidate: res.data
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   renderLoginForm = () => {
     return (
       <div className="user-login">
-        <form onSubmit={() => this.handleLoginSubmit()}>
+        <form onSubmit={event => this.handleLoginSubmit(event)}>
           <div className="user-login_form">
             <p>
               Tên đăng nhập <span>(*)</span>
             </p>
             <input
               type="text"
-              onChange={this.handleUsernameChange}
-              value={this.state.username}
+              name="Username"
+              onChange={event => this.handleValueChange(event)}
+              value={this.state.Username}
               onKeyPress={this.pressEnterUsername}
             />
+            <div className="user-login_form__validate">
+              {this.renderValidateNotify("username")}
+            </div>
+
             <p>
               Mật khẩu <span>(*)</span>
             </p>
             <input
               style={{ width: "240px" }}
+              name="PassWord"
               type={(this.state.setHiddenPass && "text") || "password"}
-              onChange={this.handlePasswordChange}
-              value={this.state.password}
+              onChange={event => this.handleValueChange(event)}
+              value={this.state.PassWord}
               onKeyPress={this.pressEnterPassword}
             />
             <i
-              class="material-icons"
+              className="material-icons"
               style={{ cursor: "pointer" }}
               onClick={() => this.setStateHiddenPass()}
             >
               {(this.state.setHiddenPass && "visibility") || "visibility_off"}
             </i>
+            <div className="user-login_form__validate">
+              {this.renderValidateNotify("password")}
+            </div>
+          </div>
+          <div className="user-login_form__response-login">
+            {this.renderValidateNotify("incorrect-password")}
+            {this.renderValidateNotify("non-existed-username")}
+            {this.renderValidateNotify("success-login")}
           </div>
 
           <div className="user-login_button">
@@ -97,7 +152,7 @@ export default class Login extends React.Component {
               </div>
               <div className="user-login_button__registerbutton">
                 <input
-                  type="submit"
+                  type="button"
                   value="Đăng kí"
                   onClick={() => this.props.updateLoginPage("register")}
                 />

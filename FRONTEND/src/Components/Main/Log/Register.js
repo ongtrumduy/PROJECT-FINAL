@@ -1,17 +1,19 @@
 import React from "react";
+import axios from "axios";
 
 export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      firstname: "",
-      lastname: "",
-      phonenumber: "",
-      password: "",
-      birthday: "",
-      gender: "",
-      setHiddenPass: false
+      Username: "",
+      Firstname: "",
+      Lastname: "",
+      PhoneNumber: "",
+      PassWord: "",
+      Birthday: "",
+      Gender: "",
+      setHiddenPass: false,
+      checkValidate: ""
     };
   }
 
@@ -27,63 +29,104 @@ export default class Register extends React.Component {
     }
   };
 
-  handleUsernameChange = event => {
+  handleValueChange = event => {
     this.setState({
-      username: event.target.value
-    });
-  };
-
-  handleFirstnameChange = event => {
-    this.setState({
-      firstname: event.target.value
-    });
-  };
-
-  handleLastnameChange = event => {
-    this.setState({
-      lastname: event.target.value
-    });
-  };
-
-  handlePhonenumberChange = event => {
-    this.setState({
-      phonenumber: event.target.value
-    });
-  };
-
-  handlePasswordChange = event => {
-    this.setState({
-      password: event.target.value
-    });
-  };
-
-  handleBirthChange = event => {
-    this.setState({
-      birthday: event.target.value
+      [event.target.name]: event.target.value
     });
   };
 
   handleGenderChange = event => {
     this.setState({
-      gender: event.target.value
+      Gender: event.target.value
     });
   };
 
-  handleRegisterSubmit = () => {
-    this.props.updateLoginPage("login");
+  handleRegisterSubmit = event => {
+    this.sentRegisterNewMember();
+
+    event.preventDefault();
+  };
+
+  checkValidateRegisterForm = type => {
+    switch (type) {
+      case "existed-username":
+        return <span>Tên đăng nhập này đã được sử dụng !!!</span>;
+        break;
+      case "success-register":
+        return <span>Bạn đã đăng kí thành công !!!</span>;
+        break;
+      case "existed-phonenumber":
+        return <span>Số điện thoại này đã được sử dụng !!!</span>;
+        break;
+      case "username":
+        return <small>Tên đăng nhập không được để trống</small>;
+        break;
+      case "password":
+        return <small>Mật khẩu không được để trống</small>;
+        break;
+      case "firstname":
+        return <small>Tên không được để trống</small>;
+        break;
+      case "lastname":
+        return <small>Họ không được để trống</small>;
+        break;
+      case "phonenumber":
+        return <small>Số điện thoại không được để trống</small>;
+        break;
+      case "birthday":
+        return <small>Ngày sinh không được để trống</small>;
+        break;
+      case "gender":
+        return <small>Giới tính không được để trống</small>;
+        break;
+      default:
+    }
+  };
+
+  renderValidateNotify = type => {
+    if (this.state.checkValidate === type) {
+      return <div>{this.checkValidateRegisterForm(type)}</div>;
+    }
+  };
+
+  sentRegisterNewMember = () => {
+    axios
+      .post("http://localhost:8081/register", {
+        Username: this.state.Username,
+        PassWord: this.state.PassWord,
+        Firstname: this.state.Firstname,
+        Lastname: this.state.Lastname,
+        PhoneNumber: this.state.PhoneNumber,
+        Birthday: this.state.Birthday,
+        Gender: this.state.Gender
+      })
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          checkValidate: res.data
+        });
+        if (res.data === "success-register") {
+          setTimeout(() => {
+            this.props.updateLoginPage("login");
+          }, 1500);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   renderRegisterForm = () => {
     return (
       <div className="user-register">
-        <form onSubmit={() => this.handleRegisterSubmit()}>
+        <form onSubmit={event => this.handleRegisterSubmit(event)}>
           <div className="user-register_form">
             <div
               className="user-register_button__returnloginbutton"
               onClick={() => this.props.updateLoginPage("login")}
             >
               <div>
-                <i class="material-icons"> &#xe5c4;</i>
+                <i className="material-icons"> &#xe5c4;</i>
               </div>
               <div>Quay lại</div>
             </div>
@@ -94,40 +137,58 @@ export default class Register extends React.Component {
               </p>
               <input
                 type="text"
-                onChange={this.handleUsernameChange}
-                value={this.state.username}
+                name="Username"
+                onChange={event => this.handleValueChange(event)}
+                value={this.state.Username}
               />
+              <div className="user-register_form__validate">
+                {this.renderValidateNotify("username")}
+              </div>
               <p>
                 Họ và tên <span>(*)</span>
               </p>
               <div className="user-register_form__fullname">
-                <div className="user-register_form__fullname___firstname">
-                  <input
-                    type="text"
-                    onChange={this.handleLastnameChange}
-                    value={this.state.lastname}
-                    placeholder="Họ"
-                  />
-                </div>
                 <div className="user-register_form__fullname___lastname">
                   <input
                     type="text"
-                    onChange={this.handleFirstnameChange}
-                    value={this.state.firstname}
+                    name="Lastname"
+                    onChange={event => this.handleValueChange(event)}
+                    value={this.state.Lastname}
+                    placeholder="Họ"
+                  />
+                </div>
+                <div className="user-register_form__fullname___fisrtname">
+                  <input
+                    type="text"
+                    name="Firstname"
+                    onChange={event => this.handleValueChange(event)}
+                    value={this.state.Firstname}
                     placeholder="Tên"
                   />
                 </div>
               </div>
-
+              <div className="user-register_form__validate">
+                {this.renderValidateNotify("firstname")}
+              </div>
+              <div className="user-register_form__validate">
+                {this.renderValidateNotify("lastname")}
+              </div>
               <p>
                 Giới tính <span>(*)</span>
               </p>
               <div className="user-register_form__genderchoose">
-                <select onChange={this.handleGenderChange}>
+                <select
+                  value={this.state.Gender}
+                  onChange={event => this.handleGenderChange(event)}
+                >
                   <option value="">Chọn</option>
                   <option value="Nam">Nam</option>
                   <option value="Nữ">Nữ</option>
                 </select>
+              </div>
+              <br></br>
+              <div className="user-register_form__validate">
+                {this.renderValidateNotify("gender")}
               </div>
             </div>
 
@@ -137,41 +198,54 @@ export default class Register extends React.Component {
               </p>
               <input
                 type="text"
-                onChange={this.handlePhonenumberChange}
-                value={this.state.usernumber}
+                name="PhoneNumber"
+                onChange={event => this.handleValueChange(event)}
+                value={this.state.PhoneNumber}
               />
+              <div className="user-register_form__validate">
+                {this.renderValidateNotify("phonenumber")}
+              </div>
               <p>
                 Mật khẩu <span>(*)</span>
               </p>
               <input
                 style={{ width: "240px" }}
                 type={(this.state.setHiddenPass && "text") || "password"}
-                onChange={this.handlePasswordChange}
-                value={this.state.password}
+                name="PassWord"
+                onChange={event => this.handleValueChange(event)}
+                value={this.state.PassWord}
               />
               <i
-                class="material-icons"
+                className="material-icons"
                 style={{ cursor: "pointer" }}
                 onClick={() => this.setStateHiddenPass()}
               >
                 {(this.state.setHiddenPass && "visibility") || "visibility_off"}
               </i>
+              <div className="user-register_form__validate">
+                {this.renderValidateNotify("password")}
+              </div>
               <p>
                 Ngày sinh <span>(*)</span>
               </p>
               <input
                 type="date"
-                onChange={this.handleBirthdayChange}
-                value={this.state.birth}
+                name="Birthday"
+                onChange={event => this.handleValueChange(event)}
+                value={this.state.Birthday}
               />
+              <div className="user-register_form__validate">
+                {this.renderValidateNotify("birthday")}
+              </div>
             </div>
           </div>
+          <div className="user-register_form__response-register">
+            {this.renderValidateNotify("existed-username")}
+            {this.renderValidateNotify("existed-phonenumber")}
+            {this.renderValidateNotify("success-register")}
+          </div>
           <div className="user-register_button__registerbutton">
-            <input
-              type="submit"
-              value="Đăng kí"
-              //   onClick={() => this.onRegisterNewUser()}
-            />
+            <input type="submit" value="Đăng kí" />
           </div>
         </form>
       </div>
