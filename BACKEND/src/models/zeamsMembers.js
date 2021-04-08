@@ -115,17 +115,37 @@ class ZeamsMembers {
   //-----------------------------------------------------------------------------------------------------------------
 
   checkLoginMemberAccount(member) {
-    let index = this.ZeamsMembers.findIndex(item => {
-      return (
-        member.Username === item.MemberInfor.Username &&
-        member.PassWord === item.MemberInfor.PassWord
-      );
+    let checkUsernameLoginMember = false;
+    let checkPassWordLoginMember = false;
+    let checkLoginMember = "";
+
+    this.ZeamsMembers.forEach(memberitem => {
+      memberitem.MemberInfor.forEach(memberinforitem => {
+        console.log("memberinforitem " + memberinforitem.PassWord);
+
+        if (member.Username === memberinforitem.Username) {
+          checkUsernameLoginMember = true;
+        }
+        if (member.PassWord === memberinforitem.PassWord) {
+          checkPassWordLoginMember = true;
+        }
+      });
     });
-    if (index < 0) {
-      return false;
+
+    if (
+      checkUsernameLoginMember === true &&
+      checkPassWordLoginMember === true
+    ) {
+      checkLoginMember = "success-login";
+    } else if (
+      checkUsernameLoginMember === true &&
+      checkPassWordLoginMember === false
+    ) {
+      checkLoginMember = "incorrect-password";
     } else {
-      return true;
+      checkLoginMember = "non-existed-username";
     }
+    return checkLoginMember;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
@@ -137,14 +157,10 @@ class ZeamsMembers {
       return "password";
     } else {
       let checkCorrectAccount = this.checkLoginMemberAccount(member);
-      if (checkCorrectAccount) {
-        return "correct";
-      } else {
-        return "incorrect";
-      }
+
+      return checkCorrectAccount;
     }
   }
-
   //-----------------------------------------------------------------------------------------------------------------
 
   checkValidateNewMemberRegister(member) {
@@ -197,6 +213,15 @@ class ZeamsMembers {
     } else {
       return checkNewMemberRegister;
     }
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  resMemberLogin(member) {
+    let checkMemberLogin = zeamsMembers.checkValidateMemberLogin(member);
+    console.log(checkMemberLogin);
+
+    return checkMemberLogin;
   }
 
   //-----------------------------------------------------------------------------------------------------------------

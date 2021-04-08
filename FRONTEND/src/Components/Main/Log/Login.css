@@ -41,6 +41,12 @@
     margin: 0 0 0 20px;
 }
 
+.user-login_form__response-login {
+    color: green;
+    font-weight: bold;
+    margin: 40px 0 -64px 0;
+}
+
 .user-login_button {
     display: flex;
     justify-content: center;

@@ -85,6 +85,11 @@ export default class Login extends React.Component {
         this.setState({
           checkValidate: res.data
         });
+        if (res.data === "success-login") {
+          setTimeout(() => {
+            this.props.updateRenderLogPage("User");
+          }, 1000);
+        }
       })
       .catch(error => {
         console.log(error);
