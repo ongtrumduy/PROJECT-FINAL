@@ -51,34 +51,24 @@ export default class Register extends React.Component {
     switch (type) {
       case "existed-username":
         return <span>Tên đăng nhập này đã được sử dụng !!!</span>;
-        break;
       case "success-register":
         return <span>Bạn đã đăng kí thành công !!!</span>;
-        break;
       case "existed-phonenumber":
         return <span>Số điện thoại này đã được sử dụng !!!</span>;
-        break;
       case "username":
         return <small>Tên đăng nhập không được để trống</small>;
-        break;
       case "password":
         return <small>Mật khẩu không được để trống</small>;
-        break;
       case "firstname":
         return <small>Tên không được để trống</small>;
-        break;
       case "lastname":
         return <small>Họ không được để trống</small>;
-        break;
       case "phonenumber":
         return <small>Số điện thoại không được để trống</small>;
-        break;
       case "birthday":
         return <small>Ngày sinh không được để trống</small>;
-        break;
       case "gender":
         return <small>Giới tính không được để trống</small>;
-        break;
       default:
     }
   };
@@ -101,11 +91,11 @@ export default class Register extends React.Component {
         Gender: this.state.Gender
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         this.setState({
-          checkValidate: res.data
+          checkValidate: res.data.checkValidate
         });
-        if (res.data === "success-register") {
+        if (res.data.checkValidate === "success-register") {
           setTimeout(() => {
             this.props.updateLoginPage("login");
           }, 1500);
@@ -177,10 +167,7 @@ export default class Register extends React.Component {
                 Giới tính <span>(*)</span>
               </p>
               <div className="user-register_form__genderchoose">
-                <select
-                  value={this.state.Gender}
-                  onChange={event => this.handleGenderChange(event)}
-                >
+                <select onChange={event => this.handleGenderChange(event)}>
                   <option value="">Chọn</option>
                   <option value="Nam">Nam</option>
                   <option value="Nữ">Nữ</option>

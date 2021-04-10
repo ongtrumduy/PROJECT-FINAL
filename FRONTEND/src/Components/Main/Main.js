@@ -8,7 +8,8 @@ export default class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      updateLog: "Log"
+      updateLog: "Log",
+      MemberID: ""
     };
   }
 
@@ -18,6 +19,7 @@ export default class Main extends React.Component {
         return (
           <AdminDashBoard
             updateRenderLogPage={this.updateRenderLogPage}
+            MemberID={this.state.MemberID}
             socket={this.socket}
           />
         );
@@ -25,6 +27,7 @@ export default class Main extends React.Component {
         return (
           <UserDashBoard
             updateRenderLogPage={this.updateRenderLogPage}
+            MemberID={this.state.MemberID}
             socket={this.socket}
           />
         );
@@ -32,6 +35,7 @@ export default class Main extends React.Component {
         return (
           <LogPage
             updateRenderLogPage={this.updateRenderLogPage}
+            setMemberIDForMemberLogin={this.setMemberIDForMemberLogin}
             socket={this.socket}
           />
         );
@@ -58,6 +62,12 @@ export default class Main extends React.Component {
   updateRenderLogPage = state => {
     this.setState({
       updateLog: state
+    });
+  };
+
+  setMemberIDForMemberLogin = memberID => {
+    this.setState({
+      MemberID: memberID
     });
   };
 

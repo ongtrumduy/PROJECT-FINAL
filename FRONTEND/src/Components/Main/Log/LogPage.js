@@ -24,6 +24,7 @@ export default class LogPage extends React.Component {
           <Login
             updateLoginPage={this.updateLoginPage}
             updateRenderLogPage={this.props.updateRenderLogPage}
+            setMemberIDForMemberLogin={this.props.setMemberIDForMemberLogin}
           />
         );
       default:

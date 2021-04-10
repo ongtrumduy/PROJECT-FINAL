@@ -8,7 +8,7 @@ import Team from "./../Team/Team";
 export default class Teams extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { setTeamRender: "" };
+    this.state = { setTeamRender: "", TeamID: "" };
   }
 
   updateRenderTeamControl = state => {
@@ -17,32 +17,50 @@ export default class Teams extends React.Component {
     });
   };
 
+  getTeamIDMemberChoice = teamID => {
+    this.setState({
+      TeamID: teamID
+    });
+  };
+
   renderTeamControlContent = () => {
     switch (this.state.setTeamRender) {
       case "create":
         return (
           <TeamCreateTeam
+            MemberID={this.props.MemberID}
             updateRenderTeamControl={this.updateRenderTeamControl}
           />
         );
       case "addcode":
         return (
           <TeamAddCodeTeam
+            MemberID={this.props.MemberID}
             updateRenderTeamControl={this.updateRenderTeamControl}
           />
         );
       case "teamcontent":
-        return <Team updateRenderTeamControl={this.updateRenderTeamControl} />;
+        return (
+          <Team
+            MemberID={this.props.MemberID}
+            TeamID={this.state.TeamID}
+            updateRenderTeamControl={this.updateRenderTeamControl}
+          />
+        );
       case "teamall":
         return (
           <TeamAllContent
+            MemberID={this.props.MemberID}
             updateRenderTeamControl={this.updateRenderTeamControl}
+            getTeamIDMemberChoice={this.getTeamIDMemberChoice}
           />
         );
       default:
         return (
           <TeamAllContent
+            MemberID={this.props.MemberID}
             updateRenderTeamControl={this.updateRenderTeamControl}
+            getTeamIDMemberChoice={this.getTeamIDMemberChoice}
           />
         );
     }

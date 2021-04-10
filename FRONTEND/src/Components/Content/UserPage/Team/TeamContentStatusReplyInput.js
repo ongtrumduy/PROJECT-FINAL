@@ -12,7 +12,7 @@ export default class TeamContentStatusReplyInput extends React.Component {
           <input type="text" placeholder="Trả lời" />
         </div>
         <div>
-          <i class="material-icons">&#xe163;</i>
+          <i className="material-icons">&#xe163;</i>
         </div>
       </div>
     );

@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+
 import TeamName from "./TeamName";
 import TeamContent from "./TeamContent";
 import "./Team.css";
@@ -6,8 +8,25 @@ import "./Team.css";
 export default class Team extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { ChooseTeamInfor: [] };
   }
+
+  componentDidMount = () => {
+    axios
+      .post("http://localhost:8081/getteamlist/getteaminfor", {
+        TeamID: this.props.TeamID
+      })
+      .then(res => {
+        // console.log(res.data);
+        this.setState({
+          ChooseTeamID: res.data.TeamID,
+          ChooseTeamInfor: res.data.TeamInfor
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     return (
@@ -18,15 +37,18 @@ export default class Team extends React.Component {
             onClick={() => this.props.updateRenderTeamControl("teamall")}
           >
             <div>
-              <i class="material-icons"> &#xe5c4;</i>
+              <i className="material-icons"> &#xe5c4;</i>
             </div>
             <div>
               <span>Tất cả các nhóm</span>
             </div>
           </div>
-          <TeamName />
+          <TeamName
+            TeamID={this.state.ChooseTeamID}
+            ChooseTeamInfor={this.state.ChooseTeamInfor}
+          />
         </div>
-        <TeamContent />
+        <TeamContent TeamID={this.props.TeamID} />
       </div>
     );
   }

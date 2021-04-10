@@ -21,21 +21,24 @@ export default class UserHeader extends React.Component {
     return (
       <div className="user-dashboard_header">
         <div className="user-dashboard_header__logo">
-          <img src={logopage} />
+          <img src={logopage} alt="logo-webpage" />
         </div>
         <div className="user-dashboard_header__search">
           <input type="text" placeholder=" Tìm kiếm tên nhóm..." />
         </div>
         <div className="user-dashboard_header__infor">
           <div className="user-dashboard_header__infor___avatar">
-            <img src={defaultavatar} />
+            <img src={defaultavatar} alt="default-avatar" />
           </div>
           <div className="user-dashboard_header__infor___fullname">
-            <button>Phạm Duy</button>
+            <button>
+              {this.props.LastnameMember} &nbsp;
+              {this.props.FirstnameMember}
+            </button>
           </div>
           <div>
             <i
-              class="material-icons"
+              className="material-icons"
               style={{
                 fontSize: "48px",
                 cursor: "pointer",

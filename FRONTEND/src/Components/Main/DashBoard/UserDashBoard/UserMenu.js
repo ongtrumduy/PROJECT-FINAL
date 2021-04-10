@@ -18,7 +18,7 @@ export default class UserMenu extends React.Component {
       <div className="user-dashboard_container__menu">
         <div className="user-dashboard_container__menu___icon">
           <i
-            class="material-icons"
+            className="material-icons"
             style={{
               fontSize: "48px",
               cursor: "pointer",
@@ -35,7 +35,7 @@ export default class UserMenu extends React.Component {
         </div>
         <div className="user-dashboard_container__menu___icon">
           <i
-            class="material-icons"
+            className="material-icons"
             style={{
               fontSize: "48px",
               cursor: "pointer",
@@ -51,7 +51,7 @@ export default class UserMenu extends React.Component {
         </div>
         <div className="user-dashboard_container__menu___icon">
           <span
-            class="material-icons"
+            className="material-icons"
             style={{
               fontSize: "48px",
               cursor: "pointer",
@@ -66,7 +66,7 @@ export default class UserMenu extends React.Component {
         </div>
         <div className="user-dashboard_container__menu___icon">
           <i
-            class="material-icons"
+            className="material-icons"
             style={{
               fontSize: "48px",
               cursor: "pointer",
@@ -82,7 +82,7 @@ export default class UserMenu extends React.Component {
         </div>
         <div className="user-dashboard_container__menu___icon">
           <i
-            class="material-icons"
+            className="material-icons"
             style={{
               fontSize: "48px",
               cursor: "pointer",
@@ -98,7 +98,7 @@ export default class UserMenu extends React.Component {
         </div>
         <div className="user-dashboard_container__menu___icon">
           <i
-            class="material-icons"
+            className="material-icons"
             style={{
               fontSize: "48px",
               cursor: "pointer",

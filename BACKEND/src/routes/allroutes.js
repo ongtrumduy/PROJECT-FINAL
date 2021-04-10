@@ -1,6 +1,10 @@
-import registerRoutes from "./register"
+import registerRoutes from "./register";
 import loginRoutes from "./login";
-
+import getfullnameRoutes from "./getfullname";
+import createnewteamRoutes from "./createnewteam";
+import getteamlistRoutes from "./getteamlist";
+import getteaminforRoutes from "./getteaminfor";
+import searchtojointeamRoutes from "./searchtojointeam";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -13,25 +17,25 @@ let AllRoutes = (app, corsOptions) => {
   loginRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
-  // // -----------------------UserDashBoard---------------------------------------
-  // firstnameRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // -----------------------GetFullname---------------------------------------
+  getfullnameRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------Home---------------------------------------
-  // homeRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------CreateNewTeam---------------------------------------
+  createnewteamRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------Profile---------------------------------------
-  // profileRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------GetTeamList---------------------------------------
+  getteamlistRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------SearchUser---------------------------------------
-  // searchRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------TeamInfor---------------------------------------
+  getteaminforRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------UnknowhUser---------------------------------------
-  // unknowRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------SearchToJoinTeam---------------------------------------
+  searchtojointeamRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
   // // --------------------------AddFriend---------------------------------------
   // addfriendRoutes(app, corsOptions);
@@ -78,6 +82,6 @@ let AllRoutes = (app, corsOptions) => {
   // //-----------------------------------------------------------------------
 
   // //=========================================================================
-}
+};
 
 module.exports = AllRoutes;

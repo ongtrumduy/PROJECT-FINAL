@@ -26,13 +26,21 @@
 }
 
 .user-team_name__title img {
-    margin: 20px 0 0 16px;
+    margin: 20px 0 0 0;
+}
+
+.user-team_name__content {
+    text-align: left;
 }
 
 .user-team_name__content p {
-    text-align: left;
-    margin: 12px 0 0 16px;
+    margin: 12px 0 32px 16px;
     font-weight: bold;
+}
+
+.user-team_name__content span {
+    color: rgb(17, 0, 255);
+    margin: 12px 0 0 16px;
 }
 
 .user-team_teamname__backtoteamall {

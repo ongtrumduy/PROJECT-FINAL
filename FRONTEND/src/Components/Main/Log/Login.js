@@ -52,19 +52,14 @@ export default class Login extends React.Component {
     switch (type) {
       case "incorrect-password":
         return <span>Mật khẩu của bạn không đúng !!!</span>;
-        break;
       case "non-existed-username":
         return <span>Tài khoản của bạn không tồn tại !!!</span>;
-        break;
       case "success-login":
         return <span>Bạn đã đăng nhập thành công !!!</span>;
-        break;
       case "username":
         return <small>Tên đăng nhập không được để trống</small>;
-        break;
       case "password":
         return <small>Mật khẩu không được để trống</small>;
-        break;
       default:
     }
   };
@@ -82,13 +77,15 @@ export default class Login extends React.Component {
         PassWord: this.state.PassWord
       })
       .then(res => {
+        // console.log(res.data);
         this.setState({
-          checkValidate: res.data
+          checkValidate: res.data.checkValidate
         });
-        if (res.data === "success-login") {
+        if (res.data.checkValidate === "success-login") {
           setTimeout(() => {
             this.props.updateRenderLogPage("User");
           }, 1000);
+          this.props.setMemberIDForMemberLogin(res.data.MemberID);
         }
       })
       .catch(error => {

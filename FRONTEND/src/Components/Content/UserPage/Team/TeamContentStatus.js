@@ -24,7 +24,7 @@ export default class TeamContentStatus extends React.Component {
           onClick={() => this.handleSetStatusReply()}
         >
           <div>
-            <i class="material-icons">&#xe15e;</i>
+            <i className="material-icons">&#xe15e;</i>
           </div>
           <div>
             <span>Trả lời</span>

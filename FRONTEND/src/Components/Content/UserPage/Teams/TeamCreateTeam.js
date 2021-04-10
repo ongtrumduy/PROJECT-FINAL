@@ -1,40 +1,149 @@
 import React from "react";
-import logo11 from "../../../Main/Image-Icons/11.PNG";
-import logo22 from "../../../Main/Image-Icons/22.PNG";
-import logo33 from "../../../Main/Image-Icons/33.PNG";
-import logo44 from "../../../Main/Image-Icons/44.PNG";
+import axios from "axios";
+
+import logoaaa from "../../../Main/Image-Icons/aaa.JPG";
+import logobbb from "../../../Main/Image-Icons/bbb.JPG";
+import logoccc from "../../../Main/Image-Icons/ccc.JPG";
+import logoddd from "../../../Main/Image-Icons/ddd.JPG";
+import logoeee from "../../../Main/Image-Icons/eee.JPG";
+import logofff from "../../../Main/Image-Icons/fff.JPG";
+import logoggg from "../../../Main/Image-Icons/ggg.JPG";
+import logohhh from "../../../Main/Image-Icons/hhh.JPG";
+import logoiii from "../../../Main/Image-Icons/iii.JPG";
+import logokkk from "../../../Main/Image-Icons/kkk.JPG";
+import logolll from "../../../Main/Image-Icons/lll.JPG";
+import logommm from "../../../Main/Image-Icons/mmm.JPG";
 
 export default class TeamCreateTeam extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { setLogoChoose: logo11 };
+    this.state = {
+      setLogoChoose: logoaaa,
+      TeamName: "",
+      TeamDescription: "",
+      checkValidate: ""
+    };
   }
 
   handleChooseLogo = event => {
     const chooseLogo = event.target.value;
     switch (chooseLogo) {
-      case "logo11":
+      case "logoaaa":
         this.setState({
-          setLogoChoose: logo11
+          setLogoChoose: logoaaa
         });
         break;
-      case "logo22":
+      case "logobbb":
         this.setState({
-          setLogoChoose: logo22
-        });
-        break;
-
-      case "logo33":
-        this.setState({
-          setLogoChoose: logo33
+          setLogoChoose: logobbb
         });
         break;
 
-      case "logo44":
+      case "logoccc":
         this.setState({
-          setLogoChoose: logo44
+          setLogoChoose: logoccc
         });
         break;
+
+      case "logoddd":
+        this.setState({
+          setLogoChoose: logoddd
+        });
+        break;
+      case "logoeee":
+        this.setState({
+          setLogoChoose: logoeee
+        });
+        break;
+      case "logofff":
+        this.setState({
+          setLogoChoose: logofff
+        });
+        break;
+
+      case "logoggg":
+        this.setState({
+          setLogoChoose: logoggg
+        });
+        break;
+
+      case "logohhh":
+        this.setState({
+          setLogoChoose: logohhh
+        });
+        break;
+      case "logoiii":
+        this.setState({
+          setLogoChoose: logoiii
+        });
+        break;
+      case "logokkk":
+        this.setState({
+          setLogoChoose: logokkk
+        });
+        break;
+
+      case "logolll":
+        this.setState({
+          setLogoChoose: logolll
+        });
+        break;
+
+      case "logommm":
+        this.setState({
+          setLogoChoose: logommm
+        });
+        break;
+      default:
+    }
+  };
+
+  handleValueCreateNewTeam = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  sentToCreateNewTeam = () => {
+    axios
+      .post("http://localhost:8081/createnewteam", {
+        TeamName: this.state.TeamName,
+        TeamDescription: this.state.TeamDescription,
+        TeamLogo: this.state.setLogoChoose,
+        MemberID: this.props.MemberID
+      })
+      .then(res => {
+        // console.log(res.data);
+        this.setState({
+          checkValidate: res.data.checkValidate
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  handleCreateNewTeam = event => {
+    this.sentToCreateNewTeam();
+
+    event.preventDefault();
+  };
+
+  checkValidateCreateNewTeam = type => {
+    switch (type) {
+      case "success-create-team":
+        return <span>Nhóm của bạn đã được tạo thành công !!!</span>;
+      case "existed-team":
+        return <span>Tên nhóm này đã tồn tại !!!</span>;
+      case "teamname":
+        return <small>Tên nhóm không được để trống</small>;
+      default:
+    }
+  };
+
+  renderValidateNotify = type => {
+    if (this.state.checkValidate === type) {
+      return <div>{this.checkValidateCreateNewTeam(type)}</div>;
     }
   };
 
@@ -46,41 +155,68 @@ export default class TeamCreateTeam extends React.Component {
           onClick={() => this.props.updateRenderTeamControl("teamall")}
         >
           <div>
-            <i class="material-icons"> &#xe5c4;</i>
+            <i className="material-icons"> &#xe5c4;</i>
           </div>
           <div>
             <span>Quay lại</span>
           </div>
         </div>
-        <div className="user-teams_create__team">
-          <div className="user-teams_create__team___form">
-            <div>
-              <p>Tên nhóm</p>
-              <input type="text" placeholder="Nhập tên nhóm..." />
-              <p>Mô tả</p>
-              <input type="text" placeholder="Nhập mô tả..." />
-              <p>Chọn ảnh đại diện cho nhóm</p>
-              <select onChange={this.handleChooseLogo}>
-                <option value="logo11">Ảnh 1</option>
-                <option value="logo22">Ảnh 2</option>
-                <option value="logo33">Ảnh 3</option>
-                <option value="logo44">Ảnh 4</option>
-              </select>
+        <form onSubmit={event => this.handleCreateNewTeam(event)}>
+          <div className="user-teams_create__team">
+            <div className="user-teams_create__team___form">
+              <div>
+                <p>Tên nhóm</p>
+                <input
+                  type="text"
+                  name="TeamName"
+                  onChange={event => this.handleValueCreateNewTeam(event)}
+                  placeholder="Nhập tên nhóm..."
+                />
+                <p>Mô tả</p>
+                <input
+                  type="text"
+                  name="TeamDescription"
+                  onChange={event => this.handleValueCreateNewTeam(event)}
+                  placeholder="Nhập mô tả..."
+                />
+                <p>Chọn ảnh đại diện cho nhóm</p>
+                <select onChange={this.handleChooseLogo}>
+                  <option value="logoaaa">Ảnh 1</option>
+                  <option value="logobbb">Ảnh 2</option>
+                  <option value="logoccc">Ảnh 3</option>
+                  <option value="logoddd">Ảnh 4</option>
+                  <option value="logoeee">Ảnh 5</option>
+                  <option value="logofff">Ảnh 6</option>
+                  <option value="logoggg">Ảnh 7</option>
+                  <option value="logohhh">Ảnh 8</option>
+                  <option value="logoiii">Ảnh 9</option>
+                  <option value="logokkk">Ảnh 10</option>
+                  <option value="logolll">Ảnh 11</option>
+                  <option value="logommm">Ảnh 12</option>
+                </select>
+              </div>
+              <div className="user-teams_create__team___response-create-team">
+                <div className="user-teams_create__team___validate">
+                  {this.renderValidateNotify("teamname")}
+                </div>
+                {this.renderValidateNotify("success-create-team")}
+                {this.renderValidateNotify("existed-team")}
+              </div>
+              <div className="user-teams_create__team___form____create-button">
+                <input type="submit" value="Tạo Nhóm" />
+              </div>
             </div>
-            <div>
-              <button>Tạo Nhóm</button>
-            </div>
-          </div>
 
-          <div className="user-teams_create__team___logo">
-            <div>
-              <img src={this.state.setLogoChoose} />
-            </div>
-            <div>
-              <p>Ảnh đại diện nhóm</p>
+            <div className="user-teams_create__team___logo">
+              <div>
+                <img alt="team-logo" src={this.state.setLogoChoose} />
+              </div>
+              <div>
+                <p>Ảnh đại diện nhóm</p>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     );
   };

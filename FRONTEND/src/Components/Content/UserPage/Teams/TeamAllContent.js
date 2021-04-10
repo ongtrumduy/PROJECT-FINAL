@@ -28,7 +28,9 @@ export default class TeamAllContent extends React.Component {
           </div>
         </div>
         <TeamAllList
+          MemberID={this.props.MemberID}
           updateRenderTeamControl={this.props.updateRenderTeamControl}
+          getTeamIDMemberChoice={this.props.getTeamIDMemberChoice}
         />
       </div>
     );

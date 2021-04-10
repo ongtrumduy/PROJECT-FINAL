@@ -121,8 +121,6 @@ class ZeamsMembers {
 
     this.ZeamsMembers.forEach(memberitem => {
       memberitem.MemberInfor.forEach(memberinforitem => {
-        console.log("memberinforitem " + memberinforitem.PassWord);
-
         if (member.Username === memberinforitem.Username) {
           checkUsernameLoginMember = true;
         }
@@ -203,37 +201,54 @@ class ZeamsMembers {
     let checkNewMemberRegister = zeamsMembers.checkValidateNewMemberRegister(
       member
     );
-    console.log(checkNewMemberRegister);
+    let resNewMemberRegister;
+
     if (checkNewMemberRegister === "non-existed") {
       if (this.ZeamsMembers.length === 0) {
         this.createAdminMember();
       }
       this.createNewMemberRegister(member);
-      return "success-register";
+      resNewMemberRegister = { checkValidate: "success-register" };
     } else {
-      return checkNewMemberRegister;
+      resNewMemberRegister = {
+        checkValidate: checkNewMemberRegister
+      };
     }
+    return resNewMemberRegister;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
   resMemberLogin(member) {
     let checkMemberLogin = zeamsMembers.checkValidateMemberLogin(member);
-    console.log(checkMemberLogin);
+    let resMemberLogin;
 
-    return checkMemberLogin;
+    if (checkMemberLogin === "success-login") {
+      let MemberLoginID = this.getLoginMemberID(member);
+      resMemberLogin = {
+        checkValidate: "success-login",
+        MemberID: MemberLoginID
+      };
+    } else {
+      resMemberLogin = {
+        checkValidate: checkMemberLogin
+      };
+    }
+    return resMemberLogin;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
   getLoginMemberID(member) {
     let indexmemberlogin = "";
-    this.ZeamsMembers.forEach(memberitem => {
-      indexmemberlogin = memberitem.findIndex(memberinforitem => {
-        return (
+    this.ZeamsMembers.forEach((memberitem, memberIndex) => {
+      memberitem.MemberInfor.forEach(memberinforitem => {
+        if (
           member.Username === memberinforitem.Username &&
           member.PassWord === memberinforitem.PassWord
-        );
+        ) {
+          indexmemberlogin = memberIndex;
+        }
       });
     });
 
@@ -242,11 +257,17 @@ class ZeamsMembers {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  getLoginMemberProfile(member) {
+  getLoginMemberFullname(member) {
     let index = this.ZeamsMembers.findIndex(item => {
       return item.MemberID === member.MemberID;
     });
-    return this.ZeamsMembers[index];
+    let FirstnameMember = this.ZeamsMembers[index].MemberInfor[0].Firstname;
+    let LastnameMember = this.ZeamsMembers[index].MemberInfor[0].Lastname;
+    let resMemberFullname = {
+      Firstname: FirstnameMember,
+      Lastname: LastnameMember
+    };
+    return resMemberFullname;
   }
 }
 

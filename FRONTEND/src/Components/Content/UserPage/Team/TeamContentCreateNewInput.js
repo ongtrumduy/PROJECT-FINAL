@@ -12,7 +12,7 @@ export default class TeamContentCreateNewInput extends React.Component {
           <input type="text" placeholder="Bắt đầu cuộc thảo luận mới" />
         </div>
         <div>
-          <i class="material-icons">&#xe163;</i>
+          <i className="material-icons">&#xe163;</i>
         </div>
       </div>
     );
