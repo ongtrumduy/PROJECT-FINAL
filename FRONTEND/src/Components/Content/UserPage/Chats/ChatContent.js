@@ -1,6 +1,6 @@
 import React from "react";
 import ChatContentMenu from "./ChatContentMenu";
-import ChatContentContent from "../Team/TeamContentContent";
+// import ChatContentContent from "../Team/TeamContentContent";
 import ChatContentSendMessage from "./ChatContentSendMessage";
 
 export default class ChatContent extends React.Component {
@@ -13,7 +13,7 @@ export default class ChatContent extends React.Component {
     return (
       <div className="user-chat_content">
         <ChatContentMenu />
-        <ChatContentContent />
+        {/* <ChatContentContent /> */}
         <ChatContentSendMessage />
       </div>
     );

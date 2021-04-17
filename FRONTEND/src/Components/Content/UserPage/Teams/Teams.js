@@ -1,8 +1,8 @@
 import React from "react";
 import "./Teams.css";
-import TeamAddCodeTeam from "./TeamAddCodeTeam";
-import TeamAllContent from "./TeamAllContent";
-import TeamCreateTeam from "./TeamCreateTeam";
+import TeamsAddCodeTeam from "./TeamsAddCodeTeam";
+import TeamsAllContent from "./TeamsAllContent";
+import TeamsCreateTeam from "./TeamsCreateTeam";
 import Team from "./../Team/Team";
 
 export default class Teams extends React.Component {
@@ -27,15 +27,17 @@ export default class Teams extends React.Component {
     switch (this.state.setTeamRender) {
       case "create":
         return (
-          <TeamCreateTeam
+          <TeamsCreateTeam
             MemberID={this.props.MemberID}
+            socket={this.props.socket}
             updateRenderTeamControl={this.updateRenderTeamControl}
           />
         );
       case "addcode":
         return (
-          <TeamAddCodeTeam
+          <TeamsAddCodeTeam
             MemberID={this.props.MemberID}
+            socket={this.props.socket}
             updateRenderTeamControl={this.updateRenderTeamControl}
           />
         );
@@ -44,21 +46,24 @@ export default class Teams extends React.Component {
           <Team
             MemberID={this.props.MemberID}
             TeamID={this.state.TeamID}
+            socket={this.props.socket}
             updateRenderTeamControl={this.updateRenderTeamControl}
           />
         );
       case "teamall":
         return (
-          <TeamAllContent
+          <TeamsAllContent
             MemberID={this.props.MemberID}
+            socket={this.props.socket}
             updateRenderTeamControl={this.updateRenderTeamControl}
             getTeamIDMemberChoice={this.getTeamIDMemberChoice}
           />
         );
       default:
         return (
-          <TeamAllContent
+          <TeamsAllContent
             MemberID={this.props.MemberID}
+            socket={this.props.socket}
             updateRenderTeamControl={this.updateRenderTeamControl}
             getTeamIDMemberChoice={this.getTeamIDMemberChoice}
           />

@@ -1,7 +1,7 @@
 import React from "react";
-import TeamAllList from "./TeamAllList";
+import TeamsAllList from "./TeamsAllList";
 
-export default class TeamAllContent extends React.Component {
+export default class TeamsAllContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -27,7 +27,7 @@ export default class TeamAllContent extends React.Component {
             </button>
           </div>
         </div>
-        <TeamAllList
+        <TeamsAllList
           MemberID={this.props.MemberID}
           updateRenderTeamControl={this.props.updateRenderTeamControl}
           getTeamIDMemberChoice={this.props.getTeamIDMemberChoice}

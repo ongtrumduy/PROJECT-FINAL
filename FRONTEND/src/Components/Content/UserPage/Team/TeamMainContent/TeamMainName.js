@@ -1,7 +1,6 @@
 import React from "react";
-import logoaaa from "../../../Main/Image-Icons/aaa.JPG";
 
-export default class TeamName extends React.Component {
+export default class TeamMainName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -9,14 +8,14 @@ export default class TeamName extends React.Component {
 
   render() {
     return (
-      <div className="user-team_name">
+      <div className="user-team_team-name__teammainname">
         {this.props.ChooseTeamInfor.map((teaminforitem, teaminforindex) => {
           return (
             <div key={teaminforindex}>
-              <div className="user-team_name__title">
-                <img src={teaminforitem.TeamLogo} />
+              <div className="user-team_team-name__teammainname___title">
+                <img alt="team-logo" src={teaminforitem.TeamLogo} />
               </div>
-              <div className="user-team_name__content">
+              <div className="user-team_team-name__teammainname___content">
                 <p>{teaminforitem.TeamName}</p>
                 <span>
                   Mã nhóm: <br></br>

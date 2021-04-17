@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-export default class TeamAllList extends React.Component {
+export default class TeamsAllList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { AllTeamList: [] };
@@ -44,6 +44,7 @@ export default class TeamAllList extends React.Component {
                     width: "120px",
                     margin: "32px 0 0 0"
                   }}
+                  alt="team-logo"
                   src={teamnameitem.TeamLogo}
                 />
                 <p style={{ fontWeight: "bold" }}>{teamnameitem.TeamName}</p>

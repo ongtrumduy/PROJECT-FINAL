@@ -1,9 +1,10 @@
 import React from "react";
-import ForgotPass from "./ForgotPass";
-import Login from "./Login";
-import "./Login.css";
-import Register from "./Register";
-import "./Register.css";
+import ForgotPass from "./ForgotPass/ForgotPass";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
+
+import "./Login/Login.css";
+import "./Register/Register.css";
 
 export default class LogPage extends React.Component {
   constructor(props) {

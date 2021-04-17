@@ -47,12 +47,17 @@ export default class UserDashBoard extends React.Component {
           updateRenderLogPage={this.props.updateRenderLogPage}
           FirstnameMember={this.state.FirstnameMember}
           LastnameMember={this.state.LastnameMember}
+          socket={this.props.socket}
         />
         <div className="user-dashboard_container">
-          <UserMenu updateContentState={this.updateContentState} />
+          <UserMenu
+            updateContentState={this.updateContentState}
+            socket={this.props.socket}
+          />
           <UserContent
             contentState={this.state.contentState}
             MemberID={this.props.MemberID}
+            socket={this.props.socket}
           />
         </div>
         <UserFooter />

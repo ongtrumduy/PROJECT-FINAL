@@ -4,11 +4,10 @@ import bodyParser from "body-parser";
 import http from "http";
 import socketio from "socket.io";
 import events from "events";
-import moment from "moment";
 
 import allRoutes from "./src/routes/allroutes";
 
-// import allSockets from "./src/io-sockets/allsockets";
+import allSockets from "./src/io-sockets/allsockets";
 
 import portRoutes from "./src/routes/port";
 
@@ -45,7 +44,7 @@ allRoutes(app, corsOptions);
 
 //============================Socket======================================
 
-// allSockets(io);
+allSockets(io);
 
 //=========================================================================
 

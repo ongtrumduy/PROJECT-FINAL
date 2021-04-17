@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-export default class TeamAddCodeTeam extends React.Component {
+export default class TeamsAddCodeTeam extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,7 +90,7 @@ export default class TeamAddCodeTeam extends React.Component {
               </div>
 
               <div className="user-team_addcode__team___submit-addcode">
-                <input type="submit" value="Tìm kiếm" />
+                <input type="submit" value="Tham gia" />
               </div>
               <div className="user-teams_create__team___response-addcode-team">
                 {this.renderValidateNotify("joined-team")}

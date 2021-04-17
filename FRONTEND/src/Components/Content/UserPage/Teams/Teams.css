@@ -1,9 +1,12 @@
+.user-teams {
+    height: 100%;
+}
+
 .user-teams_all {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    height: 100%;
     overflow: auto;
 }
 

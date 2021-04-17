@@ -14,7 +14,7 @@ import logokkk from "../../../Main/Image-Icons/kkk.JPG";
 import logolll from "../../../Main/Image-Icons/lll.JPG";
 import logommm from "../../../Main/Image-Icons/mmm.JPG";
 
-export default class TeamCreateTeam extends React.Component {
+export default class TeamsCreateTeam extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

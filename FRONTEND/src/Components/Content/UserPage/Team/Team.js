@@ -1,14 +1,15 @@
 import React from "react";
 import axios from "axios";
 
-import TeamName from "./TeamName";
-import TeamContent from "./TeamContent";
+import TeamMainName from "./TeamMainContent/TeamMainName";
+import TeamMainMenu from "./TeamMainContent/TeamMainMenu";
+import TeamMainContent from "./TeamMainContent/TeamMainContent";
 import "./Team.css";
 
 export default class Team extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { ChooseTeamInfor: [] };
+    this.state = { ChooseTeamInfor: [], setSelectTeamContent: "discuss" };
   }
 
   componentDidMount = () => {
@@ -28,12 +29,18 @@ export default class Team extends React.Component {
       });
   };
 
+  setSelectTeamContentClickChoose = setSelect => {
+    this.setState({
+      setSelectTeamContent: setSelect
+    });
+  };
+
   render() {
     return (
       <div className="user-team">
-        <div className="user-team_teamname">
+        <div className="user-team_team-name">
           <div
-            className="user-team_teamname__backtoteamall"
+            className="user-team_team-name__backtoteamall"
             onClick={() => this.props.updateRenderTeamControl("teamall")}
           >
             <div>
@@ -43,12 +50,31 @@ export default class Team extends React.Component {
               <span>Tất cả các nhóm</span>
             </div>
           </div>
-          <TeamName
+          <TeamMainName
+            MemberID={this.props.MemberID}
             TeamID={this.state.ChooseTeamID}
             ChooseTeamInfor={this.state.ChooseTeamInfor}
           />
         </div>
-        <TeamContent TeamID={this.props.TeamID} />
+        <div className="user-team_team-menu-and-content">
+          <div>
+            <TeamMainMenu
+              ChooseTeamInfor={this.state.ChooseTeamInfor}
+              setSelectTeamContentClickChoose={
+                this.setSelectTeamContentClickChoose
+              }
+            />
+          </div>
+          <div>
+            <TeamMainContent
+              MemberID={this.props.MemberID}
+              TeamID={this.props.TeamID}
+              socket={this.props.socket}
+              ChooseTeamInfor={this.state.ChooseTeamInfor}
+              setSelectTeamContent={this.state.setSelectTeamContent}
+            />
+          </div>
+        </div>
       </div>
     );
   }

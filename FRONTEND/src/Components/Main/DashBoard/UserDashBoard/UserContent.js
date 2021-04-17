@@ -15,19 +15,45 @@ export default class UserContent extends React.Component {
   renderUserContent = () => {
     switch (this.props.contentState) {
       case "activities":
-        return <Activities MemberID={this.props.MemberID} />;
+        return (
+          <Activities
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+          />
+        );
       case "chats":
-        return <Chats MemberID={this.props.MemberID} />;
+        return (
+          <Chats MemberID={this.props.MemberID} socket={this.props.socket} />
+        );
       case "teams":
-        return <Teams MemberID={this.props.MemberID} />;
+        return (
+          <Teams MemberID={this.props.MemberID} socket={this.props.socket} />
+        );
       case "assignments":
-        return <Assignments MemberID={this.props.MemberID} />;
+        return (
+          <Assignments
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+          />
+        );
       case "excercises":
-        return <Excercises MemberID={this.props.MemberID} />;
+        return (
+          <Excercises
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+          />
+        );
       case "reminders":
-        return <Reminders MemberID={this.props.MemberID} />;
+        return (
+          <Reminders
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+          />
+        );
       default:
-        return <Teams MemberID={this.props.MemberID} />;
+        return (
+          <Teams MemberID={this.props.MemberID} socket={this.props.socket} />
+        );
     }
   };
 

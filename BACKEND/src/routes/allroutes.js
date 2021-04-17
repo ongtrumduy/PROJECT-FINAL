@@ -5,6 +5,7 @@ import createnewteamRoutes from "./createnewteam";
 import getteamlistRoutes from "./getteamlist";
 import getteaminforRoutes from "./getteaminfor";
 import searchtojointeamRoutes from "./searchtojointeam";
+import getteamdiscussRoutes from "./getteamdiscuss";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -37,9 +38,9 @@ let AllRoutes = (app, corsOptions) => {
   searchtojointeamRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
-  // // --------------------------AddFriend---------------------------------------
-  // addfriendRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------GetTeamDiscuss---------------------------------------
+  getteamdiscussRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
   // // --------------------------AddHomeFriend---------------------------------------
   // addhomefriendRoutes(app, corsOptions);

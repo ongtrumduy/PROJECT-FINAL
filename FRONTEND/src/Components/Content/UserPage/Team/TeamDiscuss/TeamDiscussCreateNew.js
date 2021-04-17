@@ -1,5 +1,5 @@
 import React from "react";
-import TeamContentCreateNewInput from "./TeamContentCreateNewInput";
+import TeamDiscussCreateNewInput from "./TeamDiscussCreateNewInput";
 
 export default class TeamContentCreateNew extends React.Component {
   constructor(props) {
@@ -15,7 +15,13 @@ export default class TeamContentCreateNew extends React.Component {
 
   renderInputBoxToCreate = () => {
     if (this.state.setInputStatus) {
-      return <TeamContentCreateNewInput />;
+      return (
+        <TeamDiscussCreateNewInput
+          MemberID={this.props.MemberID}
+          TeamID={this.props.TeamID}
+          socket={this.props.socket}
+        />
+      );
     } else {
       return (
         <button onClick={() => this.handleSetInputStatus()}>
@@ -27,7 +33,7 @@ export default class TeamContentCreateNew extends React.Component {
 
   render() {
     return (
-      <div className="user-team_content__createnew">
+      <div className="user-team_team-menu-and-content__content___discuss____createnew">
         {this.renderInputBoxToCreate()}
       </div>
     );
