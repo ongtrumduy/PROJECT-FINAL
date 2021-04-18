@@ -81,7 +81,7 @@ export default class Register extends React.Component {
 
   sentRegisterNewMember = () => {
     axios
-      .post("http://localhost:8081/register", {
+      .post("/register", {
         Username: this.state.Username,
         PassWord: this.state.PassWord,
         Firstname: this.state.Firstname,

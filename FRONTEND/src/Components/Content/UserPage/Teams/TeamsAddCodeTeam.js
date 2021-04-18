@@ -44,7 +44,7 @@ export default class TeamsAddCodeTeam extends React.Component {
 
   searchTeamByTeamCodeToJoin = () => {
     axios
-      .post("http://localhost:8081/searchtojointeam", {
+      .post("/searchtojointeam", {
         MemberID: this.props.MemberID,
         TeamCodeToJoin: this.state.TeamCodeToJoin
       })

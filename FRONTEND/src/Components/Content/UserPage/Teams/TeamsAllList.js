@@ -9,7 +9,7 @@ export default class TeamsAllList extends React.Component {
 
   componentDidMount = () => {
     axios
-      .post("http://localhost:8081/getteamlist", {
+      .post("/getteamlist", {
         MemberID: this.props.MemberID
       })
       .then(res => {

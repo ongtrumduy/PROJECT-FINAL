@@ -23,7 +23,7 @@ export default class UserDashBoard extends React.Component {
 
   componentDidMount = () => {
     axios
-      .post("http://localhost:8081/getfullname", {
+      .post("/getfullname", {
         MemberID: this.props.MemberID
       })
       .then(res => {

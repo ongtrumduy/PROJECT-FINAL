@@ -72,7 +72,7 @@ export default class Login extends React.Component {
 
   sendRequestToLogin = () => {
     axios
-      .post("http://localhost:8081/login", {
+      .post("/login", {
         Username: this.state.Username,
         PassWord: this.state.PassWord
       })
