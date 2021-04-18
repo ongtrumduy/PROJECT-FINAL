@@ -106,7 +106,7 @@ export default class TeamsCreateTeam extends React.Component {
 
   sentToCreateNewTeam = () => {
     axios
-      .post("http://localhost:8081/createnewteam", {
+      .post("/createnewteam", {
         TeamName: this.state.TeamName,
         TeamDescription: this.state.TeamDescription,
         TeamLogo: this.state.setLogoChoose,
