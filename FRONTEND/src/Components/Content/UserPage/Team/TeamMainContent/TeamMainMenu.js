@@ -8,6 +8,9 @@ export default class TeamMainMenu extends React.Component {
 
   setSelectTeamClickChoose = setSelect => {
     this.props.setSelectTeamContentClickChoose(setSelect);
+    this.setState({
+      setSelectTeam: setSelect
+    });
   };
 
   render() {
@@ -19,17 +22,56 @@ export default class TeamMainMenu extends React.Component {
           </div>
         ))}
         <div>
-          <button onClick={() => this.setSelectTeamClickChoose("discuss")}>
+          <button
+            style={
+              this.state.setSelectTeam === "discuss"
+                ? {
+                    color: "blue",
+                    borderBottom: "groove",
+                    outline: "none",
+                    borderBottomColor: " rgb(216, 215, 215)",
+                    fontWeight: "bold"
+                  }
+                : {}
+            }
+            onClick={() => this.setSelectTeamClickChoose("discuss")}
+          >
             Thảo luận
           </button>
         </div>
         <div>
-          <button onClick={() => this.setSelectTeamClickChoose("files")}>
+          <button
+            style={
+              this.state.setSelectTeam === "files"
+                ? {
+                    color: "blue",
+                    borderBottom: "groove",
+                    outline: "none",
+                    borderBottomColor: " rgb(216, 215, 215)",
+                    fontWeight: "bold"
+                  }
+                : {}
+            }
+            onClick={() => this.setSelectTeamClickChoose("files")}
+          >
             Tệp
           </button>
         </div>
         <div>
-          <button onClick={() => this.setSelectTeamClickChoose("notes")}>
+          <button
+            style={
+              this.state.setSelectTeam === "notes"
+                ? {
+                    color: "blue",
+                    borderBottom: "groove",
+                    outline: "none",
+                    borderBottomColor: " rgb(216, 215, 215)",
+                    fontWeight: "bold"
+                  }
+                : {}
+            }
+            onClick={() => this.setSelectTeamClickChoose("notes")}
+          >
             Ghi chú
           </button>
         </div>
@@ -42,7 +84,20 @@ export default class TeamMainMenu extends React.Component {
             </button>
           </div>
           <div className="user-team_team-menu-and-content__callsetting___setting">
-            <button onClick={() => this.setSelectTeamClickChoose("settings")}>
+            <button
+              style={
+                this.state.setSelectTeam === "settings"
+                  ? {
+                      color: "blue",
+                      borderBottom: "groove",
+                      outline: "none",
+                      borderBottomColor: " rgb(216, 215, 215)",
+                      fontWeight: "bold"
+                    }
+                  : {}
+              }
+              onClick={() => this.setSelectTeamClickChoose("settings")}
+            >
               <i className="material-icons" style={{ fontSize: "32px" }}>
                 &#xe8b8;
               </i>

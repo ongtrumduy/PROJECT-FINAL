@@ -4,6 +4,7 @@ import TeamsAddCodeTeam from "./TeamsAddCodeTeam";
 import TeamsAllContent from "./TeamsAllContent";
 import TeamsCreateTeam from "./TeamsCreateTeam";
 import Team from "./../Team/Team";
+import VideoCall from "./../VideoCall/VideoCall";
 
 export default class Teams extends React.Component {
   constructor(props) {
@@ -57,6 +58,15 @@ export default class Teams extends React.Component {
             socket={this.props.socket}
             updateRenderTeamControl={this.updateRenderTeamControl}
             getTeamIDMemberChoice={this.getTeamIDMemberChoice}
+          />
+        );
+      case "videocall":
+        return (
+          <VideoCall
+            MemberID={this.props.MemberID}
+            TeamID={this.state.TeamID}
+            socket={this.props.socket}
+            updateRenderTeamControl={this.updateRenderTeamControl}
           />
         );
       default:

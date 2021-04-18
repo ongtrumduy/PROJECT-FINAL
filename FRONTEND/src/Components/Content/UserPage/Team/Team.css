@@ -99,11 +99,7 @@
 }
 
 .user-team_team-menu-and-content__menu button:focus {
-    color: blue;
-    border-bottom: groove;
     outline: none;
-    border-bottom-color: rgb(216, 215, 215);
-    font-weight: bold;
 }
 
 .user-team_team-menu-and-content__menu button:first-child {
