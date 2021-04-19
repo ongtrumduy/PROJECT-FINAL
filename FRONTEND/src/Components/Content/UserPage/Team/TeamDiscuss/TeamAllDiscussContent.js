@@ -53,8 +53,8 @@ export default class TeamAllDiscussContent extends React.Component {
   render() {
     return (
       <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss">
-        {this.state.TeamDiscussContent.map(teamitem => (
-          <div>{this.renderTeamDiscussContent(teamitem)}</div>
+        {this.state.TeamDiscussContent.map((teamitem, teamindex) => (
+          <div key={teamindex}>{this.renderTeamDiscussContent(teamitem)}</div>
         ))}
       </div>
     );
