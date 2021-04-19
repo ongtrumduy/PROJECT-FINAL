@@ -22,11 +22,8 @@ export default class TeamAllDiscussContent extends React.Component {
         console.log(error);
       });
 
-    this.props.socket.on("update-team-discuss-content", data => {
+    this.props.socket.on("update-discuss-content", data => {
       console.log(data);
-      this.setState({
-        TeamDiscussContent: data.TeamDiscussContent
-      });
     });
   };
 
@@ -34,8 +31,8 @@ export default class TeamAllDiscussContent extends React.Component {
     switch (teamitem.TeamDiscussType) {
       case "non-activitied":
         return <p>{teamitem.MemberDiscussContent}</p>;
-      case "newmember":
-        return <p>{teamitem.MemberDiscussContent}</p>;
+      // case "newmember":
+      //   return <p>{teamitem.MemberDiscussContent}</p>;
       case "discuss":
         return (
           <TeamDiscussContent
