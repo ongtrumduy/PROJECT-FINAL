@@ -57,6 +57,7 @@ class BeginSocket {
     let memberOnlineList = [];
 
     socket.on("sent-online-memberID", data => {
+      console.log("Nhận được " + data);
       membersocket = this.getAllSocketOfMember(
         membersocket,
         data.MemberID,
