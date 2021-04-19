@@ -23,6 +23,7 @@ export default class TeamAllDiscussContent extends React.Component {
       });
 
     this.props.socket.on("update-discuss-content", data => {
+      console.log("Lấy socket:");
       console.log(data);
     });
   };
