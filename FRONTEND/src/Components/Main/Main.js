@@ -50,7 +50,7 @@ export default class Main extends React.Component {
   };
 
   componentDidMount = () => {
-    const linklocalbackend = "http://40.88.10.237:8081";
+    const linklocalbackend = "http://localhost:8081";
     this.socket = ioclient(linklocalbackend, {
       withCredentials: true,
       extraHeaders: {

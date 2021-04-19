@@ -1,59 +1,100 @@
 import StartBeginSocket from "../io-sockets/startbeginsocket";
 import zeamsTeamsDiscuss from "../models/zeamsTeamsDiscuss";
+import zeamsTeams from "../models/zeamsTeams";
 
 let CreateNewDiscuss = io => {
-  io.on("connection", socket => {
-    let membersocket = {};
+  let membersocket = {};
+  let memberIDOnlineList = [];
+  let memberSocketOnlineList = [];
 
+  io.on("connection", socket => {
     //====================================================================================================
     // membersocket = StartBeginSocket.setStartBeginSocket(socket);
-    let memberOnlineList = [];
 
     socket.on("sent-online-memberID", data => {
-      console.log("Nhận được " + data);
-      membersocket = this.getAllSocketOfMember(
+      // console.log("Nhận được MemberID" + data.MemberID);
+      // console.log("Nhận được socketID " + socket.id);
+
+      membersocket = StartBeginSocket.getAllSocketOfMember(
         membersocket,
         data.MemberID,
         socket.id
       );
-      memberOnlineList = Object.keys(membersocket);
+      memberIDOnlineList = Object.keys(membersocket);
+      memberSocketOnlineList = Object.values(membersocket);
+      // console.log("Bắt được rồi ");
+      // console.log(memberSocketOnlineList);
     });
 
     socket.on("disconnect-logout", data => {
-      membersocket = this.setRemoveDisconnectSocket(
+      membersocket = StartBeginSocket.setRemoveSocket(
         membersocket,
         data.MemberID,
         socket.id
       );
+      // console.log("Đăng xuất rồi ");
+      memberIDOnlineList = Object.keys(membersocket);
+      memberSocketOnlineList = Object.values(membersocket);
+
+      // console.log(memberSocketOnlineList);
     });
 
     socket.on("disconnect", data => {
-      this.setRemoveDisconnectSocket(
+      StartBeginSocket.setRemoveDisconnectSocket(
         membersocket,
         data,
-        memberOnlineList,
+        memberIDOnlineList,
         socket.id
       );
+      // console.log("Mất kết nối rồi ");
+      memberIDOnlineList = Object.keys(membersocket);
+      memberSocketOnlineList = Object.values(membersocket);
+
+      // console.log(memberSocketOnlineList);
     });
     //====================================================================================================
 
-    console.log(membersocket);
-
     socket.on("create-new-discuss", data => {
-      // console.log(data);
+      // console.log("Nhận discuss" + data);
       zeamsTeamsDiscuss.createNewMemberDiscuss(data);
 
       let resTeamDiscussContent = zeamsTeamsDiscuss.responseTeamDiscussContent(
         data
       );
 
-      StartBeginSocket.emitAllSocketOfMemberTeam(
-        membersocket,
-        data.TeamID,
-        io,
-        "update-discuss-content",
-        resTeamDiscussContent
-      );
+      // console.log("Ra danh sách " + resTeamDiscussContent);
+
+      // io.sockets
+      //   .in(socket.id)
+      //   .emit("update-discuss-content", resTeamDiscussContent);
+      // StartBeginSocket.emitAllSocketsOfMember(
+      //   membersocket,
+      //   data.MemberID,
+      //   io,
+      //   "update-discuss-content",
+      //   resTeamDiscussContent
+      // );
+
+      let teamMemberIDList = zeamsTeams.getAllMemberIDsOfTeam(data);
+      console.log("Tất cả thành viên của nhóm: " + teamMemberIDList);
+      teamMemberIDList.forEach(memberid => {
+        // console.log("Ra memberid " + memberid);
+        StartBeginSocket.emitAllSocketsOfMember(
+          membersocket,
+          memberid.MemberID,
+          io,
+          "update-discuss-content",
+          resTeamDiscussContent
+        );
+      });
+
+      // StartBeginSocket.emitAllSocketsOfMemberTeam(
+      //   membersocket,
+      //   data,
+      //   io,
+      //   "update-discuss-content",
+      //   resTeamDiscussContent
+      // );
     });
     //====================================================================================================
   });

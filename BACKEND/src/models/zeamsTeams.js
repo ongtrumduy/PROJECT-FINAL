@@ -108,12 +108,12 @@ class ZeamsTeams {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  getAllMemberOfTeam(team) {
-    let teamindex = this.zeamsTeams.findIndex(teamitem => {
-      return teamitem === team.TeamID;
+  getAllMemberIDsOfTeam(team) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === team.TeamID;
     });
 
-    let resTeamMember = this.zeamsTeams[teamindex].TeamMember;
+    let resTeamMember = this.ZeamsTeams[teamindex].TeamMember;
     return resTeamMember;
   }
 

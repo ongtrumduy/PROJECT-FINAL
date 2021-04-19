@@ -39,6 +39,7 @@ export default class UserDashBoard extends React.Component {
 
     this.props.socket.emit("sent-online-memberID", {
       MemberID: this.props.MemberID
+      // data: "Sao méo nhận được"
     });
   };
 

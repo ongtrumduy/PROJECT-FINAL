@@ -2,26 +2,37 @@ import zeamsTeams from "../models/zeamsTeams";
 
 class BeginSocket {
   getAllSocketOfMember(membersocket, memberID, socketID) {
+    // console.log("Vào socketID " + socketID);
     if (membersocket[memberID]) {
       membersocket[memberID].push(socketID);
     } else {
       membersocket[memberID] = [socketID];
     }
+    // console.log("Sao lại méo được " + membersocket);
     return membersocket;
   }
 
-  emitAllSocketOfMember(membersocket, memberID, io, eventEmit, data) {
+  emitAllSocketsOfMember(membersocket, memberID, io, eventEmit, data) {
     if (membersocket[memberID]) {
       membersocket[memberID].forEach(socketid => {
+        // console.log("Bắn ra socketid " + socketid);
         return io.sockets.in(socketid).emit(eventEmit, data);
       });
     }
   }
 
-  emitAllSocketOfMemberTeam(membersocket, teamID, io, eventEmit, data) {
-    let teamMemberList = zeamsTeams.getAllMemberOfTeam(teamID);
-    teamMemberList.forEach(memberid => {
-      this.emitAllSocketOfMember(membersocket, memberid, io, eventEmit, data);
+  emitAllSocketsOfMemberTeam(membersocket, teamID, io, eventEmit, data) {
+    let teamMemberList = zeamsTeams.getAllMembersOfTeam(teamID);
+    // console.log("Tất cả thành viên của nhóm: " + teamMemberList);
+    teamMemberList.forEach(memberitem => {
+      // console.log("Ra memberid " + memberid);
+      this.emitAllSocketsOfMember(
+        membersocket,
+        memberitem.memberID,
+        io,
+        eventEmit,
+        data
+      );
     });
   }
 
@@ -52,39 +63,39 @@ class BeginSocket {
     }
   }
 
-  setStartBeginSocket(socket) {
-    let membersocket = {};
-    let memberOnlineList = [];
+  // setStartBeginSocket(socket) {
+  //   let membersocket = {};
+  //   let memberOnlineList = [];
 
-    socket.on("sent-online-memberID", data => {
-      console.log("Nhận được " + data);
-      membersocket = this.getAllSocketOfMember(
-        membersocket,
-        data.MemberID,
-        socket.id
-      );
-      memberOnlineList = Object.keys(membersocket);
-    });
+  //   socket.on("sent-online-memberID", data => {
+  //     console.log("Nhận được " + data);
+  //     membersocket = this.getAllSocketOfMember(
+  //       membersocket,
+  //       data.MemberID,
+  //       socket.id
+  //     );
+  //     memberOnlineList = Object.keys(membersocket);
+  //   });
 
-    socket.on("disconnect-logout", data => {
-      membersocket = this.setRemoveDisconnectSocket(
-        membersocket,
-        data.MemberID,
-        socket.id
-      );
-    });
+  //   socket.on("disconnect-logout", data => {
+  //     membersocket = this.setRemoveDisconnectSocket(
+  //       membersocket,
+  //       data.MemberID,
+  //       socket.id
+  //     );
+  //   });
 
-    socket.on("disconnect", data => {
-      this.setRemoveDisconnectSocket(
-        membersocket,
-        data,
-        memberOnlineList,
-        socket.id
-      );
-    });
+  //   socket.on("disconnect", data => {
+  //     this.setRemoveDisconnectSocket(
+  //       membersocket,
+  //       data,
+  //       memberOnlineList,
+  //       socket.id
+  //     );
+  //   });
 
-    return membersocket;
-  }
+  //   return membersocket;
+  // }
 }
 
 let beginSocket = new BeginSocket();
