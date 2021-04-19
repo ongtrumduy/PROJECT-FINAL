@@ -22,13 +22,13 @@ class BeginSocket {
   }
 
   emitAllSocketsOfMemberTeam(membersocket, teamID, io, eventEmit, data) {
-    let teamMemberList = zeamsTeams.getAllMembersOfTeam(teamID);
+    let teamMemberList = zeamsTeams.getAllMemberIDsOfTeam(teamID);
     // console.log("Tất cả thành viên của nhóm: " + teamMemberList);
     teamMemberList.forEach(memberitem => {
       // console.log("Ra memberid " + memberid);
       this.emitAllSocketsOfMember(
         membersocket,
-        memberitem.memberID,
+        memberitem.MemberID,
         io,
         eventEmit,
         data
@@ -63,39 +63,52 @@ class BeginSocket {
     }
   }
 
-  // setStartBeginSocket(socket) {
-  //   let membersocket = {};
-  //   let memberOnlineList = [];
+  setStartBeginSocket(socket, membersocket) {
+    let memberIDOnlineList = [];
+    let memberSocketOnlineList = [];
 
-  //   socket.on("sent-online-memberID", data => {
-  //     console.log("Nhận được " + data);
-  //     membersocket = this.getAllSocketOfMember(
-  //       membersocket,
-  //       data.MemberID,
-  //       socket.id
-  //     );
-  //     memberOnlineList = Object.keys(membersocket);
-  //   });
+    socket.on("sent-online-memberID", data => {
+      console.log("Nhận được MemberID " + data.MemberID);
+      console.log("Nhận được socketID " + socket.id);
 
-  //   socket.on("disconnect-logout", data => {
-  //     membersocket = this.setRemoveDisconnectSocket(
-  //       membersocket,
-  //       data.MemberID,
-  //       socket.id
-  //     );
-  //   });
+      membersocket = this.getAllSocketOfMember(
+        membersocket,
+        data.MemberID,
+        socket.id
+      );
+      memberIDOnlineList = Object.keys(membersocket);
+      memberSocketOnlineList = Object.values(membersocket);
+      console.log("Bắt được rồi ");
+      console.log(memberIDOnlineList);
+    });
 
-  //   socket.on("disconnect", data => {
-  //     this.setRemoveDisconnectSocket(
-  //       membersocket,
-  //       data,
-  //       memberOnlineList,
-  //       socket.id
-  //     );
-  //   });
+    socket.on("disconnect-logout", data => {
+      membersocket = this.setRemoveSocket(
+        membersocket,
+        data.MemberID,
+        socket.id
+      );
+      memberIDOnlineList = Object.keys(membersocket);
+      memberSocketOnlineList = Object.values(membersocket);
+      console.log("Đăng xuất rồi ");
+      console.log(memberIDOnlineList);
+    });
 
-  //   return membersocket;
-  // }
+    socket.on("disconnect", data => {
+      this.setRemoveDisconnectSocket(
+        membersocket,
+        data,
+        memberIDOnlineList,
+        socket.id
+      );
+      memberIDOnlineList = Object.keys(membersocket);
+      memberSocketOnlineList = Object.values(membersocket);
+      console.log("Mất kết nối rồi ");
+      console.log(memberIDOnlineList);
+    });
+
+    return membersocket;
+  }
 }
 
 let beginSocket = new BeginSocket();

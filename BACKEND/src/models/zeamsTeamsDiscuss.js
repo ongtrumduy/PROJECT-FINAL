@@ -42,7 +42,7 @@ class ZeamsTeamsDiscuss {
   //-----------------------------------------------------------------------------------------------------------------
 
   createNewMemberDiscuss(discuss) {
-    console.log("Vào trong cái discuss" + discuss.TeamID);
+    // console.log("Vào trong cái discuss" + discuss.TeamID);
     let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
       return teamitem.TeamID === discuss.TeamID;
     });
@@ -64,7 +64,7 @@ class ZeamsTeamsDiscuss {
   //-----------------------------------------------------------------------------------------------------------------
 
   createNewMemberComment(discuss) {
-    console.log("Vào trong cái discuss comment" + discuss.TeamID);
+    // console.log("Vào trong cái discuss comment" + discuss.TeamID);
     let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
       return teamitem.TeamID === discuss.TeamID;
     });
