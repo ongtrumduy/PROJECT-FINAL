@@ -148,6 +148,23 @@ class ZeamsTeamsDiscuss {
   }
 
   //-----------------------------------------------------------------------------------------------------------------
+
+  responseTeamDiscussCommentContent(discuss) {
+    let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
+      return teamitem.TeamID === discuss.TeamID;
+    });
+    let memberdiscussindex = this.ZeamsTeamsDiscuss[
+      teamindex
+    ].TeamDiscussContent.findIndex(memberdiscussitem => {
+      return memberdiscussitem.TeamDiscussID === discuss.TeamDiscussID;
+    });
+
+    let resteamsdiscusscontent = this.ZeamsTeamsDiscuss[teamindex]
+      .TeamDiscussContent[memberdiscussindex];
+
+    return resteamsdiscusscontent;
+  }
+  //-----------------------------------------------------------------------------------------------------------------
 }
 
 let zeamsTeamsDiscuss = new ZeamsTeamsDiscuss();

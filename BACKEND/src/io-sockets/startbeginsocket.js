@@ -1,3 +1,5 @@
+import zeamsTeams from "../models/zeamsTeams";
+
 class BeginSocket {
   getAllSocketOfMember(membersocket, memberID, socketID) {
     if (membersocket[memberID]) {
@@ -16,9 +18,12 @@ class BeginSocket {
     }
   }
 
-  // emitAllSocketOfMemberOfTeam = (membersocket, teamID) => {
-  //   // let teammemberidlist =
-  // };
+  emitAllSocketOfMemberTeam(membersocket, teamID, io, eventEmit, data) {
+    let teamMemberList = zeamsTeams.getAllMemberOfTeam(teamID);
+    teamMemberList.forEach(memberid => {
+      this.emitAllSocketOfMember(membersocket, memberid, io, eventEmit, data);
+    });
+  }
 
   setRemoveSocket(membersocket, memberID, socketID) {
     if (membersocket[memberID]) {
@@ -45,6 +50,39 @@ class BeginSocket {
         }
       });
     }
+  }
+
+  setStartBeginSocket(socket) {
+    let membersocket = {};
+    let memberOnlineList = [];
+
+    socket.on("sent-online-memberID", data => {
+      membersocket = this.getAllSocketOfMember(
+        membersocket,
+        data.MemberID,
+        socket.id
+      );
+      memberOnlineList = Object.keys(membersocket);
+    });
+
+    socket.on("disconnect-logout", data => {
+      membersocket = this.setRemoveDisconnectSocket(
+        membersocket,
+        data.MemberID,
+        socket.id
+      );
+    });
+
+    socket.on("disconnect", data => {
+      this.setRemoveDisconnectSocket(
+        membersocket,
+        data,
+        memberOnlineList,
+        socket.id
+      );
+    });
+
+    return membersocket;
   }
 }
 

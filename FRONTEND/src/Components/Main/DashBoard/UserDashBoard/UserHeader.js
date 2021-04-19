@@ -15,6 +15,10 @@ export default class UserHeader extends React.Component {
     setTimeout(() => {
       this.props.updateRenderLogPage("Log");
     }, 1000);
+
+    this.props.socket.emit("disconnect-logout", {
+      MemberID: this.props.MemberID
+    });
   };
 
   render() {
