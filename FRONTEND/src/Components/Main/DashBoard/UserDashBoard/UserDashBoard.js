@@ -13,12 +13,23 @@ export default class UserDashBoard extends React.Component {
     this.state = {
       contentState: "teams",
       FirstnameMember: "",
-      LastnameMember: ""
+      LastnameMember: "",
+      checkJoinCall: "false",
+      TeamCallID: ""
     };
   }
 
   updateContentState = state => {
     this.setState({ contentState: state });
+    if (state !== "teams" && this.state.checkJoinCall === "true") {
+      console.log("chuyển rồi nha");
+
+      this.props.socket.emit("disconnected-call-team", {
+        MemberID: this.props.MemberID,
+        MemberSocketID: this.props.socket.id,
+        TeamCallID: this.state.TeamCallID
+      });
+    }
   };
 
   componentDidMount = () => {
@@ -41,6 +52,17 @@ export default class UserDashBoard extends React.Component {
       MemberID: this.props.MemberID
       // data: "Sao méo nhận được"
     });
+
+    this.props.socket.on("confirm-joined-call-team", data => {
+      console.log("check ra data " + data);
+      if (this.props.socket.id === data.MemberSocketID) {
+        console.log("có vào nha");
+        this.setState({
+          checkJoinCall: "true",
+          TeamCallID: data.TeamCallID
+        });
+      }
+    });
   };
 
   renderUserDashBoard = () => {
@@ -52,6 +74,7 @@ export default class UserDashBoard extends React.Component {
           updateRenderLogPage={this.props.updateRenderLogPage}
           FirstnameMember={this.state.FirstnameMember}
           LastnameMember={this.state.LastnameMember}
+          TeamCallID={this.state.TeamCallID}
           socket={this.props.socket}
         />
         <div className="user-dashboard_container">

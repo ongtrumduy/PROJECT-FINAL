@@ -48,9 +48,12 @@ class BeginSocket {
     return membersocket;
   }
 
-  setRemoveDisconnectSocket(membersocket, data, memberOnlineList, socketID) {
+  setRemoveDisconnectSocket(membersocket, data, socketID) {
+    let memberIDOnlineList = [];
+
     if (data === "transport close") {
-      memberOnlineList.forEach(memberid => {
+      memberIDOnlineList = Object.keys(membersocket);
+      memberIDOnlineList.forEach(memberid => {
         if (membersocket[memberid]) {
           membersocket[memberid] = membersocket[memberid].filter(sockerid => {
             return sockerid !== socketID;
@@ -61,25 +64,25 @@ class BeginSocket {
         }
       });
     }
+    return membersocket;
   }
 
   setStartBeginSocket(socket, membersocket) {
-    let memberIDOnlineList = [];
-    let memberSocketOnlineList = [];
+    // let memberSocketOnlineList = [];
 
     socket.on("sent-online-memberID", data => {
-      console.log("Nhận được MemberID " + data.MemberID);
-      console.log("Nhận được socketID " + socket.id);
+      // console.log("Nhận được MemberID " + data.MemberID);
+      // console.log("Nhận được socketID " + socket.id);
 
       membersocket = this.getAllSocketOfMember(
         membersocket,
         data.MemberID,
         socket.id
       );
-      memberIDOnlineList = Object.keys(membersocket);
-      memberSocketOnlineList = Object.values(membersocket);
-      console.log("Bắt được rồi ");
-      console.log(memberIDOnlineList);
+      // memberIDOnlineList = Object.keys(membersocket);
+      // memberSocketOnlineList = Object.values(membersocket);
+      // console.log("Bắt được rồi ");
+      // console.log(memberIDOnlineList);
     });
 
     socket.on("disconnect-logout", data => {
@@ -88,27 +91,85 @@ class BeginSocket {
         data.MemberID,
         socket.id
       );
-      memberIDOnlineList = Object.keys(membersocket);
-      memberSocketOnlineList = Object.values(membersocket);
-      console.log("Đăng xuất rồi ");
-      console.log(memberIDOnlineList);
+      // memberIDOnlineList = Object.keys(membersocket);
+      // memberSocketOnlineList = Object.values(membersocket);
+      // console.log("Đăng xuất rồi ");
+      // console.log(memberIDOnlineList);
     });
 
     socket.on("disconnect", data => {
-      this.setRemoveDisconnectSocket(
+      membersocket = this.setRemoveDisconnectSocket(
         membersocket,
         data,
-        memberIDOnlineList,
+        // memberIDOnlineList,
         socket.id
       );
-      memberIDOnlineList = Object.keys(membersocket);
-      memberSocketOnlineList = Object.values(membersocket);
-      console.log("Mất kết nối rồi ");
-      console.log(memberIDOnlineList);
+      // memberIDOnlineList = Object.keys(membersocket);
+      // memberSocketOnlineList = Object.values(membersocket);
+      // console.log("Mất kết nối rồi ");
+      // console.log(memberIDOnlineList);
     });
 
     return membersocket;
   }
+
+  getAllMemberStartCall(membercallsocket, memberID, socketID) {
+    if (membercallsocket[memberID]) {
+      return membercallsocket;
+    } else {
+      membercallsocket[memberID] = [socketID];
+    }
+    return membercallsocket;
+  }
+
+  checkJoinedTeamCall(membercallsocket, memberID) {
+    if (membercallsocket[memberID]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getAllTeamStartCall(allteamcall, teamID, memberID) {
+    if (allteamcall[teamID]) {
+      allteamcall[teamID].push(memberID);
+    } else {
+      allteamcall[teamID] = [memberID];
+    }
+    return allteamcall;
+  }
+
+  checkMemberOnTeamCall(allteamcall, memberID) {
+    if (allteamcall[memberID]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  emitAllOtherMemberJoinedCallOfTeam(
+    allteamcall,
+    membercallsocket,
+    teamID,
+    memberID,
+    io,
+    eventEmit,
+    data
+  ) {
+    if (allteamcall[teamID]) {
+      allteamcall[teamID].forEach(memberid => {
+        if (memberid !== memberID) {
+          membercallsocket[memberid].forEach(socketid => {
+            return io.sockets.in(socketid).emit(eventEmit, data);
+          });
+        }
+      });
+    }
+  }
+
+  // check nếu 1 thằng mới tham gia vào cuộc goi team có sẵn mà chưa tham gia gọi phải gửi thông báo
+
+  // check nếu 1 team mới có cuộc gọi check gửi tin nhắn cho các thành viên
 }
 
 let beginSocket = new BeginSocket();

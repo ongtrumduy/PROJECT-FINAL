@@ -25,21 +25,21 @@ export default class ChatContentMenu extends React.Component {
         <div className="user-chat_content__callsetting">
           <div className="user-chat_content__callsetting___call">
             <button>
-              <i class="material-icons" style={{ fontSize: "32px" }}>
+              <i className="material-icons" style={{ fontSize: "32px" }}>
                 &#xe070;
               </i>
             </button>
           </div>
           <div className="user-chat_content__callsetting___screenshare">
             <button>
-              <i class="material-icons" style={{ fontSize: "32px" }}>
+              <i className="material-icons" style={{ fontSize: "32px" }}>
                 &#xe0e2;
               </i>
             </button>
           </div>
           <div className="user-chat_content__callsetting___setting">
             <button>
-              <i class="material-icons" style={{ fontSize: "32px" }}>
+              <i className="material-icons" style={{ fontSize: "32px" }}>
                 &#xe8b8;
               </i>
             </button>

@@ -13,6 +13,15 @@ export default class TeamMainMenu extends React.Component {
     });
   };
 
+  startBeginCallVideoTeam = () => {
+    this.props.socket.emit("start-begin-call-video", {
+      TeamID: this.props.TeamID,
+      MemberID: this.props.MemberID,
+      MemberSocketID: this.props.socket.id
+    });
+    this.props.updateRenderTeamControl("videocall");
+  };
+
   render() {
     return (
       <div className="user-team_team-menu-and-content__menu">
@@ -77,7 +86,7 @@ export default class TeamMainMenu extends React.Component {
         </div>
         <div className="user-team_team-menu-and-content__callsetting">
           <div className="user-team_team-menu-and-content__callsetting___call">
-            <button>
+            <button onClick={() => this.startBeginCallVideoTeam()}>
               <i className="material-icons" style={{ fontSize: "32px" }}>
                 &#xe070;
               </i>

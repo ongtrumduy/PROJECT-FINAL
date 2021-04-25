@@ -4,12 +4,12 @@ import TeamsAddCodeTeam from "./TeamsAddCodeTeam";
 import TeamsAllContent from "./TeamsAllContent";
 import TeamsCreateTeam from "./TeamsCreateTeam";
 import Team from "./../Team/Team";
-import VideoCall from "./../VideoCall/VideoCall";
+import VideoCall from "./../VideoTeamCall/VideoTeamCall";
 
 export default class Teams extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { setTeamRender: "", TeamID: "" };
+    this.state = { setTeamRender: "teamall", TeamID: "" };
   }
 
   updateRenderTeamControl = state => {

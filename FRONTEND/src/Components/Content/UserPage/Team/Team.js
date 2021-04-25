@@ -59,10 +59,14 @@ export default class Team extends React.Component {
         <div className="user-team_team-menu-and-content">
           <div>
             <TeamMainMenu
+              MemberID={this.props.MemberID}
+              TeamID={this.state.ChooseTeamID}
+              socket={this.props.socket}
               ChooseTeamInfor={this.state.ChooseTeamInfor}
               setSelectTeamContentClickChoose={
                 this.setSelectTeamContentClickChoose
               }
+              updateRenderTeamControl={this.props.updateRenderTeamControl}
             />
           </div>
           <div>

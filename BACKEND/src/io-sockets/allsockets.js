@@ -1,6 +1,6 @@
 import createnewdiscussSocket from "./createnewdiscuss";
 import createnewdiscusscommentSocket from "./createnewdiscusscomment";
-// import chatlistSocket from "./chatfriendlist";
+import setstartvideocallSocket from "./setstartvideocall";
 // import chatmineSocket from "./chatminefriend";
 // import chattextSocket from "./chatconversation";
 // import friendonlineSocket from "./friendonline";
@@ -25,9 +25,9 @@ let AllSockets = io => {
   // createnewdiscusscommentSocket(io);
   //--------------------------------------------------------------------------
 
-  // // --------------------------ChatListFriend--------------------------------------
-  // // chatlistSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------SetVideoCall--------------------------------------
+  setstartvideocallSocket(io);
+  //--------------------------------------------------------------------------
 
   // // --------------------------ChatMineFriend--------------------------------------
   // // chatmineSocket(io);
