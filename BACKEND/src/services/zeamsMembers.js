@@ -4,7 +4,7 @@ import moment from "moment";
 
 class ZeamsMembers {
   constructor() {
-    let members = fs.readFileSync("./src/databases/zeamsMembers.json");
+    let members = fs.readFileSync("./BACKEND/src/databases/zeamsMembers.json");
     if (members) {
       this.ZeamsMembers = JSON.parse(members);
     } else {
