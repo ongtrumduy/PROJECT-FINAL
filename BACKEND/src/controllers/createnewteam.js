@@ -1,6 +1,6 @@
-import zeamsTeams from "./../models/zeamsTeams";
+import zeamsTeams from "../services/zeamsTeams";
 
-let CreateNewTeam = (req, res, next) => {
+let CreateNewTeam = (req, res) => {
   // console.log(req.body);
   let resCreateNewTeam = zeamsTeams.responseCreateNewTeam(req.body);
   // console.log(resCreateNewTeam);

@@ -1,6 +1,6 @@
-import zeamsTeams from "../models/zeamsTeams";
+import zeamsTeams from "../services/zeamsTeams";
 
-let GetTeamInfor = (req, res, next) => {
+let GetTeamInfor = (req, res) => {
   // console.log(req.body);
   let getTeamInfor = zeamsTeams.getChoiceJoinedTeamInfor(req.body);
   // console.log(getTeamInfor);

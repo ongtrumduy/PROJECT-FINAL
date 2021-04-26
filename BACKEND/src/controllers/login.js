@@ -1,6 +1,6 @@
-import zeamsMembers from "./../models/zeamsMembers";
+import zeamsMembers from "../services/zeamsMembers";
 
-let GetLoginMember = (req, res, next) => {
+let GetLoginMember = (req, res) => {
   // console.log(req.body);
   let resMemberLogin = zeamsMembers.resMemberLogin(req.body);
   // console.log(resMemberLogin);

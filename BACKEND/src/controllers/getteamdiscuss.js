@@ -1,6 +1,6 @@
-import zeamsTeamsDiscuss from "../models/zeamsTeamsDiscuss";
+import zeamsTeamsDiscuss from "../services/zeamsTeamsDiscuss";
 
-let GetTeamDiscuss = (req, res, next) => {
+let GetTeamDiscuss = (req, res) => {
   // console.log(req.body);
   let resTeamDiscuss = zeamsTeamsDiscuss.responseTeamDiscussContent(req.body);
   // console.log(resTeamDiscuss);

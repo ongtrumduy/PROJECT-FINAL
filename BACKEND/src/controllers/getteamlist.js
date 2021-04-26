@@ -1,6 +1,6 @@
-import zeamsTeams from "../models/zeamsTeams";
+import zeamsTeams from "../services/zeamsTeams";
 
-let GetAllTeamList = (req, res, next) => {
+let GetAllTeamList = (req, res) => {
   // console.log(req.body);
   let getAllTeamList = zeamsTeams.getAllTeamList(req.body);
   // console.log(getAllTeamList);

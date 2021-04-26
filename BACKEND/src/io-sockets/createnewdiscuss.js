@@ -1,5 +1,5 @@
 import StartBeginSocket from "../io-sockets/startbeginsocket";
-import zeamsTeamsDiscuss from "../models/zeamsTeamsDiscuss";
+import zeamsTeamsDiscuss from "../services/zeamsTeamsDiscuss";
 
 let CreateNewDiscuss = io => {
   let membersocket = {};

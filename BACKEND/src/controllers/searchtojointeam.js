@@ -1,6 +1,6 @@
-import zeamsTeams from "./../models/zeamsTeams";
+import zeamsTeams from "../services/zeamsTeams";
 
-let SearchTeamCodeToJoinTeam = (req, res, next) => {
+let SearchTeamCodeToJoinTeam = (req, res) => {
   // console.log(req.body);
   let resSearchTeamInforToJoin = zeamsTeams.responseSearchTeamToJoinTeam(
     req.body

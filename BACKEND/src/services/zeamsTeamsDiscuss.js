@@ -5,7 +5,7 @@ import moment from "moment";
 class ZeamsTeamsDiscuss {
   constructor() {
     let teamsdiscuss = fs.readFileSync(
-      "../BackEnd/src/databases/zeamsTeamsDiscuss.json"
+      "./src/databases/zeamsTeamsDiscuss.json"
     );
     if (teamsdiscuss) {
       this.ZeamsTeamsDiscuss = JSON.parse(teamsdiscuss);
@@ -18,7 +18,7 @@ class ZeamsTeamsDiscuss {
 
   saveDataJSON() {
     fs.writeFileSync(
-      "../BackEnd/src/databases/zeamsTeamsDiscuss.json",
+      "./src/databases/zeamsTeamsDiscuss.json",
       JSON.stringify(this.ZeamsTeamsDiscuss),
       err => {
         if (err) throw err;
