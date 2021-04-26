@@ -1,5 +1,5 @@
 import StartBeginSocket from "./startbeginsocket";
-import zeamsTeamsDiscuss from "../models/zeamsTeamsDiscuss";
+import zeamsTeamsDiscuss from "../services/zeamsTeamsDiscuss";
 
 let SetStartVideoCall = io => {
   let membersocket = {};

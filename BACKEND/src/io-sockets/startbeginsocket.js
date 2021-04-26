@@ -1,4 +1,4 @@
-import zeamsTeams from "../models/zeamsTeams";
+import zeamsTeams from "../services/zeamsTeams";
 
 class BeginSocket {
   getAllSocketOfMember(membersocket, memberID, socketID) {
