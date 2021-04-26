@@ -16,7 +16,7 @@ let server = http.Server(app);
 let port = 8081;
 let io = socketio(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://40.88.10.237:3000, http://localhost:3000",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true
