@@ -28,15 +28,21 @@ let SetStartVideoCall = io => {
         data.MemberID
       );
 
+      let MemberJoinedCallCount = {
+        MemberPeerCount: allteamcall[data.TeamID].length
+      };
+
       StartBeginSocket.emitAllSocketsOfMemberTeam(
         membersocket,
         data,
         io,
         "connection-call-success",
-        "Hello nha"
+        MemberJoinedCallCount
       );
+
       // console.log("membercallsocket", membercallsocket);
       // console.log("allteamcall", allteamcall);
+
       StartBeginSocket.emitAllSocketsOfMember(
         membercallsocket,
         data.MemberID,
@@ -86,6 +92,9 @@ let SetStartVideoCall = io => {
     });
 
     socket.on("answer-to-connect-team-call", data => {
+      console.log("data gửi đến");
+      console.log(data);
+
       let resToConnectAnswer = {
         SDPAnswerConnect: data.SDPAnswerConnect,
         RemoteMemberID: data.LocalMemberID,
@@ -118,8 +127,20 @@ let SetStartVideoCall = io => {
     });
 
     socket.on("disconnected-call-team", data => {
-      console.log("data gửi đến");
-      console.log(data);
+      // console.log("data gửi đến");
+      // console.log(data);
+      StartBeginSocket.emitAllOtherMemberJoinedCallOfTeam(
+        allteamcall,
+        membercallsocket,
+        data.TeamID,
+        data.MemberID,
+        io,
+        "peer-member-call-disconnected",
+        {
+          RemoteMemberID: data.MemberID,
+          RemoteMemberSocketID: data.MemberSocketID
+        }
+      );
 
       membercallsocket = StartBeginSocket.setRemoveSocket(
         membercallsocket,
@@ -133,14 +154,26 @@ let SetStartVideoCall = io => {
         data.MemberID
       );
 
-      console.log("membercallsocket", membercallsocket);
-      console.log("allteamcall", allteamcall);
+      // console.log("membercallsocket", membercallsocket);
+      // console.log("allteamcall", allteamcall);
     });
 
     //Do có thể đăng nhập cùng 1 nick nhiều chỗ phải check call đúng cái đang call
     socket.on("disconnected-call-team-logout", data => {
-      console.log("data gửi đến để mà logout ra");
-      console.log(data);
+      // console.log("data gửi đến để mà logout ra");
+      // console.log(data);
+      StartBeginSocket.emitAllOtherMemberJoinedCallOfTeam(
+        allteamcall,
+        membercallsocket,
+        data.TeamID,
+        data.MemberID,
+        io,
+        "peer-member-call-disconnected",
+        {
+          RemoteMemberID: data.MemberID,
+          RemoteMemberSocketID: data.MemberSocketID
+        }
+      );
 
       membercallsocket = StartBeginSocket.setRemoveSocket(
         membercallsocket,
@@ -156,16 +189,57 @@ let SetStartVideoCall = io => {
     });
 
     socket.on("disconnect", data => {
-      console.log("data gửi đến để mà logout ra");
-      console.log(data);
+      // console.log("data gửi đến do disconnect ra");
+      // console.log(socket.id);
+      let ChooseMemberID = "";
+      let ChooseTeamID = "";
+
+      let membercallsocketIDList = Object.keys(membercallsocket);
+      let allteamcallIDList = Object.keys(allteamcall);
+
+      membercallsocketIDList.forEach(memberid => {
+        membercallsocket[memberid].forEach(socketid => {
+          if (socketid === socket.id) {
+            ChooseMemberID = memberid;
+          }
+        });
+      });
+
+      allteamcallIDList.forEach(teamid => {
+        allteamcall[teamid].forEach(memberid => {
+          if (memberid === ChooseMemberID) {
+            ChooseTeamID = teamid;
+          }
+        });
+      });
+
+      StartBeginSocket.emitAllOtherMemberJoinedCallOfTeam(
+        allteamcall,
+        membercallsocket,
+        ChooseTeamID,
+        ChooseMemberID,
+        io,
+        "peer-member-call-disconnected",
+        { RemoteMemberID: ChooseMemberID, RemoteMemberSocketID: socket.id }
+      );
+
+      // console.log("ChooseMemberID " + ChooseMemberID);
 
       membercallsocket = StartBeginSocket.setRemoveDisconnectSocket(
         membercallsocket,
         data,
         socket.id
       );
-   
-    }); //====================================================================================================
+
+      allteamcall = StartBeginSocket.setRemoveDisconnectSocket(
+        allteamcall,
+        data,
+        ChooseMemberID
+      );
+      // console.log("membercallsocket", membercallsocket);
+      // console.log("allteamcall", allteamcall);
+    });
+    //====================================================================================================
   });
 };
 

@@ -23,7 +23,7 @@ export default class VideoTeamCallMain extends React.Component {
         ]
       },
 
-      sdpContraints: {
+      sdpConstraints: {
         madatory: {
           OfferToReceiveAudio: true,
           OfferToReceiveVideo: true
@@ -83,6 +83,8 @@ export default class VideoTeamCallMain extends React.Component {
         peermemberconnnections
       });
 
+      console.log("peermemberconnnections ra " + peermemberconnnections);
+
       peermemberconnnection.onicecandidate = event => {
         if (event.candidate) {
           this.props.socket.emit("set-candidate-to-connect", {
@@ -103,6 +105,7 @@ export default class VideoTeamCallMain extends React.Component {
         const remoteVideos = this.state.AllRemoteMemberStreams.filter(
           memberstream => memberstream.RemoteMemberID === RemoteMemberID
         );
+        console.log("remoteVideos " + remoteVideos);
 
         if (remoteVideos.length) {
           remoteStream = remoteVideos[0].RemoteMemberStream;
@@ -120,6 +123,8 @@ export default class VideoTeamCallMain extends React.Component {
             );
           });
         } else {
+          console.log("remoteVideos vào đây");
+
           remoteStream = new MediaStream();
           remoteStream.addTrack(event.track, remoteStream);
 
@@ -146,8 +151,7 @@ export default class VideoTeamCallMain extends React.Component {
 
           selectedVideo = selectedVideo.length
             ? {}
-            : { selectedVideo: remoteVideo };
-
+            : { SelectedMemberVideo: remoteVideo };
           return {
             ...selectedVideo,
             ...remoteMemberStream,
@@ -170,6 +174,7 @@ export default class VideoTeamCallMain extends React.Component {
       callback(peermemberconnnection);
     } catch (error) {
       console.log("Kết nối ngang hàng thiết lập bị lỗi: ", error);
+      callback(null);
     }
   };
 
@@ -208,13 +213,17 @@ export default class VideoTeamCallMain extends React.Component {
     });
 
     this.props.socket.on("connect-all-member-call", data => {
+      console.log(
+        "vào để tạo kết nối giữa các thành viên ",
+        data.RemoteMemberID
+      );
       this.createPeerMemberOfTeamConnection(
         data.RemoteMemberID,
         data.RemoteMemberSocketID,
         peermemberconnnection => {
           if (peermemberconnnection) {
             peermemberconnnection
-              .createOffer(this.state.sdpContraints)
+              .createOffer(this.state.sdpConstraints)
               .then(offersdp => {
                 peermemberconnnection.setLocalDescription(offersdp);
 
@@ -232,9 +241,13 @@ export default class VideoTeamCallMain extends React.Component {
     });
 
     this.props.socket.on("offer-for-connect-team-call", data => {
+      // console.log("data SDPOfferConnect nhận về: " + data.SDPOfferConnect);
+      // console.log("data RemoteMemberID nhận về: " + data.RemoteMemberID);
+
       this.createPeerMemberOfTeamConnection(
         data.RemoteMemberID,
         data.RemoteMemberSocketID,
+
         peermemberconnnection => {
           peermemberconnnection.addStream(this.state.LocalMemberStream);
 
@@ -244,7 +257,7 @@ export default class VideoTeamCallMain extends React.Component {
             )
             .then(() => {
               peermemberconnnection
-                .createAnswer(this.state.sdpContraints)
+                .createAnswer(this.state.sdpConstraints)
                 .then(answersdp => {
                   peermemberconnnection.setLocalDescription(answersdp);
 
@@ -262,13 +275,12 @@ export default class VideoTeamCallMain extends React.Component {
     });
 
     this.props.socket.on("answer-for-connect-team-call", data => {
-      console.log("data nhận về: " + data.RemoteMemberID);
-
       const peermemberconnnection = this.state.PeerMemberConnections[
         data.RemoteMemberID
       ];
+      // console.log("data nhận về: " + data.RemoteMemberID);
 
-      console.log("peermemberconnnection tạo: " + peermemberconnnection);
+      // console.log("peermemberconnnection tạo: " + peermemberconnnection);
 
       peermemberconnnection
         .setLocalDescription(new RTCSessionDescription(data.SDPAnswerConnect))
