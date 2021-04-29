@@ -15,8 +15,8 @@ let app = express();
 let server = http.Server(app);
 let port = 8081;
 
-// let locallink = "http://40.88.10.237:3000";
-let locallink = "http://localhost:3000";
+let locallink = "http://40.88.10.237:3000";
+// let locallink = "http://localhost:3000";
 
 let io = socketio(server, {
   cors: {

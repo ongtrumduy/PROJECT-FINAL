@@ -25,7 +25,9 @@ export default class Videos extends React.Component {
               cursor: "pointer",
               objectFit: "cover",
               borderRadius: 3,
-              width: "100%"
+              width: "100%",
+              borderStyle: "groove",
+              backgroundColor: "black"
             }}
             autoplay
           ></Video>

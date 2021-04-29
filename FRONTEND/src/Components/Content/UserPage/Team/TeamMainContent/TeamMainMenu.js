@@ -19,8 +19,15 @@ export default class TeamMainMenu extends React.Component {
       MemberID: this.props.MemberID,
       MemberSocketID: this.props.socket.id
     });
-    this.props.updateRenderTeamControl("videocall");
+    // this.props.socket.on("joined-team-call", data => {
+    //   alert(data.Alert);
+    // });
+    // this.props.socket.on("non-joined-team-call", data => {
+      this.props.updateRenderTeamControl("videocall");
+    // });
   };
+
+  componentDidMount = () => {};
 
   render() {
     return (

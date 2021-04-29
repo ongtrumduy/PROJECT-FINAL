@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ioclient from "socket.io-client";
 import Chat from "./Components/Chat";
 import Daggable from "./Components/Draggable";
 import Videos from "./Components/Videos";
@@ -85,7 +84,7 @@ class Main extends Component {
 
       const peerConnections = {
         ...this.state.peerConnections,
-        [RemoteMemberID]: pc
+        [RemoteMemberSocketID]: pc
       };
       this.setState({
         peerConnections
@@ -109,7 +108,7 @@ class Main extends Component {
         let remoteVideo = {};
 
         const rVideos = this.state.remoteStreams.filter(
-          stream => stream.id === RemoteMemberID
+          stream => stream.id === RemoteMemberSocketID
         );
 
         if (rVideos.length) {
@@ -130,7 +129,7 @@ class Main extends Component {
           _remoteStream.addTrack(e.track, _remoteStream);
 
           remoteVideo = {
-            id: RemoteMemberID,
+            id: RemoteMemberSocketID,
             name: RemoteMemberID,
             stream: _remoteStream
           };
@@ -192,12 +191,12 @@ class Main extends Component {
 
     this.props.socket.on("peer-member-call-disconnected", data => {
       const remoteStreams = this.state.remoteStreams.filter(
-        stream => stream.id !== data.RemoteMemberID
+        stream => stream.id !== data.RemoteMemberSocketID
       );
 
       this.setState(prevState => {
         const selectedVideo =
-          prevState.selectedVideo.id === data.RemoteMemberID &&
+          prevState.selectedVideo.id === data.RemoteMemberSocketID &&
           remoteStreams.length
             ? { selectedVideo: remoteStreams[0] }
             : null;
@@ -237,7 +236,6 @@ class Main extends Component {
         data.RemoteMemberSocketID,
         pc => {
           pc.addStream(this.state.localStream);
-
           pc.setRemoteDescription(
             new RTCSessionDescription(data.SDPOfferConnect)
           ).then(() => {
@@ -258,18 +256,23 @@ class Main extends Component {
     });
 
     this.props.socket.on("answer-for-connect-team-call", data => {
-      const pc = this.state.peerConnections[data.RemoteMemberID];
+      console.log(
+        "Ra data của answer-for-connect-team-call",
+        data.SDPAnswerConnect.type
+      );
+      const pc = this.state.peerConnections[data.RemoteMemberSocketID];
       pc.setRemoteDescription(
         new RTCSessionDescription(data.SDPAnswerConnect)
-      ).then(() => {});
-    });
+      ).then(() => {
+        this.props.socket.on("get-candidate-for-connect", data => {
+          console.log("vào trong get-candidate-for-connect");
+          const pc = this.state.peerConnections[data.RemoteMemberSocketID];
 
-    this.props.socket.on("get-candidate-for-connect", data => {
-      const pc = this.state.peerConnections[data.RemoteMemberID];
-
-      if (pc) {
-        pc.addIceCandidate(new RTCIceCandidate(data.CandidateConnect));
-      }
+          if (pc) {
+            pc.addIceCandidate(new RTCIceCandidate(data.CandidateConnect));
+          }
+        });
+      });
     });
   };
 
@@ -281,7 +284,7 @@ class Main extends Component {
 
   render() {
     if (this.state.disconnected) {
-      this.socket.close();
+      this.props.socket.close();
       this.state.localStream.getTracks().forEach(track => track.stop());
       return <div>You have successfully Disconnected</div>;
     }

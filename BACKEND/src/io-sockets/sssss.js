@@ -14,8 +14,6 @@ let SetStartVideoCall = io => {
   };
 
   io.on("connection", socket => {
-    let checkconnect = "";
-
     //====================================================================================================
 
     membersocket = StartBeginSocket.setStartBeginSocket(socket, membersocket);
@@ -124,9 +122,6 @@ let SetStartVideoCall = io => {
         RemoteMemberSocketID: data.LocalMemberSocketID
       };
 
-      // async function sentAnswerToConnect() {
-      //   for (let i = 0; i < 100; i++) {
-      //     await sleep(2);
       StartBeginSocket.emitAllSocketsOfMember(
         membercallsocket,
         data.RemoteMemberID,
@@ -134,38 +129,6 @@ let SetStartVideoCall = io => {
         "answer-for-connect-team-call",
         resToConnectAnswer
       );
-      StartBeginSocket.emitAllSocketsOfMember(
-        membercallsocket,
-        data.RemoteMemberID,
-        io,
-        "answer-for-connect-team-call",
-        resToConnectAnswer
-      );
-      StartBeginSocket.emitAllSocketsOfMember(
-        membercallsocket,
-        data.RemoteMemberID,
-        io,
-        "answer-for-connect-team-call",
-        resToConnectAnswer
-      );
-      StartBeginSocket.emitAllSocketsOfMember(
-        membercallsocket,
-        data.RemoteMemberID,
-        io,
-        "answer-for-connect-team-call",
-        resToConnectAnswer
-      );
-      StartBeginSocket.emitAllSocketsOfMember(
-        membercallsocket,
-        data.RemoteMemberID,
-        io,
-        "answer-for-connect-team-call",
-        resToConnectAnswer
-      );
-      //   }
-      // }
-      // sentAnswerToConnect();
-      checkconnect = "Sentde";
     });
 
     //====================================================================================================
@@ -179,64 +142,13 @@ let SetStartVideoCall = io => {
         RemoteMemberSocketID: data.LocalMemberSocketID
       };
 
-      // async function sentCandidateToConnect() {
-      //   for (let i = 0; i < 200; i++) {
-      //     await sleep(3);
-      if (checkconnect === "Sentde") {
-        StartBeginSocket.emitAllSocketsOfMember(
-          membercallsocket,
-          data.RemoteMemberID,
-          io,
-          "get-candidate-for-connect",
-          resToConnectCandidate
-        );
-        StartBeginSocket.emitAllSocketsOfMember(
-          membercallsocket,
-          data.RemoteMemberID,
-          io,
-          "get-candidate-for-connect",
-          resToConnectCandidate
-        );
-        StartBeginSocket.emitAllSocketsOfMember(
-          membercallsocket,
-          data.RemoteMemberID,
-          io,
-          "get-candidate-for-connect",
-          resToConnectCandidate
-        );
-        StartBeginSocket.emitAllSocketsOfMember(
-          membercallsocket,
-          data.RemoteMemberID,
-          io,
-          "get-candidate-for-connect",
-          resToConnectCandidate
-        );
-        StartBeginSocket.emitAllSocketsOfMember(
-          membercallsocket,
-          data.RemoteMemberID,
-          io,
-          "get-candidate-for-connect",
-          resToConnectCandidate
-        );
-        StartBeginSocket.emitAllSocketsOfMember(
-          membercallsocket,
-          data.RemoteMemberID,
-          io,
-          "get-candidate-for-connect",
-          resToConnectCandidate
-        );
-        StartBeginSocket.emitAllSocketsOfMember(
-          membercallsocket,
-          data.RemoteMemberID,
-          io,
-          "get-candidate-for-connect",
-          resToConnectCandidate
-        );
-      }
-
-      //   }
-      // }
-      // sentCandidateToConnect();
+      StartBeginSocket.emitAllSocketsOfMember(
+        membercallsocket,
+        data.RemoteMemberID,
+        io,
+        "get-candidate-for-connect",
+        resToConnectCandidate
+      );
     });
 
     //====================================================================================================

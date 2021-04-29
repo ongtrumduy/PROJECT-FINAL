@@ -23,9 +23,7 @@ class BeginSocket {
 
   emitAllSocketsOfMemberTeam(membersocket, teamID, io, eventEmit, data) {
     let teamMemberList = zeamsTeams.getAllMemberIDsOfTeam(teamID);
-    // console.log("Tất cả thành viên của nhóm: " + teamMemberList);
     teamMemberList.forEach(memberitem => {
-      // console.log("Ra memberid " + memberid);
       this.emitAllSocketsOfMember(
         membersocket,
         memberitem.MemberID,
@@ -122,7 +120,7 @@ class BeginSocket {
     return membercallsocket;
   }
 
-  checkJoinedTeamCall(membercallsocket, memberID) {
+  checkJoinedMemberCall(membercallsocket, memberID) {
     if (membercallsocket[memberID]) {
       return true;
     } else {
@@ -130,16 +128,23 @@ class BeginSocket {
     }
   }
 
-  getAllTeamStartCall(allteamcall, teamID, memberID) {
-    if (allteamcall[teamID]) {
-      allteamcall[teamID].push(memberID);
-    } else {
-      allteamcall[teamID] = [memberID];
+  getAllTeamStartCall(allteamcall, membercallsocket, teamID, memberID) {
+    let checkjoinedcall = this.checkJoinedMemberCall(
+      membercallsocket,
+      memberID
+    );
+    if (!checkjoinedcall) {
+      if (allteamcall[teamID]) {
+        allteamcall[teamID].push(memberID);
+      } else {
+        allteamcall[teamID] = [memberID];
+      }
     }
+
     return allteamcall;
   }
 
-  checkMemberOnTeamCall(allteamcall, memberID) {
+  checkJoinedTeamCall(allteamcall, memberID) {
     if (allteamcall[memberID]) {
       return true;
     } else {
