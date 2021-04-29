@@ -20,7 +20,7 @@ let locallink = "http://40.88.10.237:3000";
 
 let io = socketio(server, {
   cors: {
-    origin: locallink,
+    origin: "http://40.88.10.237:3000",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true
