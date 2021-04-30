@@ -4,7 +4,7 @@ let PortRoutes = function (server, port) {
     let host = server.address().address;
     let port = server.address().port;
 
-    console.log(`Ung dung Node.js dang lang nghe tai dia chi: http://${host}:${port}`);
+    console.log(`Ung dung Node.js dang lang nghe tai dia chi: https://${host}:${port}`);
   });
 }
 
