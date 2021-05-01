@@ -78,13 +78,17 @@ class Main extends Component {
     })().catch(failure);
   };
 
-  createPeerConnection = (RemoteMemberID, RemoteMemberSocketID, callback) => {
+  createPeerConnection = async (
+    RemoteMemberID,
+    RemoteMemberSocketID,
+    callback
+  ) => {
     try {
       let pc = new RTCPeerConnection(this.state.pc_config);
 
       const peerConnections = {
         ...this.state.peerConnections,
-        [RemoteMemberSocketID]: pc
+        [RemoteMemberID]: pc
       };
       this.setState({
         peerConnections
@@ -108,7 +112,7 @@ class Main extends Component {
         let remoteVideo = {};
 
         const rVideos = this.state.remoteStreams.filter(
-          stream => stream.id === RemoteMemberSocketID
+          stream => stream.id === RemoteMemberID
         );
 
         if (rVideos.length) {
@@ -129,7 +133,7 @@ class Main extends Component {
           _remoteStream.addTrack(e.track, _remoteStream);
 
           remoteVideo = {
-            id: RemoteMemberSocketID,
+            id: RemoteMemberID,
             name: RemoteMemberID,
             stream: _remoteStream
           };
@@ -191,12 +195,12 @@ class Main extends Component {
 
     this.props.socket.on("peer-member-call-disconnected", data => {
       const remoteStreams = this.state.remoteStreams.filter(
-        stream => stream.id !== data.RemoteMemberSocketID
+        stream => stream.id !== data.RemoteMemberID
       );
 
       this.setState(prevState => {
         const selectedVideo =
-          prevState.selectedVideo.id === data.RemoteMemberSocketID &&
+          prevState.selectedVideo.id === data.RemoteMemberID &&
           remoteStreams.length
             ? { selectedVideo: remoteStreams[0] }
             : null;
@@ -212,10 +216,10 @@ class Main extends Component {
       this.createPeerConnection(
         data.RemoteMemberID,
         data.RemoteMemberSocketID,
-        pc => {
+        async pc => {
           if (pc) {
-            pc.createOffer(this.state.sdpConstraints).then(sdp => {
-              pc.setLocalDescription(sdp);
+            await pc.createOffer(this.state.sdpConstraints).then(async sdp => {
+              await pc.setLocalDescription(sdp);
 
               this.props.socket.emit("offer-to-connect-team-call", {
                 SDPOfferConnect: sdp,
@@ -231,48 +235,62 @@ class Main extends Component {
     });
 
     this.props.socket.on("offer-for-connect-team-call", data => {
+      // console.log(
+      //   "Ra thử offer-for-connect-team-call ",
+      //   JSON.stringify(data.SDPOfferConnect)
+      // );
       this.createPeerConnection(
         data.RemoteMemberID,
         data.RemoteMemberSocketID,
-        pc => {
-          pc.addStream(this.state.localStream);
-          pc.setRemoteDescription(
-            new RTCSessionDescription(data.SDPOfferConnect)
-          ).then(() => {
-            pc.createAnswer(this.state.sdpConstraints).then(sdp => {
-              pc.setLocalDescription(sdp);
+        async pc => {
+          await pc.addStream(this.state.localStream);
+          await pc
+            .setRemoteDescription(
+              new RTCSessionDescription(data.SDPOfferConnect)
+            )
+            .then(async () => {
+              await pc
+                .createAnswer(this.state.sdpConstraints)
+                .then(async sdp => {
+                  await pc.setLocalDescription(sdp);
 
-              this.props.socket.emit("answer-to-connect-team-call", {
-                SDPAnswerConnect: sdp,
-                LocalMemberID: this.props.MemberID,
-                LocalMemberSocketID: this.props.socket.id,
-                RemoteMemberID: data.RemoteMemberID,
-                RemoteMemberSocketID: data.RemoteMemberSocketID
-              });
+                  this.props.socket.emit("answer-to-connect-team-call", {
+                    SDPAnswerConnect: sdp,
+                    LocalMemberID: this.props.MemberID,
+                    LocalMemberSocketID: this.props.socket.id,
+                    RemoteMemberID: data.RemoteMemberID,
+                    RemoteMemberSocketID: data.RemoteMemberSocketID
+                  });
+                });
             });
-          });
         }
       );
     });
 
-    this.props.socket.on("answer-for-connect-team-call", data => {
-      console.log(
-        "Ra data của answer-for-connect-team-call",
-        data.SDPAnswerConnect.type
-      );
-      const pc = this.state.peerConnections[data.RemoteMemberSocketID];
-      pc.setRemoteDescription(
-        new RTCSessionDescription(data.SDPAnswerConnect)
-      ).then(() => {
-        this.props.socket.on("get-candidate-for-connect", data => {
-          console.log("vào trong get-candidate-for-connect");
-          const pc = this.state.peerConnections[data.RemoteMemberSocketID];
-
-          if (pc) {
-            pc.addIceCandidate(new RTCIceCandidate(data.CandidateConnect));
+    this.props.socket.on("answer-for-connect-team-call", async data => {
+      // console.log(
+      //   "Ra data của answer-for-connect-team-call",
+      //   data.SDPAnswerConnect.type
+      // );
+      const pc = this.state.peerConnections[data.RemoteMemberID];
+      // console.log("Xem pc có gì: ", pc);
+      await pc
+        .setRemoteDescription(
+          new RTCSessionDescription(data.SDPAnswerConnect),
+          () => {
+            console.log("Có chạy vào đây");
           }
-        });
-      });
+        )
+        .catch(error => console.log(error));
+    });
+
+    this.props.socket.on("get-candidate-for-connect", async data => {
+      // console.log("vào trong get-candidate-for-connect");
+      const pc = this.state.peerConnections[data.RemoteMemberID];
+
+      if (pc) {
+        await pc.addIceCandidate(new RTCIceCandidate(data.CandidateConnect));
+      }
     });
   };
 
@@ -283,6 +301,7 @@ class Main extends Component {
   };
 
   render() {
+    console.log("xem peerConnections có gì: ", this.state.peerConnections);
     if (this.state.disconnected) {
       this.props.socket.close();
       this.state.localStream.getTracks().forEach(track => track.stop());

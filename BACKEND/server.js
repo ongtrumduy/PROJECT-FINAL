@@ -33,7 +33,7 @@ let corsOptions = {
 //   key: fs.readFileSync(path.join(__dirname, "cert", "key.pem")),
 //   cert: fs.readFileSync(path.join(__dirname, "cert", "cert.pem")),
 //   requestCert: false,
-//   rejectUnauthorized: false
+//   rejectUnauthoried: false
 // };
 
 // let sslServer = https.createServer(sslCerticates, app);
@@ -42,7 +42,7 @@ app.use(bodyParser.json());
 
 let io = socketio(server, {
   cors: {
-    origin: "https://40.88.10.237:3000",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true

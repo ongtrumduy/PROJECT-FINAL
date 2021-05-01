@@ -58,7 +58,7 @@ export default class Video extends React.Component {
             fontSize: 20,
             color: (this.state.mic && "white") || "red"
           }}
-          class="material-icons"
+          className="material-icons"
         >
           {(this.state.mic && "mic") || "mic_off"}
         </i>
@@ -70,7 +70,7 @@ export default class Video extends React.Component {
             fontSize: 20,
             color: (this.state.camera && "white") || "red"
           }}
-          class="material-icons"
+          className="material-icons"
         >
           {(this.state.camera && "videocam") || "videocam_off"}
         </i>
