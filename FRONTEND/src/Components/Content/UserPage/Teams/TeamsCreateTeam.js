@@ -117,6 +117,13 @@ export default class TeamsCreateTeam extends React.Component {
         this.setState({
           checkValidate: res.data.checkValidate
         });
+        if (res.data.checkValidate === "success-create-team") {
+          {
+            setTimeout(() => {
+              this.props.updateRenderTeamControl("teamall");
+            }, 1000);
+          }
+        }
       })
       .catch(error => {
         console.log(error);
@@ -132,11 +139,11 @@ export default class TeamsCreateTeam extends React.Component {
   checkValidateCreateNewTeam = type => {
     switch (type) {
       case "success-create-team":
-        return <span>Nhóm của bạn đã được tạo thành công !!!</span>;
+        return <span>Nhóm của bạn đã được tạo thành công </span>;
       case "existed-team":
         return <span>Tên nhóm này đã tồn tại !!!</span>;
       case "teamname":
-        return <small>Tên nhóm không được để trống</small>;
+        return <small>Tên nhóm không được để trống !!!</small>;
       default:
     }
   };

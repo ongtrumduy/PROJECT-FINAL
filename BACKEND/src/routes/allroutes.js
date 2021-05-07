@@ -6,6 +6,8 @@ import getteamlistRoutes from "./getteamlist";
 import getteaminforRoutes from "./getteaminfor";
 import searchtojointeamRoutes from "./searchtojointeam";
 import getteamdiscussRoutes from "./getteamdiscuss";
+import getreminderlistRoutes from "./getreminderlist";
+import createnewreminderRoutes from "./createnewreminder";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -42,13 +44,13 @@ let AllRoutes = (app, corsOptions) => {
   getteamdiscussRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
-  // // --------------------------AddHomeFriend---------------------------------------
-  // addhomefriendRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------CreateNewReminder---------------------------------------
+  createnewreminderRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------Notify---------------------------------------
-  // notifyRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------GetReminderList---------------------------------------
+  getreminderlistRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
   // // --------------------------AddUserList---------------------------------------
   // // adduserRoutes(app, corsOptions);

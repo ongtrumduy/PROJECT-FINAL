@@ -1,7 +1,7 @@
 import React from "react";
-import ChatListContent from "./ChatListContent";
+import ChatsListContent from "./ChatsListContent";
 
-export default class ChatList extends React.Component {
+export default class ChatsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -20,7 +20,7 @@ export default class ChatList extends React.Component {
             Trò chuyện
           </p>
         </div>
-        <ChatListContent />
+        <ChatsListContent />
       </div>
     );
   }

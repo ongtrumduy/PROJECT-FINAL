@@ -1,6 +1,6 @@
 import React from "react";
-import ChatList from "./ChatList";
-import ChatContent from "./ChatContent";
+import ChatList from "./ChatsList/ChatsList";
+import ChatMainContent from "./ChatsMainContent/ChatsMainContent";
 import "./Chats.css";
 
 export default class Chats extends React.Component {
@@ -12,8 +12,11 @@ export default class Chats extends React.Component {
   render() {
     return (
       <div className="user-chat">
-        <ChatList />
-        <ChatContent />
+        <ChatList MemberID={this.props.MemberID} socket={this.props.socket} />
+        <ChatMainContent
+          MemberID={this.props.MemberID}
+          socket={this.props.socket}
+        />
       </div>
     );
   }

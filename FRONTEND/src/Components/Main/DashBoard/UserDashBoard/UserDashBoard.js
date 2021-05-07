@@ -54,9 +54,9 @@ export default class UserDashBoard extends React.Component {
     });
 
     this.props.socket.on("confirm-joined-call-team", data => {
-      console.log("check ra data " + data);
+      // console.log("check ra data " + data);
       if (this.props.socket.id === data.MemberSocketID) {
-        console.log("có vào nha");
+        // console.log("có vào nha");
         this.setState({
           checkJoinCall: "true",
           TeamCallID: data.TeamCallID

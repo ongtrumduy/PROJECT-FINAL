@@ -4,7 +4,7 @@ import Daggable from "./Components/Draggable";
 import Videos from "./Components/Videos";
 import Video from "./Components/Video";
 
-class Main extends Component {
+export default class VideoTeamCallMain extends Component {
   constructor(props) {
     super(props);
 
@@ -410,5 +410,3 @@ class Main extends Component {
     );
   }
 }
-
-export default Main;

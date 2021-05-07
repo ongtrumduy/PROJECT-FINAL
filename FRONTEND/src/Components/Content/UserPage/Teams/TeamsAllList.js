@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 
+import TeamsItem from "./TeamsItem";
+
 export default class TeamsAllList extends React.Component {
   constructor(props) {
     super(props);
@@ -32,25 +34,15 @@ export default class TeamsAllList extends React.Component {
     return (
       <div className="user-teams_all__list">
         {this.state.AllTeamList.map((teamitem, teamindex) =>
-          teamitem.TeamInfor.map(teamnameitem => {
-            return (
-              <div
-                key={teamindex}
-                onClick={() => this.chooseOneJoinedTeam(teamitem.TeamID)}
-              >
-                <img
-                  style={{
-                    height: "120px",
-                    width: "120px",
-                    margin: "32px 0 0 0"
-                  }}
-                  alt="team-logo"
-                  src={teamnameitem.TeamLogo}
-                />
-                <p style={{ fontWeight: "bold" }}>{teamnameitem.TeamName}</p>
-              </div>
-            );
-          })
+          teamitem.TeamInfor.map(teamnameitem => (
+            <TeamsItem
+              key={teamindex}
+              TeamID={teamitem.TeamID}
+              TeamLogo={teamnameitem.TeamLogo}
+              TeamName={teamnameitem.TeamName}
+              chooseOneJoinedTeam={this.chooseOneJoinedTeam}
+            />
+          ))
         )}
       </div>
     );

@@ -1,8 +1,8 @@
 import zeamsMembers from "../services/zeamsMembers";
 
-let GetRegisterNewMember = (req, res) => {
+let GetRegisterNewMember = async (req, res) => {
   // console.log(req.body);
-  let resNewMemberRegister = zeamsMembers.resNewMemberRegister(req.body);
+  let resNewMemberRegister = await zeamsMembers.resNewMemberRegister(req.body);
   res.send(resNewMemberRegister);
 };
 

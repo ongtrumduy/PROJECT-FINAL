@@ -12,8 +12,8 @@ let CreateNewDiscuss = io => {
     //====================================================================================================
 
     socket.on("create-new-discuss", data => {
-      let memberIDOnlineList = [];
-      memberIDOnlineList = Object.keys(membersocket);
+      // let memberIDOnlineList = [];
+      // memberIDOnlineList = Object.keys(membersocket);
       // console.log("ra cái membersocket ");
       // console.log(memberIDOnlineList);
       zeamsTeamsDiscuss.createNewMemberDiscuss(data);
@@ -26,7 +26,7 @@ let CreateNewDiscuss = io => {
         membersocket,
         data,
         io,
-        "update-discuss-content",
+        "update-team-discuss-content",
         resTeamDiscussContent
       );
     });

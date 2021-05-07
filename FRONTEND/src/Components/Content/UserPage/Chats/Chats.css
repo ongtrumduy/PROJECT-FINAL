@@ -31,29 +31,25 @@
     overflow: auto;
 }
 
-.user-chat_list__content table {
-    width: 100%;
-}
-
-.user-chat_list__content td {
+.user-chat_list__content {
     width: 100%;
     height: 60px;
 }
 
-.user-chat_list__content td:hover {
-    background-color: gray;
+.user-chat_list__content div:hover {
+    background-color: rgb(221, 219, 219);
     cursor: pointer;
 }
 
-.user-chat_list__infor {
+.user-chat_list__content___infor {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
 }
 
-.user-chat_list__infor___avatar {
-    margin: 0 12px 0 12px;
+.user-chat_list__content___infor_____avatar {
+    margin: 0 8px 0 8px;
 }
 
 .user-chat_content {
@@ -121,4 +117,40 @@
 
 .user-chat_content__callsetting___setting {
     margin: 0 40px 0 0;
+}
+
+.user-chat_content__message___content {
+    height: 460px;
+    overflow: auto;
+}
+
+.user-chat_content__message___chat-send {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.user-chat_content__message___chat-send div:first-child {
+    width: 98%;
+}
+
+.user-chat_content__message___chat-send div:first-child input {
+    width: 98%;
+    height: 24px;
+    border: none;
+    border-bottom: groove;
+    outline: none;
+}
+
+.user-chat_content__message___chat-send div:first-child input:focus {
+    border-bottom-color: blue;
+}
+
+.user-chat_content__message___chat-send div:last-child i {
+    cursor: pointer;
+}
+
+.user-chat_content__message___chat-send div:last-child i:hover {
+    color: red;
 }

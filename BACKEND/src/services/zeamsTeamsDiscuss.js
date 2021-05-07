@@ -18,7 +18,7 @@ class ZeamsTeamsDiscuss {
 
   saveDataJSON() {
     fs.writeFileSync(
-      "./src/databases/zeamsTeamsDiscuss.json",
+      "../BACKEND/src/databases/zeamsTeamsDiscuss.json",
       JSON.stringify(this.ZeamsTeamsDiscuss),
       err => {
         if (err) throw err;

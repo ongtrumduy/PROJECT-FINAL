@@ -1,5 +1,5 @@
 import React from "react";
-import VideoTeamCallMain1 from "./VideoTeamCallMain1";
+import VideoTeamCallMain3 from "./VideoTeamCallMain3";
 
 export default class VideoTeamCall extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class VideoTeamCall extends React.Component {
   render() {
     return (
       <div>
-        <VideoTeamCallMain1
+        <VideoTeamCallMain3
           MemberID={this.props.MemberID}
           TeamID={this.props.TeamID}
           socket={this.props.socket}

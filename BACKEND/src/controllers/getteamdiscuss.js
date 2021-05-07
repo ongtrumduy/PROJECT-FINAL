@@ -1,8 +1,10 @@
 import zeamsTeamsDiscuss from "../services/zeamsTeamsDiscuss";
 
-let GetTeamDiscuss = (req, res) => {
+let GetTeamDiscuss = async (req, res) => {
   // console.log(req.body);
-  let resTeamDiscuss = zeamsTeamsDiscuss.responseTeamDiscussContent(req.body);
+  let resTeamDiscuss = await zeamsTeamsDiscuss.responseTeamDiscussContent(
+    req.body
+  );
   // console.log(resTeamDiscuss);
   res.send(resTeamDiscuss);
 };

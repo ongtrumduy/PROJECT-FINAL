@@ -1,8 +1,8 @@
 import zeamsMembers from "../services/zeamsMembers";
 
-let GetFullnameMember = (req, res) => {
+let GetFullnameMember = async (req, res) => {
   // console.log(req.body);
-  let resMemberLogin = zeamsMembers.getLoginMemberFullname(req.body);
+  let resMemberLogin = await zeamsMembers.getLoginMemberFullname(req.body);
   // console.log(resMemberLogin);
   res.send(resMemberLogin);
 };

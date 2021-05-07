@@ -1,7 +1,7 @@
 import StartBeginSocket from "./startbeginsocket";
 import zeamsTeamsDiscuss from "../services/zeamsTeamsDiscuss";
 
-let SetStartVideoCall = io => {
+let SetStartVideoCall = async io => {
   let membersocket = {};
   let membercallsocket = {};
   let allteamcall = {};
@@ -13,8 +13,8 @@ let SetStartVideoCall = io => {
     });
   };
 
-  io.on("connection", socket => {
-    let checkconnect = "";
+  await io.on("connection", async socket => {
+    // let checkconnect = "";
 
     //====================================================================================================
 
@@ -22,7 +22,7 @@ let SetStartVideoCall = io => {
 
     //====================================================================================================
 
-    socket.on("start-begin-call-video", data => {
+    await socket.on("start-begin-call-video", data => {
       console.log("==========================================================");
       let checkjoinedcall = StartBeginSocket.checkJoinedMemberCall(
         membercallsocket,
@@ -67,13 +67,13 @@ let SetStartVideoCall = io => {
         );
       }
 
-      console.log("membercallsocket", membercallsocket);
-      console.log("allteamcall", allteamcall);
+      // console.log("membercallsocket", membercallsocket);
+      // console.log("allteamcall", allteamcall);
     });
 
     //====================================================================================================
 
-    socket.on("online-call-peer-members", data => {
+    await socket.on("online-call-peer-members", data => {
       // console.log("data gửi đến online-call-peer-members");
       // console.log(data);
       let resAsRemoteMember = {
@@ -94,9 +94,9 @@ let SetStartVideoCall = io => {
 
     //====================================================================================================
 
-    socket.on("offer-to-connect-team-call", data => {
-      console.log("data gửi đến offer-to-connect-team-call");
-      console.log(data);
+    await socket.on("offer-to-connect-team-call", data => {
+      // console.log("data gửi đến offer-to-connect-team-call");
+      // console.log(data);
       let resToConnectOffer = {
         SDPOfferConnect: data.SDPOfferConnect,
         RemoteMemberID: data.LocalMemberID,
@@ -115,9 +115,9 @@ let SetStartVideoCall = io => {
 
     //====================================================================================================
 
-    socket.on("answer-to-connect-team-call", data => {
-      console.log("data gửi đến answer-to-connect-team-call");
-      console.log(data);
+    await socket.on("answer-to-connect-team-call", data => {
+      // console.log("data gửi đến answer-to-connect-team-call");
+      // console.log(data);
 
       let resToConnectAnswer = {
         SDPAnswerConnect: data.SDPAnswerConnect,
@@ -146,9 +146,9 @@ let SetStartVideoCall = io => {
 
     //====================================================================================================
 
-    socket.on("set-candidate-to-connect", data => {
-      console.log("data gửi đến set-candidate-to-connect");
-      console.log(data);
+    await socket.on("set-candidate-to-connect", data => {
+      // console.log("data gửi đến set-candidate-to-connect");
+      // console.log(data);
       let resToConnectCandidate = {
         CandidateConnect: data.CandidateConnect,
         RemoteMemberID: data.LocalMemberID,
@@ -175,7 +175,7 @@ let SetStartVideoCall = io => {
 
     //====================================================================================================
 
-    socket.on("disconnected-call-team", data => {
+    await socket.on("disconnected-call-team", data => {
       // console.log("data gửi đến");
       // console.log(data);
       StartBeginSocket.emitAllOtherMemberJoinedCallOfTeam(
@@ -210,7 +210,7 @@ let SetStartVideoCall = io => {
     //====================================================================================================
 
     //Do có thể đăng nhập cùng 1 nick nhiều chỗ phải check call đúng cái đang call
-    socket.on("disconnected-call-team-logout", data => {
+    await socket.on("disconnected-call-team-logout", data => {
       // console.log("data gửi đến để mà logout ra");
       // console.log(data);
       StartBeginSocket.emitAllOtherMemberJoinedCallOfTeam(
@@ -241,7 +241,7 @@ let SetStartVideoCall = io => {
 
     //====================================================================================================
 
-    socket.on("disconnect", data => {
+    await socket.on("disconnect", data => {
       // console.log("data gửi đến do disconnect ra");
       // console.log(socket.id);
       let ChooseMemberID = "";
@@ -295,7 +295,119 @@ let SetStartVideoCall = io => {
       // console.log("membercallsocket", membercallsocket);
       // console.log("allteamcall", allteamcall);
     });
+
     //====================================================================================================
+
+    await socket.on("send-to-reconnect-again", data => {
+      console.log("Bị lỗi rồi: ", data.ErrorType);
+      let resLocalToRemoveErrorConnect = {
+        LocalMemberID: data.LocalMemberID,
+        LocalMemberSocketID: data.LocalMemberSocketID,
+        RemoteMemberID: data.RemoteMemberID,
+        RemoteMemberSocketID: data.RemoteMemberSocketID
+      };
+      let resRemoveToRemoveErrorConnect = {
+        LocalMemberID: data.RemoteMemberID,
+        LocalMemberSocketID: data.RemoteMemberSocketID,
+        RemoteMemberID: data.LocalMemberID,
+        RemoteMemberSocketID: data.LocalMemberSocketID
+      };
+      StartBeginSocket.emitAllSocketsOfMember(
+        membercallsocket,
+        data.LocalMemberID,
+        io,
+        "reconnect-to-call-when-error",
+        resLocalToRemoveErrorConnect
+      );
+      StartBeginSocket.emitAllSocketsOfMember(
+        membercallsocket,
+        data.RemoteMemberID,
+        io,
+        "reconnect-to-call-when-error",
+        resRemoveToRemoveErrorConnect
+      );
+    });
+
+    //====================================================================================================
+    await socket.on("reconnect-call-peer-members", data => {
+      let resLocalToReconnectCall = {
+        LocalMemberID: data.LocalMemberID,
+        LocalMemberSocketID: data.LocalMemberSocketID,
+        RemoteMemberID: data.RemoteMemberID,
+        RemoteMemberSocketID: data.RemoteMemberSocketID
+      };
+      let resRemoteToReconnectCall = {
+        LocalMemberID: data.RemoteMemberID,
+        LocalMemberSocketID: data.RemoteMemberSocketID,
+        RemoteMemberID: data.LocalMemberID,
+        RemoteMemberSocketID: data.LocalMemberSocketID
+      };
+
+      StartBeginSocket.emitAllSocketsOfMember(
+        membercallsocket,
+        data.LocalMemberID,
+        io,
+        "remove-error-peer-connection",
+        resLocalToReconnectCall
+      );
+      StartBeginSocket.emitAllSocketsOfMember(
+        membercallsocket,
+        data.RemoteMemberID,
+        io,
+        "remove-error-peer-connection",
+        resRemoteToReconnectCall
+      );
+    });
+    //====================================================================================================
+
+    socket.on("reconnect-error-peer-connection", data => {
+      let resLocalToReconnectConnection = {
+        LocalMemberID: data.LocalMemberID,
+        LocalMemberSocketID: data.LocalMemberSocketID,
+        RemoteMemberID: data.RemoteMemberID,
+        RemoteMemberSocketID: data.RemoteMemberSocketID
+      };
+      let resRemoteToReconnecConnection = {
+        LocalMemberID: data.RemoteMemberID,
+        LocalMemberSocketID: data.RemoteMemberSocketID,
+        RemoteMemberID: data.LocalMemberID,
+        RemoteMemberSocketID: data.LocalMemberSocketID
+      };
+
+      StartBeginSocket.emitAllSocketsOfMember(
+        membercallsocket,
+        data.LocalMemberID,
+        io,
+        "connect-all-member-call",
+        resLocalToReconnectConnection
+      );
+      StartBeginSocket.emitAllSocketsOfMember(
+        membercallsocket,
+        data.RemoteMemberID,
+        io,
+        "connect-all-member-call",
+        resRemoteToReconnecConnection
+      );
+    });
+
+    // //====================================================================================================
+
+    // socket.on("send-to-set-candidate-again", data => {
+    //   let resToConnectCandidate = {
+    //     CandidateConnect: data.CandidateConnect,
+    //     RemoteMemberID: data.RemoteMemberID,
+    //     RemoteMemberSocketID: data.RemoteMemberSocketID
+    //   };
+
+    //   StartBeginSocket.emitAllSocketsOfMember(
+    //     membercallsocket,
+    //     data.LocalMemberID,
+    //     io,
+    //     "get-candidate-for-connect",
+    //     resToConnectCandidate
+    //   );
+    // });
+    // //====================================================================================================
   });
 };
 

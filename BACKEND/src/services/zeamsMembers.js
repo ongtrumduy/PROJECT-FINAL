@@ -16,7 +16,7 @@ class ZeamsMembers {
 
   saveDataJSON() {
     fs.writeFileSync(
-      "./src/databases/zeamsMembers.json",
+      "../BACKEND/src/databases/zeamsMembers.json",
       JSON.stringify(this.ZeamsMembers),
       err => {
         if (err) throw err;
@@ -123,9 +123,9 @@ class ZeamsMembers {
       memberitem.MemberInfor.forEach(memberinforitem => {
         if (member.Username === memberinforitem.Username) {
           checkUsernameLoginMember = true;
-        }
-        if (member.PassWord === memberinforitem.PassWord) {
-          checkPassWordLoginMember = true;
+          if (member.PassWord === memberinforitem.PassWord) {
+            checkPassWordLoginMember = true;
+          }
         }
       });
     });
