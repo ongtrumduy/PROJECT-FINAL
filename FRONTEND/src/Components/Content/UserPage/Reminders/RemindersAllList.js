@@ -30,6 +30,8 @@ export default class RemindersAllList extends React.Component {
       .catch(error => {
         console.log(error);
       });
+
+    // this.props.socket.on("update-reminder-list");
   };
 
   setChooseReminderToChange = (reminderID, reminderType) => {
@@ -43,7 +45,7 @@ export default class RemindersAllList extends React.Component {
     return (
       <div className="user-reminders_all__list">
         <RemindersAllUnfinishedList
-          AllReminderList={this.state.AllReminderList}
+          AllReminderUnfinishedList={this.state.AllReminderUnfinishedList}
           MemberID={this.props.MemberID}
           setChooseReminderToChange={this.setChooseReminderToChange}
           socket={this.props.socket}
@@ -55,7 +57,7 @@ export default class RemindersAllList extends React.Component {
           socket={this.props.socket}
         />
         <RemindersAllFinishedList
-          AllReminderList={this.state.AllReminderList}
+          AllReminderFinishedList={this.state.AllReminderFinishedList}
           MemberID={this.props.MemberID}
           setChooseReminderToChange={this.setChooseReminderToChange}
           socket={this.props.socket}

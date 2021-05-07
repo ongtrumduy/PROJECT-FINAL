@@ -5,7 +5,7 @@ let GetReminderList = async (req, res) => {
   let getReminderList = await zeamsReminders.responseMemberReminderList(
     req.body
   );
-  console.log("VÀo đây ngay", getReminderList);
+  // console.log("VÀo đây ngay", getReminderList);
   res.send(getReminderList);
 };
 

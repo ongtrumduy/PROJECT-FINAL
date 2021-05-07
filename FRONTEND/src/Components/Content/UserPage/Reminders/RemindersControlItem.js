@@ -6,9 +6,21 @@ export default class RemindersControllItem extends React.Component {
     this.state = {};
   }
 
-  setChoiceReminderToFinished = () => {};
+  setChoiceReminderToFinished = () => {
+    alert(`Ra Finished ${this.props.ReminderID} và ${this.props.ReminderType}`);
+    // this.props.socket.emit("send-choice-reminder-to-finished", {
+    //   ReminderID: this.props.ReminderID
+    // });
+  };
 
-  setChoiceReminderToUnFinished = () => {};
+  setChoiceReminderToUnFinished = () => {
+    alert(
+      `Ra UnFinished ${this.props.ReminderID} và ${this.props.ReminderType}`
+    );
+    // this.props.socket.emit("send-choice-reminder-to-unfinished", {
+    //   ReminderID: this.props.ReminderID
+    // });
+  };
 
   render() {
     return (

@@ -47,10 +47,9 @@ class ZeamsReminders {
       return reminderitem.MemberID === reminderinfor.MemberID;
     });
 
-    // console.log("Bắn ra cái ", reminderindex);
-
     let newreminder = {
       ReminderID: uuidv4(),
+      ReminderType: "unfinished",
       ReminderName: reminderinfor.ReminderName,
       ReminderDescription: reminderinfor.ReminderDescription,
       ReminderWarning: reminderinfor.ReminderWarning,
@@ -70,25 +69,6 @@ class ZeamsReminders {
 
   checkCreateEndDate(reminderinfor) {
     let checkEndDate = false;
-    // console.log("Xem trong nó là year", moment(moment(), "DD/MM/YYYY").year());
-    // console.log(
-    //   "Xem trong nó là month",
-    //   moment(moment(), "DD/MM/YYYY").month()
-    // );
-    // console.log("Xem trong nó là date", moment(moment(), "DD/MM/YYYY").date());
-    // console.log("=======================================================");
-    // console.log(
-    //   "Xem trong nó là year",
-    //   moment(reminderinfor.ReminderEndDate, "YYYY/MM/DD").year()
-    // );
-    // console.log(
-    //   "Xem trong nó là month",
-    //   moment(reminderinfor.ReminderEndDate, "YYYY/MM/DD").month()
-    // );
-    // console.log(
-    //   "Xem trong nó là date",
-    //   moment(reminderinfor.ReminderEndDate, "YYYY/MM/DD").date()
-    // );
     if (
       moment(reminderinfor.ReminderEndDate, "YYYY/MM/DD").year() >
       moment(moment(), "DD/MM/YYYY").year()
@@ -124,7 +104,6 @@ class ZeamsReminders {
     let reminderindex = this.ZeamsReminders.findIndex(reminderindex => {
       return reminderindex.MemberID === reminderinfor.MemberID;
     });
-    // console.log("LLaays ra index ", reminderindex);
     if (reminderindex < 0) {
       this.createNewReminderList(reminderinfor);
       resmemberreminderlist = {

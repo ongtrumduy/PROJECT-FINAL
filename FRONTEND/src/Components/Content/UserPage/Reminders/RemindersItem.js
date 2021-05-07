@@ -4,26 +4,42 @@ import RemindersItemDetailContent from "./RemindersItemDetailContent";
 export default class RemindersItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { setRenderDetail: false };
+    // this.state = { setRenderDetail: false };
   }
 
-  setChangeRenderDetail = reminderID => {
-    if (
-      this.props.ReminderID === reminderID &&
-      this.state.setRenderDetail === false
-    ) {
-      this.setState({
-        setRenderDetail: true
-      });
-    } else {
-      this.setState({
-        setRenderDetail: false
-      });
-    }
+  setChangeRenderDetail = (reminderID, reminderType) => {
+    this.props.setChooseReminderToChangeIcon(reminderID);
+
+    // if (
+    //   this.props.ReminderChoiceID === reminderID &&
+    //   this.state.setRenderDetail === false
+    // ) {
+    //   this.setState({
+    //     setRenderDetail: true
+    //   });
+    //   this.props.setChooseReminderToChange(reminderID, reminderType);
+    // } else {
+    //   this.setState({
+    //     setRenderDetail: false
+    //   });
+
+    //   this.props.setChooseReminderToChange("", "");
+    // }
   };
 
-  renderReminderItemDetailContent = () => {
-    if (this.state.setRenderDetail) {
+  // componentWillReceiveProps = nextProps => {
+  //   if (nextProps.ReminderChoiceID !== this.props.ReminderChoiceID) {
+  //     this.setState({
+  //       setRenderDetail: false
+  //     });
+  //   }
+  // };
+
+  renderReminderItemDetailContent = reminderID => {
+    if (
+      // this.state.setRenderDetail &&
+      this.props.ReminderChoiceID === reminderID
+    ) {
       return (
         <RemindersItemDetailContent
           ReminderCreateDate={this.props.ReminderCreateDate}
@@ -35,16 +51,27 @@ export default class RemindersItem extends React.Component {
   };
 
   render() {
+    // console.log("check setRenderDetail ", this.state.setRenderDetail);
+    // console.log("check ReminderChoiceID ", this.props.ReminderChoiceID);
+    // console.log("check ReminderID ", this.props.ReminderID);
+    // console.log("==============================================");
     return (
       <div
         className="user-reminders_all__list___un-finished____reminder-item"
-        onClick={() => this.setChangeRenderDetail(this.props.ReminderID)}
+        onClick={() =>
+          this.setChangeRenderDetail(
+            this.props.ReminderID,
+            this.props.ReminderType
+          )
+        }
       >
         <div className="user-reminders_all__list___un-finished____reminder-item_____content">
           <div>
             <i className="material-icons">
-              {(this.state.setRenderDetail && "radio_button_checked") ||
-                "radio_button_unchecked"}
+              {/* {this.state.setRenderDetail === true && */}
+              {this.props.ReminderChoiceID === this.props.ReminderID
+                ? "radio_button_checked"
+                : "radio_button_unchecked"}
             </i>
           </div>
           <div>
@@ -55,11 +82,14 @@ export default class RemindersItem extends React.Component {
           </div>
           <div>
             <i className="material-icons">
-              {(this.state.setRenderDetail && "expand_more") || "chevron_right"}
+              {/* {this.state.setRenderDetail === true && */}
+              {this.props.ReminderChoiceID === this.props.ReminderID
+                ? "expand_more"
+                : "chevron_right"}
             </i>
           </div>
         </div>
-        {this.renderReminderItemDetailContent()}
+        {this.renderReminderItemDetailContent(this.props.ReminderID)}
       </div>
     );
   }
