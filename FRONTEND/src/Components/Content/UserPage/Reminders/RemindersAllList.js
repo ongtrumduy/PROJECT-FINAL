@@ -11,7 +11,8 @@ export default class RemindersAllList extends React.Component {
       AllReminderUnfinishedList: [],
       AllReminderFinishedList: [],
       ReminderChoiceID: "",
-      ReminderChoiceType: ""
+      ReminderChoiceType: "",
+      checkToChangeUnOrFinished: ""
     };
   }
 
@@ -31,7 +32,12 @@ export default class RemindersAllList extends React.Component {
         console.log(error);
       });
 
-    // this.props.socket.on("update-reminder-list");
+    this.props.socket.on("update-reminder-list", data => {
+      this.setState({
+        AllReminderUnfinishedList: data.MemberReminderUnfinishedList,
+        AllReminderFinishedList: data.MemberReminderFinishedList
+      });
+    });
   };
 
   setChooseReminderToChange = (reminderID, reminderType) => {
@@ -41,14 +47,22 @@ export default class RemindersAllList extends React.Component {
     });
   };
 
+  setCheckToChangeUnOrFinished = changeType => {
+    this.setState({
+      checkToChangeUnOrFinished: changeType
+    });
+  };
+
   render() {
     return (
       <div className="user-reminders_all__list">
         <RemindersAllUnfinishedList
           AllReminderUnfinishedList={this.state.AllReminderUnfinishedList}
           MemberID={this.props.MemberID}
-          setChooseReminderToChange={this.setChooseReminderToChange}
           socket={this.props.socket}
+          setChooseReminderToChange={this.setChooseReminderToChange}
+          checkToChangeUnOrFinished={this.state.checkToChangeUnOrFinished}
+          setCheckToChangeUnOrFinished={this.setCheckToChangeUnOrFinished}
         />
         <RemindersControlItem
           ReminderID={this.state.ReminderChoiceID}
@@ -59,8 +73,10 @@ export default class RemindersAllList extends React.Component {
         <RemindersAllFinishedList
           AllReminderFinishedList={this.state.AllReminderFinishedList}
           MemberID={this.props.MemberID}
-          setChooseReminderToChange={this.setChooseReminderToChange}
           socket={this.props.socket}
+          setChooseReminderToChange={this.setChooseReminderToChange}
+          checkToChangeUnOrFinished={this.state.checkToChangeUnOrFinished}
+          setCheckToChangeUnOrFinished={this.setCheckToChangeUnOrFinished}
         />
       </div>
     );

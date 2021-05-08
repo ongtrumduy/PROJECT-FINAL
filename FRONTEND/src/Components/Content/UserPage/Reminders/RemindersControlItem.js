@@ -7,19 +7,31 @@ export default class RemindersControllItem extends React.Component {
   }
 
   setChoiceReminderToFinished = () => {
-    alert(`Ra Finished ${this.props.ReminderID} và ${this.props.ReminderType}`);
-    // this.props.socket.emit("send-choice-reminder-to-finished", {
-    //   ReminderID: this.props.ReminderID
-    // });
+    if (this.props.ReminderType !== "unfinished") {
+      alert(
+        "Bạn chỉ có thể chuyển 1 nhắc nhở chưa hoàn thành nhưng chưa hết hạn sang"
+      );
+    } else {
+      this.props.socket.emit("send-choice-reminder-to-finished", {
+        MemberID: this.props.MemberID,
+        ReminderID: this.props.ReminderID,
+        ReminderType: this.props.ReminderType
+      });
+    }
   };
 
   setChoiceReminderToUnFinished = () => {
-    alert(
-      `Ra UnFinished ${this.props.ReminderID} và ${this.props.ReminderType}`
-    );
-    // this.props.socket.emit("send-choice-reminder-to-unfinished", {
-    //   ReminderID: this.props.ReminderID
-    // });
+    if (this.props.ReminderType !== "finished") {
+      alert(
+        "Bạn chỉ có thể chuyển 1 nhắc nhở hoàn thành nhưng chưa hết hạn sang"
+      );
+    } else {
+      this.props.socket.emit("send-choice-reminder-to-unfinished", {
+        MemberID: this.props.MemberID,
+        ReminderID: this.props.ReminderID,
+        ReminderType: this.props.ReminderType
+      });
+    }
   };
 
   render() {

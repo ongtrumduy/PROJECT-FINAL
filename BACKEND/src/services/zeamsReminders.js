@@ -101,8 +101,8 @@ class ZeamsReminders {
   //-----------------------------------------------------------------------------------------------------------------
   responseMemberReminderList(reminderinfor) {
     let resmemberreminderlist;
-    let reminderindex = this.ZeamsReminders.findIndex(reminderindex => {
-      return reminderindex.MemberID === reminderinfor.MemberID;
+    let reminderindex = this.ZeamsReminders.findIndex(reminderitem => {
+      return reminderitem.MemberID === reminderinfor.MemberID;
     });
     if (reminderindex < 0) {
       this.createNewReminderList(reminderinfor);
@@ -144,6 +144,64 @@ class ZeamsReminders {
   }
 
   //-----------------------------------------------------------------------------------------------------------------
+
+  changeReminderToFinished(reminderinfor) {
+    let reminderindex = this.ZeamsReminders.findIndex(reminderitem => {
+      return reminderitem.MemberID === reminderinfor.MemberID;
+    });
+    let reminderunfinishedindex = this.ZeamsReminders[
+      reminderindex
+    ].MemberReminderUnfinishedList.findIndex(reminderunfinisheditem => {
+      return reminderunfinisheditem.ReminderID === reminderinfor.ReminderID;
+    });
+
+    this.ZeamsReminders[reminderindex].MemberReminderUnfinishedList[
+      reminderunfinishedindex
+    ].ReminderType = "finished";
+
+    this.ZeamsReminders[reminderindex].MemberReminderFinishedList.unshift(
+      this.ZeamsReminders[reminderindex].MemberReminderUnfinishedList[
+        reminderunfinishedindex
+      ]
+    );
+
+    this.ZeamsReminders[reminderindex].MemberReminderUnfinishedList.splice(
+      reminderunfinishedindex,
+      1
+    );
+
+    this.saveDataJSON();
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  changeReminderToUnfinished(reminderinfor) {
+    let reminderindex = this.ZeamsReminders.findIndex(reminderitem => {
+      return reminderitem.MemberID === reminderinfor.MemberID;
+    });
+    let reminderfinishedindex = this.ZeamsReminders[
+      reminderindex
+    ].MemberReminderFinishedList.findIndex(reminderunfinisheditem => {
+      return reminderunfinisheditem.ReminderID === reminderinfor.ReminderID;
+    });
+
+    this.ZeamsReminders[reminderindex].MemberReminderFinishedList[
+      reminderfinishedindex
+    ].ReminderType = "unfinished";
+
+    this.ZeamsReminders[reminderindex].MemberReminderUnfinishedList.unshift(
+      this.ZeamsReminders[reminderindex].MemberReminderFinishedList[
+        reminderfinishedindex
+      ]
+    );
+
+    this.ZeamsReminders[reminderindex].MemberReminderFinishedList.splice(
+      reminderfinishedindex,
+      1
+    );
+
+    this.saveDataJSON();
+  }
 
   //-----------------------------------------------------------------------------------------------------------------
   //-----------------------------------------------------------------------------------------------------------------

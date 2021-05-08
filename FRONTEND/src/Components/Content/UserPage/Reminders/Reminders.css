@@ -234,7 +234,7 @@
 }
 
 .user-reminders_all__list___un-finished____reminder-item div:nth-child(2) {
-    width: 100%;
+    /* width: 100%; */
 }
 
 .user-reminders_all__list___un-finished____reminder-item_____content {
@@ -279,5 +279,55 @@
 }
 
 .user-reminders_all__list___control-item i:hover {
+    color: blue;
+}
+
+.user-reminders_all__list___un-finished____reminder-item_____detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 1px solid black;
+    width: 88%;
+    border-radius: 4px;
+    border-top: none;
+}
+
+.user-reminders_all__list___un-finished____reminder-item_____detail div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 0 0 4px;
+}
+
+.user-reminders_all__list___un-finished____reminder-item_____detail______create-end-date {
+    width: 100%;
+}
+
+.user-reminders_all__list___un-finished____reminder-item_____detail span {
+    font-weight: bold;
+}
+
+.user-reminders_all__list___un-finished____reminder-item_____detail______create-end-date div:first-child {
+    width: 64%;
+}
+
+.user-reminders_all__list___un-finished____reminder-item_____detail______content-delete {
+    width: 100%;
+}
+
+.user-reminders_all__list___un-finished____reminder-item_____detail______content-delete div:first-child {
+    width: 88%;
+}
+
+.user-reminders_all__list___un-finished____reminder-item_____detail______content-delete_______delete {
+    border-bottom: 2px solid;
+    border-bottom-color: black;
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.user-reminders_all__list___un-finished____reminder-item_____detail______content-delete_______delete:hover {
     color: blue;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import RemindersItem from "./RemindersItem";
+import RemindersUnfinishedItem from "./RemindersUnfinishedItem";
 
 export default class RemindersAllUnfinishedList extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ export default class RemindersAllUnfinishedList extends React.Component {
         <p style={{ fontWeight: "bold" }}> Chưa hoàn thành </p>
         {this.props.AllReminderUnfinishedList.map(
           (reminderitem, reminderindex) => (
-            <RemindersItem
+            <RemindersUnfinishedItem
               key={reminderindex}
               ReminderID={reminderitem.ReminderID}
               ReminderChoiceID={this.state.ReminderChoiceID}
@@ -33,6 +33,10 @@ export default class RemindersAllUnfinishedList extends React.Component {
               ReminderCreateDate={reminderitem.ReminderCreateDate}
               setChooseReminderToChange={this.props.setChooseReminderToChange}
               setChooseReminderToChangeIcon={this.setChooseReminderToChangeIcon}
+              setCheckToChangeUnOrFinished={
+                this.props.setCheckToChangeUnOrFinished
+              }
+              checkToChangeUnOrFinished={this.props.checkToChangeUnOrFinished}
             />
           )
         )}

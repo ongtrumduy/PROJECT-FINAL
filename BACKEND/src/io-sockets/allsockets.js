@@ -1,7 +1,7 @@
 import createnewdiscussSocket from "./createnewdiscuss";
 import createnewdiscusscommentSocket from "./createnewdiscusscomment";
 import setstartvideocallSocket from "./setstartvideocall";
-// import chatmineSocket from "./chatminefriend";
+import changeremindertounandfinishedSocket from "./changeremindertounandfinished";
 // import chattextSocket from "./chatconversation";
 // import friendonlineSocket from "./friendonline";
 // import waituserSocket from "./waituserlist";
@@ -29,9 +29,9 @@ let AllSockets = io => {
   setstartvideocallSocket(io);
   //--------------------------------------------------------------------------
 
-  // // --------------------------ChatMineFriend--------------------------------------
-  // // chatmineSocket(io);
-  // //--------------------------------------------------------------------------
+  //--------------------------ChangeReminderToUnAndFinished--------------------------------------
+  changeremindertounandfinishedSocket(io);
+  //--------------------------------------------------------------------------
 
   // // --------------------------ChatMineFriend--------------------------------------
   // chattextSocket(io);
