@@ -69,6 +69,7 @@ export default class RemindersAllList extends React.Component {
           ReminderType={this.state.ReminderChoiceType}
           MemberID={this.props.MemberID}
           socket={this.props.socket}
+          setCheckToChangeUnOrFinished={this.setCheckToChangeUnOrFinished}
         />
         <RemindersAllFinishedList
           AllReminderFinishedList={this.state.AllReminderFinishedList}

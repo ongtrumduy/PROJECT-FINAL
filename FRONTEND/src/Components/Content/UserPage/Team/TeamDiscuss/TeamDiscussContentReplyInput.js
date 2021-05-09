@@ -1,5 +1,5 @@
 import React from "react";
-import TeamDiscussCommentContent from "./TeamDiscussCommentContent";
+import TeamDiscussCommentContentItem from "./TeamDiscussCommentContentItem";
 
 export default class TeamDiscussContentReplyInput extends React.Component {
   constructor(props) {
@@ -39,10 +39,12 @@ export default class TeamDiscussContentReplyInput extends React.Component {
       <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput">
         {this.props.TeamCommentContent.map(commentitem => (
           <div>
-            <TeamDiscussCommentContent
+            <TeamDiscussCommentContentItem
               MemberCommentID={commentitem.MemberCommentID}
               MemberCommentTime={commentitem.MemberCommentTime}
               MemberCommentContent={commentitem.MemberCommentContent}
+              MemberCommentFullName={commentitem.MemberCommentFullName}
+              setChoiceTeamMemberChatID={this.props.setChoiceTeamMemberChatID}
             />
           </div>
         ))}

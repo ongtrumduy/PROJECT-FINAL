@@ -258,16 +258,30 @@ class ZeamsMembers {
   //-----------------------------------------------------------------------------------------------------------------
 
   getLoginMemberFullname(member) {
-    let index = this.ZeamsMembers.findIndex(item => {
+    let memberindex = this.ZeamsMembers.findIndex(item => {
       return item.MemberID === member.MemberID;
     });
-    let FirstnameMember = this.ZeamsMembers[index].MemberInfor[0].Firstname;
-    let LastnameMember = this.ZeamsMembers[index].MemberInfor[0].Lastname;
+    let FirstnameMember = this.ZeamsMembers[memberindex].MemberInfor[0]
+      .Firstname;
+    let LastnameMember = this.ZeamsMembers[memberindex].MemberInfor[0].Lastname;
     let resMemberFullname = {
       Firstname: FirstnameMember,
       Lastname: LastnameMember
     };
     return resMemberFullname;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  getMemberFullName(member) {
+    let memberindex = this.ZeamsMembers.findIndex(item => {
+      return item.MemberID === member.MemberID;
+    });
+    let FirstnameMember = this.ZeamsMembers[memberindex].MemberInfor[0]
+      .Firstname;
+    let LastnameMember = this.ZeamsMembers[memberindex].MemberInfor[0].Lastname;
+
+    return LastnameMember + " " + FirstnameMember;
   }
 }
 

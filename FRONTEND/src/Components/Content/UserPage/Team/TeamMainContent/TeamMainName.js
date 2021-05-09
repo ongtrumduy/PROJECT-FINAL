@@ -21,6 +21,10 @@ export default class TeamMainName extends React.Component {
                   Mã nhóm: <br></br>
                   {this.props.TeamID}
                 </span>
+                <p>
+                  Mô tả: <br></br>
+                  {teaminforitem.TeamDescription}
+                </p>
               </div>
             </div>
           );

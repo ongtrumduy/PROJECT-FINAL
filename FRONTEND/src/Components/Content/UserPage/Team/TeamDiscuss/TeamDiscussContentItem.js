@@ -5,7 +5,7 @@ import TeamDiscussContentReplyInput from "./TeamDiscussContentReplyInput";
 export default class TeamDiscussContent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { setDiscussReply: false };
+    this.state = { setDiscussReply: false, TeamDisscussChooseCommentID: "" };
   }
 
   handleSetDiscussReply = () => {
@@ -14,8 +14,19 @@ export default class TeamDiscussContent extends React.Component {
     });
   };
 
+  componentDidMount = () => {
+    this.props.socket.on("update-team-discuss-comment-content", data => {
+      this.setState({
+        TeamDisscussChooseCommentID: data.TeamDiscussID
+      });
+    });
+  };
+
   renderContentDiscussReply = () => {
-    if (this.state.setDiscussReply) {
+    if (
+      this.state.setDiscussReply ||
+      this.props.TeamDiscussID === this.state.TeamDisscussChooseCommentID
+    ) {
       return (
         <TeamDiscussContentReplyInput
           MemberDiscussID={this.props.MemberDiscussID}
@@ -24,6 +35,7 @@ export default class TeamDiscussContent extends React.Component {
           TeamID={this.props.TeamID}
           TeamCommentContent={this.props.TeamCommentContent}
           socket={this.props.socket}
+          setChoiceTeamMemberChatID={this.props.setChoiceTeamMemberChatID}
         />
       );
     } else {
@@ -53,8 +65,13 @@ export default class TeamDiscussContent extends React.Component {
         </div>
         <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox">
           <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime">
-            <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________fullname">
-              {this.props.MemberDiscussID}
+            <div
+              onClick={() =>
+                this.props.setChoiceTeamMemberChatID(this.props.MemberDiscussID)
+              }
+              className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________fullname"
+            >
+              {this.props.MemberDiscussFullName}-{this.props.MemberDiscussID}
             </div>
             <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________timedate">
               {this.props.MemberDiscussTime}

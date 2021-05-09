@@ -53,6 +53,13 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________fullname {
     font-weight: bold;
+    width: 80%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________fullname:hover {
+    color: blue;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content {
@@ -192,8 +199,93 @@
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________fullname {
     margin: 0 32px 0 4px;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________fullname:hover {
+    color: blue;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content {
     margin: -12px 0 0 4px;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat {
+    border: 2px solid black;
+    position: absolute;
+    top: 50%;
+    left: 76px;
+    height: 320px;
+    width: 400px;
+    cursor: move;
+    background-color: rgb(226, 225, 225);
+    z-index: 1000;
+    border-radius: 4px;
+    display: none;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat:hover {
+    border-color: rgb(255, 5, 5);
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    border: groove;
+    height: 40px;
+    background-color: rgb(252, 252, 252);
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname______avatar img {
+    width: 40px;
+    margin: 0 4px 0 4px;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname______fullname {
+    width: 80%;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname______fullname p {
+    font-weight: bold;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname______close-box {
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname______close-box i:hover {
+    color: blue;
+    font-weight: bold;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content {
+    /* display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row; */
+    border: groove;
+    height: 240px;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______send-message {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______send-message input {
+    width: 360px;
+    margin: 0 2px 0 2px;
+    height: 20px;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______send-message i {
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______send-message i:hover {
+    color: blue;
 }

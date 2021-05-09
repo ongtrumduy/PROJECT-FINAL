@@ -18,7 +18,6 @@ export default class Team extends React.Component {
         TeamID: this.props.TeamID
       })
       .then(res => {
-        // console.log(res.data);
         this.setState({
           ChooseTeamID: res.data.TeamID,
           ChooseTeamInfor: res.data.TeamInfor

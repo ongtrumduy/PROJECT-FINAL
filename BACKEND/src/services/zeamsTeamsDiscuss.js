@@ -1,6 +1,7 @@
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+import zeamsMembers from "./zeamsMembers";
 
 class ZeamsTeamsDiscuss {
   constructor() {
@@ -42,7 +43,6 @@ class ZeamsTeamsDiscuss {
   //-----------------------------------------------------------------------------------------------------------------
 
   createNewMemberDiscuss(discuss) {
-    // console.log("Vào trong cái discuss" + discuss.TeamID);
     let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
       return teamitem.TeamID === discuss.TeamID;
     });
@@ -51,6 +51,7 @@ class ZeamsTeamsDiscuss {
         TeamDiscussID: uuidv4(),
         TeamDiscussType: "discuss",
         MemberDiscussID: discuss.MemberID,
+        MemberDiscussFullName: zeamsMembers.getMemberFullName(discuss),
         MemberDiscussContent: discuss.MemberDiscuss,
         MemberDiscussTime: moment().format("HH:mm DD-MM-YYYY"),
         TeamCommentContent: []
@@ -64,7 +65,6 @@ class ZeamsTeamsDiscuss {
   //-----------------------------------------------------------------------------------------------------------------
 
   createNewMemberComment(discuss) {
-    // console.log("Vào trong cái discuss comment" + discuss.TeamID);
     let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
       return teamitem.TeamID === discuss.TeamID;
     });
@@ -77,6 +77,7 @@ class ZeamsTeamsDiscuss {
       let membercomment = {
         TeamCommentID: uuidv4(),
         MemberCommentID: discuss.MemberID,
+        MemberCommentFullName: zeamsMembers.getMemberFullName(discuss),
         MemberCommentContent: discuss.MemberComment,
         MemberCommentTime: moment().format("HH:mm DD-MM-YYYY")
       };

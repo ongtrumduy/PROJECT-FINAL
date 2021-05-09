@@ -18,8 +18,13 @@ export default class TeamDiscussCommentContent extends React.Component {
         </div>
         <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox">
           <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________nameandtime">
-            <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________fullname">
-              {this.props.MemberCommentID}
+            <div
+              onClick={() =>
+                this.props.setChoiceTeamMemberChatID(this.props.MemberCommentID)
+              }
+              className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________fullname"
+            >
+              {this.props.MemberCommentFullName}-{this.props.MemberCommentID}
             </div>
             <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________timedate">
               {this.props.MemberCommentTime}

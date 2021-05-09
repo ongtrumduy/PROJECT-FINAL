@@ -12,10 +12,6 @@ let CreateNewDiscuss = io => {
     //====================================================================================================
 
     socket.on("create-new-discuss", data => {
-      // let memberIDOnlineList = [];
-      // memberIDOnlineList = Object.keys(membersocket);
-      // console.log("ra cái membersocket ");
-      // console.log(memberIDOnlineList);
       zeamsTeamsDiscuss.createNewMemberDiscuss(data);
 
       let resTeamDiscussContent = zeamsTeamsDiscuss.responseTeamDiscussContent(
@@ -30,6 +26,37 @@ let CreateNewDiscuss = io => {
         resTeamDiscussContent
       );
     });
+
+    //====================================================================================================
+
+    socket.on("create-new-discuss-comment", data => {
+      zeamsTeamsDiscuss.createNewMemberComment(data);
+
+      let resTeamDiscussContent = zeamsTeamsDiscuss.responseTeamDiscussContent(
+        data
+      );
+
+      StartBeginSocket.emitAllSocketsOfMemberTeam(
+        membersocket,
+        data,
+        io,
+        "update-team-discuss-content",
+        resTeamDiscussContent
+      );
+
+      let resUpdateTeamDiscussComment = {
+        TeamDiscussID: data.TeamDiscussID
+      };
+
+      StartBeginSocket.emitAllSocketsOfMember(
+        membersocket,
+        data.MemberID,
+        io,
+        "update-team-discuss-comment-content",
+        resUpdateTeamDiscussComment
+      );
+    });
+
     //====================================================================================================
   });
 };

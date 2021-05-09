@@ -17,6 +17,7 @@ export default class RemindersControllItem extends React.Component {
         ReminderID: this.props.ReminderID,
         ReminderType: this.props.ReminderType
       });
+      this.props.setCheckToChangeUnOrFinished("none");
     }
   };
 
@@ -31,6 +32,7 @@ export default class RemindersControllItem extends React.Component {
         ReminderID: this.props.ReminderID,
         ReminderType: this.props.ReminderType
       });
+      this.props.setCheckToChangeUnOrFinished("none");
     }
   };
 

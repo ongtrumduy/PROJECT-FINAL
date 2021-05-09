@@ -1,53 +1,31 @@
 import React from "react";
-import TeamDiscussContent from "./TeamDiscussContent";
-import axios from "axios";
+import TeamDiscussContentItem from "./TeamDiscussContentItem";
 
 export default class TeamAllDiscussContent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { TeamDiscussContent: [] };
+    this.state = {};
   }
-
-  componentDidMount = () => {
-    axios
-      .post("/getteamlist/getteamdiscuss", {
-        TeamID: this.props.TeamID
-      })
-      .then(res => {
-        this.setState({
-          TeamDiscussContent: res.data.TeamDiscussContent
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    this.props.socket.on("update-team-discuss-content", data => {
-      console.log("Lấy socket:");
-      console.log(data);
-      this.setState({
-        TeamDiscussContent: data.TeamDiscussContent
-      });
-    });
-  };
 
   renderTeamDiscussContent = teamitem => {
     switch (teamitem.TeamDiscussType) {
       case "non-activitied":
-        return <p>{teamitem.MemberDiscussContent}</p>;
-      // case "newmember":
-      //   return <p>{teamitem.MemberDiscussContent}</p>;
+        return (
+          <p style={{ fontWeight: "bold" }}>{teamitem.MemberDiscussContent}</p>
+        );
       case "discuss":
         return (
-          <TeamDiscussContent
+          <TeamDiscussContentItem
             MemberDiscussID={teamitem.MemberDiscussID}
             MemberID={this.props.MemberID}
             TeamDiscussID={teamitem.TeamDiscussID}
+            MemberDiscussFullName={teamitem.MemberDiscussFullName}
             TeamID={this.props.TeamID}
             MemberDiscussContent={teamitem.MemberDiscussContent}
             MemberDiscussTime={teamitem.MemberDiscussTime}
             TeamCommentContent={teamitem.TeamCommentContent}
             socket={this.props.socket}
+            setChoiceTeamMemberChatID={this.props.setChoiceTeamMemberChatID}
           />
         );
     }
@@ -56,7 +34,7 @@ export default class TeamAllDiscussContent extends React.Component {
   render() {
     return (
       <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss">
-        {this.state.TeamDiscussContent.map((teamitem, teamindex) => (
+        {this.props.TeamDiscussContent.map((teamitem, teamindex) => (
           <div key={teamindex}>{this.renderTeamDiscussContent(teamitem)}</div>
         ))}
       </div>
