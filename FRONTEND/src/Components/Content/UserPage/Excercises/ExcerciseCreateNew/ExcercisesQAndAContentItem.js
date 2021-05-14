@@ -86,7 +86,7 @@ export default class ExcercisesQAndAContentItem extends React.Component {
       this.state.ExcerciseCorrectAnswer
     );
     this.setState({
-      changeToEditMode: true
+      changeToEditMode: false
     });
     this.closeChooseTrueAnswerModal();
   };
