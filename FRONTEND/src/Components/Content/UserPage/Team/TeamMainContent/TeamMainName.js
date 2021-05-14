@@ -18,11 +18,15 @@ export default class TeamMainName extends React.Component {
               <div className="user-team_team-name__teammainname___content">
                 <p>{teaminforitem.TeamName}</p>
                 <span>
-                  Mã nhóm: <br></br>
+                  <span style={{ userSelect: "none" }}>Mã nhóm:</span>
+                  <br style={{ userSelect: "none" }}></br>
                   {this.props.TeamID}
                 </span>
                 <p>
-                  Mô tả: <br></br>
+                  <span style={{ userSelect: "none", color: "black" }}>
+                    Mô tả:
+                  </span>
+                  <br style={{ userSelect: "none" }}></br>
                   {teaminforitem.TeamDescription}
                 </p>
               </div>

@@ -1,9 +1,9 @@
 import React from "react";
 
 export default class ChatsNotes extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (

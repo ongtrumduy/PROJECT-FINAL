@@ -81,6 +81,7 @@
 
 .user-dashboard_container__menu___icon {
     margin: 28px 0 28px 0;
+    user-select: none;
 }
 
 .user-dashboard_container__content {

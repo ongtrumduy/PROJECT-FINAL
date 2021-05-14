@@ -90,6 +90,14 @@ export default class ChatsMainContent extends React.Component {
             socket={this.props.socket}
           />
         );
+      default:
+        return (
+          <ChatsMessage
+            MemberID={this.props.MemberID}
+            MemberMessageID={this.props.MemberMessageID}
+            socket={this.props.socket}
+          />
+        );
     }
   };
 

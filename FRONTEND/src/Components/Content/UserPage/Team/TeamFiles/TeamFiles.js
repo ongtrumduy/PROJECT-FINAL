@@ -2,9 +2,9 @@ import React from "react";
 import Draggable from "react-draggable";
 
 export default class TeamFiles extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (

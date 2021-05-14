@@ -1,5 +1,5 @@
 import React from "react";
-import defaultavatar from "../../../../Main/Image-Icons/default-avatar.png";
+import defaultavatar from "../../../../Main/Image-Icons/default-avatar.PNG";
 
 export default class ChatsContentMenu extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class ChatsContentMenu extends React.Component {
     return (
       <div className="user-chat_content__menu">
         <div>
-          <img src={defaultavatar} />
+          <img src={defaultavatar} alt="default-avatar" />
         </div>
         <div className="user-chat_content__menu___fullname">
           <p>Phạm Duy</p>

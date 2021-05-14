@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
 
-import warning111 from "../../../Main/Image-Icons/11111a.png";
-import warning222 from "../../../Main/Image-Icons/22222b.png";
-import warning333 from "../../../Main/Image-Icons/33333c.png";
-import warning444 from "../../../Main/Image-Icons/44444d.png";
-import warning555 from "../../../Main/Image-Icons/55555e.png";
+import warning111 from "../../../../Main/Image-Icons/11111a.PNG";
+import warning222 from "../../../../Main/Image-Icons/22222b.PNG";
+import warning333 from "../../../../Main/Image-Icons/33333c.PNG";
+import warning444 from "../../../../Main/Image-Icons/44444d.PNG";
+import warning555 from "../../../../Main/Image-Icons/55555e.PNG";
 
 export default class RemindersCreateNew extends React.Component {
   constructor(props) {
@@ -21,37 +21,9 @@ export default class RemindersCreateNew extends React.Component {
 
   handleChooseWarning = event => {
     const chooseWarning = event.target.value;
-    switch (chooseWarning) {
-      case "warning111":
-        this.setState({
-          setWarningChoose: warning111
-        });
-        break;
-      case "warning222":
-        this.setState({
-          setWarningChoose: warning222
-        });
-        break;
-
-      case "warning333":
-        this.setState({
-          setWarningChoose: warning333
-        });
-        break;
-
-      case "warning444":
-        this.setState({
-          setWarningChoose: warning444
-        });
-        break;
-      case "warning555":
-        this.setState({
-          setWarningChoose: warning555
-        });
-        break;
-
-      default:
-    }
+    this.setState({
+      setWarningChoose: chooseWarning
+    });
   };
 
   handleValueCreateNewReminder = event => {
@@ -75,11 +47,9 @@ export default class RemindersCreateNew extends React.Component {
           checkValidate: res.data.checkValidate
         });
         if (res.data.checkValidate === "success-create-reminder") {
-          {
-            setTimeout(() => {
-              this.props.updateRenderReminderControl("reminderall");
-            }, 1000);
-          }
+          setTimeout(() => {
+            this.props.updateRenderReminderControl("reminderall");
+          }, 1000);
         }
       })
       .catch(error => {
@@ -153,12 +123,15 @@ export default class RemindersCreateNew extends React.Component {
                   value={this.state.ReminderEndDate}
                 />
                 <p>Chọn mức độ cảnh báo cho nhắc nhở</p>
-                <select onChange={this.handleChooseWarning}>
-                  <option value="warning111">Mức 1</option>
-                  <option value="warning222">Mức 2</option>
-                  <option value="warning333">Mức 3</option>
-                  <option value="warning444">Mức 4</option>
-                  <option value="warning555">Mức 5</option>
+                <select
+                  value={this.state.setWarningChoose}
+                  onChange={event => this.handleChooseWarning(event)}
+                >
+                  <option value={warning111}>Mức 1</option>
+                  <option value={warning222}>Mức 2</option>
+                  <option value={warning333}>Mức 3</option>
+                  <option value={warning444}>Mức 4</option>
+                  <option value={warning555}>Mức 5</option>
                 </select>
               </div>
               <div className="user-reminders_create__reminder___response-create-reminder">

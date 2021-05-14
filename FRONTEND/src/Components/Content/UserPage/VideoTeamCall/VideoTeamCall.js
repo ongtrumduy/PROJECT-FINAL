@@ -2,9 +2,9 @@ import React from "react";
 import VideoTeamCallMain3 from "./VideoTeamCallMain3";
 
 export default class VideoTeamCall extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (

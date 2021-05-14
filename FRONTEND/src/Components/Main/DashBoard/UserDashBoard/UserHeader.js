@@ -1,6 +1,6 @@
 import React from "react";
-import defaultavatar from "../../Image-Icons/default-avatar.png";
-import logopage from "../../Image-Icons/logo.png";
+import defaultavatar from "../../Image-Icons/default-avatar.PNG";
+import logopage from "../../Image-Icons/logo.PNG";
 
 export default class UserHeader extends React.Component {
   constructor(props) {

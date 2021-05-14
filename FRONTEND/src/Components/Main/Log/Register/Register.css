@@ -17,6 +17,11 @@
 .user-register p {
     font-weight: bold;
     text-align: left;
+    user-select: none;
+}
+
+.user-register i {
+    user-select: none;
 }
 
 .user-register span {

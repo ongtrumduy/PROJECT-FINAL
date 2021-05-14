@@ -64,6 +64,7 @@
     margin: 20px 0 24px -60px;
     box-shadow: 0 2px tomato;
     transition: box-shadow 0.3s;
+    user-select: none;
 }
 
 .user-team_team-name__backtoteamall:hover {
@@ -79,6 +80,7 @@
     width: 100%;
     height: 48px;
     border-bottom: 1px solid rgb(190, 190, 190);
+    user-select: none;
 }
 
 .user-team_team-menu-and-content__menu img {
@@ -112,6 +114,7 @@
     justify-content: flex-end;
     flex-direction: row;
     flex: 1;
+    user-select: none;
 }
 
 .user-team_team-menu-and-content__callsetting___call {

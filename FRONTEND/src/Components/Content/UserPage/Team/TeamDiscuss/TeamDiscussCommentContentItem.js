@@ -1,5 +1,5 @@
 import React from "react";
-import defaultavatar from "../../../../Main/Image-Icons/default-avatar.png";
+import defaultavatar from "../../../../Main/Image-Icons/default-avatar.PNG";
 
 export default class TeamDiscussCommentContent extends React.Component {
   constructor(props) {
@@ -14,6 +14,7 @@ export default class TeamDiscussCommentContent extends React.Component {
           <img
             style={{ height: "28px", width: "28px", margin: "4px 0 0 0" }}
             src={defaultavatar}
+            alt="defalut-avatar"
           />
         </div>
         <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox">

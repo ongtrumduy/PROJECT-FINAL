@@ -23,7 +23,7 @@ export default class TeamMainMenu extends React.Component {
     //   alert(data.Alert);
     // });
     // this.props.socket.on("non-joined-team-call", data => {
-      this.props.updateRenderTeamControl("videocall");
+    this.props.updateRenderTeamControl("videocall");
     // });
   };
 
@@ -34,7 +34,7 @@ export default class TeamMainMenu extends React.Component {
       <div className="user-team_team-menu-and-content__menu">
         {this.props.ChooseTeamInfor.map((teaminforitem, teaminforindex) => (
           <div key={teaminforindex}>
-            <img src={teaminforitem.TeamLogo} />
+            <img src={teaminforitem.TeamLogo} alt="team-logo" />
           </div>
         ))}
         <div>

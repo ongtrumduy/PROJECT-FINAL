@@ -27,6 +27,15 @@ export default class TeamMainContent extends React.Component {
         return <TeamNotes />;
       case "settings":
         return <TeamSettings />;
+      default:
+        return (
+          <TeamDiscuss
+            MemberID={this.props.MemberID}
+            TeamID={this.props.TeamID}
+            socket={this.props.socket}
+            ChooseTeamInfor={this.props.ChooseTeamInfor}
+          />
+        );
     }
   };
 

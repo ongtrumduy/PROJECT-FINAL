@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import RemindersAllFinishedList from "./RemindersAllFinishedList";
-import RemindersAllUnfinishedList from "./RemindersAllUnfinishedList";
-import RemindersControlItem from "./RemindersControlItem";
+import RemindersAllFinishedList from "../ReminderUnAndFinished/RemindersAllFinishedList";
+import RemindersAllUnfinishedList from "../ReminderUnAndFinished/RemindersAllUnfinishedList";
+import RemindersControlItem from "../ReminderControlItem/RemindersControlItem";
 
 export default class RemindersAllList extends React.Component {
   constructor(props) {

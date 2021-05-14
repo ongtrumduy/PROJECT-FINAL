@@ -37,8 +37,8 @@ export default class TeamDiscussContentReplyInput extends React.Component {
   render() {
     return (
       <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput">
-        {this.props.TeamCommentContent.map(commentitem => (
-          <div>
+        {this.props.TeamCommentContent.map((commentitem, commemtindex) => (
+          <div key={commemtindex}>
             <TeamDiscussCommentContentItem
               MemberCommentID={commentitem.MemberCommentID}
               MemberCommentTime={commentitem.MemberCommentTime}

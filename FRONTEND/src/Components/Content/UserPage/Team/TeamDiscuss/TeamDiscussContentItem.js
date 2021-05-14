@@ -1,5 +1,5 @@
 import React from "react";
-import defaultavatar from "../../../../Main/Image-Icons/default-avatar.png";
+import defaultavatar from "../../../../Main/Image-Icons/default-avatar.PNG";
 import TeamDiscussContentReplyInput from "./TeamDiscussContentReplyInput";
 
 export default class TeamDiscussContent extends React.Component {
@@ -16,9 +16,11 @@ export default class TeamDiscussContent extends React.Component {
 
   componentDidMount = () => {
     this.props.socket.on("update-team-discuss-comment-content", data => {
-      this.setState({
-        TeamDisscussChooseCommentID: data.TeamDiscussID
-      });
+      if (this.props.TeamDiscussID === data.TeamDiscussID) {
+        this.setState({
+          TeamDisscussChooseCommentID: data.TeamDiscussID
+        });
+      }
     });
   };
 

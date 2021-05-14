@@ -13,7 +13,7 @@ export default class TeamDiscuss extends React.Component {
     this.state = {
       TeamDiscussContent: [],
       chooseTeamMemberChat: false,
-      ChoiceMemberChatID: "",
+      MemberChoiceChatID: "",
       modalIsOpen: false
     };
   }
@@ -33,9 +33,11 @@ export default class TeamDiscuss extends React.Component {
       });
 
     this.props.socket.on("update-team-discuss-content", data => {
-      this.setState({
-        TeamDiscussContent: data.TeamDiscussContent
-      });
+      if (this.props.TeamID === data.TeamID) {
+        this.setState({
+          TeamDiscussContent: data.TeamDiscussContent
+        });
+      }
     });
   };
 
@@ -50,9 +52,16 @@ export default class TeamDiscuss extends React.Component {
   setChoiceTeamMemberChatID = memberID => {
     if (this.props.MemberID !== memberID) {
       this.setState({
-        ChoiceMemberChatID: memberID
+        MemberChoiceChatID: memberID
       });
+
       this.setChooseTeamMemberChat(true);
+
+      this.props.socket.emit("get-team-member-chat-list", {
+        MemberChatID: memberID,
+        TeamID: this.props.TeamID,
+        MemberID: this.props.MemberID
+      });
     } else {
       this.openModal();
     }
@@ -76,7 +85,7 @@ export default class TeamDiscuss extends React.Component {
         />
         <TeamMemberChat
           chooseTeamMemberChat={this.state.chooseTeamMemberChat}
-          ChoiceMemberChatID={this.state.ChoiceMemberChatID}
+          MemberChoiceChatID={this.state.MemberChoiceChatID}
           setChooseTeamMemberChat={this.setChooseTeamMemberChat}
           MemberID={this.props.MemberID}
           TeamID={this.props.TeamID}
@@ -99,6 +108,7 @@ export default class TeamDiscuss extends React.Component {
               backgroundColor: "#ecf0f1"
             }
           }}
+          ariaHideApp={false}
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
         >

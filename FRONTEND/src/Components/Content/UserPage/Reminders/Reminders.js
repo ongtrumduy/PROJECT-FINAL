@@ -1,8 +1,8 @@
 import React from "react";
 import "./Reminders.css";
 
-import RemindersAllContent from "./RemindersAllContent";
-import RemindersCreateNew from "./RemindersCreateNew";
+import RemindersAllContent from "./ReminderAllContent/RemindersAllContent";
+import RemindersCreateNew from "./ReminderCreateNew/RemindersCreateNew";
 
 export default class Reminders extends React.Component {
   constructor(props) {

@@ -20,14 +20,14 @@ export default class TeamDiscussCreateNewInput extends React.Component {
       TeamID: this.props.TeamID,
       MemberDiscuss: this.state.MemberDiscuss
     });
+    this.setState({
+      MemberDiscuss: ""
+    });
   };
 
   pressEnterNewDiscuss = event => {
     if (event.key === "Enter") {
       this.sentNewDiscussCreate();
-      this.setState({
-        MemberDiscuss: ""
-      });
     }
   };
 

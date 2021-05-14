@@ -1,5 +1,5 @@
 import React from "react";
-import ChatsMessageItem from "./ChatsMessageItem";
+// import ChatsMessageItem from "./ChatsMessageItem";
 
 export default class ChatsMessageContent extends React.Component {
   constructor(props) {

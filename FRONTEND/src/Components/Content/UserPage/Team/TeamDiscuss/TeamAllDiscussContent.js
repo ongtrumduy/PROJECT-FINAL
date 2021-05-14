@@ -28,6 +28,7 @@ export default class TeamAllDiscussContent extends React.Component {
             setChoiceTeamMemberChatID={this.props.setChoiceTeamMemberChatID}
           />
         );
+      default:
     }
   };
 

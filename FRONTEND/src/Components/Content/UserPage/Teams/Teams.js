@@ -1,10 +1,10 @@
 import React from "react";
 import "./Teams.css";
-import TeamsAddCodeTeam from "./TeamsAddCodeTeam";
-import TeamsAllContent from "./TeamsAllContent";
-import TeamsCreateTeam from "./TeamsCreateTeam";
-import Team from "./../Team/Team";
-import VideoCall from "./../VideoTeamCall/VideoTeamCall";
+import TeamsAddCodeTeam from "./TeamAAndCTeam/TeamsAddCodeTeam";
+import TeamsAllContent from "./TeamAllContent/TeamsAllContent";
+import TeamsCreateTeam from "./TeamAAndCTeam/TeamsCreateTeam";
+import Team from "../Team/Team";
+import VideoCall from "../VideoTeamCall/VideoTeamCall";
 
 export default class Teams extends React.Component {
   constructor(props) {

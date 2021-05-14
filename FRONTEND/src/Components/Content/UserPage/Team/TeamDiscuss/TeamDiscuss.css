@@ -79,6 +79,7 @@
     justify-content: flex-start;
     flex-direction: row;
     cursor: pointer;
+    user-select: none;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________reply:hover {
@@ -87,7 +88,7 @@
 
 .user-team_team-menu-and-content__content___discuss____createnew {
     background-color: rgb(219, 206, 206);
-    /* height: 72px; */
+    user-select: none;
     text-align: left;
     line-height: 54px;
 }
@@ -145,6 +146,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: row;
+    user-select: none;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________send div:first-child {
@@ -236,6 +238,7 @@
     border: groove;
     height: 40px;
     background-color: rgb(252, 252, 252);
+    user-select: none;
 }
 
 .user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname______avatar img {
@@ -267,6 +270,7 @@
     flex-direction: row; */
     border: groove;
     height: 240px;
+    overflow: auto;
 }
 
 .user-team_team-menu-and-content__content___discuss____member-chat______send-message {
