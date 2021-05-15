@@ -1,7 +1,9 @@
 import React from "react";
-// import RemindersAllList from "./RemindersAllList";
+import "./ExcercisesAllContent.css";
 
-export default class RemindersAllContent extends React.Component {
+import ExcercisesAllList from "./ExcercisesAllList";
+
+export default class ExcercisesAllContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -9,12 +11,12 @@ export default class RemindersAllContent extends React.Component {
 
   render() {
     return (
-      <div className="user-reminders_all">
-        <div className="user-reminders_all__control">
-          <div className="user-reminders_all__control___title">
+      <div className="user-excercises_all">
+        <div className="user-excercises_all__control">
+          <div className="user-excercises_all__control___title">
             <p>Bộ đề - Bài tập trắc nghiệm</p>
           </div>
-          <div className="user-reminders_all__control___button">
+          <div className="user-excercises_all__control___button">
             <button
               onClick={() =>
                 this.props.updateRenderExcerciseControl("createexcercisenew")
@@ -24,11 +26,11 @@ export default class RemindersAllContent extends React.Component {
             </button>
           </div>
         </div>
-        {/* <RemindersAllList
+        <ExcercisesAllList
           MemberID={this.props.MemberID}
           socket={this.props.socket}
-          updateRenderReminderControl={this.props.updateRenderReminderControl}
-        /> */}
+          updateRenderExcerciseControl={this.props.updateRenderExcerciseControl}
+        />
       </div>
     );
   }

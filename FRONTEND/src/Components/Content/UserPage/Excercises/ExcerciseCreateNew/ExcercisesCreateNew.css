@@ -397,7 +397,11 @@
 }
 
 .user-excercises_create-new__QandA___control {
-    margin: 40px 0 0 0;
+    margin: 40px 0 0 196px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .user-excercises_create-new__QandA___control i {
@@ -406,6 +410,14 @@
     cursor: pointer;
     margin: 0 32px 0 32px;
     user-select: none;
+}
+
+.user-excercises_create-new__QandA___control input {
+    height: 32px;
+    width: 120px;
+    margin: 0 0 0 84px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .user-excercises_create-new__QandA___content___confirm-content {

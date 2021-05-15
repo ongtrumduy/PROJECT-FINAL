@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import axios from "axios";
 
 import ExcercisesQAndAContentItem from "./ExcercisesQAndAContentItem";
 import ExcercisesQAndAMainInfor from "./ExcerciseQAndAMainInfor";
@@ -15,9 +16,22 @@ export default class ExcercisesQAndAContent extends React.Component {
       checkValidateNextRight: false,
       overNumberQuestionIsOpen: false,
       checkQAContentNextQuestIsOpen: false,
-      checkTrueOrderQuestion: false
+      checkTrueOrderQuestion: false,
+      checkCompleteExcerciseIsOpen: false
     };
   }
+
+  openCheckCompleteExcerciseModal = () => {
+    this.setState({
+      checkCompleteExcerciseIsOpen: true
+    });
+  };
+
+  closeCheckCompleteExcerciseModal = () => {
+    this.setState({
+      checkCompleteExcerciseIsOpen: false
+    });
+  };
 
   openCheckQAContentNextQuestModal = () => {
     this.setState({
@@ -138,31 +152,72 @@ export default class ExcercisesQAndAContent extends React.Component {
     }
   };
 
+  sendAllQAndAExcerciseContent = () => {
+    axios
+      .post("/createnewexcercisecontent", {})
+      .then(res => {
+        // console.log(res.data);
+        this.setState({
+          checkValidate: res.data.checkValidate
+        });
+        if (res.data.checkValidate === "success-create-excercise-content") {
+          setTimeout(() => {
+            this.props.updateRenderExcerciseControl("excerciseall");
+          }, 1000);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  sendToCompleteExcercises = () => {
+    if (
+      this.state.ExcerciseQAContent.length() !==
+      this.props.ExcerciseNumberQuestion
+    ) {
+      this.openCheckCompleteExcerciseModal();
+    } else {
+      this.sendAllQAndAExcerciseContent();
+    }
+  };
+
   excerciseQAndAControl = () => {
     return (
       <div className="user-excercises_create-new__QandA___control">
-        <i
-          style={
-            this.state.checkValidatePrevLeft
-              ? { color: "gray" }
-              : { color: "blue" }
-          }
-          onClick={() => this.prevToNthQuestionOnLeft()}
-          className="material-icons"
-        >
-          &#xe5c4;
-        </i>
-        <i
-          style={
-            this.state.checkValidateNextRight
-              ? { color: "gray" }
-              : { color: "blue" }
-          }
-          onClick={() => this.nextToNthQuestionOnRight()}
-          className="material-icons"
-        >
-          &#xe5c8;
-        </i>
+        <div>
+          <i
+            style={
+              this.state.checkValidatePrevLeft
+                ? { color: "gray" }
+                : { color: "blue" }
+            }
+            onClick={() => this.prevToNthQuestionOnLeft()}
+            className="material-icons"
+          >
+            &#xe5c4;
+          </i>
+        </div>
+        <div>
+          <i
+            style={
+              this.state.checkValidateNextRight
+                ? { color: "gray" }
+                : { color: "blue" }
+            }
+            onClick={() => this.nextToNthQuestionOnRight()}
+            className="material-icons"
+          >
+            &#xe5c8;
+          </i>
+        </div>
+        <div>
+          <input
+            type="button"
+            value="Hoàn tất"
+            onClick={() => this.sendToCompleteExcercises()}
+          />
+        </div>
       </div>
     );
   };
@@ -301,6 +356,37 @@ export default class ExcercisesQAndAContent extends React.Component {
           <button
             style={{ float: "right", cursor: "pointer" }}
             onClick={() => this.closeCheckQAContentNextQuestModal()}
+          >
+            Đã hiểu!!!
+          </button>
+        </Modal>
+
+        <Modal
+          style={{
+            content: {
+              top: "50%",
+              left: "50%",
+              right: "auto",
+              bottom: "auto",
+              marginRight: "-50%",
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "#ecf0f1"
+            }
+          }}
+          ariaHideApp={false}
+          isOpen={this.state.checkCompleteExcerciseIsOpen}
+          onRequestClose={this.closeCheckCompleteExcerciseModal}
+        >
+          <div>
+            <p style={{ fontWeight: "bold", color: "red" }}>NHẮc NHỞ</p>
+            <p style={{ fontWeight: "bold" }}>
+              Bạn chưa hoàn thành nội dung cho tất cả các câu hỏi có trong Bộ đề
+              - Bài tập !!!
+            </p>
+          </div>
+          <button
+            style={{ float: "right", cursor: "pointer" }}
+            onClick={() => this.closeCheckCompleteExcerciseModal()}
           >
             Đã hiểu!!!
           </button>

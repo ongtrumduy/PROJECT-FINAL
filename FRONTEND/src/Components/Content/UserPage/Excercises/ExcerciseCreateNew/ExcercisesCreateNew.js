@@ -1,5 +1,5 @@
 import React from "react";
-import "./ExcerciseCreateNew.css";
+import "./ExcercisesCreateNew.css";
 
 import ExcercisesCreateNewMain from "./ExcercisesCreateNewMain";
 import ExcercisesQAndAContent from "./ExcercisesQAndAContent";
