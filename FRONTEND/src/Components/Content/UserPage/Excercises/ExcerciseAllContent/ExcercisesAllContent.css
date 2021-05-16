@@ -65,7 +65,7 @@
     font-weight: bold;
 }
 
-.user-excercises_all__public-list___content {
+.user-excercises_all__public-list___choice-index-content {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -78,7 +78,7 @@
     width: 99.5%;
 }
 
-.user-excercises_all__public-list___content div {
+.user-excercises_all__public-list___choice-index-content div {
     height: 260px;
     width: 260px;
     background-color: rgb(197, 194, 194);
@@ -86,6 +86,34 @@
     cursor: pointer;
 }
 
-.user-excercises_all__public-list___content div:hover {
+.user-excercises_all__public-list___choice-index-content div:hover {
     background-color: rgb(219, 219, 219);
+}
+
+.user-excercises_all__public-list___control {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.user-excercises_all__public-list___control i {
+    cursor: pointer;
+}
+
+.user-excercises_all__public-list___control____index-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.user-excercises_all__public-list___control____index-item div {
+    margin: 0 12px 0 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.user-excercises_all__public-list___control____index-item div:hover {
+    color: rgb(255, 0, 0);
 }
