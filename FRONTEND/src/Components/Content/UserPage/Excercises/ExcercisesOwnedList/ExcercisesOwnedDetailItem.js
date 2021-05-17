@@ -8,7 +8,9 @@ export default class ExcercisesOwnedDetailItem extends React.Component {
     super(props);
     this.state = {
       checkOwnedExcerciseItem: true,
-      checkConfirmDoExcercisesChoiceIsOpen: false
+      checkConfirmDoExcercisesChoiceIsOpen: false,
+      checkTimeToDoExcercise: false,
+      TimeToDoExcercise: "0"
     };
   }
 
@@ -33,6 +35,32 @@ export default class ExcercisesOwnedDetailItem extends React.Component {
       this.setState({
         checkOwnedExcerciseItem: true
       });
+    }
+  };
+
+  hanldeValueTimeToDoExcercise = event => {
+    this.setState({
+      TimeToDoExcercise: event.target.value
+    });
+  };
+
+  sentToBeginStartDoExcercise = () => {
+    if (this.state.TimeToDoExcercise === "0") {
+      this.setState({
+        checkTimeToDoExcercise: true
+      });
+    } else {
+      alert("Chuyển sang trang làm bài");
+    }
+  };
+
+  validateTimeToConfirmDoExcercise = () => {
+    if (this.state.checkTimeToDoExcercise) {
+      return (
+        <small style={{ color: "red" }}>
+          Bạn cần chọn thời gian làm Bộ đề - Bài tập trong bao lâu đã !!!
+        </small>
+      );
     }
   };
 
@@ -142,15 +170,33 @@ export default class ExcercisesOwnedDetailItem extends React.Component {
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>
             <p style={{ fontWeight: "bold" }}>
-              tên của Bộ đề - Bài tập này đã tồn tại. Vui lòng chọn một tên khác
-              cho bộ đề
+              Khi nhấn bắt đầu làm bài bạn sẽ chuyển sang giao diện làm bài và
+              bắt đầu làm các câu hỏi có trong Bộ đề - Bài tập. Bạn đã sắn sàng
+              ???
             </p>
+            <select
+              value={this.state.TimeToDoExcercise}
+              onChange={event => this.hanldeValueTimeToDoExcercise(event)}
+            >
+              <option value="0">Chọn thời gian làm bài</option>
+              <option value="15">15 phút</option>
+              <option value="30">30 phút</option>
+              <option value="45">45 phút</option>
+              <option value="60">60 phút</option>
+            </select>
           </div>
+          <div>{this.validateTimeToConfirmDoExcercise()}</div>
           <button
             style={{ float: "right", cursor: "pointer" }}
             onClick={() => this.closeConfirmDoExcercisesChoiceModal()}
           >
-            Đã hiểu!!!
+            Suy nghĩ lại!!!
+          </button>
+          <button
+            style={{ float: "right", cursor: "pointer" }}
+            onClick={() => this.sentToBeginStartDoExcercise()}
+          >
+            Bắt đầu làm bài!!!
           </button>
         </Modal>
       </div>
