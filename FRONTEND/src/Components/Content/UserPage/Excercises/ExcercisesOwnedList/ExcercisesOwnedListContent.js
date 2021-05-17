@@ -3,9 +3,9 @@ import Modal from "react-modal";
 
 import axios from "axios";
 
-import de111 from "../../../../../Main/Image-Icons/de111.PNG";
+import de111 from "../../../../Main/Image-Icons/de111.PNG";
 
-export default class ExcercisesPublicListContent extends React.Component {
+export default class ExcercisesOwnedListContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -830,7 +830,7 @@ export default class ExcercisesPublicListContent extends React.Component {
               <div
                 key={excerciseindex}
                 onClick={() =>
-                  this.props.updateRenderExcercisePublicControl("publicitem")
+                  this.props.updateRenderExcerciseOwnedControl("owneditem")
                 }
               >
                 <img

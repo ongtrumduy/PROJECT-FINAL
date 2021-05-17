@@ -1,8 +1,8 @@
 import React from "react";
 import "./Excercises.css";
 
-import ExcercisesAllContent from "./ExcerciseAllContent/ExcercisesAllContent";
-import ExcercisesCreateNew from "./ExcerciseCreateNew/ExcercisesCreateNew";
+import ExcercisesAllContent from "./ExcercisesAllContent/ExcercisesAllContent";
+import ExcercisesCreateNew from "./ExcercisesCreateNew/ExcercisesCreateNew";
 
 export default class Excercises extends React.Component {
   constructor(props) {

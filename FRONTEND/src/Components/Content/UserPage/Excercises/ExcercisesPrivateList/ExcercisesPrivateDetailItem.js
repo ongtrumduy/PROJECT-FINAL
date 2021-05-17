@@ -1,7 +1,7 @@
 import React from "react";
 
-import de110 from "../../../../../Main/Image-Icons/de110.PNG";
-export default class ExcercisesPublicDetailItem extends React.Component {
+import de110 from "../../../../Main/Image-Icons/de110.PNG";
+export default class ExcercisesPrivateDetailItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = { checkOwnedExcerciseItem: false };
@@ -21,11 +21,11 @@ export default class ExcercisesPublicDetailItem extends React.Component {
 
   render() {
     return (
-      <div className="user-excercises_all-list__public-list___public-item">
+      <div className="user-excercises_all-list__private-list___private-item">
         <div
-          className="user-excercises_all-list__public-list___public-item_____backtopubliclist"
+          className="user-excercises_all-list__private-list___private-item_____backtoprivatelist"
           onClick={() =>
-            this.props.updateRenderExcercisePublicControl("publiclist")
+            this.props.updateRenderExcercisePrivateControl("privatelist")
           }
         >
           <div>
@@ -35,12 +35,12 @@ export default class ExcercisesPublicDetailItem extends React.Component {
             <span>Quay lại</span>
           </div>
         </div>
-        <div className="user-excercises_all-list__public-list___public-item_____excercise-logo-and-content">
-          <div className="user-excercises_all-list__public-list___public-item_____excercise-logo">
+        <div className="user-excercises_all-list__private-list___private-item_____excercise-logo-and-content">
+          <div className="user-excercises_all-list__private-list___private-item_____excercise-logo">
             <img src={de110} />
             <p>Mô tả: fkasjfakakakakakakakak</p>
           </div>
-          <div className="user-excercises_all-list__public-list___public-item_____excercise-content">
+          <div className="user-excercises_all-list__private-list___private-item_____excercise-content">
             <div>
               <p>Tên Bộ đề - Bài tập &nbsp;&nbsp; : Kiến quốc vĩ nghiệp</p>
               <p>Số lượng câu hỏi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 20</p>
@@ -56,7 +56,7 @@ export default class ExcercisesPublicDetailItem extends React.Component {
                 onClick={() => this.changeCheckOwnedExcerciseItem()}
               >
                 {(this.state.checkOwnedExcerciseItem && (
-                  <div className="user-excercises_all-list__public-list___public-item____button-choose">
+                  <div className="user-excercises_all-list__private-list___private-item____button-choose">
                     <div>
                       <i className="material-icons">{"done"}</i>
                     </div>
@@ -65,7 +65,7 @@ export default class ExcercisesPublicDetailItem extends React.Component {
                     </div>
                   </div>
                 )) || (
-                  <div className="user-excercises_all-list__public-list___public-item____button-choose">
+                  <div className="user-excercises_all-list__private-list___private-item____button-choose">
                     <div>
                       <i className="material-icons">{"add"}</i>
                     </div>
