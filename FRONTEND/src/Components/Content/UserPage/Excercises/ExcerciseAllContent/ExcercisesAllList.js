@@ -1,7 +1,7 @@
 import React from "react";
 
 import ExcercisesOwnedList from "./ExcercisesOwnedList";
-import ExcercisesPublicList from "./ExcercisesPublicList";
+import ExcercisesPublicList from "./ExcercisePublicListContent/ExcercisesPublicList";
 import ExcercisesPrivateList from "./ExcercisesPrivateList";
 
 export default class ExcercisesAllList extends React.Component {
