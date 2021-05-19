@@ -50,7 +50,11 @@ export default class ExcercisesOwnedDetailItem extends React.Component {
         checkTimeToDoExcercise: true
       });
     } else {
-      alert("Chuyển sang trang làm bài");
+      this.props.updateRenderExcerciseControl("excercisedoexcercise");
+      this.props.getExcerciseIDAndTimeMemberChoice(
+        this.props.ExcerciseID,
+        this.state.TimeToDoExcercise
+      );
     }
   };
 
@@ -175,10 +179,12 @@ export default class ExcercisesOwnedDetailItem extends React.Component {
               ???
             </p>
             <select
+              style={{ cursor: "pointer", outline: "none" }}
               value={this.state.TimeToDoExcercise}
               onChange={event => this.hanldeValueTimeToDoExcercise(event)}
             >
               <option value="0">Chọn thời gian làm bài</option>
+              <option value="1">1 phút</option>
               <option value="15">15 phút</option>
               <option value="30">30 phút</option>
               <option value="45">45 phút</option>

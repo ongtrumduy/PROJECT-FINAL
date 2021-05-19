@@ -678,6 +678,7 @@ export default class ExcercisesPublicListContent extends React.Component {
   };
 
   componentDidMount = () => {
+    console.log("Sao nó lại ko ra đây nhỉ????????????");
     const allNumberOfExcerciseOnPageList = [];
     const ExcerciseListLength = this.state.AllExcercisePublicList.length;
 

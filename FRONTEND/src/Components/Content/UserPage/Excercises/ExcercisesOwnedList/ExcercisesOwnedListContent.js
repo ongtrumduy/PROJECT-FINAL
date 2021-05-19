@@ -699,6 +699,11 @@ export default class ExcercisesOwnedListContent extends React.Component {
     });
   };
 
+  choiceExcerciseOwnedItemToDetail = excerciseID => {
+    this.props.updateRenderExcerciseOwnedControl("owneditem");
+    this.props.getExcerciseOwnedIDMemberChoice(excerciseID);
+  };
+
   renderIndexOfExcerciseItemList = () => {
     const currentIndexOfIndexExcercisePage = Number(
       this.state.CurrentIndexOfIndexExcercisePage
@@ -830,7 +835,9 @@ export default class ExcercisesOwnedListContent extends React.Component {
               <div
                 key={excerciseindex}
                 onClick={() =>
-                  this.props.updateRenderExcerciseOwnedControl("owneditem")
+                  this.choiceExcerciseOwnedItemToDetail(
+                    excerciseitem.ExcerciseID
+                  )
                 }
               >
                 <img

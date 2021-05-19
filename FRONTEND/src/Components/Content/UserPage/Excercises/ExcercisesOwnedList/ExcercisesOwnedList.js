@@ -31,6 +31,9 @@ export default class ExcercisesOwnedList extends React.Component {
             updateRenderExcerciseOwnedControl={
               this.updateRenderExcerciseOwnedControl
             }
+            getExcerciseOwnedIDMemberChoice={
+              this.getExcerciseOwnedIDMemberChoice
+            }
           />
         );
       case "owneditem":
@@ -42,6 +45,12 @@ export default class ExcercisesOwnedList extends React.Component {
               this.updateRenderExcerciseOwnedControl
             }
             ExcerciseID={this.state.ExcerciseID}
+            getExcerciseIDAndTimeMemberChoice={
+              this.props.getExcerciseIDAndTimeMemberChoice
+            }
+            updateRenderExcerciseControl={
+              this.props.updateRenderExcerciseControl
+            }
           />
         );
       default:
@@ -51,6 +60,9 @@ export default class ExcercisesOwnedList extends React.Component {
             socket={this.props.socket}
             updateRenderExcerciseOwnedControl={
               this.updateRenderExcerciseOwnedControl
+            }
+            getExcerciseOwnedIDMemberChoice={
+              this.getExcerciseOwnedIDMemberChoice
             }
           />
         );

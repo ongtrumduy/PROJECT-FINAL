@@ -30,6 +30,9 @@ export default class ExcercisesAllContent extends React.Component {
           MemberID={this.props.MemberID}
           socket={this.props.socket}
           updateRenderExcerciseControl={this.props.updateRenderExcerciseControl}
+          getExcerciseIDAndTimeMemberChoice={
+            this.props.getExcerciseIDAndTimeMemberChoice
+          }
         />
       </div>
     );

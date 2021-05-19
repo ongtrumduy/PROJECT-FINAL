@@ -26,6 +26,9 @@ export default class ExcercisesAllList extends React.Component {
             updateRenderExcerciseControl={
               this.props.updateRenderExcerciseControl
             }
+            getExcerciseIDAndTimeMemberChoice={
+              this.props.getExcerciseIDAndTimeMemberChoice
+            }
           />
         );
       case "publiclist":
@@ -55,6 +58,9 @@ export default class ExcercisesAllList extends React.Component {
             socket={this.props.socket}
             updateRenderExcerciseControl={
               this.props.updateRenderExcerciseControl
+            }
+            getExcerciseIDAndTimeMemberChoice={
+              this.props.getExcerciseIDAndTimeMemberChoice
             }
           />
         );
