@@ -425,3 +425,22 @@
     background-color: rgb(219, 219, 219);
     cursor: pointer;
 }
+
+.user-excercises_do-excercise__result-excercise {
+    user-select: none;
+}
+
+.user-excercises_do-excercise__result-excercise___title {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.user-excercises_do-excercise__result-excercise___title p {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.user-excercises_do-excercise__result-excercise___content p {
+    text-align: left;
+}

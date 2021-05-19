@@ -141,38 +141,39 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
     }
   };
 
-  sendToFinishedExcerciseChoice = () => {
-    axios
-      .post("/finishedexcercisechoice", {
-        ExcerciseID: this.props.ExcerciseID,
-        ExcerciseAllAnswerContent: this.state.ExcerciseAllAnswerContent
-      })
-      .then(res => {
-        // console.log(res.data);
-        this.setState({
-          checkValidate: res.data.checkValidate
-        });
-        if (res.data.checkValidate === "success-finished-excercise-choice") {
-          setTimeout(() => {
-            this.props.updateRenderExcerciseDoExcerciseControl(
-              "finishexcercise"
-            );
-          }, 1500);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  // sendToFinishedExcerciseChoice = () => {
+  //   axios
+  //     .post("/finishedexcercisechoice", {
+  //       ExcerciseID: this.props.ExcerciseID,
+  //       ExcerciseAllAnswerContent: this.state.ExcerciseAllAnswerContent
+  //     })
+  //     .then(res => {
+  //       // console.log(res.data);
+  //       this.setState({
+  //         checkValidate: res.data.checkValidate
+  //       });
+  //       if (res.data.checkValidate === "success-finished-excercise-choice") {
+  //         setTimeout(() => {
+  //           this.props.updateRenderExcerciseDoExcerciseControl(
+  //             "finishexcercise"
+  //           );
+  //         }, 1500);
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
 
   sendToCompleteDoExcerciseChoice = () => {
     if (
-      this.state.ExcerciseQAContent.length() !==
+      this.state.ExcerciseAllAnswerContent.length !==
       this.props.ExcerciseNumberQuestion
     ) {
       this.openCheckCompleteExcerciseModal();
     } else {
-      this.sendToFinishedExcerciseChoice();
+      // this.sendToFinishedExcerciseChoice();
+      this.props.updateRenderExcerciseDoExcerciseControl("finishexcercise");
     }
   };
 
@@ -209,7 +210,7 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
           <input
             type="button"
             value="Hoàn tất"
-            onClick={() => this.sendToCompleteExcercises()}
+            onClick={() => this.sendToCompleteDoExcerciseChoice()}
           />
         </div>
       </div>
@@ -374,14 +375,24 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
             <p style={{ fontWeight: "bold", color: "red" }}>NHẮc NHỞ</p>
             <p style={{ fontWeight: "bold" }}>
               Bạn chưa hoàn thành nội dung cho tất cả các câu hỏi có trong Bộ đề
-              - Bài tập !!!
+              - Bài tập. Bạn có chính xác muốn nộp bài không ???
             </p>
           </div>
           <button
             style={{ float: "right", cursor: "pointer" }}
+            onClick={() =>
+              this.props.updateRenderExcerciseDoExcerciseControl(
+                "finishexcercise"
+              )
+            }
+          >
+            Nộp bài
+          </button>
+          <button
+            style={{ float: "right", cursor: "pointer" }}
             onClick={() => this.closeCheckCompleteExcerciseModal()}
           >
-            Đã hiểu!!!
+            Ấn nhầm!!!
           </button>
         </Modal>
         {/*================================================================================= */}

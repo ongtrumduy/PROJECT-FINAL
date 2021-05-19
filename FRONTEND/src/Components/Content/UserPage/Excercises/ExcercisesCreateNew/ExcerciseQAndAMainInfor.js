@@ -33,7 +33,10 @@ export default class ExcercisesQAndAMainInfor extends React.Component {
             <p>Số lượng câu hỏi: {this.props.ExcerciseNumberQuestion}</p>
           </div>
           <div>
-            <p>Loại Bộ đề - Bài tập: {this.props.ExcerciseType}</p>
+            <p>
+              Loại Bộ đề - Bài tập: &nbsp;
+              {this.props.ExcerciseType === "public" ? "Công khai" : "Riêng tư"}
+            </p>
           </div>
         </div>
       </div>
