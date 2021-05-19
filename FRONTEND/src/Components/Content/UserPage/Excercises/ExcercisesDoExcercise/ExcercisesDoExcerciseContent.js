@@ -58,8 +58,14 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
     });
   };
 
+  setCheckDidAnswerQuest = () => {
+    this.setState({
+      checkDidAnswerQuest: true
+    });
+  };
+
   nextToNthQuestionOnRight = () => {
-    if (!this.state.checkDidAnswerQuest) {
+    if (this.state.checkDidAnswerQuest) {
       this.openCheckDidAnswerQuestModal();
     } else {
       if (!this.state.checkValidateNextRight) {
@@ -72,28 +78,11 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
           });
         }
 
-        let nthindex = this.state.ExcerciseAllAnswerContent.findIndex(
-          nthitem => {
-            return (
-              nthitem.ExcerciseNthQuestion ===
-              Number(this.state.ExcerciseNthQuestion) + 1 + ""
-            );
-          }
-        );
-
-        if (nthindex >= 0) {
-          this.setState({
-            ExcerciseNthQuestion:
-              Number(this.state.ExcerciseNthQuestion) + 1 + "",
-            checkValidatePrevLeft: false
-          });
-        } else {
-          this.setState({
-            ExcerciseNthQuestion:
-              Number(this.state.ExcerciseNthQuestion) + 1 + "",
-            checkValidatePrevLeft: false
-          });
-        }
+        this.setState({
+          ExcerciseNthQuestion:
+            Number(this.state.ExcerciseNthQuestion) + 1 + "",
+          checkValidatePrevLeft: false
+        });
       } else {
         this.openOverNumberQuestionModal();
       }
@@ -101,7 +90,7 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
   };
 
   prevToNthQuestionOnLeft = () => {
-    if (!this.state.checkDidAnswerQuest) {
+    if (this.state.checkDidAnswerQuest) {
       this.openCheckDidAnswerQuestModal();
     } else {
       if (!this.state.checkValidatePrevLeft) {
@@ -109,31 +98,16 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
           this.setState({
             checkValidatePrevLeft: true
           });
-        } else {
-          this.setState({
-            ExcerciseNthQuestion:
-              Number(this.state.ExcerciseNthQuestion) - 1 + "",
-            checkValidateNextRight: false
-          });
         }
-      } else {
-        this.openOverNumberQuestionModal();
-      }
-    }
-    if (!this.state.checkValidatePrevLeft) {
-      if (Number(this.state.ExcerciseNthQuestion) - 1 + "" === "1") {
-        this.setState({
-          checkValidatePrevLeft: true
-        });
-      } else {
+
         this.setState({
           ExcerciseNthQuestion:
             Number(this.state.ExcerciseNthQuestion) - 1 + "",
           checkValidateNextRight: false
         });
+      } else {
+        this.openOverNumberQuestionModal();
       }
-    } else {
-      this.openOverNumberQuestionModal();
     }
   };
 
@@ -154,7 +128,7 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
       this.state.ExcerciseAllAnswerContent.splice(nthindex, 1, AnswerContent);
       this.setState({
         ExcerciseAllAnswerContent: this.state.ExcerciseAllAnswerContent,
-        checkDidAnswerQuest: true
+        checkDidAnswerQuest: false
       });
     } else {
       this.setState({
@@ -162,7 +136,7 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
           ...this.state.ExcerciseAllAnswerContent,
           AnswerContent
         ],
-        checkDidAnswerQuest: true
+        checkDidAnswerQuest: false
       });
     }
   };
@@ -249,7 +223,15 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
       );
     });
 
-    if (this.state.ExcerciseAllAnswerContent[nthindex]) {
+    let nthanswerindex = this.state.ExcerciseAllAnswerContent.findIndex(
+      questansitem => {
+        return (
+          questansitem.ExcerciseNthQuestion === this.state.ExcerciseNthQuestion
+        );
+      }
+    );
+
+    if (this.state.ExcerciseAllAnswerContent[nthanswerindex]) {
       return (
         <ExcercisesDoExcerciseContentItem
           ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
@@ -275,8 +257,10 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
             this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
           }
           ExcerciseChoiceAnswer={
-            this.state.ExcerciseAllAnswerContent[nthindex].ExcerciseChoiceAnswer
+            this.state.ExcerciseAllAnswerContent[nthanswerindex]
+              .ExcerciseChoiceAnswer
           }
+          setCheckDidAnswerQuest={this.setCheckDidAnswerQuest}
         />
       );
     } else {
@@ -305,6 +289,7 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
             this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
           }
           ExcerciseChoiceAnswer=""
+          setCheckDidAnswerQuest={this.setCheckDidAnswerQuest}
         />
       );
     }
@@ -419,8 +404,8 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>NHẮc NHỞ</p>
             <p style={{ fontWeight: "bold" }}>
-              Bạn chưa làm hoặc chưa xác nhận trả lời câu số
-              {Number(this.state.ExcerciseNthQuestion) - 1 + ""} này !!!
+              Bạn chưa xác nhận trả lời câu hỏi số &nbsp;
+              {this.state.ExcerciseNthQuestion} này !!!
             </p>
           </div>
           <button

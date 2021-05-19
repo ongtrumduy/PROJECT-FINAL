@@ -47,6 +47,9 @@ export default class ExcercisesDoExcerciseContentItem extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     });
+    if (event.target.value !== "") {
+      this.props.setCheckDidAnswerQuest();
+    }
   };
 
   handleValueExcerciseToAllAnswerContent = () => {
