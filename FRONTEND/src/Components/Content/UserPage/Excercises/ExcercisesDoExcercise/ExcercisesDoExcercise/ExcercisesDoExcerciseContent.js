@@ -141,29 +141,30 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
     }
   };
 
-  // sendToFinishedExcerciseChoice = () => {
-  //   axios
-  //     .post("/finishedexcercisechoice", {
-  //       ExcerciseID: this.props.ExcerciseID,
-  //       ExcerciseAllAnswerContent: this.state.ExcerciseAllAnswerContent
-  //     })
-  //     .then(res => {
-  //       // console.log(res.data);
-  //       this.setState({
-  //         checkValidate: res.data.checkValidate
-  //       });
-  //       if (res.data.checkValidate === "success-finished-excercise-choice") {
-  //         setTimeout(() => {
-  //           this.props.updateRenderExcerciseDoExcerciseControl(
-  //             "finishexcercise"
-  //           );
-  //         }, 1500);
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // };
+  sendToFinishedExcerciseChoice = () => {
+    axios
+      .post("/finishedexcercisechoice", {
+        ExcerciseID: this.props.ExcerciseID,
+        ExcerciseAllAnswerContent: this.state.ExcerciseAllAnswerContent
+      })
+      .then(res => {
+        // console.log(res.data);
+        this.setState({
+          checkValidate: res.data.checkValidate
+        });
+        if (res.data.checkValidate === "success-finished-excercise-choice") {
+          this.props.getExcerciseDidIDMemberDone(res.data.ExcerciseDidID);
+          setTimeout(() => {
+            this.props.updateRenderExcerciseDoExcerciseControl(
+              "finishexcercise"
+            );
+          }, 1500);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   sendToCompleteDoExcerciseChoice = () => {
     if (

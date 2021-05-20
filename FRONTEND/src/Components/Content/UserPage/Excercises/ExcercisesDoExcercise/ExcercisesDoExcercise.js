@@ -5,8 +5,9 @@ import de111 from "../../../../Main/Image-Icons/de111.PNG";
 
 import "./ExcercisesDoExcercise.css";
 
-import ExcercisesDoExcerciseContent from "./ExcercisesDoExcerciseContent";
-import ExcercisesResultExcerciseContent from "./ExcercisesResultExcerciseContent";
+import ExcercisesDoExcerciseContent from "./ExcercisesDoExcercise/ExcercisesDoExcerciseContent";
+import ExcercisesResultExcerciseContent from "./ExcercisesResultExcercise/ExcercisesResultExcerciseContent";
+import ExcercisesResultDidExcerciseContent from "./ExcercisesResultExcercise/ExcercisesResultDidExcerciseContent";
 
 export default class ExcercisesDoExcercise extends React.Component {
   constructor(props) {
@@ -103,6 +104,12 @@ export default class ExcercisesDoExcercise extends React.Component {
     });
   };
 
+  getExcerciseDidIDMemberDone = excerciseDidID => {
+    this.setState({
+      ExcerciseDidID: excerciseDidID
+    });
+  };
+
   renderExcerciseDoExcersiceDoOrFinished = () => {
     switch (this.state.chooseExcerciseDoOrFinished) {
       case "doexcercise":
@@ -115,6 +122,7 @@ export default class ExcercisesDoExcercise extends React.Component {
             updateRenderExcerciseControl={
               this.props.updateRenderExcerciseControl
             }
+            getExcerciseDidIDMemberDone={this.getExcerciseDidIDMemberDone}
             ExcerciseAllQAContent={this.state.ExcerciseAllQAContent}
             TimeToDoExcercise={this.props.TimeToDoExcercise}
             ExcerciseName={this.state.ExcerciseName}
@@ -136,6 +144,25 @@ export default class ExcercisesDoExcercise extends React.Component {
             updateRenderExcerciseControl={
               this.props.updateRenderExcerciseControl
             }
+            ExcerciseDidID={this.props.ExcerciseDidID}
+            ExcerciseID={this.props.ExcerciseID}
+            TimeToDoExcercise={this.props.TimeToDoExcercise}
+          />
+        );
+
+      case "excerciseresultdidexcercise":
+        return (
+          <ExcercisesResultDidExcerciseContent
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+            updateRenderExcerciseDoExcerciseControl={
+              this.updateRenderExcerciseDoExcerciseControl
+            }
+            updateRenderExcerciseControl={
+              this.props.updateRenderExcerciseControl
+            }
+            getExcerciseDidIDMemberDone={this.getExcerciseDidIDMemberDone}
+            ExcerciseDidID={this.props.ExcerciseDidID}
             ExcerciseID={this.props.ExcerciseID}
             TimeToDoExcercise={this.props.TimeToDoExcercise}
           />
@@ -151,6 +178,7 @@ export default class ExcercisesDoExcercise extends React.Component {
             updateRenderExcerciseControl={
               this.props.updateRenderExcerciseControl
             }
+            getExcerciseDidIDMemberDone={this.getExcerciseDidIDMemberDone}
             ExcerciseAllQAContent={this.state.ExcerciseAllQAContent}
             TimeToDoExcercise={this.props.TimeToDoExcercise}
             ExcerciseName={this.state.ExcerciseName}
