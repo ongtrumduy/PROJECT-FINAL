@@ -147,7 +147,7 @@ export default class RemindersCreateNew extends React.Component {
         <div
           className="user-excercises_create-new__main___backtoexcerciseall"
           onClick={() =>
-            this.props.updateRenderExcerciseControl("exc7erciseall")
+            this.props.updateRenderExcerciseControl("excerciseall")
           }
         >
           <div>
