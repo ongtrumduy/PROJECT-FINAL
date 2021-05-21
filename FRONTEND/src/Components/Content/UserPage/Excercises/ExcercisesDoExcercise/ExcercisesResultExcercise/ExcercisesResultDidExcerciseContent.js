@@ -114,6 +114,11 @@ export default class ExcercisesResultDidExcerciseContent extends React.Component
           ExcerciseType: res.data.ExcerciseType,
           ExcerciseLogo: res.data.ExcerciseAllQAContent
         });
+        if (res.data.ExcerciseNumberQuestion === "1") {
+          this.setState({
+            checkValidateNextRight: true
+          });
+        }
       });
   };
 
@@ -250,6 +255,31 @@ export default class ExcercisesResultDidExcerciseContent extends React.Component
             this.state.ExcerciseAllAnswerContent[nthanswerindex]
               .ExcerciseChoiceAnswer
           }
+        />
+      );
+    } else {
+      return (
+        <ExcercisesResultDidExcerciseContentItem
+          ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
+          ExcerciseCorrectAnswer={
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
+          }
+          ExcerciseQuestionContent={
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseQuestionContent
+          }
+          ExcerciseAnswerContentA={
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
+          }
+          ExcerciseAnswerContentB={
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
+          }
+          ExcerciseAnswerContentC={
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
+          }
+          ExcerciseAnswerContentD={
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
+          }
+          ExcerciseChoiceAnswer=""
         />
       );
     }

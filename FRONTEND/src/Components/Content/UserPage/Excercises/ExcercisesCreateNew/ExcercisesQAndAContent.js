@@ -21,6 +21,14 @@ export default class ExcercisesQAndAContent extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    if (this.props.ExcerciseNumberQuestion === "1") {
+      this.setState({
+        checkValidateNextRight: true
+      });
+    }
+  };
+
   openCheckCompleteExcerciseModal = () => {
     this.setState({
       checkCompleteExcerciseIsOpen: true

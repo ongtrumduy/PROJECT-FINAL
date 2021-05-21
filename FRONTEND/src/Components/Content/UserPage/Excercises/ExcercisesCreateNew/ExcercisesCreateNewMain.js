@@ -101,7 +101,7 @@ export default class RemindersCreateNew extends React.Component {
       .post("/createnewexcercisecontent", {
         ExcerciseName: this.state.ExcerciseName,
         ExcerciseDescription: this.state.ExcerciseDescription,
-        ExcerciseLogo: this.state.ExcerciseLogo,
+        ExcerciseLogo: this.state.setExcerciseLogoChoose,
         ExcerciseCreateMemberID: this.props.MemberID,
         ExcerciseType: this.state.ExcerciseType,
         ExcerciseNumberQuestion: this.state.ExcerciseNumberQuestion
