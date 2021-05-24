@@ -17,9 +17,9 @@ export default class AssignmentsAllUnfinishedList extends React.Component {
 
   render() {
     return (
-      <div className="user-reminders_all__list___finished">
+      <div className="user-assignments_all__list___finished">
         <p style={{ fontWeight: "bold" }}>Đã hoàn thành hoặc hết hạn</p>
-        {this.props.AllReminderFinishedList.map(
+        {/* {this.props.AllAssignmentFinishedList.map(
           (assignmentitem, assignmentindex) => (
             <AssignmentsUnfinishedItem
               key={assignmentindex}
@@ -41,7 +41,7 @@ export default class AssignmentsAllUnfinishedList extends React.Component {
               checkToChangeUnOrFinished={this.props.checkToChangeUnOrFinished}
             />
           )
-        )}
+        )} */}
       </div>
     );
   }

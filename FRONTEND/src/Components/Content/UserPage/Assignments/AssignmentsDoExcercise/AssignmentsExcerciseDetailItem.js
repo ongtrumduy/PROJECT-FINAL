@@ -3,11 +3,11 @@ import React from "react";
 import Modal from "react-modal";
 
 import de110 from "../../../../Main/Image-Icons/de110.PNG";
-export default class AssignmetsExcerciseDetailItem extends React.Component {
+export default class AssignmentsExcerciseDetailItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkOwnedExcerciseItem: true,
+      checkOwnedExcerciseItem: false,
       checkConfirmDoExcercisesChoiceIsOpen: false,
       checkTimeToDoExcercise: false,
       TimeToDoExcercise: "0"
@@ -50,6 +50,7 @@ export default class AssignmetsExcerciseDetailItem extends React.Component {
         checkTimeToDoExcercise: true
       });
     } else {
+      console.log("Vào đây rồi");
       this.props.updateRenderExcerciseControl("excercisedoexcercise");
       this.props.getExcerciseIDAndTimeMemberChoice(
         this.props.ExcerciseID,

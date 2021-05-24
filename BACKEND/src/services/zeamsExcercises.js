@@ -30,18 +30,22 @@ class ZeamsExcercises {
   //-----------------------------------------------------------------------------------------------------------------
 
   createNewExcercisesContent(excerciseinfor) {
+    let ExcerciseID = uuidv4();
     let newexcercisecontent = {
-      ExcerciseID: uuidv4(),
+      ExcerciseID: ExcerciseID,
       ExcerciseName: excerciseinfor.ExcerciseName,
       ExcerciseType: excerciseinfor.ExcerciseType,
       ExcerciseDescription: excerciseinfor.ExcerciseDescription,
       ExcerciseLogo: excerciseinfor.ExcerciseLogo,
+      ExcerciseNumberQuestion: excerciseinfor.ExcerciseNumberQuestion,
       ExcerciseCreateDate: moment().format("HH:mm DD-MM-YYYY"),
       ExcerciseQAContent: []
     };
 
     this.ZeamsExcercises.push(newexcercisecontent);
     this.saveDataJSON();
+
+    return ExcerciseID;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
@@ -75,15 +79,40 @@ class ZeamsExcercises {
         checkValidate: "excercisename"
       };
     } else {
+      let ExcerciseID = this.createNewExcercisesContent(excerciseinfor);
       resCheckCreateNewExcercise = {
-        checkValidate: "success-create-excercise"
+        checkValidate: "success-create-excercise",
+        ExcerciseID: ExcerciseID
       };
     }
     return resCheckCreateNewExcercise;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
+
+  createNewExcerciseQAContent(excerciseinfor) {
+    let excerciseidindex = this.ZeamsExcercises.findIndex(excerciseitem => {
+      return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+    });
+
+    let ExcerciseQAContent = excerciseinfor.ExcerciseQAContent;
+
+    this.ZeamsExcercises[
+      excerciseidindex
+    ].ExcerciseQAContent = ExcerciseQAContent;
+
+    this.saveDataJSON();
+  }
+
   //-----------------------------------------------------------------------------------------------------------------
+
+  responseCreateNewExcerciseQAContent(excerciseinfor) {
+    this.createNewExcerciseQAContent(excerciseinfor);
+    let resCreateNewExcerciseQAContent = {
+      checkValidate: "success-create-excercise-QA-content"
+    };
+    return resCreateNewExcerciseQAContent;
+  }
 
   //-----------------------------------------------------------------------------------------------------------------
 }

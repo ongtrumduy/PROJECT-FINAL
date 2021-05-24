@@ -1,12 +1,16 @@
 import React from "react";
 import axios from "axios";
 
-import AssignmentsAllUnfinishedList from "./AssignmentsAllUnfinishedList";
-import AssignmentsAllFinishedList from "./AssignmentsAllFinishedList";
+import AssignmentsAllUnfinishedList from "../AssignmentUnOrFinished/AssignmentsAllUnfinishedList";
+import AssignmentsAllFinishedList from "../AssignmentUnOrFinished/AssignmentsAllFinishedList";
 
 export default class AssignmentsAllContent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      AllAssignmentUnfinishedList: [],
+      AllAssignmentFinishedList: []
+    };
   }
 
   componentDidMount = () => {
@@ -52,7 +56,7 @@ export default class AssignmentsAllContent extends React.Component {
     return (
       <div className="user-assignments_all__list">
         <AssignmentsAllUnfinishedList
-          AllAssignmentUnfinishedList={this.state.AllReminderUnfinishedList}
+          AllAssignmentUnfinishedList={this.state.AllAssignmentUnfinishedList}
           MemberID={this.props.MemberID}
           socket={this.props.socket}
           setChooseAssignmentToCompelete={this.setChooseAssignmentToChange}
@@ -60,7 +64,7 @@ export default class AssignmentsAllContent extends React.Component {
           setCheckToChangeUnOrFinished={this.setCheckToChangeUnOrFinished}
         />
         <AssignmentsAllFinishedList
-          AllAssignmentFinishedList={this.state.AllReminderFinishedList}
+          AllAssignmentFinishedList={this.state.AllAssignmentFinishedList}
           MemberID={this.props.MemberID}
           socket={this.props.socket}
           setChooseAssignmentToCompelete={this.setChooseAssignmentToChange}

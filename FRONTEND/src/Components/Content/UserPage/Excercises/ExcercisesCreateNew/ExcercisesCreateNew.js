@@ -9,6 +9,7 @@ export default class ExcercisesCreateNew extends React.Component {
     super(props);
     this.state = {
       setExcerciseCreateNewRender: "createnewmain",
+      ExcerciseID: "",
       ExcerciseName: "",
       ExcerciseDescription: "",
       ExcerciseNumberQuestion: "",
@@ -27,13 +28,15 @@ export default class ExcercisesCreateNew extends React.Component {
     excerciseName,
     excerciseNumberQuestion,
     excerciseType,
-    excerciseLogo
+    excerciseLogo,
+    excerciseID
   ) => {
     this.setState({
       ExcerciseName: excerciseName,
       ExcerciseNumberQuestion: excerciseNumberQuestion,
       ExcerciseType: excerciseType,
-      ExcerciseLogo: excerciseLogo
+      ExcerciseLogo: excerciseLogo,
+      ExcerciseID: excerciseID
     });
   };
 
@@ -50,6 +53,7 @@ export default class ExcercisesCreateNew extends React.Component {
             updateRenderExcerciseCreateNewControl={
               this.updateRenderExcerciseCreateNewControl
             }
+            ExcerciseID={this.state.ExcerciseID}
             ExcerciseName={this.state.ExcerciseName}
             ExcerciseNumberQuestion={this.state.ExcerciseNumberQuestion}
             ExcerciseType={this.state.ExcerciseType}

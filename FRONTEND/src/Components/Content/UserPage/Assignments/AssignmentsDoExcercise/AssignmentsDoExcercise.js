@@ -1,14 +1,16 @@
 import React from "react";
+
 import ExcercisesDoExcercise from "../../Excercises/ExcercisesDoExcercise/ExcercisesDoExcercise";
-import ExcercisesDoExcerciseContent from "../../Excercises/ExcercisesDoExcercise/ExcercisesDoExcercise/ExcercisesDoExcerciseContent";
-import AssignmetsExcerciseDetailItem from "./AssignmentsExcerciseDetailItem";
+import AssignmentsExcerciseDetailItem from "./AssignmentsExcerciseDetailItem";
 
 export default class AssignmentsDoExcercise extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       checkDoExcercise: false,
-      renderAssignmentDoExcercise: "excercisedetail"
+      renderAssignmentDoExcercise: "excercisedetail",
+      ExcerciseID: "",
+      TimeToDoExcercise: "0"
     };
   }
 
@@ -22,47 +24,69 @@ export default class AssignmentsDoExcercise extends React.Component {
   updateRenderExcerciseControl = state => {
     if (state === "excerciseall") {
       this.props.updateRenderAssignmentsControl("assignmentall");
+    } else if (state === "excercisedoexcercise") {
+      this.updateRenderAssignmentDoExcercise("doexcercise");
     }
+  };
+
+  updateRenderExcerciseOwnedControl = state => {
+    if (state === "ownedlist") {
+      this.props.updateRenderAssignmentsControl("assignmentall");
+    }
+  };
+
+  updateRenderAssignmentDoExcercise = state => {
+    this.setState({
+      renderAssignmentDoExcercise: state
+    });
   };
 
   renderAssignmentDoExcercise = () => {
     switch (this.state.renderAssignmentDoExcercise) {
       case "doexcercise":
-        <ExcercisesDoExcercise
-          MemberID={this.props.MemberID}
-          socket={this.props.socket}
-          updateRenderExcerciseControl={this.updateRenderExcerciseControl}
-          TimeToDoExcercise={this.state.TimeToDoExcercise}
-          ExcerciseID={this.props.ExcerciseID}
-        />;
+        return (
+          <ExcercisesDoExcercise
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+            updateRenderExcerciseControl={this.updateRenderExcerciseControl}
+            TimeToDoExcercise={this.state.TimeToDoExcercise}
+            ExcerciseID={this.state.ExcerciseID}
+          />
+        );
       case "excercisedetail":
-        <AssignmetsExcerciseDetailItem
-          MemberID={this.props.MemberID}
-          socket={this.props.socket}
-          updateRenderExcerciseOwnedControl={
-            this.updateRenderExcerciseOwnedControl
-          }
-          ExcerciseID={this.state.ExcerciseID}
-          getExcerciseIDAndTimeMemberChoice={
-            this.props.getExcerciseIDAndTimeMemberChoice
-          }
-          updateRenderExcerciseControl={this.props.updateRenderExcerciseControl}
-        />;
+        return (
+          <AssignmentsExcerciseDetailItem
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+            updateRenderExcerciseOwnedControl={
+              this.updateRenderExcerciseOwnedControl
+            }
+            ExcerciseID={this.props.ExcerciseID}
+            getExcerciseIDAndTimeMemberChoice={
+              this.getExcerciseIDAndTimeMemberChoice
+            }
+            updateRenderExcerciseControl={this.updateRenderExcerciseControl}
+          />
+        );
       default:
-        <AssignmetsExcerciseDetailItem
-          MemberID={this.props.MemberID}
-          socket={this.props.socket}
-          updateRenderExcerciseOwnedControl={
-            this.updateRenderExcerciseOwnedControl
-          }
-          ExcerciseID={this.state.ExcerciseID}
-          getExcerciseIDAndTimeMemberChoice={
-            this.props.getExcerciseIDAndTimeMemberChoice
-          }
-          updateRenderExcerciseControl={this.props.updateRenderExcerciseControl}
-        />;
+        return (
+          <AssignmentsExcerciseDetailItem
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+            updateRenderExcerciseOwnedControl={
+              this.updateRenderExcerciseOwnedControl
+            }
+            ExcerciseID={this.props.ExcerciseID}
+            getExcerciseIDAndTimeMemberChoice={
+              this.getExcerciseIDAndTimeMemberChoice
+            }
+            updateRenderExcerciseControl={this.updateRenderExcerciseControl}
+          />
+        );
     }
   };
 
-  render() {}
+  render() {
+    return <div>{this.renderAssignmentDoExcercise()}</div>;
+  }
 }

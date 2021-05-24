@@ -5,13 +5,13 @@ export default class AssignmentsAllUnfinishedList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ReminderChoiceID: ""
+      AssignmentChoiceID: ""
     };
   }
 
-  setChooseAssignmentToChangeIcon = assigmentChoiceID => {
+  setChooseAssignmentToChangeIcon = assignmentChoiceID => {
     this.setState({
-      AssigmentChoiceID: assigmentChoiceID
+      AssignmentChoiceID: assignmentChoiceID
     });
   };
 
@@ -19,7 +19,7 @@ export default class AssignmentsAllUnfinishedList extends React.Component {
     return (
       <div className="user-assignments_all__list___finished">
         <p style={{ fontWeight: "bold" }}>Chưa hoàn thành</p>
-        {this.props.AllReminderUnfinishedList.map(
+        {/* {this.props.AllAssignmentUnfinishedList.map(
           (assignmentitem, assignmentindex) => (
             <AssignmentsUnfinishedItem
               key={assignmentindex}
@@ -41,7 +41,7 @@ export default class AssignmentsAllUnfinishedList extends React.Component {
               checkToChangeUnOrFinished={this.props.checkToChangeUnOrFinished}
             />
           )
-        )}
+        )} */}
       </div>
     );
   }

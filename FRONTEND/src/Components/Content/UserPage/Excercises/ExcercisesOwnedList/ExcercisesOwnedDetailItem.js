@@ -144,6 +144,9 @@ export default class ExcercisesOwnedDetailItem extends React.Component {
                   </div>
                 </div>
               </button>
+              <button>
+                <span>Xem Xếp hạng</span>
+              </button>
             </div>
           </div>
         </div>

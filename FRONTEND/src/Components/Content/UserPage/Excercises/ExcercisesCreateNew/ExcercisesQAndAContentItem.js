@@ -271,7 +271,8 @@ export default class ExcercisesQAndAContentItem extends React.Component {
               bottom: "auto",
               marginRight: "-50%",
               transform: "translate(-50%, -50%)",
-              backgroundColor: "#ecf0f1"
+              backgroundColor: "#ecf0f1",
+              userSelect: "none"
             }
           }}
           ariaHideApp={false}
@@ -301,7 +302,8 @@ export default class ExcercisesQAndAContentItem extends React.Component {
               bottom: "auto",
               marginRight: "-50%",
               transform: "translate(-50%, -50%)",
-              backgroundColor: "#ecf0f1"
+              backgroundColor: "#ecf0f1",
+              userSelect: "none"
             }
           }}
           ariaHideApp={false}

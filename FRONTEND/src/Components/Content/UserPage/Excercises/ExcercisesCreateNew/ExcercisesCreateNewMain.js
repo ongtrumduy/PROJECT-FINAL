@@ -29,7 +29,7 @@ import de215 from "../../../../Main/Image-Icons/de215.PNG";
 import de216 from "../../../../Main/Image-Icons/de216.PNG";
 import de217 from "../../../../Main/Image-Icons/de217.PNG";
 
-export default class RemindersCreateNew extends React.Component {
+export default class ExcercisesCreateNew extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +37,8 @@ export default class RemindersCreateNew extends React.Component {
       ExcerciseName: "",
       ExcerciseDescription: "",
       ExcerciseNumberQuestion: "1",
-      ExcerciseType: "public"
+      ExcerciseType: "public",
+      ExcerciseID: ""
     };
   }
 
@@ -111,6 +112,9 @@ export default class RemindersCreateNew extends React.Component {
           checkValidate: res.data.checkValidate
         });
         if (res.data.checkValidate === "success-create-excercise") {
+          this.setState({
+            ExcerciseID: res.data.ExcerciseID
+          });
           this.openConfirmCreateModal();
         } else if (res.data.checkValidate === "excercisename") {
           this.openValidateExcerciseNameModal();
@@ -134,7 +138,8 @@ export default class RemindersCreateNew extends React.Component {
       this.state.ExcerciseName,
       this.state.ExcerciseNumberQuestion,
       this.state.ExcerciseType,
-      this.state.setExcerciseLogoChoose
+      this.state.setExcerciseLogoChoose,
+      this.state.ExcerciseID
     );
     setTimeout(() => {
       this.props.updateRenderExcerciseCreateNewControl("createnewQAcontent");
@@ -405,7 +410,7 @@ export default class RemindersCreateNew extends React.Component {
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>
             <p style={{ fontWeight: "bold" }}>
-              tên của Bộ đề - Bài tập này đã tồn tại. Vui lòng chọn một tên khác
+              Tên của Bộ đề - Bài tập này đã tồn tại. Vui lòng chọn một tên khác
               cho bộ đề
             </p>
           </div>

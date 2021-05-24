@@ -1,5 +1,5 @@
 import React from "react";
-import RemindersItemDetailContent from "./AssignmentsItemDetailContent";
+import AssignmentsItemDetailContent from "./AssignmentsItemDetailContent";
 
 export default class AssignmentsUnfinishedItem extends React.Component {
   constructor(props) {
@@ -30,7 +30,7 @@ export default class AssignmentsUnfinishedItem extends React.Component {
   renderReminderItemDetailContent = () => {
     if (this.state.checkRenderDetail === true) {
       return (
-        <RemindersItemDetailContent
+        <AssignmentsItemDetailContent
           ReminderCreateDate={this.props.ReminderCreateDate}
           ReminderDescription={this.props.ReminderDescription}
           ReminderEndDate={this.props.ReminderEndDate}

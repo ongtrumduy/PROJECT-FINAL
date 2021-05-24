@@ -9,6 +9,8 @@ import getteamdiscussRoutes from "./getteamdiscuss";
 import getreminderlistRoutes from "./getreminderlist";
 import createnewreminderRoutes from "./createnewreminder";
 import createnewexcercisecontentRoutes from "./createnewexcercisecontent";
+import createnewexcerciseQAcontentRoutes from "./createnewexcerciseQAcontent";
+import getExcerciseOwnedListRoutes from "./getexcerciseownedlist";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -57,13 +59,13 @@ let AllRoutes = (app, corsOptions) => {
   createnewexcercisecontentRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
-  // // --------------------------ChatFriendList---------------------------------------
-  // chatfriendRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------CreateNewExcerciseQAContent---------------------------------------
+  createnewexcerciseQAcontentRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------Message---------------------------------------
-  // messageRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------GetExcerciseOwnedList---------------------------------------
+  getExcerciseOwnedListRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
   // // --------------------------UpdateImage---------------------------------------
   // updateimageRoutes(app, corsOptions);

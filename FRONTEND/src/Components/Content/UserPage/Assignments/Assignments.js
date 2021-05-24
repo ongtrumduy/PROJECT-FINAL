@@ -2,13 +2,13 @@ import React from "react";
 import "./Assignments.css";
 
 import AssignmentsAllContent from "./AssignmentsAllContent/AssignmentsAllContent";
-import ExcercisesDoExcercise from "../Excercises/ExcercisesDoExcercise/ExcercisesDoExcercise";
+import AssignmentsDoExcercise from "./AssignmentsDoExcercise/AssignmentsDoExcercise";
 
-export default class Reminders extends React.Component {
+export default class Assignments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      setAssignmentRender: "assignmentall",
+      setAssignmentRender: "doexcercise",
       ExcerciseID: "",
       TimeToDoExcercise: ""
     };
@@ -20,28 +20,14 @@ export default class Reminders extends React.Component {
     });
   };
 
-  updateRenderExcerciseControl = state => {
-    if (state === "excerciseall")
-      this.setState({
-        setAssignmentRender: "assignmentall"
-      });
-  };
-
-  getExcerciseIDAndTimeMemberChoice = (excerciseID, timeToDoExcercise) => {
-    this.setState({
-      ExcerciseID: excerciseID,
-      TimeToDoExcercise: timeToDoExcercise
-    });
-  };
-
-  renderReminderControlContent = () => {
+  renderAssignmentControlContent = () => {
     switch (this.state.setAssignmentRender) {
       case "doexcercise":
         return (
           <AssignmentsDoExcercise
             MemberID={this.props.MemberID}
             socket={this.props.socket}
-            updateRenderAssignmentsControl={this.updateRenderExcerciseControl}
+            updateRenderAssignmentsControl={this.updateRenderAssignmentsControl}
             TimeToDoExcercise={this.state.TimeToDoExcercise}
             ExcerciseID={this.state.ExcerciseID}
           />
@@ -51,21 +37,27 @@ export default class Reminders extends React.Component {
           <AssignmentsAllContent
             MemberID={this.props.MemberID}
             socket={this.props.socket}
-            updateRenderAssignmentsControl={this.updateRenderReminderControl}
-            getExcerciseIDAndTimeMemberChoice={
-              this.getExcerciseIDAndTimeMemberChoice
-            }
+            updateRenderAssignmentsControl={this.updateRenderAssignmentsControl}
           />
         );
       default:
+        // return (
+        //   <AssignmentsAllContent
+        //     MemberID={this.props.MemberID}
+        //     socket={this.props.socket}
+        //     updateRenderAssignmentsControl={this.updateRenderAssignmentsControl}
+        //     getExcerciseIDAndTimeMemberChoice={
+        //       this.getExcerciseIDAndTimeMemberChoice
+        //     }
+        //   />
+        // );
         return (
-          <AssignmentsAllContent
+          <AssignmentsDoExcercise
             MemberID={this.props.MemberID}
             socket={this.props.socket}
-            updateRenderAssignmentsControl={this.updateRenderReminderControl}
-            getExcerciseIDAndTimeMemberChoice={
-              this.getExcerciseIDAndTimeMemberChoice
-            }
+            updateRenderAssignmentsControl={this.updateRenderAssignmentsControl}
+            TimeToDoExcercise={this.state.TimeToDoExcercise}
+            ExcerciseID={this.state.ExcerciseID}
           />
         );
     }
@@ -74,7 +66,7 @@ export default class Reminders extends React.Component {
   render() {
     return (
       <div className="user-assignments">
-        {this.renderReminderControlContent()}
+        {this.renderAssignmentControlContent()}
       </div>
     );
   }
