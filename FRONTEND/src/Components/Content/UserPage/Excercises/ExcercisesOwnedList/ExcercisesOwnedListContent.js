@@ -317,7 +317,7 @@ export default class ExcercisesOwnedListContent extends React.Component {
           onRequestClose={this.closecheckOverIndexExcerciseModal}
         >
           <div>
-            <p style={{ fontWeight: "bold", color: "red" }}>NHẮc NHỞ</p>
+            <p style={{ fontWeight: "bold", color: "red" }}>NHẮC NHỞ</p>
             <p style={{ fontWeight: "bold" }}>
               Không thể vượt quá số lượng Bộ đề - Bài tập công khai!!!!
             </p>
