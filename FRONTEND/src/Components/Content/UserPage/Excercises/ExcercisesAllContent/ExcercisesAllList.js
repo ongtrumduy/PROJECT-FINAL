@@ -51,6 +51,7 @@ export default class ExcercisesAllList extends React.Component {
             }
           />
         );
+
       default:
         return (
           <ExcercisesOwnedList

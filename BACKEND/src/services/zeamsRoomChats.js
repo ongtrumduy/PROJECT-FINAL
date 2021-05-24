@@ -7,7 +7,7 @@ class ZeamsRoomChats {
     let roomchats = fs.readFileSync(
       "../BACKEND/src/databases/zeamsRoomChats.json"
     );
-    if (roomchats) {
+    if (roomchats.length > 0) {
       this.ZeamsRoomChats = JSON.parse(roomchats);
     } else {
       this.ZeamsRoomChats = [];

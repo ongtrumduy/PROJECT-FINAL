@@ -7,7 +7,7 @@ class ZeamsExcercises {
     let excercises = fs.readFileSync(
       "../BACKEND/src/databases/zeamsExcercises.json"
     );
-    if (excercises) {
+    if (excercises.length > 0) {
       this.ZeamsExcercises = JSON.parse(excercises);
     } else {
       this.ZeamsExcercises = [];

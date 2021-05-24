@@ -8,7 +8,7 @@ class ZeamsTeamsDiscuss {
     let teamsdiscuss = fs.readFileSync(
       "../BACKEND/src/databases/zeamsTeamsDiscuss.json"
     );
-    if (teamsdiscuss) {
+    if (teamsdiscuss.length > 0) {
       this.ZeamsTeamsDiscuss = JSON.parse(teamsdiscuss);
     } else {
       this.ZeamsTeamsDiscuss = [];

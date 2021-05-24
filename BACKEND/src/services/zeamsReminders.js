@@ -7,7 +7,7 @@ class ZeamsReminders {
     let reminders = fs.readFileSync(
       "../BACKEND/src/databases/zeamsReminders.json"
     );
-    if (reminders) {
+    if (reminders.length > 0) {
       this.ZeamsReminders = JSON.parse(reminders);
     } else {
       this.ZeamsReminders = [];

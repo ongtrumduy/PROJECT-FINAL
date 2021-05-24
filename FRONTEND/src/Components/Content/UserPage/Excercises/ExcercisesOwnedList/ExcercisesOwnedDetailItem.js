@@ -51,11 +51,13 @@ export default class ExcercisesOwnedDetailItem extends React.Component {
       });
     } else {
       this.props.updateRenderExcerciseControl("excercisedoexcercise");
-      this.props.getExcerciseIDAndTimeMemberChoice(
-        this.props.ExcerciseID,
-        this.state.TimeToDoExcercise
-      );
+      this.props.getExcerciseOwnedIDMemberChoice(this.props.ExcerciseID);
     }
+  };
+
+  seenExcerciseItemScoreBoard = () => {
+    this.props.getExcerciseOwnedIDMemberChoice(this.props.ExcerciseID);
+    this.props.updateRenderExcerciseOwnedControl("owneditemscoreboard");
   };
 
   validateTimeToConfirmDoExcercise = () => {
@@ -144,8 +146,18 @@ export default class ExcercisesOwnedDetailItem extends React.Component {
                   </div>
                 </div>
               </button>
-              <button>
-                <span>Xem Xếp hạng</span>
+              <button
+                style={{ margin: "0 0 0 40px" }}
+                onClick={() => this.seenExcerciseItemScoreBoard()}
+              >
+                <div className="user-excercises_all-list__owned-list___owned-item____button-choose">
+                  <div>
+                    <i className="material-icons">{"assessment"}</i>
+                  </div>
+                  <div>
+                    <span> Xem xếp hạng</span>
+                  </div>
+                </div>
               </button>
             </div>
           </div>
