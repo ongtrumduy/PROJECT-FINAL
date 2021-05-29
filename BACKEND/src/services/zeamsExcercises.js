@@ -2,6 +2,8 @@ import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 
+import zeamsExcerciseLists from "./zeamsExcerciseLists";
+
 class ZeamsExcercises {
   constructor() {
     let excercises = fs.readFileSync(
@@ -39,8 +41,22 @@ class ZeamsExcercises {
       ExcerciseLogo: excerciseinfor.ExcerciseLogo,
       ExcerciseNumberQuestion: excerciseinfor.ExcerciseNumberQuestion,
       ExcerciseCreateDate: moment().format("HH:mm DD-MM-YYYY"),
-      ExcerciseQAContent: []
+      ExcerciseAllQAContent: []
     };
+
+    let newexcercisetolistcontent = {
+      MemberID: excerciseinfor.MemberID,
+      ExcerciseID: ExcerciseID,
+      ExcerciseName: excerciseinfor.ExcerciseName,
+      ExcerciseType: excerciseinfor.ExcerciseType,
+      ExcerciseDescription: excerciseinfor.ExcerciseDescription,
+      ExcerciseLogo: excerciseinfor.ExcerciseLogo,
+      ExcerciseNumberQuestion: excerciseinfor.ExcerciseNumberQuestion
+    };
+
+    zeamsExcerciseLists.createNewExcercisesListItemContent(
+      newexcercisetolistcontent
+    );
 
     this.ZeamsExcercises.push(newexcercisecontent);
     this.saveDataJSON();
@@ -90,28 +106,70 @@ class ZeamsExcercises {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  createNewExcerciseQAContent(excerciseinfor) {
+  createNewExcerciseAllQAContent(excerciseinfor) {
     let excerciseidindex = this.ZeamsExcercises.findIndex(excerciseitem => {
       return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
     });
 
-    let ExcerciseQAContent = excerciseinfor.ExcerciseQAContent;
-
-    this.ZeamsExcercises[
-      excerciseidindex
-    ].ExcerciseQAContent = ExcerciseQAContent;
+    let ExcerciseAllQAContent = excerciseinfor.ExcerciseAllQAContent;
+    if (excerciseidindex >= 0) {
+      this.ZeamsExcercises[
+        excerciseidindex
+      ].ExcerciseAllQAContent = ExcerciseAllQAContent;
+    }
 
     this.saveDataJSON();
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
+  responseCancelCreateNewExcerciseContent(excerciseinfor) {
+    let excerciseidindex = this.ZeamsExcercises.findIndex(excerciseitem => {
+      return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+    });
+
+    this.ZeamsExcercises.splice(excerciseidindex, 1);
+    this.saveDataJSON();
+
+    zeamsExcerciseLists.removeCreateExcerciseFromList(excerciseinfor);
+
+    let resCancelCreateNewExcerciseContent = {
+      checkValidate: "remove-success"
+    };
+    return resCancelCreateNewExcerciseContent;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
   responseCreateNewExcerciseQAContent(excerciseinfor) {
-    this.createNewExcerciseQAContent(excerciseinfor);
+    this.createNewExcerciseAllQAContent(excerciseinfor);
     let resCreateNewExcerciseQAContent = {
       checkValidate: "success-create-excercise-QA-content"
     };
     return resCreateNewExcerciseQAContent;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  responseAllQuestionAnswerExcerciseItemContent(excerciseinfor) {
+    let excerciseindex = this.ZeamsExcercises.findIndex(excerciseitem => {
+      return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+    });
+    let resAllQuestionAnswerContent = {};
+
+    if (excerciseindex >= 0) {
+      let excerciseQAinfor = this.ZeamsExcercises[excerciseindex];
+
+      resAllQuestionAnswerContent = {
+        ExcerciseName: excerciseQAinfor.ExcerciseName,
+        ExcerciseNumberQuestion: excerciseQAinfor.ExcerciseNumberQuestion,
+        ExcerciseType: excerciseQAinfor.ExcerciseType,
+        ExcerciseAllQAContent: excerciseQAinfor.ExcerciseAllQAContent,
+        ExcerciseLogo: excerciseQAinfor.ExcerciseLogo
+      };
+    }
+
+    return resAllQuestionAnswerContent;
   }
 
   //-----------------------------------------------------------------------------------------------------------------

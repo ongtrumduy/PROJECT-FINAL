@@ -9,7 +9,7 @@ let createnewexcerciseQAcontentRoutes = (app, corsOptions) => {
   app.use(cors());
   app.use(bodyParser.json());
   router.post(
-    "/createnewexcerciseQAcontent",
+    "/createnewexcerciseallQAcontent",
     cors(corsOptions),
     createNewExcerciseQAContent
   );

@@ -2,7 +2,7 @@ import React from "react";
 
 import Modal from "react-modal";
 
-export default class ExcercisesQAndAContentItem extends React.Component {
+export default class ExcercisesCreateQAndAContentItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,7 +50,7 @@ export default class ExcercisesQAndAContentItem extends React.Component {
       ExcerciseAnswerContentB: this.props.ExcerciseAnswerContentB,
       ExcerciseAnswerContentC: this.props.ExcerciseAnswerContentC,
       ExcerciseAnswerContentD: this.props.ExcerciseAnswerContentD,
-      ExcerciseCorrectAnswer: this.props.ExcerciseCorrectAnswers
+      ExcerciseCorrectAnswer: ""
     });
   };
 
@@ -113,6 +113,7 @@ export default class ExcercisesQAndAContentItem extends React.Component {
           <input
             type="text"
             name="ExcerciseQuestionContent"
+            maxLength="200"
             value={
               this.props.ExcerciseQuestionContent === "" ||
               this.state.changeToEditMode
@@ -144,6 +145,7 @@ export default class ExcercisesQAndAContentItem extends React.Component {
               <input
                 type="text"
                 name="ExcerciseAnswerContentA"
+                maxLength="200"
                 value={
                   this.props.ExcerciseAnswerContentA === "" ||
                   this.state.changeToEditMode
@@ -175,6 +177,7 @@ export default class ExcercisesQAndAContentItem extends React.Component {
               <input
                 type="text"
                 name="ExcerciseAnswerContentB"
+                maxLength="200"
                 value={
                   this.props.ExcerciseAnswerContentB === "" ||
                   this.state.changeToEditMode
@@ -206,6 +209,7 @@ export default class ExcercisesQAndAContentItem extends React.Component {
               <input
                 type="text"
                 name="ExcerciseAnswerContentC"
+                maxLength="200"
                 value={
                   this.props.ExcerciseAnswerContentC === "" ||
                   this.state.changeToEditMode
@@ -237,6 +241,7 @@ export default class ExcercisesQAndAContentItem extends React.Component {
               <input
                 type="text"
                 name="ExcerciseAnswerContentD"
+                maxLength="200"
                 value={
                   this.props.ExcerciseAnswerContentD === "" ||
                   this.state.changeToEditMode

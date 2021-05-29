@@ -21,7 +21,6 @@ export default class ExcercisesResultDidExcerciseMainInfor extends React.Compone
 
   returnToExcerciseResultExcercise = () => {
     this.props.updateRenderExcerciseDoExcerciseControl("finishexcercise");
-    this.props.getExcerciseDidIDMemberDone(this.props.ExcerciseDidID);
   };
 
   render() {
@@ -38,7 +37,7 @@ export default class ExcercisesResultDidExcerciseMainInfor extends React.Compone
             <span>Quay trở lại Xem kết quả </span>
           </div>
         </div>
-        <div className="user-excercises_do-excercise__QandA-result___infor">
+        {/* <div className="user-excercises_do-excercise__QandA-result___infor">
           <div>
             <img src={this.props.ExcerciseLogo} alt="excercise-logo" />
           </div>
@@ -54,7 +53,7 @@ export default class ExcercisesResultDidExcerciseMainInfor extends React.Compone
               {this.props.ExcerciseType === "public" ? "Công khai" : "Riêng tư"}
             </p>
           </div>
-        </div>
+        </div> */}
 
         <Modal
           style={{

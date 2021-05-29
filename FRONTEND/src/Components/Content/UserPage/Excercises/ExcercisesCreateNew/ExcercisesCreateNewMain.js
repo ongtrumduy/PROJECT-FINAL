@@ -100,6 +100,7 @@ export default class ExcercisesCreateNew extends React.Component {
   sentToCreateNewReminder = () => {
     axios
       .post("/createnewexcercisecontent", {
+        MemberID: this.props.MemberID,
         ExcerciseName: this.state.ExcerciseName,
         ExcerciseDescription: this.state.ExcerciseDescription,
         ExcerciseLogo: this.state.setExcerciseLogoChoose,
@@ -170,6 +171,7 @@ export default class ExcercisesCreateNew extends React.Component {
                 <input
                   type="text"
                   name="ExcerciseName"
+                  maxLength="200"
                   onChange={event => this.handleValueCreateNewExcercise(event)}
                   placeholder="Nhập tên nhóm..."
                 />

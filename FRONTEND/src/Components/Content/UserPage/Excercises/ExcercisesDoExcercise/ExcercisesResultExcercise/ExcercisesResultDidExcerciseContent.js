@@ -9,84 +9,8 @@ export default class ExcercisesResultDidExcerciseContent extends React.Component
   constructor(props) {
     super(props);
     this.state = {
-      ExcerciseAllAnswerContent: [
-        {
-          ExcerciseNthQuestion: "4",
-          ExcerciseChoiceAnswer: "A"
-        },
-        {
-          ExcerciseNthQuestion: "2",
-          ExcerciseChoiceAnswer: "A"
-        },
-        {
-          ExcerciseNthQuestion: "5",
-          ExcerciseChoiceAnswer: "C"
-        },
-        {
-          ExcerciseNthQuestion: "3",
-          ExcerciseChoiceAnswer: "D"
-        },
-        {
-          ExcerciseNthQuestion: "1",
-          ExcerciseChoiceAnswer: "B"
-        }
-      ],
-      ExcerciseAllQAContent: [
-        {
-          ExcerciseNthQuestion: "1",
-          ExcerciseQuestionContent: "Thuộc tính CSS nào sau đây viết sai?",
-          ExcerciseAnswerContentA:
-            "A.	border: 1px solid rgba(0.1, 0.1, 0.1, 1);",
-          ExcerciseAnswerContentB: "B.	width: calc(100px + 100%);",
-          ExcerciseAnswerContentC: "C.	z-index: -999;",
-          ExcerciseAnswerContentD:
-            "D.	background-image: src(‘/images/title.png’);",
-          ExcerciseCorrectAnswer: "D"
-        },
-        {
-          ExcerciseNthQuestion: "2",
-          ExcerciseQuestionContent:
-            ": Điều nào sau đây là đúng khi nói về REST?",
-          ExcerciseAnswerContentA:
-            "A.	Chỉ hỗ trợ duy nhất giao thức truyền tải HTTP",
-          ExcerciseAnswerContentB: "B.	Là viết tắt của REquest State Transfer",
-          ExcerciseAnswerContentC:
-            "C.	Chỉ hỗ trợ gói tin định dạng XML hoặc JSON",
-          ExcerciseAnswerContentD: "D.	Làs giao thức có trạng thái ",
-          ExcerciseCorrectAnswer: "A"
-        },
-        {
-          ExcerciseNthQuestion: "3",
-          ExcerciseQuestionContent:
-            "HTTP response status code là 401 có nghĩa là gì",
-          ExcerciseAnswerContentA: "a.	Ok",
-          ExcerciseAnswerContentB: "b.	Not found",
-          ExcerciseAnswerContentC: "c.	Bad request",
-          ExcerciseAnswerContentD: "d.	Unauthorized",
-          ExcerciseCorrectAnswer: "D"
-        },
-        {
-          ExcerciseNthQuestion: "4",
-          ExcerciseQuestionContent:
-            ". Với SOAP, chúng ta có thể dùng Message Format nào?",
-          ExcerciseAnswerContentA: "a.	XML",
-          ExcerciseAnswerContentB: "b.	Json",
-          ExcerciseAnswerContentC: "c.	Plain Text",
-          ExcerciseAnswerContentD: "d.	Tất cả",
-          ExcerciseCorrectAnswer: "A"
-        },
-        {
-          ExcerciseNthQuestion: "5",
-          ExcerciseQuestionContent: "Thuộc tính CSS nào sau đây viết sai?",
-          ExcerciseAnswerContentA:
-            "A.	border: 1px solid rgba(0.1, 0.1, 0.1, 1);",
-          ExcerciseAnswerContentB: "B.	width: calc(100px + 100%);",
-          ExcerciseAnswerContentC: "C.	z-index: -999;",
-          ExcerciseAnswerContentD:
-            "D.	background-image: src(‘/images/title.png’);",
-          ExcerciseCorrectAnswer: "D"
-        }
-      ],
+      ExcerciseAllAnswerContent: [],
+      ExcerciseAllQAContent: [],
       ExcerciseNthQuestion: "1",
       ExcerciseName: "",
       ExcerciseNumberQuestion: "",
@@ -99,27 +23,20 @@ export default class ExcercisesResultDidExcerciseContent extends React.Component
   }
 
   componentDidMount = () => {
-    axios
-      .post("./getexcercisedidresult", {
-        ExcerciseID: this.props.ExcerciseID,
-        ExcerciseDidID: this.props.ExcerciseDidID
-      })
-      .then(res => {
-        console.log(res.data);
-        this.setState({
-          ExcerciseAllAnswerContent: res.data.ExcerciseAllAnswerContent,
-          ExcerciseAllQAContent: res.data.ExcerciseAllQAContent,
-          ExcerciseName: res.data.ExcerciseName,
-          ExcerciseNumberQuestion: res.data.ExcerciseNumberQuestion,
-          ExcerciseType: res.data.ExcerciseType,
-          ExcerciseLogo: res.data.ExcerciseAllQAContent
-        });
-        if (res.data.ExcerciseNumberQuestion === "1") {
-          this.setState({
-            checkValidateNextRight: true
-          });
-        }
-      });
+    console.log("Cho sang bên này cái đi ", this.props.ExcerciseAllQAContent);
+    console.log(
+      "Cho sang bên này tiếp thử phát cái đi ",
+      this.props.ExcerciseAllAnswerContent
+    );
+
+    this.setState({
+      ExcerciseAllQAContent: this.props.ExcerciseAllQAContent,
+      ExcerciseAllAnswerContent: this.props.ExcerciseAllAnswerContent,
+      ExcerciseName: this.props.ExcerciseName,
+      ExcerciseNumberQuestion: this.props.ExcerciseNumberQuestion,
+      ExcerciseType: this.props.ExcerciseType,
+      ExcerciseLogo: this.props.ExcerciseLogo
+    });
   };
 
   openOverNumberQuestionModal = () => {
@@ -221,67 +138,71 @@ export default class ExcercisesResultDidExcerciseContent extends React.Component
       );
     });
 
-    let nthanswerindex = this.state.ExcerciseAllAnswerContent.findIndex(
-      questansitem => {
+    if (nthindex >= 0) {
+      let nthanswerindex = this.state.ExcerciseAllAnswerContent.findIndex(
+        questansitem => {
+          return (
+            questansitem.ExcerciseNthQuestion ===
+            this.state.ExcerciseNthQuestion
+          );
+        }
+      );
+      if (this.state.ExcerciseAllAnswerContent[nthanswerindex]) {
         return (
-          questansitem.ExcerciseNthQuestion === this.state.ExcerciseNthQuestion
+          <ExcercisesResultDidExcerciseContentItem
+            ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
+            ExcerciseCorrectAnswer={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
+            }
+            ExcerciseQuestionContent={
+              this.state.ExcerciseAllQAContent[nthindex]
+                .ExcerciseQuestionContent
+            }
+            ExcerciseAnswerContentA={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
+            }
+            ExcerciseAnswerContentB={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
+            }
+            ExcerciseAnswerContentC={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
+            }
+            ExcerciseAnswerContentD={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
+            }
+            ExcerciseChoiceAnswer={
+              this.state.ExcerciseAllAnswerContent[nthanswerindex]
+                .ExcerciseChoiceAnswer
+            }
+          />
+        );
+      } else {
+        return (
+          <ExcercisesResultDidExcerciseContentItem
+            ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
+            ExcerciseCorrectAnswer={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
+            }
+            ExcerciseQuestionContent={
+              this.state.ExcerciseAllQAContent[nthindex]
+                .ExcerciseQuestionContent
+            }
+            ExcerciseAnswerContentA={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
+            }
+            ExcerciseAnswerContentB={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
+            }
+            ExcerciseAnswerContentC={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
+            }
+            ExcerciseAnswerContentD={
+              this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
+            }
+            ExcerciseChoiceAnswer=""
+          />
         );
       }
-    );
-
-    if (this.state.ExcerciseAllAnswerContent[nthanswerindex]) {
-      return (
-        <ExcercisesResultDidExcerciseContentItem
-          ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
-          ExcerciseCorrectAnswer={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
-          }
-          ExcerciseQuestionContent={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseQuestionContent
-          }
-          ExcerciseAnswerContentA={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
-          }
-          ExcerciseAnswerContentB={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
-          }
-          ExcerciseAnswerContentC={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
-          }
-          ExcerciseAnswerContentD={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
-          }
-          ExcerciseChoiceAnswer={
-            this.state.ExcerciseAllAnswerContent[nthanswerindex]
-              .ExcerciseChoiceAnswer
-          }
-        />
-      );
-    } else {
-      return (
-        <ExcercisesResultDidExcerciseContentItem
-          ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
-          ExcerciseCorrectAnswer={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
-          }
-          ExcerciseQuestionContent={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseQuestionContent
-          }
-          ExcerciseAnswerContentA={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
-          }
-          ExcerciseAnswerContentB={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
-          }
-          ExcerciseAnswerContentC={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
-          }
-          ExcerciseAnswerContentD={
-            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
-          }
-          ExcerciseChoiceAnswer=""
-        />
-      );
     }
   };
 
@@ -295,11 +216,11 @@ export default class ExcercisesResultDidExcerciseContent extends React.Component
           updateRenderExcerciseDoExcerciseControl={
             this.props.updateRenderExcerciseDoExcerciseControl
           }
-          getExcerciseDidIDMemberDone={this.props.getExcerciseDidIDMemberDone}
-          ExcerciseName={this.state.ExcerciseName}
-          ExcerciseNumberQuestion={this.state.ExcerciseNumberQuestion}
-          ExcerciseType={this.state.ExcerciseType}
-          ExcerciseLogo={this.state.ExcerciseLogo}
+          ExcerciseID={this.props.ExcerciseID}
+          // ExcerciseName={this.state.ExcerciseName}
+          // ExcerciseNumberQuestion={this.state.ExcerciseNumberQuestion}
+          // ExcerciseType={this.state.ExcerciseType}
+          // ExcerciseLogo={this.state.ExcerciseLogo}
         />
 
         {this.renderExcercisesResultDidExcerciseContentItem()}

@@ -4,7 +4,7 @@ let CreateNewExcerciseContent = async (req, res) => {
   let resCreateNewExcerciseContent = await zeamsExcercises.responseCheckCreateNewExcerciseContent(
     req.body
   );
-  console.log(resCreateNewExcerciseContent);
+  // console.log(resCreateNewExcerciseContent);
   res.send(resCreateNewExcerciseContent);
 };
 

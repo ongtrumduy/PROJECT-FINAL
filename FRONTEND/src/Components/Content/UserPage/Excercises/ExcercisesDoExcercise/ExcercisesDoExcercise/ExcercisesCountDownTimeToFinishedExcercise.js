@@ -46,7 +46,7 @@ export default class ExcercisesCountDownTimeToFinishedExcercise extends React.Co
       if (minutes === 0 && seconds === 0) {
         this.openCheckAlerTimeUpModal();
         setTimeout(() => {
-          this.props.updateRenderExcerciseDoExcerciseControl("finishexcercise");
+          this.props.sendToFinishedExcerciseChoice();
         }, 1000);
       }
     }, 1000);

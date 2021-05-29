@@ -2,7 +2,7 @@ import createnewdiscussSocket from "./createnewdiscuss";
 import setstartvideocallSocket from "./setstartvideocall";
 import changeremindertounandfinishedSocket from "./changeremindertounandfinished";
 import getteammemberchatlistSocket from "./getteammemberchatlist";
-// import friendonlineSocket from "./friendonline";
+import updatestatusaddremoveexcerciseitemSocket from "./updatestatusaddremoveexcerciseitem";
 // import waituserSocket from "./waituserlist";
 // import friendlistSocket from "./userfriendlist";
 // import adminstatisticSocket from "./adminstatistic";
@@ -36,9 +36,9 @@ let AllSockets = io => {
   getteammemberchatlistSocket(io);
   //--------------------------------------------------------------------------
 
-  // // --------------------------FriendOnline--------------------------------------
-  // friendonlineSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------UpdateStatusAddRemoveExcerciseItem--------------------------------------
+  updatestatusaddremoveexcerciseitemSocket(io);
+  //--------------------------------------------------------------------------
 
   // // --------------------------WaitUserList--------------------------------------
   // waituserSocket(io);

@@ -104,6 +104,7 @@ export default class Login extends React.Component {
             <input
               type="text"
               name="Username"
+              maxLength="20"
               onChange={event => this.handleValueChange(event)}
               value={this.state.Username}
               onKeyPress={this.pressEnterUsername}
@@ -118,6 +119,7 @@ export default class Login extends React.Component {
             <input
               style={{ width: "240px" }}
               name="PassWord"
+              maxLength="20"
               type={(this.state.setHiddenPass && "text") || "password"}
               onChange={event => this.handleValueChange(event)}
               value={this.state.PassWord}

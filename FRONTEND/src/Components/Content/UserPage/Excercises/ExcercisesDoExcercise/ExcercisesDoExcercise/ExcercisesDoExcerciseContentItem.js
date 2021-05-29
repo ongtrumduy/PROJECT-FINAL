@@ -63,7 +63,8 @@ export default class ExcercisesDoExcerciseContentItem extends React.Component {
   confirmValueToSendToAnswerContent = () => {
     this.props.getAllAnswerExcerciseOfMemberContent(
       this.props.ExcerciseNthQuestion,
-      this.state.ExcerciseChoiceAnswer
+      this.state.ExcerciseChoiceAnswer,
+      this.props.ExcerciseCorrectAnswer
     );
     this.setState({
       changeToEditMode: false

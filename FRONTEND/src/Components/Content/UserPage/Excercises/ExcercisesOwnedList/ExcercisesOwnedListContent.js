@@ -3,18 +3,17 @@ import Modal from "react-modal";
 
 import axios from "axios";
 
-import de111 from "../../../../Main/Image-Icons/de111.PNG";
-
 export default class ExcercisesOwnedListContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      AllExcerciseOwnedList: [],
+      CurrentExcerciseChoiceOwnedList: [],
       NumberExcerciseOnPage: "3",
       NumberIndexExcerciseOnPage: "5",
       CurrentIndexExcercisePage: "1",
       CurrentIndexOfIndexExcercisePage: "1",
-      AllNumberOfExcerciseOnPageList: [],
+      AllNumberExcercise: "",
+      AllNumberOfIndexExcerciseOnPageList: [],
       checkValidatePrevLeft: true,
       checkValidateNextRight: false,
       overIndexExcerciseIsOpen: false
@@ -42,23 +41,65 @@ export default class ExcercisesOwnedListContent extends React.Component {
         NumberIndexExcerciseOnPage: this.state.NumberIndexExcerciseOnPage
       })
       .then(res => {
-        console.log(res.data);
+        console.log("ra cái res.data", res.data);
+        let allNumberOfIndexExcerciseOnPageList = [];
+        let excerciselistlength = res.data.AllNumberExcercise;
+
+        let allNumberOfExcercise = Math.ceil(
+          excerciselistlength / Number(this.state.NumberExcerciseOnPage)
+        );
+
+        for (let i = 1; i <= allNumberOfExcercise; i++) {
+          allNumberOfIndexExcerciseOnPageList.push(i + "");
+        }
+        this.setState({
+          AllNumberOfIndexExcerciseOnPageList: allNumberOfIndexExcerciseOnPageList,
+          AllNumberExcercise: res.data.AllNumberExcercise,
+          CurrentExcerciseChoiceOwnedList:
+            res.data.CurrentExcerciseChoiceOwnedList
+        });
       })
       .catch(error => console.log(error));
 
-    const allNumberOfExcerciseOnPageList = [];
-    const ExcerciseListLength = this.state.AllExcerciseOwnedList.length;
+    this.mounted = true;
 
-    const allNumberOfExcercise = Math.ceil(
-      ExcerciseListLength / Number(this.state.NumberExcerciseOnPage)
-    );
-
-    for (let i = 1; i <= allNumberOfExcercise; i++) {
-      allNumberOfExcerciseOnPageList.push(i + "");
-    }
-    this.setState({
-      AllNumberOfExcerciseOnPageList: allNumberOfExcerciseOnPageList
+    this.props.socket.on("send-to-update-excercise-owned-list", data => {
+      if (data.MemberID === this.props.MemberID) {
+        this.props.socket.emit("receive-to-update-excercise-owned-list", {
+          MemberID: this.props.MemberID,
+          CurrentIndexExcercisePage: this.state.CurrentIndexExcercisePage,
+          NumberExcerciseOnPage: this.state.NumberExcerciseOnPage,
+          NumberIndexExcerciseOnPage: this.state.NumberIndexExcerciseOnPage
+        });
+      }
     });
+
+    this.props.socket.on("update-excercise-owned-list", data => {
+      if (this.mounted) {
+        if (data.MemberID === this.props.MemberID) {
+          let allNumberOfIndexExcerciseOnPageList = [];
+          let excerciselistlength = data.AllNumberExcercise;
+
+          let allNumberOfExcercise = Math.ceil(
+            excerciselistlength / Number(this.state.NumberExcerciseOnPage)
+          );
+
+          for (let i = 1; i <= allNumberOfExcercise; i++) {
+            allNumberOfIndexExcerciseOnPageList.push(i + "");
+          }
+          this.setState({
+            AllNumberOfIndexExcerciseOnPageList: allNumberOfIndexExcerciseOnPageList,
+            AllNumberExcercise: data.AllNumberExcercise,
+            CurrentExcerciseChoiceOwnedList:
+              data.CurrentExcerciseChoiceOwnedList
+          });
+        }
+      }
+    });
+  };
+
+  componentWillUnmount = () => {
+    this.mounted = false;
   };
 
   chooseIndexExcercisePage = event => {
@@ -68,36 +109,39 @@ export default class ExcercisesOwnedListContent extends React.Component {
   };
 
   choiceExcerciseOwnedItemToDetail = excerciseID => {
-    this.props.updateRenderExcerciseOwnedControl("owneditem");
     this.props.getExcerciseOwnedIDMemberChoice(excerciseID);
+
+    setTimeout(() => {
+      this.props.updateRenderExcerciseOwnedControl("owneditem");
+    }, 200);
   };
 
   renderIndexOfExcerciseItemList = () => {
-    const currentIndexOfIndexExcercisePage = Number(
+    let currentIndexOfIndexExcercisePage = Number(
       this.state.CurrentIndexOfIndexExcercisePage
     );
-    const numberIndexExcerciseOnPage = Number(
+    let numberIndexExcerciseOnPage = Number(
       this.state.NumberIndexExcerciseOnPage
     );
 
-    const indexOfLastIndexExcerciseList =
+    let indexOfLastIndexExcerciseList =
       currentIndexOfIndexExcercisePage * numberIndexExcerciseOnPage;
 
-    const indexOfFirstIndexExcerciseList =
+    let indexOfFirstIndexExcerciseList =
       indexOfLastIndexExcerciseList - numberIndexExcerciseOnPage;
 
-    const currentIndexOfChoiceIndexExcerciseList = this.state.AllNumberOfExcerciseOnPageList.slice(
+    let currentIndexOfChoiceIndexExcerciseList = this.state.AllNumberOfIndexExcerciseOnPageList.slice(
       indexOfFirstIndexExcerciseList,
       indexOfLastIndexExcerciseList
     );
 
-    const allNumberOfIndexOfExcercise = Math.ceil(
-      this.state.AllNumberOfExcerciseOnPageList.length /
+    let allNumberOfIndexOfExcercise = Math.ceil(
+      this.state.AllNumberOfIndexExcerciseOnPageList.length /
         numberIndexExcerciseOnPage
     );
 
     if (
-      (this.state.AllNumberOfExcerciseOnPageList.length %
+      (this.state.AllNumberOfIndexExcerciseOnPageList.length %
         numberIndexExcerciseOnPage ===
         0 &&
         currentIndexOfIndexExcercisePage === allNumberOfIndexOfExcercise) ||
@@ -179,49 +223,29 @@ export default class ExcercisesOwnedListContent extends React.Component {
   };
 
   renderChooseIndexExcercisePublicList = () => {
-    const currentIndexExcercisePage = Number(
-      this.state.CurrentIndexExcercisePage
-    );
-    const numberExcerciseOnPage = Number(this.state.NumberExcerciseOnPage);
-
-    const indexOfLastExcerciseList =
-      currentIndexExcercisePage * numberExcerciseOnPage;
-
-    const indexOfFirstExcerciseList =
-      indexOfLastExcerciseList - numberExcerciseOnPage;
-
-    const currentChoiceIndexExcerciseList = this.state.AllExcerciseOwnedList.slice(
-      indexOfFirstExcerciseList,
-      indexOfLastExcerciseList
-    );
-
     return (
       <div className="user-excercises_all__public-list___choice-index-content">
-        {currentChoiceIndexExcerciseList.map(excerciseitem =>
-          excerciseitem.ExcerciseInfor.map(
-            (excercisenameitem, excerciseindex) => (
-              <div
-                key={excerciseindex}
-                onClick={() =>
-                  this.choiceExcerciseOwnedItemToDetail(
-                    excerciseitem.ExcerciseID
-                  )
-                }
-              >
-                <img
-                  style={{
-                    height: "120px",
-                    width: "120px",
-                    margin: "32px 0 0 0"
-                  }}
-                  alt="team-logo"
-                  src={de111}
-                />
-                <p style={{ fontWeight: "bold" }}>
-                  {excercisenameitem.ExcerciseName}
-                </p>
-              </div>
-            )
+        {this.state.CurrentExcerciseChoiceOwnedList.map(
+          (excerciseitem, excerciseindex) => (
+            <div
+              key={excerciseindex}
+              onClick={() =>
+                this.choiceExcerciseOwnedItemToDetail(excerciseitem.ExcerciseID)
+              }
+            >
+              <img
+                style={{
+                  height: "120px",
+                  width: "120px",
+                  margin: "32px 0 0 0"
+                }}
+                alt="team-logo"
+                src={excerciseitem.ExcerciseLogo}
+              />
+              <p style={{ fontWeight: "bold" }}>
+                {excerciseitem.ExcerciseName}
+              </p>
+            </div>
           )
         )}
       </div>
@@ -229,7 +253,7 @@ export default class ExcercisesOwnedListContent extends React.Component {
   };
 
   prevToIndexExcerciseOnLeft = () => {
-    const numberIndexExcerciseOnPage = Number(
+    let numberIndexExcerciseOnPage = Number(
       this.state.NumberIndexExcerciseOnPage
     );
 
@@ -256,12 +280,12 @@ export default class ExcercisesOwnedListContent extends React.Component {
   };
 
   nextToIndexExcerciseOnRight = () => {
-    const numberIndexExcerciseOnPage = Number(
+    let numberIndexExcerciseOnPage = Number(
       this.state.NumberIndexExcerciseOnPage
     );
 
-    const allNumberOfIndexOfExcercise = Math.ceil(
-      this.state.AllNumberOfExcerciseOnPageList.length /
+    let allNumberOfIndexOfExcercise = Math.ceil(
+      this.state.AllNumberOfIndexExcerciseOnPageList.length /
         numberIndexExcerciseOnPage
     );
 
@@ -290,15 +314,30 @@ export default class ExcercisesOwnedListContent extends React.Component {
     }
   };
 
+  renderExcerciseOwnedListContent = () => {
+    if (this.state.AllNumberExcercise === 0) {
+      return (
+        <div style={{ textAlign: "center", fontWeight: "bold" }}>
+          <p>Chưa có Bộ đề - Bài tập nào trong danh sách</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="user-excercises_all__public-list___content">
+          {this.renderChooseIndexExcercisePublicList()}
+          {this.selectIndexForRenderExcerciseItem()}
+        </div>
+      );
+    }
+  };
+
   render() {
     return (
       <div className="user-excercises_all__public-list">
         <div className="user-excercises_all__public-list___title">
-          <p>Bộ đề - Bài tập Công khai</p>
+          <p>Bộ đề - Bài tập Sở hữu</p>
         </div>
-        {this.renderChooseIndexExcercisePublicList()}
-        {this.selectIndexForRenderExcerciseItem()}
-
+        {this.renderExcerciseOwnedListContent()}
         <Modal
           style={{
             content: {

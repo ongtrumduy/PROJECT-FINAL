@@ -57,6 +57,14 @@
     align-items: flex-start;
 }
 
+.user-excercises_all__public-list___content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
 .user-excercises_all__public-list___title {
     margin: 0 0 0 28px;
 }

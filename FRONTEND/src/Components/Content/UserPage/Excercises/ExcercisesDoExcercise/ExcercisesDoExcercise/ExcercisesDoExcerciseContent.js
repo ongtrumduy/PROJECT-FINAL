@@ -121,11 +121,13 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
 
   getAllAnswerExcerciseOfMemberContent = (
     excerciseNthQuestion,
-    excerciseChoiceAnswer
+    excerciseChoiceAnswer,
+    excerciseCorrectAnswer
   ) => {
     let AnswerContent = {
       ExcerciseNthQuestion: excerciseNthQuestion,
-      ExcerciseChoiceAnswer: excerciseChoiceAnswer
+      ExcerciseChoiceAnswer: excerciseChoiceAnswer,
+      ExcerciseCorrectAnswer: excerciseCorrectAnswer
     };
     let nthindex = this.state.ExcerciseAllAnswerContent.findIndex(
       answeritem => {
@@ -151,17 +153,21 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
 
   sendToFinishedExcerciseChoice = () => {
     axios
-      .post("/finishedexcercisechoice", {
+      .post("/finishedexcercisechoiceanswer", {
         ExcerciseID: this.props.ExcerciseID,
+        MemberID: this.props.MemberID,
+        TimeToDoExcercise: this.props.TimeToDoExcercise,
         ExcerciseAllAnswerContent: this.state.ExcerciseAllAnswerContent
       })
       .then(res => {
-        // console.log(res.data);
+        console.log("Ra data về ", res.data);
         this.setState({
           checkValidate: res.data.checkValidate
         });
         if (res.data.checkValidate === "success-finished-excercise-choice") {
-          this.props.getExcerciseDidIDMemberDone(res.data.ExcerciseDidID);
+          this.props.getExcerciseMemberDidResultOfThisExcercise(
+            res.data.ExcerciseMemberDidResult
+          );
           setTimeout(() => {
             this.props.updateRenderExcerciseDoExcerciseControl(
               "finishexcercise"
@@ -172,18 +178,10 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
       .catch(error => {
         console.log(error);
       });
-  };
 
-  sendToCompleteDoExcerciseChoice = () => {
-    if (
-      this.state.ExcerciseAllAnswerContent.length !==
-      this.props.ExcerciseNumberQuestion
-    ) {
-      this.openCheckCompleteExcerciseModal();
-    } else {
-      // this.sendToFinishedExcerciseChoice();
-      this.props.updateRenderExcerciseDoExcerciseControl("finishexcercise");
-    }
+    this.props.getAllChoiceAndCorrectAnswerList(
+      this.state.ExcerciseAllAnswerContent
+    );
   };
 
   excerciseDoExcerciseControl = () => {
@@ -219,7 +217,7 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
           <input
             type="button"
             value="Hoàn tất"
-            onClick={() => this.sendToCompleteDoExcerciseChoice()}
+            onClick={() => this.openCheckCompleteExcerciseModal()}
           />
         </div>
       </div>
@@ -233,75 +231,80 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
       );
     });
 
-    let nthanswerindex = this.state.ExcerciseAllAnswerContent.findIndex(
-      questansitem => {
+    if (nthindex >= 0) {
+      let nthanswerindex = this.state.ExcerciseAllAnswerContent.findIndex(
+        questansitem => {
+          return (
+            questansitem.ExcerciseNthQuestion ===
+            this.state.ExcerciseNthQuestion
+          );
+        }
+      );
+
+      if (this.state.ExcerciseAllAnswerContent[nthanswerindex]) {
         return (
-          questansitem.ExcerciseNthQuestion === this.state.ExcerciseNthQuestion
+          <ExcercisesDoExcerciseContentItem
+            ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
+            getAllAnswerExcerciseOfMemberContent={
+              this.getAllAnswerExcerciseOfMemberContent
+            }
+            ExcerciseCorrectAnswer={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
+            }
+            ExcerciseQuestionContent={
+              this.props.ExcerciseAllQAContent[nthindex]
+                .ExcerciseQuestionContent
+            }
+            ExcerciseAnswerContentA={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
+            }
+            ExcerciseAnswerContentB={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
+            }
+            ExcerciseAnswerContentC={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
+            }
+            ExcerciseAnswerContentD={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
+            }
+            ExcerciseChoiceAnswer={
+              this.state.ExcerciseAllAnswerContent[nthanswerindex]
+                .ExcerciseChoiceAnswer
+            }
+            setCheckDidAnswerQuest={this.setCheckDidAnswerQuest}
+          />
+        );
+      } else {
+        return (
+          <ExcercisesDoExcerciseContentItem
+            ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
+            getAllAnswerExcerciseOfMemberContent={
+              this.getAllAnswerExcerciseOfMemberContent
+            }
+            ExcerciseCorrectAnswer={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
+            }
+            ExcerciseQuestionContent={
+              this.props.ExcerciseAllQAContent[nthindex]
+                .ExcerciseQuestionContent
+            }
+            ExcerciseAnswerContentA={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
+            }
+            ExcerciseAnswerContentB={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
+            }
+            ExcerciseAnswerContentC={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
+            }
+            ExcerciseAnswerContentD={
+              this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
+            }
+            ExcerciseChoiceAnswer=""
+            setCheckDidAnswerQuest={this.setCheckDidAnswerQuest}
+          />
         );
       }
-    );
-
-    if (this.state.ExcerciseAllAnswerContent[nthanswerindex]) {
-      return (
-        <ExcercisesDoExcerciseContentItem
-          ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
-          getAllAnswerExcerciseOfMemberContent={
-            this.getAllAnswerExcerciseOfMemberContent
-          }
-          ExcerciseCorrectAnswer={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
-          }
-          ExcerciseQuestionContent={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseQuestionContent
-          }
-          ExcerciseAnswerContentA={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
-          }
-          ExcerciseAnswerContentB={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
-          }
-          ExcerciseAnswerContentC={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
-          }
-          ExcerciseAnswerContentD={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
-          }
-          ExcerciseChoiceAnswer={
-            this.state.ExcerciseAllAnswerContent[nthanswerindex]
-              .ExcerciseChoiceAnswer
-          }
-          setCheckDidAnswerQuest={this.setCheckDidAnswerQuest}
-        />
-      );
-    } else {
-      return (
-        <ExcercisesDoExcerciseContentItem
-          ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
-          getAllAnswerExcerciseOfMemberContent={
-            this.getAllAnswerExcerciseOfMemberContent
-          }
-          ExcerciseCorrectAnswer={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
-          }
-          ExcerciseQuestionContent={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseQuestionContent
-          }
-          ExcerciseAnswerContentA={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
-          }
-          ExcerciseAnswerContentB={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
-          }
-          ExcerciseAnswerContentC={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
-          }
-          ExcerciseAnswerContentD={
-            this.props.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
-          }
-          ExcerciseChoiceAnswer=""
-          setCheckDidAnswerQuest={this.setCheckDidAnswerQuest}
-        />
-      );
     }
   };
 
@@ -313,15 +316,17 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
           updateRenderExcerciseDoExcerciseControl={
             this.props.updateRenderExcerciseDoExcerciseControl
           }
+          sendToFinishedExcerciseChoice={this.sendToFinishedExcerciseChoice}
         />
         <ExcercisesDoExcerciseMainInfor
           MemberID={this.props.MemberID}
           socket={this.props.socket}
           updateRenderExcerciseControl={this.props.updateRenderExcerciseControl}
-          ExcerciseName={this.props.ExcerciseName}
-          ExcerciseNumberQuestion={this.props.ExcerciseNumberQuestion}
-          ExcerciseType={this.props.ExcerciseType}
-          ExcerciseLogo={this.props.ExcerciseLogo}
+          ExcerciseID={this.props.ExcerciseID}
+          // ExcerciseName={this.props.ExcerciseName}
+          // ExcerciseNumberQuestion={this.props.ExcerciseNumberQuestion}
+          // ExcerciseType={this.props.ExcerciseType}
+          // ExcerciseLogo={this.props.ExcerciseLogo}
         />
 
         {this.renderExcercisesDoExcerciseContentItem()}
@@ -383,17 +388,13 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>NHẮc NHỞ</p>
             <p style={{ fontWeight: "bold" }}>
-              Bạn chưa hoàn thành nội dung cho tất cả các câu hỏi có trong Bộ đề
-              - Bài tập. Bạn có chính xác muốn nộp bài không ???
+              Hãy chắc chắn các câu trả lời bạn đã xác nhận. Bạn có chính xác
+              muốn nộp bài không ???
             </p>
           </div>
           <button
             style={{ float: "right", cursor: "pointer" }}
-            onClick={() =>
-              this.props.updateRenderExcerciseDoExcerciseControl(
-                "finishexcercise"
-              )
-            }
+            onClick={() => this.sendToFinishedExcerciseChoice()}
           >
             Nộp bài
           </button>

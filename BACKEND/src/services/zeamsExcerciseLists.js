@@ -41,25 +41,39 @@ class ZeamsExcerciseLists {
     this.saveDataJSON();
   }
 
-  // //-----------------------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------------------------
 
-  // createNewExcercisesPublicListItemContent(excerciseinfor) {
-  //   if (excerciseinfor.ExcerciseType === "public") {
-  //     this.ZeamsExcerciseLists[0].ExcercisePubliclist.push(excerciseinfor);
-  //   } else if (excerciseinfor.ExcerciseType === "private") {
-  //     this.ZeamsExcerciseLists[0].ExcercisePrivateList.push(excerciseinfor);
-  //   }
-  // }
+  checkCreateNewExcerciseListContent() {
+    let getlength = this.ZeamsExcerciseLists.length;
+    if (getlength <= 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-  // //-----------------------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------------------------
 
-  // createNewExcercisesPrivateListItemContent(excerciseinfor) {
-  //   if (excerciseinfor.ExcerciseType === "public") {
-  //     this.ZeamsExcerciseLists[0].ExcercisePubliclist.push(excerciseinfor);
-  //   } else if (excerciseinfor.ExcerciseType === "private") {
-  //     this.ZeamsExcerciseLists[0].ExcercisePrivateList.push(excerciseinfor);
-  //   }
-  // }
+  createNewExcercisesListItemContent(excerciseinfor) {
+    let checkcreatenew = this.checkCreateNewExcerciseListContent();
+    if (checkcreatenew) {
+      if (excerciseinfor.ExcerciseType === "public") {
+        this.ZeamsExcerciseLists[0].ExcercisePubliclist.push(excerciseinfor);
+      } else if (excerciseinfor.ExcerciseType === "private") {
+        this.ZeamsExcerciseLists[0].ExcercisePrivateList.push(excerciseinfor);
+      }
+    } else {
+      this.createNewExcerciseListContent();
+      if (excerciseinfor.ExcerciseType === "public") {
+        this.ZeamsExcerciseLists[0].ExcercisePubliclist.push(excerciseinfor);
+      } else if (excerciseinfor.ExcerciseType === "private") {
+        this.ZeamsExcerciseLists[0].ExcercisePrivateList.push(excerciseinfor);
+      }
+    }
+    this.addNewExcerciseOwnedItemContent(excerciseinfor);
+
+    this.saveDataJSON();
+  }
 
   //-----------------------------------------------------------------------------------------------------------------
 
@@ -70,34 +84,59 @@ class ZeamsExcerciseLists {
       }
     );
 
+    let excerciseinforcontent = {
+      ExcerciseID: excerciseinfor.ExcerciseID,
+      ExcerciseName: excerciseinfor.ExcerciseName,
+      ExcerciseType: excerciseinfor.ExcerciseType,
+      ExcerciseDescription: excerciseinfor.ExcerciseDescription,
+      ExcerciseLogo: excerciseinfor.ExcerciseLogo,
+      ExcerciseNumberQuestion: excerciseinfor.ExcerciseNumberQuestion
+    };
+
     if (memberExcerciseIndex < 0) {
       let memberexcerciseinfor = {
         MemberID: excerciseinfor.MemberID,
-        ExcerciseMemberAllOwnedList: [
-          {
-            ExcerciseID: excerciseinfor.ExcerciseID,
-            ExcerciseName: excerciseinfor.ExcerciseName,
-            ExcerciseLogo: excerciseinfor.ExcerciseLogo,
-            ExcerciseType: excerciseinfor.ExcerciseType,
-            ExcerciseDescription: excerciseinfor.ExcerciseDescription,
-            ExcerciseNumberQuestion: excerciseinfor.ExcerciseNumberQuestion
-          }
-        ]
+        ExcerciseMemberAllOwnedList: []
       };
+      memberexcerciseinfor.ExcerciseMemberAllOwnedList.push(
+        excerciseinforcontent
+      );
+
       this.ZeamsExcerciseLists[0].ExcerciseOwnedList.push(memberexcerciseinfor);
     } else {
-      let memberexcerciseinfor = {
-        ExcerciseID: excerciseinfor.ExcerciseID,
-        ExcerciseName: excerciseinfor.ExcerciseName,
-        ExcerciseLogo: excerciseinfor.ExcerciseLogo,
-        ExcerciseType: excerciseinfor.ExcerciseType,
-        ExcerciseDescription: excerciseinfor.ExcerciseDescription,
-        ExcerciseNumberQuestion: excerciseinfor.ExcerciseNumberQuestion
-      };
       this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
         memberExcerciseIndex
-      ].ExcerciseMemberAllOwnedList.push(memberexcerciseinfor);
+      ].ExcerciseMemberAllOwnedList.push(excerciseinforcontent);
     }
+
+    this.saveDataJSON();
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  removeCreateExcerciseFromList(excerciseinfor) {
+    if (excerciseinfor.ExcerciseType === "public") {
+      let excerciseidindex = this.ZeamsExcerciseLists[0].ExcercisePubliclist.findIndex(
+        excerciseitem => {
+          return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+        }
+      );
+      this.ZeamsExcerciseLists[0].ExcercisePubliclist.splice(
+        excerciseidindex,
+        1
+      );
+    } else if (excerciseinfor.ExcerciseType === "private") {
+      let excerciseidindex = this.ZeamsExcerciseLists[0].ExcercisePrivateList.findIndex(
+        excerciseitem => {
+          return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+        }
+      );
+      this.ZeamsExcerciseLists[0].ExcercisePubliclist.splice(
+        excerciseidindex,
+        1
+      );
+    }
+    this.removeExcerciseOwnedItemContent(excerciseinfor);
     this.saveDataJSON();
   }
 
@@ -118,12 +157,13 @@ class ZeamsExcerciseLists {
     this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
       memberExcerciseIndex
     ].ExcerciseMemberAllOwnedList.splice(memberExcerciseItemIndex, 1);
+
     this.saveDataJSON();
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  getCurrentExcercisePublicPageOnList(excerciseinfor) {
+  getCurrentExcerciseChoicePublicPageOnList(excerciseinfor) {
     let currentIndexExcercisePage = Number(
       excerciseinfor.CurrentIndexExcercisePage
     );
@@ -146,7 +186,7 @@ class ZeamsExcerciseLists {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  getCurrentExcerciseOwnedPageOnList(excerciseinfor) {
+  getCurrentExcerciseChoiceOwnedPageOnList(excerciseinfor) {
     let currentIndexExcercisePage = Number(
       excerciseinfor.CurrentIndexExcercisePage
     );
@@ -177,13 +217,13 @@ class ZeamsExcerciseLists {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  responseMemberChoiceExcercisePublicListContent(excerciseinfor) {
+  responseMemberChoiceIndexExcercisePublicListContent(excerciseinfor) {
     let resMemberChoiceExcercise = {};
 
     resMemberChoiceExcercise = {
       AllNumberExcercise: this.ZeamsExcerciseLists[0].ExcercisePubliclist
         .length,
-      CurrentExcercisePublicPageOnList: this.getCurrentExcercisePublicPageOnList(
+      CurrentExcercisePublicPageOnList: this.getCurrentExcerciseChoicePublicPageOnList(
         excerciseinfor
       )
     };
@@ -193,8 +233,45 @@ class ZeamsExcerciseLists {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  responseMemberChoiceExcerciseOwnedListContent(excerciseinfor) {
+  responseMemberChoiceIndexExcerciseOwnedListContent(excerciseinfor) {
+    let checkcreatenew = this.checkCreateNewExcerciseListContent();
     let resMemberChoiceExcercise = {};
+
+    if (!checkcreatenew) {
+      this.createNewExcerciseListContent();
+    } else {
+      let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+        memberexcerciseitem => {
+          return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
+        }
+      );
+
+      if (memberExcerciseIndex >= 0) {
+        resMemberChoiceExcercise = {
+          AllNumberExcercise: this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+            memberExcerciseIndex
+          ].ExcerciseMemberAllOwnedList.length,
+          CurrentExcerciseChoiceOwnedList: this.getCurrentExcerciseChoiceOwnedPageOnList(
+            excerciseinfor
+          ),
+          MemberID: excerciseinfor.MemberID
+        };
+      } else {
+        resMemberChoiceExcercise = {
+          AllNumberExcercise: 0,
+          CurrentExcerciseChoiceOwnedList: [],
+          MemberID: excerciseinfor.MemberID
+        };
+      }
+    }
+
+    return resMemberChoiceExcercise;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  responseMemberChoiceExcerciseOwnedItemContent(excerciseinfor) {
+    let resMemberChoiceExcerciseItem = {};
 
     let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
       memberexcerciseitem => {
@@ -202,17 +279,138 @@ class ZeamsExcerciseLists {
       }
     );
 
-    resMemberChoiceExcercise = {
-      AllNumberExcercise: this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+    let excercisechoiceindex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+      memberExcerciseIndex
+    ].ExcerciseMemberAllOwnedList.findIndex(excerciseitem => {
+      return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+    });
+
+    resMemberChoiceExcerciseItem = this.ZeamsExcerciseLists[0]
+      .ExcerciseOwnedList[memberExcerciseIndex].ExcerciseMemberAllOwnedList[
+      excercisechoiceindex
+    ];
+
+    return resMemberChoiceExcerciseItem;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  addNewExcerciseItemToMemberOwnedList(excerciseinfor) {
+    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+      memberexcerciseitem => {
+        return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
+      }
+    );
+
+    let checkmemberexcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+      memberExcerciseIndex
+    ].ExcerciseMemberAllOwnedList.findIndex(excerciseitem => {
+      return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+    });
+
+    if (checkmemberexcerciseIndex < 0) {
+      if (excerciseinfor.ExcerciseType === "public") {
+        let excerciseidindex = this.ZeamsExcerciseLists[0].ExcercisePubliclist.findIndex(
+          excerciseitem => {
+            return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+          }
+        );
+
+        let excerciseiteminfor = this.ZeamsExcerciseLists[0]
+          .ExcercisePubliclist[excerciseidindex];
+
+        let excerciseaddinfor = {
+          ExcerciseID: excerciseiteminfor.ExcerciseID,
+          ExcerciseName: excerciseiteminfor.ExcerciseName,
+          ExcerciseType: excerciseiteminfor.ExcerciseType,
+          ExcerciseDescription: excerciseiteminfor.ExcerciseDescription,
+          ExcerciseLogo: excerciseiteminfor.ExcerciseLogo,
+          ExcerciseNumberQuestion: excerciseiteminfor.ExcerciseNumberQuestion
+        };
+
+        this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+          memberExcerciseIndex
+        ].ExcerciseMemberAllOwnedList.push(excerciseaddinfor);
+      } else if (excerciseinfor.ExcerciseType === "private") {
+        let excerciseidindex = this.ZeamsExcerciseLists[0].ExcercisePrivateList.findIndex(
+          excerciseitem => {
+            return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+          }
+        );
+
+        let excerciseiteminfor = this.ZeamsExcerciseLists[0]
+          .ExcercisePrivateList[excerciseidindex];
+
+        let excerciseaddinfor = {
+          ExcerciseID: excerciseiteminfor.ExcerciseID,
+          ExcerciseName: excerciseiteminfor.ExcerciseName,
+          ExcerciseType: excerciseiteminfor.ExcerciseType,
+          ExcerciseDescription: excerciseiteminfor.ExcerciseDescription,
+          ExcerciseLogo: excerciseiteminfor.ExcerciseLogo,
+          ExcerciseNumberQuestion: excerciseiteminfor.ExcerciseNumberQuestion
+        };
+
+        this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+          memberExcerciseIndex
+        ].ExcerciseMemberAllOwnedList.push(excerciseaddinfor);
+      }
+    }
+
+    this.saveDataJSON();
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  removeNewExcerciseItemToMemberOwnedList(excerciseinfor) {
+    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+      memberexcerciseitem => {
+        return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
+      }
+    );
+
+    let excerciseidindex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+      memberExcerciseIndex
+    ].ExcerciseMemberAllOwnedList.findIndex(excerciseitem => {
+      return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
+    });
+
+    if (excerciseidindex >= 0) {
+      this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
         memberExcerciseIndex
-      ].ExcerciseMemberAllOwnedList.length,
-      CurrentExcerciseOwnedPageOnList: this.getCurrentExcerciseOwnedPageOnList(
-        excerciseinfor
-      )
+      ].ExcerciseMemberAllOwnedList.splice(excerciseidindex, 1);
+    }
+
+    this.saveDataJSON();
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  responseAddNewExcerciseItemToMemberOwnedList(excerciseinfor) {
+    this.addNewExcerciseItemToMemberOwnedList(excerciseinfor);
+
+    let resAddNewExcerciseItem = {
+      checkValidate: "add-success"
     };
 
-    return resMemberChoiceExcercise;
+    return resAddNewExcerciseItem;
   }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  responseRemoveNewExcerciseItemToMemberOwnedList(excerciseinfor) {
+    this.removeNewExcerciseItemToMemberOwnedList(excerciseinfor);
+
+    let resRemoveNewExcerciseItem = {
+      checkValidate: "remove-success"
+    };
+
+    return resRemoveNewExcerciseItem;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------------------------
 
   //-----------------------------------------------------------------------------------------------------------------
 }

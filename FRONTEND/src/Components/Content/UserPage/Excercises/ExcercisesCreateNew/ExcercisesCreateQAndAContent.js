@@ -2,14 +2,14 @@ import React from "react";
 import Modal from "react-modal";
 import axios from "axios";
 
-import ExcercisesQAndAContentItem from "./ExcercisesQAndAContentItem";
-import ExcercisesQAndAMainInfor from "./ExcerciseQAndAMainInfor";
+import ExcercisesCreateQAndAContentItem from "./ExcercisesCreateQAndAContentItem";
+import ExcercisesCreateQAndAMainInfor from "./ExcercisesCreateQAndAMainInfor";
 
-export default class ExcercisesQAndAContent extends React.Component {
+export default class ExcercisesCreateQAndAContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ExcerciseQAContent: [],
+      ExcerciseAllQAContent: [],
       ExcerciseNthQuestion: "1",
 
       checkValidatePrevLeft: true,
@@ -18,7 +18,7 @@ export default class ExcercisesQAndAContent extends React.Component {
       checkQAContentNextQuestIsOpen: false,
       checkTrueOrderQuestion: false,
       checkCompleteExcerciseIsOpen: false,
-      checkCompleteAllExcerciseQAContentIsOpen: false
+      checkCompleteAllExcerciseAllQAContentIsOpen: false
     };
   }
 
@@ -42,15 +42,15 @@ export default class ExcercisesQAndAContent extends React.Component {
     });
   };
 
-  openCheckCompleteAllExcerciseQAContentIsOpenModal = () => {
+  openCheckCompleteAllExcerciseAllQAContentIsOpenModal = () => {
     this.setState({
-      checkCompleteAllExcerciseQAContentIsOpen: true
+      checkCompleteAllExcerciseAllQAContentIsOpen: true
     });
   };
 
-  closeCheckCompleteAllExcerciseQAContentIsOpenModal = () => {
+  closeCheckCompleteAllExcerciseAllQAContentIsOpenModal = () => {
     this.setState({
-      checkCompleteAllExcerciseQAContentIsOpen: false
+      checkCompleteAllExcerciseAllQAContentIsOpen: false
     });
   };
 
@@ -92,7 +92,7 @@ export default class ExcercisesQAndAContent extends React.Component {
           });
         }
 
-        let nthindex = this.state.ExcerciseQAContent.findIndex(nthitem => {
+        let nthindex = this.state.ExcerciseAllQAContent.findIndex(nthitem => {
           return (
             nthitem.ExcerciseNthQuestion ===
             parseInt(this.state.ExcerciseNthQuestion) + 1 + ""
@@ -157,17 +157,17 @@ export default class ExcercisesQAndAContent extends React.Component {
       ExcerciseAnswerContentD: excerciseAnswerContentD,
       ExcerciseCorrectAnswer: excerciseCorrectAnswer
     };
-    let nthindex = this.state.ExcerciseQAContent.findIndex(questitem => {
+    let nthindex = this.state.ExcerciseAllQAContent.findIndex(questitem => {
       return questitem.ExcerciseNthQuestion === excerciseNthQuestion;
     });
     if (nthindex >= 0) {
-      this.state.ExcerciseQAContent.splice(nthindex, 1, QAContent);
+      this.state.ExcerciseAllQAContent.splice(nthindex, 1, QAContent);
       this.setState({
-        ExcerciseQAContent: this.state.ExcerciseQAContent
+        ExcerciseAllQAContent: this.state.ExcerciseAllQAContent
       });
     } else {
       this.setState({
-        ExcerciseQAContent: [...this.state.ExcerciseQAContent, QAContent],
+        ExcerciseAllQAContent: [...this.state.ExcerciseAllQAContent, QAContent],
         checkTrueOrderQuestion: true
       });
     }
@@ -175,9 +175,9 @@ export default class ExcercisesQAndAContent extends React.Component {
 
   sendAllQAndAExcerciseContent = () => {
     axios
-      .post("/createnewexcerciseQAcontent", {
+      .post("/createnewexcerciseallQAcontent", {
         MemberID: this.props.MemberID,
-        ExcerciseQAContent: this.state.ExcerciseQAContent,
+        ExcerciseAllQAContent: this.state.ExcerciseAllQAContent,
         ExcerciseID: this.props.ExcerciseID
       })
       .then(res => {
@@ -198,12 +198,12 @@ export default class ExcercisesQAndAContent extends React.Component {
 
   sendToCompleteExcercises = () => {
     if (
-      this.state.ExcerciseQAContent.length !==
+      this.state.ExcerciseAllQAContent.length !==
       Number(this.props.ExcerciseNumberQuestion)
     ) {
       this.openCheckCompleteExcerciseModal();
     } else {
-      this.openCheckCompleteAllExcerciseQAContentIsOpenModal();
+      this.openCheckCompleteAllExcerciseAllQAContentIsOpenModal();
     }
   };
 
@@ -248,40 +248,40 @@ export default class ExcercisesQAndAContent extends React.Component {
   };
 
   renderExcercisesQAndAContentItem = () => {
-    let nthindex = this.state.ExcerciseQAContent.findIndex(questitem => {
+    let nthindex = this.state.ExcerciseAllQAContent.findIndex(questitem => {
       return questitem.ExcerciseNthQuestion === this.state.ExcerciseNthQuestion;
     });
 
     if (nthindex >= 0) {
       return (
-        <ExcercisesQAndAContentItem
+        <ExcercisesCreateQAndAContentItem
           ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
           getAllQAContentToExcerciseContent={
             this.getAllQAContentToExcerciseContent
           }
           ExcerciseQuestionContent={
-            this.state.ExcerciseQAContent[nthindex].ExcerciseQuestionContent
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseQuestionContent
           }
           ExcerciseAnswerContentA={
-            this.state.ExcerciseQAContent[nthindex].ExcerciseAnswerContentA
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentA
           }
           ExcerciseAnswerContentB={
-            this.state.ExcerciseQAContent[nthindex].ExcerciseAnswerContentB
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentB
           }
           ExcerciseAnswerContentC={
-            this.state.ExcerciseQAContent[nthindex].ExcerciseAnswerContentC
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentC
           }
           ExcerciseAnswerContentD={
-            this.state.ExcerciseQAContent[nthindex].ExcerciseAnswerContentD
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseAnswerContentD
           }
           ExcerciseCorrectAnswer={
-            this.state.ExcerciseQAContent[nthindex].ExcerciseCorrectAnswer
+            this.state.ExcerciseAllQAContent[nthindex].ExcerciseCorrectAnswer
           }
         />
       );
     } else {
       return (
-        <ExcercisesQAndAContentItem
+        <ExcercisesCreateQAndAContentItem
           ExcerciseNthQuestion={this.state.ExcerciseNthQuestion}
           getAllQAContentToExcerciseContent={
             this.getAllQAContentToExcerciseContent
@@ -297,10 +297,10 @@ export default class ExcercisesQAndAContent extends React.Component {
     }
   };
 
-  createNewExcerciseQAContent = () => {
+  createNewExcerciseAllQAContent = () => {
     return (
       <div className="user-excercises_create-new__QandA">
-        <ExcercisesQAndAMainInfor
+        <ExcercisesCreateQAndAMainInfor
           MemberID={this.props.MemberID}
           socket={this.props.socket}
           updateRenderExcerciseControl={this.props.updateRenderExcerciseControl}
@@ -308,10 +308,10 @@ export default class ExcercisesQAndAContent extends React.Component {
             this.props.updateRenderExcerciseCreateNewControl
           }
           ExcerciseID={this.props.ExcerciseID}
-          ExcerciseName={this.props.ExcerciseName}
-          ExcerciseNumberQuestion={this.props.ExcerciseNumberQuestion}
-          ExcerciseType={this.props.ExcerciseType}
-          ExcerciseLogo={this.props.ExcerciseLogo}
+          // ExcerciseName={this.props.ExcerciseName}
+          // ExcerciseNumberQuestion={this.props.ExcerciseNumberQuestion}
+          // ExcerciseType={this.props.ExcerciseType}
+          // ExcerciseLogo={this.props.ExcerciseLogo}
         />
 
         {this.renderExcercisesQAndAContentItem()}
@@ -321,10 +321,9 @@ export default class ExcercisesQAndAContent extends React.Component {
   };
 
   render() {
-    console.log("Ra ExcerciseQAContent", this.state.ExcerciseQAContent);
     return (
       <div>
-        {this.createNewExcerciseQAContent()}
+        {this.createNewExcerciseAllQAContent()}
 
         <Modal
           style={{
@@ -435,9 +434,9 @@ export default class ExcercisesQAndAContent extends React.Component {
             }
           }}
           ariaHideApp={false}
-          isOpen={this.state.checkCompleteAllExcerciseQAContentIsOpen}
+          isOpen={this.state.checkCompleteAllExcerciseAllQAContentIsOpen}
           onRequestClose={
-            this.closeCheckCompleteAllExcerciseQAContentIsOpenModal
+            this.closeCheckCompleteAllExcerciseAllQAContentIsOpenModal
           }
         >
           <div>
@@ -449,7 +448,7 @@ export default class ExcercisesQAndAContent extends React.Component {
           <button
             style={{ float: "right", cursor: "pointer" }}
             onClick={() =>
-              this.closeCheckCompleteAllExcerciseQAContentIsOpenModal()
+              this.closeCheckCompleteAllExcerciseAllQAContentIsOpenModal()
             }
           >
             Xem lại

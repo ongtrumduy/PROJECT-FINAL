@@ -6,7 +6,7 @@ import ExcercisesOwnedItemScoreBoard from "./ExcercisesOwnedItemScoreBoard";
 export default class ExcercisesOwnedList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { setExcerciseOwnedRender: "owneditem", ExcerciseID: "" };
+    this.state = { setExcerciseOwnedRender: "ownedlist", ExcerciseID: "" };
   }
 
   updateRenderExcerciseOwnedControl = excerciseOwned => {
@@ -77,18 +77,18 @@ export default class ExcercisesOwnedList extends React.Component {
           />
         );
       default:
-      // return (
-      //   <ExcercisesOwnedListContent
-      //     MemberID={this.props.MemberID}
-      //     socket={this.props.socket}
-      //     updateRenderExcerciseOwnedControl={
-      //       this.updateRenderExcerciseOwnedControl
-      //     }
-      //     getExcerciseOwnedIDMemberChoice={
-      //       this.getExcerciseOwnedIDMemberChoice
-      //     }
-      //   />
-      // );
+        return (
+          <ExcercisesOwnedListContent
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+            updateRenderExcerciseOwnedControl={
+              this.updateRenderExcerciseOwnedControl
+            }
+            getExcerciseOwnedIDMemberChoice={
+              this.getExcerciseOwnedIDMemberChoice
+            }
+          />
+        );
     }
   };
 

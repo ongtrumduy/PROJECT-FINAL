@@ -11,6 +11,12 @@ import createnewreminderRoutes from "./createnewreminder";
 import createnewexcercisecontentRoutes from "./createnewexcercisecontent";
 import createnewexcerciseQAcontentRoutes from "./createnewexcerciseQAcontent";
 import getExcerciseOwnedListRoutes from "./getexcerciseownedlist";
+import cancelCreateNewExcerciseRoutes from "./cancelcreatenewexcercise";
+import getexcerciseowneddetailitemRoutes from "./getexcerciseowneddetailitem";
+import addexcerciseitemtoownedlistRoutes from "./addexcerciseitemtoownedlist";
+import removeexcerciseitemtoownedlistRoutes from "./removeexcerciseitemtoownedlist";
+import getallquestionanswercontentRoutes from "./getallquestionanswercontent";
+import finishedexcercisechoiceanswerRoutes from "./finishedexcercisechoiceanswer";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -67,27 +73,31 @@ let AllRoutes = (app, corsOptions) => {
   getExcerciseOwnedListRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
-  // // --------------------------UpdateImage---------------------------------------
-  // updateimageRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------CancelCreateNewExcericse---------------------------------------
+  cancelCreateNewExcerciseRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------WaitFriendList---------------------------------------
-  // // waitfriendRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------GetExcerciseOwnedDetailItem---------------------------------------
+  getexcerciseowneddetailitemRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------IndexFriendList---------------------------------------
-  // indexfriendRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------AddExcerciseItemToOwnedList---------------------------------------
+  addexcerciseitemtoownedlistRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------ChangeInfor---------------------------------------
-  // changeinforRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------RemoveExcerciseItemToOwnedList---------------------------------------
+  removeexcerciseitemtoownedlistRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // // --------------------------ChangePass---------------------------------------
-  // changepassRoutes(app, corsOptions);
-  // //-----------------------------------------------------------------------
+  // --------------------------GetAllQuestionAnswerContent---------------------------------------
+  getallquestionanswercontentRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
 
-  // //=========================================================================
+  // --------------------------FinishedExcerciseChoiceAnswer---------------------------------------
+  finishedexcercisechoiceanswerRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  //=========================================================================
 };
 
 module.exports = AllRoutes;

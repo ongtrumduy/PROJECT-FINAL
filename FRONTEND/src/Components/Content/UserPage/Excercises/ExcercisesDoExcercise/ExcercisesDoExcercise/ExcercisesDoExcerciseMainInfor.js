@@ -33,7 +33,7 @@ export default class ExcercisesDoExcerciseMainInfor extends React.Component {
             <span>Hủy làm bài </span>
           </div>
         </div>
-        <div className="user-excercises_do-excercise__QandA___infor">
+        {/* <div className="user-excercises_do-excercise__QandA___infor">
           <div>
             <img src={this.props.ExcerciseLogo} alt="excercise-logo" />
           </div>
@@ -49,7 +49,7 @@ export default class ExcercisesDoExcerciseMainInfor extends React.Component {
               {this.props.ExcerciseType === "public" ? "Công khai" : "Riêng tư"}
             </p>
           </div>
-        </div>
+        </div> */}
 
         <Modal
           style={{

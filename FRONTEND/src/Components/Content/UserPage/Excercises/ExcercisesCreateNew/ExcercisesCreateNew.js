@@ -2,7 +2,7 @@ import React from "react";
 import "./ExcercisesCreateNew.css";
 
 import ExcercisesCreateNewMain from "./ExcercisesCreateNewMain";
-import ExcercisesQAndAContent from "./ExcercisesQAndAContent";
+import ExcercisesCreateQAndAContent from "./ExcercisesCreateQAndAContent";
 
 export default class ExcercisesCreateNew extends React.Component {
   constructor(props) {
@@ -44,7 +44,7 @@ export default class ExcercisesCreateNew extends React.Component {
     switch (this.state.setExcerciseCreateNewRender) {
       case "createnewQAcontent":
         return (
-          <ExcercisesQAndAContent
+          <ExcercisesCreateQAndAContent
             MemberID={this.props.MemberID}
             socket={this.props.socket}
             updateRenderExcerciseControl={
