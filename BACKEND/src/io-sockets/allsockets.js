@@ -1,10 +1,11 @@
 import createnewdiscussSocket from "./createnewdiscuss";
+import updateteamdicusscontentSocket from "./updateteamdicusscontent";
 import setstartvideocallSocket from "./setstartvideocall";
 import changeremindertounandfinishedSocket from "./changeremindertounandfinished";
-import getteammemberchatlistSocket from "./getteammemberchatlist";
+import updateteammemberchatlistSocket from "./updateteammemberchatlist";
 import updatestatusaddremoveexcerciseitemSocket from "./updatestatusaddremoveexcerciseitem";
-// import waituserSocket from "./waituserlist";
-// import friendlistSocket from "./userfriendlist";
+import addnewmembercreateteamSocket from "./addnewmembercreateteam";
+import addnewmemberjointeamSocket from "./addnewmemberjointeam";
 // import adminstatisticSocket from "./adminstatistic";
 // import totaluserSocket from "./totaluser";
 // import buttonnextSocket from "./buttonnext";
@@ -20,8 +21,8 @@ let AllSockets = io => {
   createnewdiscussSocket(io);
   //--------------------------------------------------------------------------
 
-  // --------------------------CreateNewDiscussComment--------------------------------------
-  // createnewdiscusscommentSocket(io);
+  // --------------------------UpdateTeamDiscussContent--------------------------------------
+  updateteamdicusscontentSocket(io);
   //--------------------------------------------------------------------------
 
   // --------------------------SetVideoCall--------------------------------------
@@ -33,20 +34,20 @@ let AllSockets = io => {
   //--------------------------------------------------------------------------
 
   // --------------------------GetTeamMemberChatList--------------------------------------
-  getteammemberchatlistSocket(io);
+  updateteammemberchatlistSocket(io);
   //--------------------------------------------------------------------------
 
   // --------------------------UpdateStatusAddRemoveExcerciseItem--------------------------------------
   updatestatusaddremoveexcerciseitemSocket(io);
   //--------------------------------------------------------------------------
 
-  // // --------------------------WaitUserList--------------------------------------
-  // waituserSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------AddNewMemberCreateTeam--------------------------------------
+  addnewmembercreateteamSocket(io);
+  //--------------------------------------------------------------------------
 
-  // // --------------------------UserFriendList--------------------------------------
-  // friendlistSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------AddNewMemberJoinTeam--------------------------------------
+  addnewmemberjointeamSocket(io);
+  //--------------------------------------------------------------------------
 
   // // --------------------------AdminStatistic--------------------------------------
   // adminstatisticSocket(io);

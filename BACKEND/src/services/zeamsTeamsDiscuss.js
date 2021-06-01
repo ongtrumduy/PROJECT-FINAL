@@ -99,7 +99,34 @@ class ZeamsTeamsDiscuss {
       TeamDiscussID: uuidv4(),
       TeamDiscussType: "newmember",
       MemberDiscussID: discuss.MemberID,
-      MemberDiscussContent: discuss.MemberID + " đã tham gia vào nhóm <3<3<3"
+      MemberDiscussContent:
+        zeamsMembers.getMemberFullName(discuss) +
+        "-" +
+        discuss.MemberID +
+        " đã tham gia vào nhóm <3<3<3"
+    };
+
+    this.ZeamsTeamsDiscuss[teamindex].TeamDiscussContent.push(membernotify);
+    this.saveDataJSON();
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  createAdminMemberJoinedNotify(discuss) {
+    this.createNewTeamDiscussContent(discuss);
+
+    let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
+      return teamitem.TeamID === discuss.TeamID;
+    });
+    let membernotify = {
+      TeamDiscussID: uuidv4(),
+      TeamDiscussType: "adminmember",
+      MemberDiscussID: discuss.MemberID,
+      MemberDiscussContent:
+        zeamsMembers.getMemberFullName(discuss) +
+        "-" +
+        discuss.MemberID +
+        " đã tạo nhóm này <3<3<3"
     };
 
     this.ZeamsTeamsDiscuss[teamindex].TeamDiscussContent.push(membernotify);
@@ -112,41 +139,105 @@ class ZeamsTeamsDiscuss {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  responseTeamDiscussContent(discuss) {
-    let resteamsdiscusscontent;
+  getTeamDiscussContentList(discuss) {
+    // console.log("Din dit the nhở ", discuss);
+
     let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
       return teamitem.TeamID === discuss.TeamID;
     });
-    if (teamindex < 0) {
-      this.createNewTeamDiscussContent(discuss);
-      resteamsdiscusscontent = {
-        TeamID: discuss.TeamID,
-        TeamDiscussContent: [
-          {
-            TeamDiscussType: "non-activitied",
-            MemberDiscussContent:
-              "Nhóm hiện tại chưa có hoạt động thảo luận !!!"
-          }
-        ]
-      };
-    } else {
-      let teamdiscusscontent = this.ZeamsTeamsDiscuss[teamindex]
-        .TeamDiscussContent.length;
-      if (teamdiscusscontent <= 0) {
-        resteamsdiscusscontent = {
-          TeamID: discuss.TeamID,
-          TeamDiscussContent: [
-            {
-              TeamDiscussType: "non-activitied",
-              MemberDiscussContent:
-                "Nhóm hiện tại chưa có hoạt động thảo luận !!!"
-            }
-          ]
-        };
-      } else {
-        resteamsdiscusscontent = this.ZeamsTeamsDiscuss[teamindex];
-      }
+
+    let currentIndexToRenderDiscussContent = Number(
+      discuss.CurrentIndexToRenderDiscussContent
+    );
+
+    let numberRenderDiscussContent = Number(discuss.NumberRenderDiscussContent);
+
+    let currentTeamDiscussContent = [];
+
+    // console.log(
+    //   "Kiểm tiếp cả cái này xem indexOfLastDiscuss",
+    //   indexOfLastDiscuss
+    // );
+    // console.log(
+    //   "Kiểm tiếp cả cái này xem ",
+    //   this.ZeamsTeamsDiscuss[teamindex].TeamDiscussContent
+    // );
+    let indexOfLastDiscuss = this.ZeamsTeamsDiscuss[teamindex]
+      .TeamDiscussContent.length;
+
+    let indexOfFirstDiscuss =
+      indexOfLastDiscuss -
+      currentIndexToRenderDiscussContent * numberRenderDiscussContent;
+
+    if (indexOfFirstDiscuss < 0) {
+      indexOfFirstDiscuss = 0;
     }
+
+    // console.log("Nốt cái này phat cuối xem sao ", teamindex);
+    if (teamindex >= 0) {
+      // console.log("có vào trong cái này");
+      currentTeamDiscussContent = this.ZeamsTeamsDiscuss[
+        teamindex
+      ].TeamDiscussContent.slice(indexOfFirstDiscuss, indexOfLastDiscuss);
+    }
+
+    // console.log("KHổ quá các vậy nhở ", currentTeamDiscussContent);
+
+    return currentTeamDiscussContent;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  checkNextRenderDiscussContent(discuss) {
+    let checkNextRenderDiscussContent = false;
+
+    let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
+      return teamitem.TeamID === discuss.TeamID;
+    });
+
+    let currentIndexToRenderDiscussContent = Number(
+      discuss.CurrentIndexToRenderDiscussContent
+    );
+
+    let numberRenderDiscussContent = Number(discuss.NumberRenderDiscussContent);
+    if (teamindex >= 0) {
+      let numberOfDiscussContentList = this.ZeamsTeamsDiscuss[teamindex]
+        .TeamDiscussContent.length;
+
+      let indexOfLastDiscuss =
+        currentIndexToRenderDiscussContent * numberRenderDiscussContent;
+
+      if (indexOfLastDiscuss < numberOfDiscussContentList) {
+        checkNextRenderDiscussContent = true;
+      } else {
+        checkNextRenderDiscussContent = false;
+      }
+    } else {
+      console.log("Bị lỗi rồi bạn ạ");
+    }
+
+    return checkNextRenderDiscussContent;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+  responseTeamDiscussContent(discuss) {
+    console.log("dữ liệu bawnwsnnnnn sang bên này ", discuss);
+    let resteamsdiscusscontent;
+
+    let currentTeamDiscussContent = this.getTeamDiscussContentList(discuss);
+
+    let checkNextRenderDiscussContent = this.checkNextRenderDiscussContent(
+      discuss
+    );
+
+    resteamsdiscusscontent = {
+      CurrentTeamDiscussContent: currentTeamDiscussContent,
+      CheckNextRenderDiscussContent: checkNextRenderDiscussContent,
+      TeamID: discuss.TeamID
+    };
+
+    // console.log("RA lên cái này để còn lấy ra nào", resteamsdiscusscontent);
+
     return resteamsdiscusscontent;
   }
 

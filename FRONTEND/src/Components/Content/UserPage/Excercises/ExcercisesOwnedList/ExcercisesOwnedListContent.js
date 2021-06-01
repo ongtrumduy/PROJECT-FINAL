@@ -41,7 +41,6 @@ export default class ExcercisesOwnedListContent extends React.Component {
         NumberIndexExcerciseOnPage: this.state.NumberIndexExcerciseOnPage
       })
       .then(res => {
-        console.log("ra cái res.data", res.data);
         let allNumberOfIndexExcerciseOnPageList = [];
         let excerciselistlength = res.data.AllNumberExcercise;
 

@@ -1,4 +1,4 @@
-import StartBeginSocket from "../io-sockets/startbeginsocket";
+import StartBeginSocket from "./startbeginsocket";
 import zeamsRoomChats from "../services/zeamsRoomChats";
 
 let GetTeamMemberChatList = io => {
@@ -8,28 +8,6 @@ let GetTeamMemberChatList = io => {
     //====================================================================================================
 
     membersocket = StartBeginSocket.setStartBeginSocket(socket, membersocket);
-
-    //====================================================================================================
-
-    socket.on("get-team-member-chat-list", data => {
-      let resMemberRoomChatList = zeamsRoomChats.responseMemberRoomChat(data);
-
-      StartBeginSocket.emitAllSocketsOfMember(
-        membersocket,
-        data.MemberID,
-        io,
-        "response-room-chat-list",
-        resMemberRoomChatList
-      );
-
-      StartBeginSocket.emitAllSocketsOfMember(
-        membersocket,
-        data.MemberChatID,
-        io,
-        "response-room-chat-list",
-        resMemberRoomChatList
-      );
-    });
 
     //====================================================================================================
 

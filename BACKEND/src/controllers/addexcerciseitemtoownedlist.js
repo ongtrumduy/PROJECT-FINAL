@@ -1,7 +1,7 @@
 import zeamsExcerciseLists from "../services/zeamsExcerciseLists";
 
 let AddNewExcerciseItem = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   let resAddNewExcerciseItem = await zeamsExcerciseLists.responseAddNewExcerciseItemToMemberOwnedList(
     req.body
   );

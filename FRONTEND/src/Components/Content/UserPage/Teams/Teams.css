@@ -56,9 +56,15 @@
     overflow: auto;
     height: 500px;
     user-select: none;
+    width: 100%;
 }
 
-.user-teams_all__list div {
+.user-teams_all__list p {
+    font-weight: bold;
+    /* margin: 40px 0 0 20px; */
+}
+
+/* .user-teams_all__list div {
     height: 260px;
     width: 260px;
     background-color: rgb(197, 194, 194);
@@ -68,6 +74,97 @@
 
 .user-teams_all__list div:hover {
     background-color: rgb(219, 219, 219);
+} */
+
+.user-teams_all__list___team-item____delete {
+    height: 260px;
+    width: 260px;
+    background-color: rgb(197, 194, 194);
+    margin: 20px 20px 20px 28px;
+    cursor: pointer;
+}
+
+.user-teams_all__list___team-item____delete:hover {
+    background-color: rgb(219, 219, 219);
+}
+
+.user-teams_all__list___team-item____delete div {
+    /* border: groove; */
+    height: 98%;
+    position: relative;
+    bottom: 28px;
+}
+
+.user-teams_all__list___team-item____delete i {
+    position: relative;
+    width: 40px;
+    left: 110px;
+    top: 4px;
+    z-index: 1000;
+}
+
+.user-teams_all__list___team-item____delete i:hover {
+    color: blue;
+}
+
+.user-teams_all__list___team-item____delete span {
+    width: 60px;
+    background-color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    color: royalblue;
+    font-size: 20px;
+    z-index: 1000;
+    position: relative;
+    left: 72px;
+    top: 24px;
+}
+
+.user-teams_all__list___team-item____delete span:hover {
+    color: red;
+}
+
+.user-teams_all__list___team-item____delete img {
+    height: 60px;
+    width: 60px;
+    margin: 32px 0 0 0;
+}
+
+.user-teams_all__list___team-item____non-delete {
+    height: 260px;
+    width: 260px;
+    background-color: rgb(197, 194, 194);
+    margin: 20px 20px 20px 28px;
+    cursor: pointer;
+}
+
+.user-teams_all__list___team-item____non-delete:hover {
+    background-color: rgb(219, 219, 219);
+}
+
+.user-teams_all__list___team-item____non-delete div {
+    /* border: groove; */
+    height: 98%;
+    position: relative;
+    bottom: 27px;
+}
+
+.user-teams_all__list___team-item____non-delete i {
+    position: relative;
+    width: 40px;
+    left: 110px;
+    top: 4px;
+    z-index: 1000;
+}
+
+.user-teams_all__list___team-item____non-delete i:hover {
+    color: blue;
+}
+
+.user-teams_all__list___team-item____non-delete img {
+    height: 60px;
+    width: 60px;
+    margin: 32px 0 0 0;
 }
 
 .user-teams_create {
@@ -166,6 +263,26 @@
 .user-teams_create__team___form select:focus {
     outline: none;
     border-color: green
+}
+
+.user-teams_create__team___form____radio-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-teams_create__team___form____radio-button div {
+    flex: 1
+}
+
+.user-teams_create__team___form____radio-button input {
+    height: 20px;
+    cursor: pointer;
+}
+
+.user-teams_create__team___form____radio-button span {
+    margin: 0 0 0 -100px;
 }
 
 .user-teams_create__team___response-create-team {

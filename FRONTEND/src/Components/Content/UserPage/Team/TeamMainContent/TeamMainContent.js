@@ -4,7 +4,7 @@ import TeamFiles from "../TeamFiles/TeamFiles";
 import TeamNotes from "../TeamNotes/TeamNotes";
 import TeamSettings from "../TeamSetting/TeamSetting";
 
-export default class TeamMainContent extends React.Component {
+export default class zTeamMainContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -19,6 +19,7 @@ export default class TeamMainContent extends React.Component {
             TeamID={this.props.TeamID}
             socket={this.props.socket}
             ChooseTeamInfor={this.props.ChooseTeamInfor}
+            checkMemberIsAdmin={this.props.checkMemberIsAdmin}
           />
         );
       case "files":
@@ -30,6 +31,7 @@ export default class TeamMainContent extends React.Component {
             TeamID={this.props.TeamID}
             socket={this.props.socket}
             ChooseTeamInfor={this.props.ChooseTeamInfor}
+            checkMemberIsAdmin={this.props.checkMemberIsAdmin}
           />
         );
       case "settings":
@@ -41,6 +43,7 @@ export default class TeamMainContent extends React.Component {
             TeamID={this.props.TeamID}
             socket={this.props.socket}
             ChooseTeamInfor={this.props.ChooseTeamInfor}
+            checkMemberIsAdmin={this.props.checkMemberIsAdmin}
           />
         );
     }

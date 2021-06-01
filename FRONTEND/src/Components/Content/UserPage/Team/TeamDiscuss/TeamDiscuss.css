@@ -1,10 +1,28 @@
 .user-team_team-menu-and-content__content___discuss_____alldiscuss {
     height: 456px;
     overflow: auto;
+    width: 100%;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss p {
     text-align: center;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss____seen-old-discuss {
+    position: absolute;
+    text-align: center;
+    border: 1px solid black;
+    z-index: 1000;
+    height: 24px;
+    width: 71%;
+    background-color: rgb(235, 205, 151,0.3);
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss____seen-old-discuss p {
+    font-weight: bold;
+    line-height: 1px;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss {
@@ -13,6 +31,7 @@
     justify-content: flex-start;
     flex-direction: row;
     margin: 20px 0 0 20px;
+    width: 100%;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox {
@@ -64,6 +83,8 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content {
     width: 100%;
+    min-width: 200px;
+    max-width: 600px;
     max-height: 240px;
     overflow: auto;
     margin: 8px 0 0 0;
@@ -243,7 +264,7 @@
 }
 
 .user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname______avatar img {
-    width: 40px;
+    width: 32px;
     margin: 0 4px 0 4px;
 }
 

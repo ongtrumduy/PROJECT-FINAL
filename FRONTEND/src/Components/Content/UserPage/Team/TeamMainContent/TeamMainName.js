@@ -29,6 +29,14 @@ export default class TeamMainName extends React.Component {
                   <br style={{ userSelect: "none" }}></br>
                   {teaminforitem.TeamDescription}
                 </p>
+                <p>
+                  <span style={{ userSelect: "none", color: "black" }}>
+                    Loại nhóm: &nbsp;
+                  </span>
+                  {teaminforitem.TeamType === "public"
+                    ? "Công khai"
+                    : "Riêng tư"}
+                </p>
               </div>
             </div>
           );

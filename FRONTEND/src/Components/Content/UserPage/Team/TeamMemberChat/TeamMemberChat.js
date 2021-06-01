@@ -1,41 +1,17 @@
 import React from "react";
 import Draggable from "react-draggable";
 import defaultavatar from "../../../../Main/Image-Icons/default-avatar.PNG";
+import axios from "axios";
 
 export default class TeamMemberChat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      TeamMemberRoomChatList: [],
       TeamMemberChatContent: ""
     };
   }
 
-  componentDidMount = () => {
-    this.props.socket.on("response-room-chat-list", data => {
-      if (
-        (this.props.MemberID === data.MemberID &&
-          this.props.MemberChoiceChatID === data.MemberChatID) ||
-        (this.props.MemberID === data.MemberChatID &&
-          this.props.MemberChoiceChatID === data.MemberID)
-      )
-        this.setState({
-          TeamMemberRoomChatList: data.RoomChatContent
-        });
-    });
-
-    this.props.socket.on("update-room-chat-list", data => {
-      if (
-        (this.props.MemberID === data.MemberID &&
-          this.props.MemberChoiceChatID === data.MemberChatID) ||
-        (this.props.MemberID === data.MemberChatID &&
-          this.props.MemberChoiceChatID === data.MemberID)
-      )
-        this.setState({
-          TeamMemberRoomChatList: data.RoomChatContent
-        });
-    });
-  };
+  componentDidMount = () => {};
 
   handleTeamMemberChatContent = event => {
     this.setState({
@@ -80,13 +56,13 @@ export default class TeamMemberChat extends React.Component {
         </div>
 
         <div className="user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content">
-          {!this.state.TeamMemberRoomChatList.length ? (
+          {!this.props.CurrentTeamMemberRoomChatList.length ? (
             <p style={{ fontWeight: "bold", fontSize: "12px" }}>
               Hãy nhắn tin để liên lạc với bạn này
             </p>
           ) : (
             <div>
-              {this.state.TeamMemberRoomChatList.map(
+              {this.props.CurrentTeamMemberRoomChatList.map(
                 (roomchatitem, roomchatindex) => (
                   <div key={roomchatindex}>
                     <p>{roomchatitem.MemberChatContent}</p>
@@ -101,6 +77,7 @@ export default class TeamMemberChat extends React.Component {
             <input
               type="text"
               placeholder="Nhập tin nhắn..."
+              maxLength="2000"
               onChange={event => this.handleTeamMemberChatContent(event)}
               onKeyPress={event => this.pressEnterSendMessageContent(event)}
               value={this.state.TeamMemberChatContent}

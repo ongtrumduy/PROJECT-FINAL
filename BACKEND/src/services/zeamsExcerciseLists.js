@@ -239,30 +239,30 @@ class ZeamsExcerciseLists {
 
     if (!checkcreatenew) {
       this.createNewExcerciseListContent();
-    } else {
-      let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
-        memberexcerciseitem => {
-          return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
-        }
-      );
+    }
 
-      if (memberExcerciseIndex >= 0) {
-        resMemberChoiceExcercise = {
-          AllNumberExcercise: this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
-            memberExcerciseIndex
-          ].ExcerciseMemberAllOwnedList.length,
-          CurrentExcerciseChoiceOwnedList: this.getCurrentExcerciseChoiceOwnedPageOnList(
-            excerciseinfor
-          ),
-          MemberID: excerciseinfor.MemberID
-        };
-      } else {
-        resMemberChoiceExcercise = {
-          AllNumberExcercise: 0,
-          CurrentExcerciseChoiceOwnedList: [],
-          MemberID: excerciseinfor.MemberID
-        };
+    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+      memberexcerciseitem => {
+        return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
       }
+    );
+
+    if (memberExcerciseIndex >= 0) {
+      resMemberChoiceExcercise = {
+        AllNumberExcercise: this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+          memberExcerciseIndex
+        ].ExcerciseMemberAllOwnedList.length,
+        CurrentExcerciseChoiceOwnedList: this.getCurrentExcerciseChoiceOwnedPageOnList(
+          excerciseinfor
+        ),
+        MemberID: excerciseinfor.MemberID
+      };
+    } else {
+      resMemberChoiceExcercise = {
+        AllNumberExcercise: 0,
+        CurrentExcerciseChoiceOwnedList: [],
+        MemberID: excerciseinfor.MemberID
+      };
     }
 
     return resMemberChoiceExcercise;

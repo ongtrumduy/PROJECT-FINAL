@@ -6,6 +6,7 @@ import getteamlistRoutes from "./getteamlist";
 import getteaminforRoutes from "./getteaminfor";
 import searchtojointeamRoutes from "./searchtojointeam";
 import getteamdiscussRoutes from "./getteamdiscuss";
+import getteammemberchatlistRoutes from "./getteammemberchatlist";
 import getreminderlistRoutes from "./getreminderlist";
 import createnewreminderRoutes from "./createnewreminder";
 import createnewexcercisecontentRoutes from "./createnewexcercisecontent";
@@ -51,6 +52,10 @@ let AllRoutes = (app, corsOptions) => {
 
   // --------------------------GetTeamDiscuss---------------------------------------
   getteamdiscussRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // --------------------------GetTeamMemberChatList---------------------------------------
+  getteammemberchatlistRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
   // --------------------------CreateNewReminder---------------------------------------

@@ -2,9 +2,9 @@ import zeamsTeams from "../services/zeamsTeams";
 
 let GetAllTeamList = async (req, res) => {
   // console.log(req.body);
-  let getAllTeamList = await zeamsTeams.getAllTeamList(req.body);
+  let resAllTeamList = await zeamsTeams.responseAllTeamListOfMember(req.body);
   // console.log(getAllTeamList);
-  res.send(getAllTeamList);
+  res.send(resAllTeamList);
 };
 
 module.exports = GetAllTeamList;

@@ -9,9 +9,20 @@ export default class TeamAllDiscussContent extends React.Component {
 
   renderTeamDiscussContent = teamitem => {
     switch (teamitem.TeamDiscussType) {
-      case "non-activitied":
+      case "newmember":
         return (
-          <p style={{ fontWeight: "bold" }}>{teamitem.MemberDiscussContent}</p>
+          <p style={{ fontWeight: "bold", fontSize: "12px", color: "red" }}>
+            {teamitem.MemberDiscussContent}
+          </p>
+        );
+      case "adminmember":
+        return (
+          <div>
+            <br></br>
+            <p style={{ fontWeight: "bold", fontSize: "12px", color: "red" }}>
+              {teamitem.MemberDiscussContent}
+            </p>
+          </div>
         );
       case "discuss":
         return (
@@ -35,7 +46,19 @@ export default class TeamAllDiscussContent extends React.Component {
   render() {
     return (
       <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss">
-        {this.props.TeamDiscussContent.map((teamitem, teamindex) => (
+        <div
+          style={
+            this.props.CheckNextRenderDiscussContent
+              ? { display: "block" }
+              : { display: "none" }
+          }
+          onClick={() => this.props.sendToSeeOldDiscussContent()}
+          className="user-team_team-menu-and-content__content___discuss_____alldiscuss____seen-old-discuss"
+        >
+          <p>Xem thêm các Thảo luận cũ !!!</p>
+        </div>
+
+        {this.props.CurrentTeamDiscussContent.map((teamitem, teamindex) => (
           <div key={teamindex}>{this.renderTeamDiscussContent(teamitem)}</div>
         ))}
       </div>

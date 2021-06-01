@@ -55,6 +55,7 @@ export default class TeamDiscussContentReplyInput extends React.Component {
               onChange={event => this.handleCreateNewMemberComment(event)}
               onKeyPress={this.pressEnterNewDiscussComment}
               value={this.state.MemberComment}
+              maxLength="1000"
               placeholder="Trả lời"
             />
           </div>

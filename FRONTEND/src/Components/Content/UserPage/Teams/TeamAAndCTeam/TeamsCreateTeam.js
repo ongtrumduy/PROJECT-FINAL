@@ -21,6 +21,7 @@ export default class TeamsCreateTeam extends React.Component {
       setLogoChoose: logoaaa,
       TeamName: "",
       TeamDescription: "",
+      TeamType: "public",
       checkValidate: ""
     };
   }
@@ -42,6 +43,7 @@ export default class TeamsCreateTeam extends React.Component {
       .post("/createnewteam", {
         TeamName: this.state.TeamName,
         TeamDescription: this.state.TeamDescription,
+        TeamType: this.state.TeamType,
         TeamLogo: this.state.setLogoChoose,
         MemberID: this.props.MemberID
       })
@@ -51,6 +53,10 @@ export default class TeamsCreateTeam extends React.Component {
           checkValidate: res.data.checkValidate
         });
         if (res.data.checkValidate === "success-create-team") {
+          this.props.socket.emit("add-new-member-create-team", {
+            MemberID: this.props.MemberID,
+            TeamID: res.data.TeamID
+          });
           setTimeout(() => {
             this.props.updateRenderTeamControl("teamall");
           }, 1000);
@@ -107,17 +113,45 @@ export default class TeamsCreateTeam extends React.Component {
                 <input
                   type="text"
                   name="TeamName"
+                  maxLength="120"
                   onChange={event => this.handleValueCreateNewTeam(event)}
                   placeholder="Nhập tên nhóm..."
                 />
+
                 <p>Mô tả</p>
                 <input
                   type="text"
                   name="TeamDescription"
+                  maxLength="120"
                   onChange={event => this.handleValueCreateNewTeam(event)}
                   placeholder="Nhập mô tả..."
                 />
-                <p>Chọn ảnh đại diện cho nhóm</p>
+
+                <p>Chọn chế độ hiển thị Nhóm</p>
+                <div className="user-teams_create__team___form____radio-button">
+                  <div>
+                    <input
+                      type="radio"
+                      name="TeamType"
+                      value="public"
+                      defaultChecked
+                      onChange={event => this.handleValueCreateNewTeam(event)}
+                    />
+                  </div>
+                  <span>Công khai</span>
+
+                  <div>
+                    <input
+                      type="radio"
+                      name="TeamType"
+                      value="private"
+                      onChange={event => this.handleValueCreateNewTeam(event)}
+                    />
+                  </div>
+                  <span>Riêng tư</span>
+                </div>
+
+                <p>Chọn ảnh đại diện cho Nhóm</p>
                 <select
                   value={this.state.setLogoChoose}
                   onChange={event => this.handleChooseLogo(event)}

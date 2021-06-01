@@ -26,7 +26,7 @@ export default class TeamsAddCodeTeam extends React.Component {
     switch (type) {
       case "joined-team":
         return <span>Bạn đã tham gia nhóm này rồi !!!</span>;
-      case "sucess-joined":
+      case "success-joined":
         return <span>Bạn đã tham gia nhóm thành công !!!</span>;
       case "non-existed-team":
         return (
@@ -51,9 +51,13 @@ export default class TeamsAddCodeTeam extends React.Component {
       .then(res => {
         // console.log(res.data);
         this.setState({
-          checkValidate: res.data
+          checkValidate: res.data.checkValidate
         });
-        if (res.data === "success-joined") {
+        if (res.data.checkValidate === "success-joined") {
+          this.props.socket.emit("add-new-member-join-team", {
+            MemberID: this.props.MemberID,
+            TeamID: this.state.TeamCodeToJoin
+          });
           setTimeout(() => {
             this.props.updateRenderTeamControl("teamall");
           }, 1000);
@@ -87,6 +91,7 @@ export default class TeamsAddCodeTeam extends React.Component {
                 <input
                   type="text"
                   placeholder="Nhập mã nhóm..."
+                  maxLength="100"
                   onChange={event => this.handleValueSearch(event)}
                 />
               </div>
@@ -99,7 +104,7 @@ export default class TeamsAddCodeTeam extends React.Component {
               </div>
               <div className="user-teams_create__team___response-addcode-team">
                 {this.renderValidateNotify("joined-team")}
-                {this.renderValidateNotify("sucess-joined")}
+                {this.renderValidateNotify("success-joined")}
               </div>
             </div>
           </div>

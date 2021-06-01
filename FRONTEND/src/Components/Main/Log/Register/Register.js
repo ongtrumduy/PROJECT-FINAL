@@ -128,6 +128,7 @@ export default class Register extends React.Component {
               <input
                 type="text"
                 name="Username"
+                maxLength="20"
                 onChange={event => this.handleValueChange(event)}
                 value={this.state.Username}
               />
@@ -142,6 +143,7 @@ export default class Register extends React.Component {
                   <input
                     type="text"
                     name="Lastname"
+                    maxLength="10"
                     onChange={event => this.handleValueChange(event)}
                     value={this.state.Lastname}
                     placeholder="Họ"
@@ -151,6 +153,7 @@ export default class Register extends React.Component {
                   <input
                     type="text"
                     name="Firstname"
+                    maxLength="10"
                     onChange={event => this.handleValueChange(event)}
                     value={this.state.Firstname}
                     placeholder="Tên"
@@ -167,7 +170,10 @@ export default class Register extends React.Component {
                 Giới tính <span>(*)</span>
               </p>
               <div className="user-register_form__genderchoose">
-                <select onChange={event => this.handleGenderChange(event)}>
+                <select
+                  value={this.state.Gender}
+                  onChange={event => this.handleGenderChange(event)}
+                >
                   <option value="">Chọn</option>
                   <option value="Nam">Nam</option>
                   <option value="Nữ">Nữ</option>
@@ -186,6 +192,7 @@ export default class Register extends React.Component {
               <input
                 type="text"
                 name="PhoneNumber"
+                maxLength="12"
                 onChange={event => this.handleValueChange(event)}
                 value={this.state.PhoneNumber}
               />
@@ -199,6 +206,7 @@ export default class Register extends React.Component {
                 style={{ width: "240px" }}
                 type={(this.state.setHiddenPass && "text") || "password"}
                 name="PassWord"
+                maxLength="20"
                 onChange={event => this.handleValueChange(event)}
                 value={this.state.PassWord}
               />

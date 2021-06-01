@@ -28,26 +28,36 @@ class ZeamsTeams {
   //-----------------------------------------------------------------------------------------------------------------
 
   createNewTeam(teaminfor) {
+    let TeamID = uuidv1();
+
     let newteam = {
-      TeamID: uuidv1(),
-      TeamMemberAdminID: teaminfor.MemberID,
+      TeamID: TeamID,
+      TeamAdminMemberList: [],
       TeamInfor: [],
-      TeamMember: []
+      TeamMemberList: []
     };
     let newteaminfor = {
       TeamName: teaminfor.TeamName,
+      TeamType: teaminfor.TeamType,
       TeamDescription: teaminfor.TeamDescription,
       TeamLogo: teaminfor.TeamLogo
     };
     newteam.TeamInfor.push(newteaminfor);
 
+    let newadminmember = {
+      MemberID: teaminfor.MemberID
+    };
+    newteam.TeamAdminMemberList.push(newadminmember);
+
     let newteammember = {
       MemberID: teaminfor.MemberID
     };
-    newteam.TeamMember.push(newteammember);
+    newteam.TeamMemberList.push(newteammember);
 
     this.ZeamsTeams.push(newteam);
     this.saveDataJSON();
+
+    return TeamID;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
@@ -79,9 +89,10 @@ class ZeamsTeams {
           checkValidate: "existed-team"
         };
       } else {
-        this.createNewTeam(teaminfor);
+        let TeamID = this.createNewTeam(teaminfor);
         resCreateNewTeam = {
-          checkValidate: "success-create-team"
+          checkValidate: "success-create-team",
+          TeamID: TeamID
         };
       }
     }
@@ -92,11 +103,11 @@ class ZeamsTeams {
   getAllTeamList(member) {
     let allTeamList = [];
     this.ZeamsTeams.forEach(teamitem => {
-      teamitem.TeamMember.forEach(memberitem => {
+      teamitem.TeamMemberList.forEach(memberitem => {
         if (member.MemberID === memberitem.MemberID) {
           let TeamInfor = {
             TeamID: teamitem.TeamID,
-            TeamMemberAdminID: teamitem.MemberID,
+            TeamAdminMemberList: teamitem.TeamAdminMemberList,
             TeamInfor: teamitem.TeamInfor
           };
           allTeamList.push(TeamInfor);
@@ -106,6 +117,14 @@ class ZeamsTeams {
     return allTeamList;
   }
 
+  responseAllTeamListOfMember(member) {
+    let resAllTeamList = {
+      AllTeamList: this.getAllTeamList(member)
+    };
+
+    return resAllTeamList;
+  }
+
   //-----------------------------------------------------------------------------------------------------------------
 
   getAllMemberIDsOfTeam(team) {
@@ -113,8 +132,12 @@ class ZeamsTeams {
       return teamitem.TeamID === team.TeamID;
     });
 
-    let resTeamMember = this.ZeamsTeams[teamindex].TeamMember;
-    return resTeamMember;
+    let resTeamMemberList = [];
+
+    if (teamindex >= 0) {
+      resTeamMemberList = this.ZeamsTeams[teamindex].TeamMemberList;
+    }
+    return resTeamMemberList;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
@@ -123,7 +146,10 @@ class ZeamsTeams {
     let teamindex = this.ZeamsTeams.findIndex(teamitem => {
       return teamitem.TeamID === team.TeamID;
     });
-    let teaminfor = this.ZeamsTeams[teamindex];
+    let teaminfor = [];
+    if (teamindex >= 0) {
+      teaminfor = this.ZeamsTeams[teamindex].TeamInfor;
+    }
     return teaminfor;
   }
 
@@ -136,7 +162,9 @@ class ZeamsTeams {
     let newMemberID = {
       MemberID: member.MemberID
     };
-    this.ZeamsTeams[teamindex].TeamMember.push(newMemberID);
+    if (teamindex >= 0) {
+      this.ZeamsTeams[teamindex].TeamMemberList.push(newMemberID);
+    }
     this.saveDataJSON();
   }
 
@@ -146,25 +174,74 @@ class ZeamsTeams {
     let teamindex = this.ZeamsTeams.findIndex(teamitem => {
       return teamitem.TeamID === member.TeamCodeToJoin;
     });
+
+    let resSearchTeamToJoinTeam = {};
+
     if (teamindex >= 0) {
-      let memberteamindex = this.ZeamsTeams[teamindex].TeamMember.findIndex(
+      let memberteamindex = this.ZeamsTeams[teamindex].TeamMemberList.findIndex(
         memberteamitem => {
           return memberteamitem.MemberID === member.MemberID;
         }
       );
       if (memberteamindex >= 0) {
-        return "joined-team";
+        resSearchTeamToJoinTeam = {
+          checkValidate: "joined-team"
+        };
       } else {
         this.addNewMemberToTeam(member);
-        return "sucess-joined";
+        resSearchTeamToJoinTeam = {
+          checkValidate: "success-joined"
+        };
       }
     } else {
-      return "non-existed-team";
+      resSearchTeamToJoinTeam = {
+        checkValidate: "non-existed-team"
+      };
+    }
+
+    return resSearchTeamToJoinTeam;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  setCheckMemberIsAdmin(member) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === member.TeamID;
+    });
+    let adminmemberindex;
+    if (teamindex >= 0) {
+      adminmemberindex = this.ZeamsTeams[
+        teamindex
+      ].TeamAdminMemberList.findIndex(adminmemberitem => {
+        return adminmemberitem.MemberID === member.MemberID;
+      });
+
+      if (adminmemberindex >= 0) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
   //-----------------------------------------------------------------------------------------------------------------
-  //-----------------------------------------------------------------------------------------------------------------
+
+  responseChoiceJoinedTeamInfor(member) {
+    let resChoiceJoinedTeamInfor = {};
+
+    let TeamAllInfor = this.getChoiceJoinedTeamInfor(member);
+
+    let checkMemberIsAdmin = this.setCheckMemberIsAdmin(member);
+
+    resChoiceJoinedTeamInfor = {
+      TeamID: member.TeamID,
+      TeamAllInfor: TeamAllInfor,
+      CheckMemberIsAdmin: checkMemberIsAdmin
+    };
+
+    return resChoiceJoinedTeamInfor;
+  }
+
   //-----------------------------------------------------------------------------------------------------------------
   //-----------------------------------------------------------------------------------------------------------------
   //-----------------------------------------------------------------------------------------------------------------

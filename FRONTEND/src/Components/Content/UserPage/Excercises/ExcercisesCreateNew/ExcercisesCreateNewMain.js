@@ -171,7 +171,7 @@ export default class ExcercisesCreateNew extends React.Component {
                 <input
                   type="text"
                   name="ExcerciseName"
-                  maxLength="200"
+                  maxLength="120"
                   onChange={event => this.handleValueCreateNewExcercise(event)}
                   placeholder="Nhập tên nhóm..."
                 />
@@ -179,6 +179,7 @@ export default class ExcercisesCreateNew extends React.Component {
                 <input
                   type="text"
                   name="ExcerciseDescription"
+                  maxLength="120"
                   onChange={event => this.handleValueCreateNewExcercise(event)}
                   placeholder="Nhập mô tả..."
                 />
@@ -207,9 +208,7 @@ export default class ExcercisesCreateNew extends React.Component {
                       }
                     />
                   </div>
-                  <div>
-                    <span>Công khai</span>
-                  </div>
+                  <span>Công khai</span>
 
                   <div>
                     <input
@@ -221,9 +220,7 @@ export default class ExcercisesCreateNew extends React.Component {
                       }
                     />
                   </div>
-                  <div>
-                    <span>Riêng tư</span>
-                  </div>
+                  <span>Riêng tư</span>
                 </div>
 
                 <p>Chọn logo cho Bộ đề - Bài tập </p>

@@ -14,48 +14,46 @@ let CreateNewDiscuss = io => {
     socket.on("create-new-discuss", data => {
       zeamsTeamsDiscuss.createNewMemberDiscuss(data);
 
-      let resTeamDiscussContent = zeamsTeamsDiscuss.responseTeamDiscussContent(
-        data
-      );
-
       StartBeginSocket.emitAllSocketsOfMemberTeam(
         membersocket,
         data,
         io,
-        "update-team-discuss-content",
-        resTeamDiscussContent
+        "send-to-update-team-discuss-content",
+        {
+          TeamID: data.TeamID
+        }
       );
     });
 
     //====================================================================================================
 
-    socket.on("create-new-discuss-comment", data => {
-      zeamsTeamsDiscuss.createNewMemberComment(data);
+    // socket.on("create-new-discuss-comment", data => {
+    //   zeamsTeamsDiscuss.createNewMemberComment(data);
 
-      let resTeamDiscussContent = zeamsTeamsDiscuss.responseTeamDiscussContent(
-        data
-      );
+    //   let resTeamDiscussContent = zeamsTeamsDiscuss.responseTeamDiscussContent(
+    //     data
+    //   );
 
-      StartBeginSocket.emitAllSocketsOfMemberTeam(
-        membersocket,
-        data,
-        io,
-        "update-team-discuss-content",
-        resTeamDiscussContent
-      );
+    //   StartBeginSocket.emitAllSocketsOfMemberTeam(
+    //     membersocket,
+    //     data,
+    //     io,
+    //     "update-team-discuss-content",
+    //     resTeamDiscussContent
+    //   );
 
-      let resUpdateTeamDiscussComment = {
-        TeamDiscussID: data.TeamDiscussID
-      };
+    //   let resUpdateTeamDiscussComment = {
+    //     TeamDiscussID: data.TeamDiscussID
+    //   };
 
-      StartBeginSocket.emitAllSocketsOfMember(
-        membersocket,
-        data.MemberID,
-        io,
-        "update-team-discuss-comment-content",
-        resUpdateTeamDiscussComment
-      );
-    });
+    //   StartBeginSocket.emitAllSocketsOfMember(
+    //     membersocket,
+    //     data.MemberID,
+    //     io,
+    //     "update-team-discuss-comment-content",
+    //     resUpdateTeamDiscussComment
+    //   );
+    // });
 
     //====================================================================================================
   });

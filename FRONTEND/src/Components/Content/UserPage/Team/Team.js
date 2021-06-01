@@ -9,23 +9,46 @@ import "./Team.css";
 export default class Team extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { ChooseTeamInfor: [], setSelectTeamContent: "discuss" };
+    this.state = {
+      ChooseTeamInfor: [],
+      setSelectTeamContent: "discuss",
+      CheckMemberIsAdmin: false,
+      ChooseTeamID: ""
+    };
   }
 
   componentDidMount = () => {
     axios
       .post("/getteamlist/getteaminfor", {
-        TeamID: this.props.TeamID
+        TeamID: this.props.TeamID,
+        MemberID: this.props.MemberID
       })
       .then(res => {
         this.setState({
           ChooseTeamID: res.data.TeamID,
-          ChooseTeamInfor: res.data.TeamInfor
+          ChooseTeamInfor: res.data.TeamAllInfor,
+          CheckMemberIsAdmin: res.data.CheckMemberIsAdmin
         });
       })
       .catch(error => {
         console.log(error);
       });
+
+    this.mounted = true;
+
+    this.props.socket.on("update-team-infor", data => {
+      if (this.mounted) {
+        this.setState({
+          ChooseTeamID: data.TeamID,
+          ChooseTeamInfor: data.TeamAllInfor,
+          CheckMemberIsAdmin: data.CheckMemberIsAdmin
+        });
+      }
+    });
+  };
+
+  componentWillUnmount = () => {
+    this.mounted = false;
   };
 
   setSelectTeamContentClickChoose = setSelect => {
@@ -75,6 +98,7 @@ export default class Team extends React.Component {
               socket={this.props.socket}
               ChooseTeamInfor={this.state.ChooseTeamInfor}
               setSelectTeamContent={this.state.setSelectTeamContent}
+              checkMemberIsAdmin={this.state.checkMemberIsAdmin}
             />
           </div>
         </div>

@@ -17,7 +17,7 @@ export default class TeamsAllList extends React.Component {
       .then(res => {
         // console.log(res.data);
         this.setState({
-          AllTeamList: res.data
+          AllTeamList: res.data.AllTeamList
         });
       })
       .catch(error => {
@@ -33,16 +33,21 @@ export default class TeamsAllList extends React.Component {
   render() {
     return (
       <div className="user-teams_all__list">
-        {this.state.AllTeamList.map((teamitem, teamindex) =>
-          teamitem.TeamInfor.map(teamnameitem => (
-            <TeamsItem
-              key={teamindex}
-              TeamID={teamitem.TeamID}
-              TeamLogo={teamnameitem.TeamLogo}
-              TeamName={teamnameitem.TeamName}
-              chooseOneJoinedTeam={this.chooseOneJoinedTeam}
-            />
-          ))
+        {this.state.AllTeamList.length === 0 ? (
+          <p>Bạn chưa tham gia Nhóm thảo luận nào</p>
+        ) : (
+          this.state.AllTeamList.map((teamitem, teamindex) =>
+            teamitem.TeamInfor.map(teamnameitem => (
+              <TeamsItem
+                key={teamindex}
+                TeamID={teamitem.TeamID}
+                MemberID={this.props.MemberID}
+                TeamLogo={teamnameitem.TeamLogo}
+                TeamName={teamnameitem.TeamName}
+                chooseOneJoinedTeam={this.chooseOneJoinedTeam}
+              />
+            ))
+          )
         )}
       </div>
     );
