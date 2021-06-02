@@ -4,6 +4,10 @@
     width: 100%;
 }
 
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____content {
+    width: 100%;
+}
+
 .user-team_team-menu-and-content__content___discuss_____alldiscuss p {
     text-align: center;
 }
@@ -15,9 +19,10 @@
     z-index: 1000;
     height: 24px;
     width: 71%;
-    background-color: rgb(235, 205, 151,0.3);
+    background-color: rgb(235, 205, 151, 0.3);
     cursor: pointer;
     border-radius: 8px;
+    user-select: none;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss____seen-old-discuss p {
@@ -51,10 +56,12 @@
     flex-direction: row;
     border-bottom: 1px solid rgb(216, 216, 216);
     width: 100%;
+    user-select: none;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______avatar {
     margin: 0 12px 0 0;
+    user-select: none;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______avatar img {
@@ -64,6 +71,7 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________timedate {
     margin: 0 0 0 20px;
+    width: 20%;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________timedate p {
@@ -72,7 +80,7 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________fullname {
     font-weight: bold;
-    width: 80%;
+    width: 76%;
     text-align: left;
     cursor: pointer;
 }
@@ -82,8 +90,6 @@
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content {
-    width: 100%;
-    min-width: 200px;
     max-width: 600px;
     max-height: 240px;
     overflow: auto;
@@ -93,6 +99,15 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content p {
     text-align: left;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete:hover {
+    color: blue;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________reply {
@@ -160,6 +175,25 @@
     justify-content: flex-start;
     flex-direction: column;
     width: 100%;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput________seen-old-comment {
+    background-color: cornsilk;
+    height: 24px;
+    width: 99.9%;
+    cursor: pointer;
+    user-select: none;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput________seen-old-comment:hover {
+    font-weight: bold;
+    color: crimson;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput________seen-old-comment p {
+    text-align: left;
+    font-size: 12px;
+    margin: 0 0 0 8px;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________send {
@@ -231,7 +265,10 @@
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content {
-    margin: -12px 0 0 4px;
+    margin: 4px 0 8px 4px;
+    max-height: 100px;
+    max-width: 570px;
+    overflow: auto;
 }
 
 .user-team_team-menu-and-content__content___discuss____member-chat {

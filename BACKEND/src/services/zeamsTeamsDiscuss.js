@@ -53,8 +53,7 @@ class ZeamsTeamsDiscuss {
         MemberDiscussID: discuss.MemberID,
         MemberDiscussFullName: zeamsMembers.getMemberFullName(discuss),
         MemberDiscussContent: discuss.MemberDiscuss,
-        MemberDiscussTime: moment().format("HH:mm DD-MM-YYYY"),
-        TeamCommentContent: []
+        MemberDiscussTime: moment().format("HH:mm DD-MM-YYYY")
       };
 
       this.ZeamsTeamsDiscuss[teamindex].TeamDiscussContent.push(memberdiscuss);
@@ -140,8 +139,6 @@ class ZeamsTeamsDiscuss {
   //-----------------------------------------------------------------------------------------------------------------
 
   getTeamDiscussContentList(discuss) {
-    // console.log("Din dit the nhở ", discuss);
-
     let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
       return teamitem.TeamID === discuss.TeamID;
     });
@@ -154,14 +151,6 @@ class ZeamsTeamsDiscuss {
 
     let currentTeamDiscussContent = [];
 
-    // console.log(
-    //   "Kiểm tiếp cả cái này xem indexOfLastDiscuss",
-    //   indexOfLastDiscuss
-    // );
-    // console.log(
-    //   "Kiểm tiếp cả cái này xem ",
-    //   this.ZeamsTeamsDiscuss[teamindex].TeamDiscussContent
-    // );
     let indexOfLastDiscuss = this.ZeamsTeamsDiscuss[teamindex]
       .TeamDiscussContent.length;
 
@@ -173,15 +162,11 @@ class ZeamsTeamsDiscuss {
       indexOfFirstDiscuss = 0;
     }
 
-    // console.log("Nốt cái này phat cuối xem sao ", teamindex);
     if (teamindex >= 0) {
-      // console.log("có vào trong cái này");
       currentTeamDiscussContent = this.ZeamsTeamsDiscuss[
         teamindex
       ].TeamDiscussContent.slice(indexOfFirstDiscuss, indexOfLastDiscuss);
     }
-
-    // console.log("KHổ quá các vậy nhở ", currentTeamDiscussContent);
 
     return currentTeamDiscussContent;
   }
@@ -221,7 +206,6 @@ class ZeamsTeamsDiscuss {
 
   //-----------------------------------------------------------------------------------------------------------------
   responseTeamDiscussContent(discuss) {
-    console.log("dữ liệu bawnwsnnnnn sang bên này ", discuss);
     let resteamsdiscusscontent;
 
     let currentTeamDiscussContent = this.getTeamDiscussContentList(discuss);

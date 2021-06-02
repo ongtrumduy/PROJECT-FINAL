@@ -11,72 +11,18 @@ export default class TeamDiscuss extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      CurrentTeamDiscussContent: [],
       CurrentTeamMemberRoomChatList: [],
       chooseTeamMemberChat: false,
       MemberChoiceChatID: "",
       modalCheckChatWithSelfIsOpen: false,
-      CurrentIndexToRenderDiscussContent: "1",
-      NumberRenderDiscussContent: "5",
       CurrentIndexToRenderMemberChatContent: "1",
       NumberMemberChatContent: "5",
-      CheckNextRenderDiscussContent: false,
       CheckNextRenderChatContent: false
     };
   }
 
   componentDidMount = () => {
-    axios
-      .post("/getteamlist/getteamdiscuss", {
-        TeamID: this.props.TeamID,
-        CurrentIndexToRenderDiscussContent: this.state
-          .CurrentIndexToRenderDiscussContent,
-        NumberRenderDiscussContent: this.state.NumberRenderDiscussContent
-      })
-      .then(res => {
-        // console.log(
-        //   "Đổ về dữ lieuj cái này xem saooooooooooooooooooooooooooo ",
-        //   res.data
-        // );
-
-        this.setState({
-          CurrentTeamDiscussContent: res.data.CurrentTeamDiscussContent,
-          CheckNextRenderDiscussContent: res.data.CheckNextRenderDiscussContent
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
     this.mounted = true;
-
-    this.props.socket.on("send-to-update-team-discuss-content", data => {
-      if (this.props.TeamID === data.TeamID) {
-        this.props.socket.emit("receive-to-update-team-discuss-content", {
-          MemberID: this.props.MemberID,
-          TeamID: this.props.TeamID,
-          CurrentIndexToRenderDiscussContent: "1",
-          NumberRenderDiscussContent: this.state.NumberRenderDiscussContent
-        });
-        this.setState({
-          CurrentIndexToRenderDiscussContent: "1"
-        });
-      }
-    });
-
-    this.props.socket.on("update-team-discuss-content", data => {
-      if (this.mounted) {
-        if (this.props.TeamID === data.TeamID) {
-          // console.log("Đổ về dữ lieuj cái này xem sao ", data);
-          this.setState({
-            CurrentTeamDiscussContent: data.CurrentTeamDiscussContent,
-            CheckNextRenderDiscussContent: data.CheckNextRenderDiscussContent
-          });
-        }
-      }
-    });
-    //=============================================================================
-    this.momounted = true;
 
     this.props.socket.on("update-room-chat-list", data => {
       if (this.mounted) {
@@ -96,7 +42,6 @@ export default class TeamDiscuss extends React.Component {
 
   componentWillUnmount = () => {
     this.mounted = false;
-    this.momounted = false;
   };
 
   openModalCheckChatWithSelfModal = () => {
@@ -106,12 +51,6 @@ export default class TeamDiscuss extends React.Component {
   closeModalCheckChatWithSelfModal = () => {
     this.setState({ modalCheckChatWithSelfIsOpen: false });
   };
-
-  // getCurrentIndexToRenderMemberChatContent = currentIndexToRender => {
-  //   this.setState({
-  //     currentIndexToRenderMemberChatContent: currentIndexToRender
-  //   });
-  // };
 
   setChoiceTeamMemberChatID = memberID => {
     if (this.props.MemberID !== memberID) {
@@ -147,20 +86,6 @@ export default class TeamDiscuss extends React.Component {
     });
   };
 
-  sendToSeeOldDiscussContent = () => {
-    this.props.socket.emit("receive-to-update-team-discuss-content", {
-      MemberID: this.props.MemberID,
-      TeamID: this.props.TeamID,
-      CurrentIndexToRenderDiscussContent:
-        Number(this.state.CurrentIndexToRenderDiscussContent) + 1 + "",
-      NumberRenderDiscussContent: this.state.NumberRenderDiscussContent
-    });
-    this.setState({
-      CurrentIndexToRenderDiscussContent:
-        Number(this.state.CurrentIndexToRenderDiscussContent) + 1 + ""
-    });
-  };
-
   render() {
     return (
       <div className="user-team_team-menu-and-content__content___discuss">
@@ -168,12 +93,7 @@ export default class TeamDiscuss extends React.Component {
           MemberID={this.props.MemberID}
           TeamID={this.props.TeamID}
           socket={this.props.socket}
-          CurrentTeamDiscussContent={this.state.CurrentTeamDiscussContent}
-          CheckNextRenderDiscussContent={
-            this.state.CheckNextRenderDiscussContent
-          }
           setChoiceTeamMemberChatID={this.setChoiceTeamMemberChatID}
-          sendToSeeOldDiscussContent={this.sendToSeeOldDiscussContent}
         />
         <TeamMemberChat
           chooseTeamMemberChat={this.state.chooseTeamMemberChat}
@@ -182,9 +102,6 @@ export default class TeamDiscuss extends React.Component {
             this.state.CurrentTeamMemberRoomChatList
           }
           setChooseTeamMemberChat={this.setChooseTeamMemberChat}
-          // getCurrentIndexToRenderMemberChatContent={
-          //   this.getCurrentIndexToRenderMemberChatContent
-          // }
           MemberID={this.props.MemberID}
           TeamID={this.props.TeamID}
           socket={this.props.socket}

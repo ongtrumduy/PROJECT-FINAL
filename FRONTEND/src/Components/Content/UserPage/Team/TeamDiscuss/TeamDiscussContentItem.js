@@ -5,8 +5,28 @@ import TeamDiscussContentReplyInput from "./TeamDiscussContentReplyInput";
 export default class TeamDiscussContent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { setDiscussReply: false, TeamDisscussChooseCommentID: "" };
+    this.state = { setDiscussReply: false };
   }
+
+  componentDidMount = () => {
+    this.mounted = true;
+    this.props.socket.on("receive-to-close-all-discuss-reply", data => {
+      if (this.mounted) {
+        if (
+          this.props.socket.id === data.SocketID &&
+          this.props.TeamID === data.TeamID
+        ) {
+          this.setState({
+            setDiscussReply: false
+          });
+        }
+      }
+    });
+  };
+
+  componentWillUnmount = () => {
+    this.mounted = false;
+  };
 
   handleSetDiscussReply = () => {
     this.setState({
@@ -14,28 +34,14 @@ export default class TeamDiscussContent extends React.Component {
     });
   };
 
-  componentDidMount = () => {
-    this.props.socket.on("update-team-discuss-comment-content", data => {
-      if (this.props.TeamDiscussID === data.TeamDiscussID) {
-        this.setState({
-          TeamDisscussChooseCommentID: data.TeamDiscussID
-        });
-      }
-    });
-  };
-
   renderContentDiscussReply = () => {
-    if (
-      this.state.setDiscussReply ||
-      this.props.TeamDiscussID === this.state.TeamDisscussChooseCommentID
-    ) {
+    if (this.state.setDiscussReply) {
       return (
         <TeamDiscussContentReplyInput
           MemberDiscussID={this.props.MemberDiscussID}
           TeamDiscussID={this.props.TeamDiscussID}
           MemberID={this.props.MemberID}
           TeamID={this.props.TeamID}
-          TeamCommentContent={this.props.TeamCommentContent}
           socket={this.props.socket}
           setChoiceTeamMemberChatID={this.props.setChoiceTeamMemberChatID}
         />
@@ -77,6 +83,9 @@ export default class TeamDiscussContent extends React.Component {
             </div>
             <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________timedate">
               {this.props.MemberDiscussTime}
+            </div>
+            <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete">
+              <i className="material-icons">{"more_horiz"}</i>
             </div>
           </div>
           <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content">

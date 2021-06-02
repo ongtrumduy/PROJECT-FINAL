@@ -40,7 +40,7 @@ export default class TeamDiscussCreateNewInput extends React.Component {
             onChange={event => this.handleNewDiscuss(event)}
             onKeyPress={this.pressEnterNewDiscuss}
             value={this.state.MemberDiscuss}
-            maxLength="2000"
+            maxLength="4000"
             placeholder="Bắt đầu cuộc thảo luận mới"
           />
         </div>

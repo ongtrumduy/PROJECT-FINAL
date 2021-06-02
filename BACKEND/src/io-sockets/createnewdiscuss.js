@@ -1,5 +1,6 @@
 import StartBeginSocket from "../io-sockets/startbeginsocket";
 import zeamsTeamsDiscuss from "../services/zeamsTeamsDiscuss";
+import zeamsTeamsDiscussComments from "../services/zeamsTeamsDiscussComments";
 
 let CreateNewDiscuss = io => {
   let membersocket = {};
@@ -27,33 +28,23 @@ let CreateNewDiscuss = io => {
 
     //====================================================================================================
 
-    // socket.on("create-new-discuss-comment", data => {
-    //   zeamsTeamsDiscuss.createNewMemberComment(data);
+    socket.on("create-new-discuss-comment", data => {
+      console.log("Dữ liệu đổ qua cái comment của tao đm ", data);
+      zeamsTeamsDiscussComments.createNewTeamMemberDiscussCommentContent(data);
 
-    //   let resTeamDiscussContent = zeamsTeamsDiscuss.responseTeamDiscussContent(
-    //     data
-    //   );
-
-    //   StartBeginSocket.emitAllSocketsOfMemberTeam(
-    //     membersocket,
-    //     data,
-    //     io,
-    //     "update-team-discuss-content",
-    //     resTeamDiscussContent
-    //   );
-
-    //   let resUpdateTeamDiscussComment = {
-    //     TeamDiscussID: data.TeamDiscussID
-    //   };
-
-    //   StartBeginSocket.emitAllSocketsOfMember(
-    //     membersocket,
-    //     data.MemberID,
-    //     io,
-    //     "update-team-discuss-comment-content",
-    //     resUpdateTeamDiscussComment
-    //   );
-    // });
+      StartBeginSocket.emitAllSocketsOfMemberTeam(
+        membersocket,
+        data,
+        io,
+        "send-to-update-team-discuss-comment-content",
+        {
+          TeamID: data.TeamID,
+          TeamDiscussID: data.TeamDiscussID,
+          MemberID: data.MemberID,
+          SocketID: socket.id
+        }
+      );
+    });
 
     //====================================================================================================
   });

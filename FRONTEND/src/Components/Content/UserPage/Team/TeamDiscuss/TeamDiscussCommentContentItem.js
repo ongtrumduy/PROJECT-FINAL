@@ -12,7 +12,11 @@ export default class TeamDiscussCommentContent extends React.Component {
       <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment">
         <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________avatar">
           <img
-            style={{ height: "28px", width: "28px", margin: "4px 0 0 0" }}
+            style={{
+              height: "28px",
+              width: "28px",
+              margin: "4px 0 0 0"
+            }}
             src={defaultavatar}
             alt="defalut-avatar"
           />
@@ -29,6 +33,9 @@ export default class TeamDiscussCommentContent extends React.Component {
             </div>
             <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________timedate">
               {this.props.MemberCommentTime}
+            </div>
+            <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________edit-and-delete">
+              <i className="material-icons">{"more_horiz"}</i>
             </div>
           </div>
           <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content">
