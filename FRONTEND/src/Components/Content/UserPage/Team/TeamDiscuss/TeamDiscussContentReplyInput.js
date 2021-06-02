@@ -26,7 +26,6 @@ export default class TeamDiscussContentReplyInput extends React.Component {
           .NumberRenderDiscussCommentContent
       })
       .then(res => {
-        // console.log("Lấy dữ liệu đổ về comment cho tao", res.data);
         this.setState({
           CurrentTeamDiscussCommentContent:
             res.data.CurrentTeamDiscussCommentContent,
@@ -40,40 +39,42 @@ export default class TeamDiscussContentReplyInput extends React.Component {
 
     this.mounted = true;
 
+    this.semounted = true;
+
     this.props.socket.on(
       "send-to-update-team-discuss-comment-content",
       data => {
-        // console.log("Lấy dữ liệu xem socket thế nào ", data);
-        // console.log("Lấy ra socket của thằng này đây ", this.props.socket.id);
-        if (this.props.TeamID === data.TeamID) {
-          if (this.props.socket.id === data.SocketID) {
-            this.props.socket.emit(
-              "receive-to-update-team-discuss-comment-content",
-              {
-                MemberID: this.props.MemberID,
-                TeamID: this.props.TeamID,
-                TeamDiscussID: this.props.TeamDiscussID,
-                CurrentIndexToRenderDiscussCommentContent: "1",
-                NumberRenderDiscussCommentContent: this.state
-                  .NumberRenderDiscussCommentContent
-              }
-            );
-            this.setState({
-              CurrentIndexToRenderDiscussCommentContent: "1"
-            });
-          } else {
-            this.props.socket.emit(
-              "receive-to-update-team-discuss-comment-content",
-              {
-                MemberID: this.props.MemberID,
-                TeamID: this.props.TeamID,
-                TeamDiscussID: this.props.TeamDiscussID,
-                CurrentIndexToRenderDiscussCommentContent: this.state
-                  .CurrentIndexToRenderDiscussCommentContent,
-                NumberRenderDiscussCommentContent: this.state
-                  .NumberRenderDiscussCommentContent
-              }
-            );
+        if (this.semounted) {
+          if (this.props.TeamID === data.TeamID) {
+            if (this.props.socket.id === data.SocketID) {
+              this.props.socket.emit(
+                "receive-to-update-team-discuss-comment-content",
+                {
+                  MemberID: this.props.MemberID,
+                  TeamID: this.props.TeamID,
+                  TeamDiscussID: this.props.TeamDiscussID,
+                  CurrentIndexToRenderDiscussCommentContent: "1",
+                  NumberRenderDiscussCommentContent: this.state
+                    .NumberRenderDiscussCommentContent
+                }
+              );
+              this.setState({
+                CurrentIndexToRenderDiscussCommentContent: "1"
+              });
+            } else {
+              this.props.socket.emit(
+                "receive-to-update-team-discuss-comment-content",
+                {
+                  MemberID: this.props.MemberID,
+                  TeamID: this.props.TeamID,
+                  TeamDiscussID: this.props.TeamDiscussID,
+                  CurrentIndexToRenderDiscussCommentContent: this.state
+                    .CurrentIndexToRenderDiscussCommentContent,
+                  NumberRenderDiscussCommentContent: this.state
+                    .NumberRenderDiscussCommentContent
+                }
+              );
+            }
           }
         }
       }
@@ -82,10 +83,6 @@ export default class TeamDiscussContentReplyInput extends React.Component {
     this.props.socket.on("update-team-discuss-comment-content", data => {
       if (this.mounted) {
         if (this.props.TeamDiscussID === data.TeamDiscussID) {
-          // console.log(
-          //   "Đổ về dữ lieuj cái socket này cơ mà đm mmmmmmmmmmmmmmmmm ",
-          //   data
-          // );
           this.setState({
             CurrentTeamDiscussCommentContent:
               data.CurrentTeamDiscussCommentContent,
@@ -99,6 +96,7 @@ export default class TeamDiscussContentReplyInput extends React.Component {
 
   componentWillUnmount = () => {
     this.mounted = false;
+    this.semounted = false;
   };
 
   sendToSeeOldDiscussCommentContent = () => {
