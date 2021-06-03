@@ -98,7 +98,7 @@ export default class Team extends React.Component {
               socket={this.props.socket}
               ChooseTeamInfor={this.state.ChooseTeamInfor}
               setSelectTeamContent={this.state.setSelectTeamContent}
-              checkMemberIsAdmin={this.state.checkMemberIsAdmin}
+              CheckMemberIsAdmin={this.state.CheckMemberIsAdmin}
             />
           </div>
         </div>

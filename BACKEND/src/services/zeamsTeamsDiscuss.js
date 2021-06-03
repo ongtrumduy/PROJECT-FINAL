@@ -197,9 +197,10 @@ class ZeamsTeamsDiscuss {
       } else {
         checkNextRenderDiscussContent = false;
       }
-    } else {
-      console.log("Bị lỗi rồi bạn ạ");
     }
+    // else {
+    //   console.log("Bị lỗi rồi bạn ạ");
+    // }
 
     return checkNextRenderDiscussContent;
   }
@@ -231,17 +232,72 @@ class ZeamsTeamsDiscuss {
     let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
       return teamitem.TeamID === discuss.TeamID;
     });
-    let memberdiscussindex = this.ZeamsTeamsDiscuss[
-      teamindex
-    ].TeamDiscussContent.findIndex(memberdiscussitem => {
-      return memberdiscussitem.TeamDiscussID === discuss.TeamDiscussID;
-    });
 
-    let resteamsdiscusscontent = this.ZeamsTeamsDiscuss[teamindex]
-      .TeamDiscussContent[memberdiscussindex];
+    let resteamsdiscusscontent = [];
+
+    if (teamindex >= 0) {
+      let memberdiscussindex = this.ZeamsTeamsDiscuss[
+        teamindex
+      ].TeamDiscussContent.findIndex(memberdiscussitem => {
+        return memberdiscussitem.TeamDiscussID === discuss.TeamDiscussID;
+      });
+
+      resteamsdiscusscontent = this.ZeamsTeamsDiscuss[teamindex]
+        .TeamDiscussContent[memberdiscussindex];
+    }
 
     return resteamsdiscusscontent;
   }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  editChoiceTeamDiscuss(discuss) {
+    let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
+      return teamitem.TeamID === discuss.TeamID;
+    });
+
+    if (teamindex >= 0) {
+      let memberdiscussindex = this.ZeamsTeamsDiscuss[
+        teamindex
+      ].TeamDiscussContent.findIndex(discussitem => {
+        return discussitem.TeamDiscussID === discuss.TeamDiscussID;
+      });
+
+      if (memberdiscussindex >= 0) {
+        this.ZeamsTeamsDiscuss[teamindex].TeamDiscussContent[
+          memberdiscussindex
+        ].MemberDiscussContent = discuss.MemberDiscussContent;
+
+        this.saveDataJSON();
+      }
+    }
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  deleteChoiceTeamDiscuss(discuss) {
+    let teamindex = this.ZeamsTeamsDiscuss.findIndex(teamitem => {
+      return teamitem.TeamID === discuss.TeamID;
+    });
+
+    if (teamindex >= 0) {
+      let memberdiscussindex = this.ZeamsTeamsDiscuss[
+        teamindex
+      ].TeamDiscussContent.findIndex(discussitem => {
+        return discussitem.TeamDiscussID === discuss.TeamDiscussID;
+      });
+
+      if (memberdiscussindex >= 0) {
+        this.ZeamsTeamsDiscuss[teamindex].TeamDiscussContent.splice(
+          memberdiscussindex,
+          1
+        );
+
+        this.saveDataJSON();
+      }
+    }
+  }
+
   //-----------------------------------------------------------------------------------------------------------------
 }
 

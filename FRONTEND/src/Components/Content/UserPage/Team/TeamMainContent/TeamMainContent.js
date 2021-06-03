@@ -20,6 +20,7 @@ export default class zTeamMainContent extends React.Component {
             socket={this.props.socket}
             ChooseTeamInfor={this.props.ChooseTeamInfor}
             checkMemberIsAdmin={this.props.checkMemberIsAdmin}
+            CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
           />
         );
       case "files":
@@ -31,11 +32,19 @@ export default class zTeamMainContent extends React.Component {
             TeamID={this.props.TeamID}
             socket={this.props.socket}
             ChooseTeamInfor={this.props.ChooseTeamInfor}
-            checkMemberIsAdmin={this.props.checkMemberIsAdmin}
+            CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
           />
         );
       case "settings":
-        return <TeamSettings />;
+        return (
+          <TeamSettings
+            MemberID={this.props.MemberID}
+            TeamID={this.props.TeamID}
+            socket={this.props.socket}
+            ChooseTeamInfor={this.props.ChooseTeamInfor}
+            CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
+          />
+        );
       default:
         return (
           <TeamDiscuss
@@ -43,7 +52,7 @@ export default class zTeamMainContent extends React.Component {
             TeamID={this.props.TeamID}
             socket={this.props.socket}
             ChooseTeamInfor={this.props.ChooseTeamInfor}
-            checkMemberIsAdmin={this.props.checkMemberIsAdmin}
+            CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
           />
         );
     }

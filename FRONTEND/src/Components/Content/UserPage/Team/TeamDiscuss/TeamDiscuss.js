@@ -94,6 +94,7 @@ export default class TeamDiscuss extends React.Component {
           TeamID={this.props.TeamID}
           socket={this.props.socket}
           setChoiceTeamMemberChatID={this.setChoiceTeamMemberChatID}
+          CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
         />
         <TeamMemberChat
           chooseTeamMemberChat={this.state.chooseTeamMemberChat}
@@ -126,7 +127,7 @@ export default class TeamDiscuss extends React.Component {
           }}
           ariaHideApp={false}
           isOpen={this.state.modalCheckChatWithSelfIsOpen}
-          onRequestClose={this.closeModalCheckChatWithSelfModal}
+          onRequestClose={() => this.closeModalCheckChatWithSelfModal()}
         >
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>NHẮC NHỞ</p>
@@ -136,7 +137,7 @@ export default class TeamDiscuss extends React.Component {
           </div>
           <button
             style={{ float: "right", cursor: "pointer" }}
-            onClick={this.closeModalCheckChatWithSelfModal}
+            onClick={() => this.closeModalCheckChatWithSelfModal()}
           >
             Đóng
           </button>

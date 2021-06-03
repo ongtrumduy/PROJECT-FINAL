@@ -10,7 +10,8 @@ export default class TeamAllDiscussContent extends React.Component {
       CurrentTeamDiscussContent: [],
       CurrentIndexToRenderDiscussContent: "1",
       NumberRenderDiscussContent: "5",
-      CheckNextRenderDiscussContent: false
+      CheckNextRenderDiscussContent: false,
+      TeamChoiceDiscussID: ""
     };
   }
 
@@ -33,18 +34,21 @@ export default class TeamAllDiscussContent extends React.Component {
       });
 
     this.mounted = true;
+    this.semounted = true;
 
     this.props.socket.on("send-to-update-team-discuss-content", data => {
-      if (this.props.TeamID === data.TeamID) {
-        this.props.socket.emit("receive-to-update-team-discuss-content", {
-          MemberID: this.props.MemberID,
-          TeamID: this.props.TeamID,
-          CurrentIndexToRenderDiscussContent: "1",
-          NumberRenderDiscussContent: this.state.NumberRenderDiscussContent
-        });
-        this.setState({
-          CurrentIndexToRenderDiscussContent: "1"
-        });
+      if (this.semounted) {
+        if (this.props.TeamID === data.TeamID) {
+          this.props.socket.emit("receive-to-update-team-discuss-content", {
+            MemberID: this.props.MemberID,
+            TeamID: this.props.TeamID,
+            CurrentIndexToRenderDiscussContent: "1",
+            NumberRenderDiscussContent: this.state.NumberRenderDiscussContent
+          });
+          this.setState({
+            CurrentIndexToRenderDiscussContent: "1"
+          });
+        }
       }
     });
 
@@ -63,6 +67,7 @@ export default class TeamAllDiscussContent extends React.Component {
 
   componentWillUnmount = () => {
     this.mounted = false;
+    this.semounted = false;
   };
 
   // componentDidUpdate = () => {
@@ -84,6 +89,12 @@ export default class TeamAllDiscussContent extends React.Component {
     this.setState({
       CurrentIndexToRenderDiscussContent:
         Number(this.state.CurrentIndexToRenderDiscussContent) + 1 + ""
+    });
+  };
+
+  setTeamChoiceDiscussID = teamChoiceDiscussID => {
+    this.setState({
+      TeamChoiceDiscussID: teamChoiceDiscussID
     });
   };
 
@@ -120,17 +131,17 @@ export default class TeamAllDiscussContent extends React.Component {
         return (
           <TeamDiscussContentItem
             MemberDiscussID={teamitem.MemberDiscussID}
-            MemberID={this.props.MemberID}
-            socket={this.props.socket}
             TeamDiscussID={teamitem.TeamDiscussID}
             MemberDiscussFullName={teamitem.MemberDiscussFullName}
-            TeamID={this.props.TeamID}
             MemberDiscussContent={teamitem.MemberDiscussContent}
             MemberDiscussTime={teamitem.MemberDiscussTime}
             socket={this.props.socket}
+            MemberID={this.props.MemberID}
+            TeamID={this.props.TeamID}
             setChoiceTeamMemberChatID={this.props.setChoiceTeamMemberChatID}
-            setCloseAllReply={this.state.setCloseAllReply}
-            resetSetCloseAllReply={this.resetSetCloseAllReply}
+            CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
+            TeamChoiceDiscussID={this.state.TeamChoiceDiscussID}
+            setTeamChoiceDiscussID={this.setTeamChoiceDiscussID}
           />
         );
       default:

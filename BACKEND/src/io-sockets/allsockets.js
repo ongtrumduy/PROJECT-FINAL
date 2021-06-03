@@ -6,8 +6,8 @@ import updateteammemberchatlistSocket from "./updateteammemberchatlist";
 import updatestatusaddremoveexcerciseitemSocket from "./updatestatusaddremoveexcerciseitem";
 import addnewmembercreateteamSocket from "./addnewmembercreateteam";
 import addnewmemberjointeamSocket from "./addnewmemberjointeam";
-// import adminstatisticSocket from "./adminstatistic";
-// import totaluserSocket from "./totaluser";
+import editanddeleteteamdiscusscommentSocket from "./editanddeleteteamdiscusscomment";
+import editanddeleteteamdiscussSocket from "./editanddeleteteamdiscuss";
 // import buttonnextSocket from "./buttonnext";
 // import buttonpreSocket from "./buttonpre";
 // import indexfriendSocket from "./updateindexfriend";
@@ -49,13 +49,13 @@ let AllSockets = io => {
   addnewmemberjointeamSocket(io);
   //--------------------------------------------------------------------------
 
-  // // --------------------------AdminStatistic--------------------------------------
-  // adminstatisticSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------EditAndDeleteTeamDiscussComment--------------------------------------
+  editanddeleteteamdiscusscommentSocket(io);
+  //--------------------------------------------------------------------------
 
-  // // --------------------------AdminStatistic--------------------------------------
-  // adminstatisticSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------EditAndDeleteTeamDiscuss--------------------------------------
+  editanddeleteteamdiscussSocket(io);
+  //--------------------------------------------------------------------------
 
   // // --------------------------TotalUserList--------------------------------------
   // totaluserSocket(io);

@@ -29,7 +29,7 @@ let CreateNewDiscuss = io => {
     //====================================================================================================
 
     socket.on("create-new-discuss-comment", data => {
-      console.log("Dữ liệu đổ qua cái comment của tao đm ", data);
+      // console.log("Dữ liệu đổ qua cái comment của tao đm ", data);
       zeamsTeamsDiscussComments.createNewTeamMemberDiscussCommentContent(data);
 
       StartBeginSocket.emitAllSocketsOfMemberTeam(

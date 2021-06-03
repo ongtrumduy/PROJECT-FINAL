@@ -57,6 +57,7 @@
     border-bottom: 1px solid rgb(216, 216, 216);
     width: 100%;
     user-select: none;
+    height: 40px;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______avatar {
@@ -80,7 +81,7 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________fullname {
     font-weight: bold;
-    width: 76%;
+    width: 65%;
     text-align: left;
     cursor: pointer;
 }
@@ -109,6 +110,89 @@
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete:hover {
     color: blue;
 }
+
+/*================================================================================================================================================*/
+
+/* .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________edit-and-delete {
+    border: groove;
+    position: relative;
+    bottom: 10px;
+    margin: 0 0 0 80px;
+    user-select: none;
+} */
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete________edit-and-delete-button {
+    position: relative;
+    top: 14px;
+    right: 44px;
+    z-index: 1000;
+    font-weight: bold;
+    user-select: none;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete________delete-button {
+    position: relative;
+    top: 14px;
+    right: 24px;
+    z-index: 1000;
+    font-weight: bold;
+    user-select: none;
+    height: 20px;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete________delete-button p:first-child {
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete________delete-button p:first-child:hover {
+    color: rgb(0, 255, 0);
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete________edit-and-delete-button p:first-child {
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete________edit-and-delete-button p:first-child:hover {
+    color: blue;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete________edit-and-delete-button p:last-child {
+    color: rgb(255, 0, 0);
+    margin: -10px 0 0 0;
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete________edit-and-delete-button p:last-child:hover {
+    color: rgb(0, 255, 0);
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content {
+    margin: 4px 0 8px 4px;
+    max-height: 140px;
+    max-width: 570px;
+    overflow: auto;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content________edit-mode {
+    width: 100%;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content________edit-mode div:first-child textarea {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid gray;
+    width: 540px;
+    height: 100px;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content________edit-mode div:last-child input {
+    cursor: pointer;
+    margin: 2px 4px 0 4px;
+}
+
+/*============================================================================================================================================================*/
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________reply {
     display: flex;
@@ -249,9 +333,10 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________nameandtime {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     flex-direction: row;
+    height: 24px;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________fullname {
@@ -264,11 +349,82 @@
     color: blue;
 }
 
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________edit-and-delete {
+    /* border: groove;
+    position: relative;
+    bottom: 10px; */
+    margin: 0 0 0 80px;
+    user-select: none;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________edit-and-delete-button {
+    position: relative;
+    top: 40px;
+    right: 37px;
+    z-index: 1000;
+    font-weight: bold;
+    user-select: none;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________delete-button {
+    position: relative;
+    top: 12px;
+    right: 21px;
+    z-index: 1000;
+    font-weight: bold;
+    user-select: none;
+    height: 20px;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________delete-button p:first-child {
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________delete-button p:first-child:hover {
+    color: rgb(0, 255, 0);
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________edit-and-delete-button p:first-child {
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________edit-and-delete-button p:first-child:hover {
+    color: blue;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________edit-and-delete-button p:last-child {
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________edit-and-delete-button p:last-child:hover {
+    color: rgb(0, 255, 0);
+}
+
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content {
     margin: 4px 0 8px 4px;
-    max-height: 100px;
+    max-height: 140px;
     max-width: 570px;
     overflow: auto;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content________edit-mode {
+    width: 100%;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content________edit-mode div:first-child textarea {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid gray;
+    width: 540px;
+    height: 100px;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content________edit-mode div:last-child input {
+    cursor: pointer;
+    margin: 2px 4px 0 4px;
 }
 
 .user-team_team-menu-and-content__content___discuss____member-chat {

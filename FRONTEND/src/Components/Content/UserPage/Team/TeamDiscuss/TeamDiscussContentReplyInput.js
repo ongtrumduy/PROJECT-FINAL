@@ -10,7 +10,8 @@ export default class TeamDiscussContentReplyInput extends React.Component {
       CurrentTeamDiscussCommentContent: [],
       CurrentIndexToRenderDiscussCommentContent: "1",
       NumberRenderDiscussCommentContent: "3",
-      CheckNextRenderDiscussCommentContent: false
+      CheckNextRenderDiscussCommentContent: false,
+      TeamChoiceCommentID: ""
     };
   }
 
@@ -140,6 +141,12 @@ export default class TeamDiscussContentReplyInput extends React.Component {
     }
   };
 
+  setTeamChoiceCommentID = teamChoiceCommentID => {
+    this.setState({
+      TeamChoiceCommentID: teamChoiceCommentID
+    });
+  };
+
   render() {
     return (
       <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput">
@@ -158,11 +165,20 @@ export default class TeamDiscussContentReplyInput extends React.Component {
           (commentitem, commemtindex) => (
             <div key={commemtindex}>
               <TeamDiscussCommentContentItem
+                TeamDiscussID={this.props.TeamDiscussID}
+                TeamCommentID={commentitem.TeamCommentID}
                 MemberCommentID={commentitem.MemberCommentID}
                 MemberCommentTime={commentitem.MemberCommentTime}
                 MemberCommentContent={commentitem.MemberCommentContent}
                 MemberCommentFullName={commentitem.MemberCommentFullName}
                 setChoiceTeamMemberChatID={this.props.setChoiceTeamMemberChatID}
+                CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
+                MemberDiscussID={this.props.MemberDiscussID}
+                MemberID={this.props.MemberID}
+                TeamID={this.props.TeamID}
+                socket={this.props.socket}
+                TeamChoiceCommentID={this.state.TeamChoiceCommentID}
+                setTeamChoiceCommentID={this.setTeamChoiceCommentID}
               />
             </div>
           )
