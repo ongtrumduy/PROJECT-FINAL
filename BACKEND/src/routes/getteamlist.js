@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 
 let router = express.Router();
 
-let teamlistRoutes = (app, corsOptions) => {
+let getteamlistRoutes = (app, corsOptions) => {
   app.use(cors());
   app.use(bodyParser.json());
   router.post("/getteamlist", cors(corsOptions), getAllTeamList);
@@ -14,4 +14,4 @@ let teamlistRoutes = (app, corsOptions) => {
 };
 
 
-module.exports = teamlistRoutes;
+module.exports = getteamlistRoutes;

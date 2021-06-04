@@ -19,6 +19,7 @@ import addexcerciseitemtoownedlistRoutes from "./addexcerciseitemtoownedlist";
 import removeexcerciseitemtoownedlistRoutes from "./removeexcerciseitemtoownedlist";
 import getallquestionanswercontentRoutes from "./getallquestionanswercontent";
 import finishedexcercisechoiceanswerRoutes from "./finishedexcercisechoiceanswer";
+import getallmembersofteamRoutes from "./getallmembersofteam";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -105,6 +106,10 @@ let AllRoutes = (app, corsOptions) => {
 
   // --------------------------FinishedExcerciseChoiceAnswer---------------------------------------
   finishedexcercisechoiceanswerRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // --------------------------GetAllMemberOfTeam---------------------------------------
+  getallmembersofteamRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
   //=========================================================================

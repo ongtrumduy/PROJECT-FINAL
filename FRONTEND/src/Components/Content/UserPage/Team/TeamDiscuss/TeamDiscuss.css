@@ -438,7 +438,7 @@
     background-color: rgb(226, 225, 225);
     z-index: 1000;
     border-radius: 4px;
-    display: none;
+    /* display: none; */
 }
 
 .user-team_team-menu-and-content__content___discuss____member-chat:hover {

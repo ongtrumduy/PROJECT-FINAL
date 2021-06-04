@@ -1,6 +1,6 @@
 import fs from "fs";
 import { v1 as uuidv1 } from "uuid";
-import moment from "moment";
+import zeamMembers from "./zeamsMembers";
 
 class ZeamsTeams {
   constructor() {
@@ -100,14 +100,13 @@ class ZeamsTeams {
   }
   //-----------------------------------------------------------------------------------------------------------------
 
-  getAllTeamList(member) {
+  getAllTeamList(teaminfor) {
     let allTeamList = [];
     this.ZeamsTeams.forEach(teamitem => {
       teamitem.TeamMemberList.forEach(memberitem => {
-        if (member.MemberID === memberitem.MemberID) {
+        if (teaminfor.MemberID === memberitem.MemberID) {
           let TeamInfor = {
             TeamID: teamitem.TeamID,
-            TeamAdminMemberList: teamitem.TeamAdminMemberList,
             TeamInfor: teamitem.TeamInfor
           };
           allTeamList.push(TeamInfor);
@@ -117,9 +116,9 @@ class ZeamsTeams {
     return allTeamList;
   }
 
-  responseAllTeamListOfMember(member) {
+  responseAllTeamListOfMember(teaminfor) {
     let resAllTeamList = {
-      AllTeamList: this.getAllTeamList(member)
+      AllTeamList: this.getAllTeamList(teaminfor)
     };
 
     return resAllTeamList;
@@ -127,9 +126,9 @@ class ZeamsTeams {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  getAllMemberIDsOfTeam(team) {
+  getAllMemberIDsOfTeam(teaminfor) {
     let teamindex = this.ZeamsTeams.findIndex(teamitem => {
-      return teamitem.TeamID === team.TeamID;
+      return teamitem.TeamID === teaminfor.TeamID;
     });
 
     let resTeamMemberList = [];
@@ -142,25 +141,38 @@ class ZeamsTeams {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  getChoiceJoinedTeamInfor(team) {
+  getChoiceJoinedTeamInfor(teaminfor) {
     let teamindex = this.ZeamsTeams.findIndex(teamitem => {
-      return teamitem.TeamID === team.TeamID;
+      return teamitem.TeamID === teaminfor.TeamID;
     });
-    let teaminfor = [];
+    let choicejoinedteaminfor = [];
     if (teamindex >= 0) {
-      teaminfor = this.ZeamsTeams[teamindex].TeamInfor;
+      choicejoinedteaminfor = this.ZeamsTeams[teamindex].TeamInfor;
     }
-    return teaminfor;
+    return choicejoinedteaminfor;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  addNewMemberToTeam(member) {
+  getKickedTeamName(teaminfor) {
     let teamindex = this.ZeamsTeams.findIndex(teamitem => {
-      return teamitem.TeamID === member.TeamCodeToJoin;
+      return teamitem.TeamID === teaminfor.TeamID;
+    });
+    let kickedteamname = "";
+    if (teamindex >= 0) {
+      kickedteamname = this.ZeamsTeams[teamindex].TeamInfor[0].TeamName;
+    }
+    return kickedteamname;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  addNewMemberToTeam(teaminfor) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === teaminfor.TeamCodeToJoin;
     });
     let newMemberID = {
-      MemberID: member.MemberID
+      MemberID: teaminfor.MemberID
     };
     if (teamindex >= 0) {
       this.ZeamsTeams[teamindex].TeamMemberList.push(newMemberID);
@@ -170,9 +182,9 @@ class ZeamsTeams {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  responseSearchTeamToJoinTeam(member) {
+  responseSearchTeamToJoinTeam(teaminfor) {
     let teamindex = this.ZeamsTeams.findIndex(teamitem => {
-      return teamitem.TeamID === member.TeamCodeToJoin;
+      return teamitem.TeamID === teaminfor.TeamCodeToJoin;
     });
 
     let resSearchTeamToJoinTeam = {};
@@ -180,7 +192,7 @@ class ZeamsTeams {
     if (teamindex >= 0) {
       let memberteamindex = this.ZeamsTeams[teamindex].TeamMemberList.findIndex(
         memberteamitem => {
-          return memberteamitem.MemberID === member.MemberID;
+          return memberteamitem.MemberID === teaminfor.MemberID;
         }
       );
       if (memberteamindex >= 0) {
@@ -188,7 +200,7 @@ class ZeamsTeams {
           checkValidate: "joined-team"
         };
       } else {
-        this.addNewMemberToTeam(member);
+        this.addNewMemberToTeam(teaminfor);
         resSearchTeamToJoinTeam = {
           checkValidate: "success-joined"
         };
@@ -204,16 +216,16 @@ class ZeamsTeams {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  setCheckMemberIsAdmin(member) {
+  setCheckMemberIsAdmin(teaminfor) {
     let teamindex = this.ZeamsTeams.findIndex(teamitem => {
-      return teamitem.TeamID === member.TeamID;
+      return teamitem.TeamID === teaminfor.TeamID;
     });
     let adminmemberindex;
     if (teamindex >= 0) {
       adminmemberindex = this.ZeamsTeams[
         teamindex
       ].TeamAdminMemberList.findIndex(adminmemberitem => {
-        return adminmemberitem.MemberID === member.MemberID;
+        return adminmemberitem.MemberID === teaminfor.MemberID;
       });
 
       if (adminmemberindex >= 0) {
@@ -226,15 +238,15 @@ class ZeamsTeams {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  responseChoiceJoinedTeamInfor(member) {
+  responseChoiceJoinedTeamInfor(teaminfor) {
     let resChoiceJoinedTeamInfor = {};
 
-    let TeamAllInfor = this.getChoiceJoinedTeamInfor(member);
+    let TeamAllInfor = this.getChoiceJoinedTeamInfor(teaminfor);
 
-    let checkMemberIsAdmin = this.setCheckMemberIsAdmin(member);
+    let checkMemberIsAdmin = this.setCheckMemberIsAdmin(teaminfor);
 
     resChoiceJoinedTeamInfor = {
-      TeamID: member.TeamID,
+      TeamID: teaminfor.TeamID,
       TeamAllInfor: TeamAllInfor,
       CheckMemberIsAdmin: checkMemberIsAdmin
     };
@@ -243,7 +255,178 @@ class ZeamsTeams {
   }
 
   //-----------------------------------------------------------------------------------------------------------------
+
+  getAllMemberInforOfTeam(teaminfor) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === teaminfor.TeamID;
+    });
+
+    let allMemberInforOfTeam = [];
+
+    if (teamindex >= 0) {
+      let TeamMemberList = this.ZeamsTeams[teamindex].TeamMemberList;
+
+      TeamMemberList.forEach(teammemberitem => {
+        let toCheckMemberIsAdmin = {
+          TeamID: teaminfor.TeamID,
+          MemberID: teammemberitem.MemberID
+        };
+
+        let teamMemberItem = {
+          MemberID: teammemberitem.MemberID,
+          MemberFullName: zeamMembers.getMemberFullName(teammemberitem),
+          CheckMemberIsAdmin: this.setCheckMemberIsAdmin(toCheckMemberIsAdmin)
+        };
+
+        allMemberInforOfTeam.push(teamMemberItem);
+      });
+    }
+
+    return allMemberInforOfTeam;
+  }
+
   //-----------------------------------------------------------------------------------------------------------------
+
+  resGetAllMemberInforOfTeam(teaminfor) {
+    let resGetAllMember = {
+      AllMemberOfTeam: this.getAllMemberInforOfTeam(teaminfor),
+      TeamID: teaminfor.TeamID
+    };
+
+    return resGetAllMember;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  editChoiceTeamName(teaminfor) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === teaminfor.TeamID;
+    });
+
+    console.log("vào đây mà ", teamindex);
+
+    if (teamindex >= 0) {
+      this.ZeamsTeams[teamindex].TeamInfor[0].TeamName = teaminfor.TeamName;
+
+      this.saveDataJSON();
+    }
+  }
+
+  //----------------------------------------------------------------------------------------------------------------- //-----------------------------------------------------------------------------------------------------------------
+
+  editChoiceTeamDescription(teaminfor) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === teaminfor.TeamID;
+    });
+
+    if (teamindex >= 0) {
+      this.ZeamsTeams[teamindex].TeamInfor[0].TeamDescription =
+        teaminfor.TeamDescription;
+
+      this.saveDataJSON();
+    }
+  }
+
+  //----------------------------------------------------------------------------------------------------------------- //-----------------------------------------------------------------------------------------------------------------
+
+  editChoiceTeamType(teaminfor) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === teaminfor.TeamID;
+    });
+
+    if (teamindex >= 0) {
+      this.ZeamsTeams[teamindex].TeamInfor[0].TeamType = teaminfor.TeamType;
+
+      this.saveDataJSON();
+    }
+  }
+
+  //----------------------------------------------------------------------------------------------------------------- //-----------------------------------------------------------------------------------------------------------------
+
+  addMemberBecomeAdminToList(teaminfor) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === teaminfor.TeamID;
+    });
+
+    if (teamindex >= 0) {
+      let memberadminindex = this.ZeamsTeams[
+        teamindex
+      ].TeamAdminMemberList.findIndex(memberadminitem => {
+        return memberadminitem.MemberID === teaminfor.MemberID;
+      });
+
+      if (memberadminindex < 0) {
+        let newadmin = {
+          MemberID: teaminfor.MemberID
+        };
+
+        this.ZeamsTeams[teamindex].TeamAdminMemberList.push(newadmin);
+
+        this.saveDataJSON();
+      }
+    }
+  }
+
+  //----------------------------------------------------------------------------------------------------------------- //-----------------------------------------------------------------------------------------------------------------
+
+  removeMemberAdminFromList(teaminfor) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === teaminfor.TeamID;
+    });
+
+    if (teamindex >= 0) {
+      let memberadminindex = this.ZeamsTeams[
+        teamindex
+      ].TeamAdminMemberList.findIndex(memberadminitem => {
+        return memberadminitem.MemberID === teaminfor.MemberID;
+      });
+
+      if (memberadminindex >= 0) {
+        this.ZeamsTeams[teamindex].TeamAdminMemberList.splice(
+          memberadminindex,
+          1
+        );
+
+        this.saveDataJSON();
+      }
+    }
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  removeMemberFromTeamList(teaminfor) {
+    let teamindex = this.ZeamsTeams.findIndex(teamitem => {
+      return teamitem.TeamID === teaminfor.TeamID;
+    });
+
+    if (teamindex >= 0) {
+      let memberindex = this.ZeamsTeams[teamindex].TeamMemberList.findIndex(
+        memberadminitem => {
+          return memberadminitem.MemberID === teaminfor.MemberID;
+        }
+      );
+
+      if (memberindex >= 0) {
+        this.ZeamsTeams[teamindex].TeamMemberList.splice(memberindex, 1);
+
+        let memberadminindex = this.ZeamsTeams[
+          teamindex
+        ].TeamAdminMemberList.findIndex(memberadminitem => {
+          return memberadminitem.MemberID === teaminfor.MemberID;
+        });
+
+        if (memberadminindex >= 0) {
+          this.ZeamsTeams[teamindex].TeamAdminMemberList.splice(
+            memberadminindex,
+            1
+          );
+        }
+
+        this.saveDataJSON();
+      }
+    }
+  }
+
   //-----------------------------------------------------------------------------------------------------------------
   //-----------------------------------------------------------------------------------------------------------------
 

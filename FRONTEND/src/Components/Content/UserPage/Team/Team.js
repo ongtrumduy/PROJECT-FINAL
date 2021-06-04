@@ -35,20 +35,49 @@ export default class Team extends React.Component {
       });
 
     this.mounted = true;
+    this.upmounted = true;
+    this.leavemounted = true;
+
+    this.props.socket.on("sent-to-update-team-infor", data => {
+      if (this.upmounted) {
+        if (this.props.TeamID === data.TeamID) {
+          this.props.socket.emit("receive-to-update-team-infor", {
+            TeamID: data.TeamID,
+            MemberID: this.props.MemberID
+          });
+        }
+      }
+    });
 
     this.props.socket.on("update-team-infor", data => {
       if (this.mounted) {
-        this.setState({
-          ChooseTeamID: data.TeamID,
-          ChooseTeamInfor: data.TeamAllInfor,
-          CheckMemberIsAdmin: data.CheckMemberIsAdmin
-        });
+        if (this.props.TeamID === data.TeamID) {
+          this.setState({
+            ChooseTeamID: data.TeamID,
+            ChooseTeamInfor: data.TeamAllInfor,
+            CheckMemberIsAdmin: data.CheckMemberIsAdmin
+          });
+        }
+      }
+    });
+
+    this.props.socket.on("confirm-kickout-from-team", data => {
+      if (this.leavemounted) {
+        if (
+          this.props.TeamID === data.TeamID &&
+          this.props.MemberID === data.MemberID
+        ) {
+          this.props.openConfirmKickoutFromTeamModal(data.TeamName);
+
+          this.props.updateRenderTeamControl("teamall");
+        }
       }
     });
   };
 
   componentWillUnmount = () => {
     this.mounted = false;
+    this.upmounted = false;
   };
 
   setSelectTeamContentClickChoose = setSelect => {

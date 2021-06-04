@@ -8,9 +8,9 @@ import addnewmembercreateteamSocket from "./addnewmembercreateteam";
 import addnewmemberjointeamSocket from "./addnewmemberjointeam";
 import editanddeleteteamdiscusscommentSocket from "./editanddeleteteamdiscusscomment";
 import editanddeleteteamdiscussSocket from "./editanddeleteteamdiscuss";
-// import buttonnextSocket from "./buttonnext";
-// import buttonpreSocket from "./buttonpre";
-// import indexfriendSocket from "./updateindexfriend";
+import editallinforteamSocket from "./editallinforteam";
+import updateallinforteamSocket from "./updateallinforteam";
+import addandremovememberSocket from "./addandremovemember";
 // import changeinforSocket from "./changeinfor";
 // import adminseeonlineSocket from "./adminseefriendonline";
 
@@ -57,17 +57,17 @@ let AllSockets = io => {
   editanddeleteteamdiscussSocket(io);
   //--------------------------------------------------------------------------
 
-  // // --------------------------TotalUserList--------------------------------------
-  // totaluserSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------EditAllInforTeam--------------------------------------
+  editallinforteamSocket(io);
+  //--------------------------------------------------------------------------
 
-  // // --------------------------NextButon--------------------------------------
-  // buttonnextSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------UpdateAllInforTeam--------------------------------------
+  updateallinforteamSocket(io);
+  //--------------------------------------------------------------------------
 
-  // // --------------------------PreButon--------------------------------------
-  // buttonpreSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------AddAndRemoveMember--------------------------------------
+  addandremovememberSocket(io);
+  //--------------------------------------------------------------------------
 
   // // --------------------------UpdateIndexFriend--------------------------------------
   // indexfriendSocket(io);

@@ -226,8 +226,7 @@ class ZeamsRoomChats {
   deleteMemberChatContent(roomchatinfor) {
     let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
 
-    if (roomchatindex >= 0) {
-      0;
+    if (roomchatindex >= 0) {0
       if (
         this.ZeamsRoomChats[roomchatindex].MemberFirstChatID ===
         roomchatinfor.MemberID

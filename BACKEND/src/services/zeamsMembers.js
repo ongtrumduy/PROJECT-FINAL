@@ -261,13 +261,19 @@ class ZeamsMembers {
     let memberindex = this.ZeamsMembers.findIndex(item => {
       return item.MemberID === member.MemberID;
     });
-    let FirstnameMember = this.ZeamsMembers[memberindex].MemberInfor[0]
-      .Firstname;
-    let LastnameMember = this.ZeamsMembers[memberindex].MemberInfor[0].Lastname;
-    let resMemberFullname = {
-      Firstname: FirstnameMember,
-      Lastname: LastnameMember
-    };
+    let resMemberFullname = {};
+
+    if (memberindex >= 0) {
+      let FirstnameMember = this.ZeamsMembers[memberindex].MemberInfor[0]
+        .Firstname;
+      let LastnameMember = this.ZeamsMembers[memberindex].MemberInfor[0]
+        .Lastname;
+      resMemberFullname = {
+        Firstname: FirstnameMember,
+        Lastname: LastnameMember
+      };
+    }
+
     return resMemberFullname;
   }
 
@@ -277,11 +283,19 @@ class ZeamsMembers {
     let memberindex = this.ZeamsMembers.findIndex(item => {
       return item.MemberID === member.MemberID;
     });
-    let FirstnameMember = this.ZeamsMembers[memberindex].MemberInfor[0]
-      .Firstname;
-    let LastnameMember = this.ZeamsMembers[memberindex].MemberInfor[0].Lastname;
 
-    return LastnameMember + " " + FirstnameMember;
+    let MemberFullName = "";
+
+    if (memberindex >= 0) {
+      let FirstnameMember = this.ZeamsMembers[memberindex].MemberInfor[0]
+        .Firstname;
+      let LastnameMember = this.ZeamsMembers[memberindex].MemberInfor[0]
+        .Lastname;
+
+      MemberFullName = LastnameMember + " " + FirstnameMember;
+    }
+
+    return MemberFullName;
   }
 }
 

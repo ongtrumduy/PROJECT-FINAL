@@ -2,9 +2,9 @@ import React from "react";
 import TeamDiscuss from "../TeamDiscuss/TeamDiscuss";
 import TeamFiles from "../TeamFiles/TeamFiles";
 import TeamNotes from "../TeamNotes/TeamNotes";
-import TeamSettings from "../TeamSetting/TeamSetting";
+import TeamSettings from "../TeamSettings/TeamSettings";
 
-export default class zTeamMainContent extends React.Component {
+export default class TeamMainContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

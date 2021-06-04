@@ -2,7 +2,7 @@ import StartBeginSocket from "../io-sockets/startbeginsocket";
 import zeamsTeamsDiscuss from "../services/zeamsTeamsDiscuss";
 import zeamsTeamsDiscussComments from "../services/zeamsTeamsDiscussComments";
 
-let CreateNewDiscuss = io => {
+let UpdateTeamDiscussContent = io => {
   let membersocket = {};
 
   io.on("connection", socket => {
@@ -52,4 +52,4 @@ let CreateNewDiscuss = io => {
   });
 };
 
-module.exports = CreateNewDiscuss;
+module.exports = UpdateTeamDiscussContent;

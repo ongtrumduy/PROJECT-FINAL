@@ -11,38 +11,11 @@ export default class TeamDiscuss extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      CurrentTeamMemberRoomChatList: [],
       chooseTeamMemberChat: false,
       MemberChoiceChatID: "",
-      modalCheckChatWithSelfIsOpen: false,
-      CurrentIndexToRenderMemberChatContent: "1",
-      NumberMemberChatContent: "5",
-      CheckNextRenderChatContent: false
+      modalCheckChatWithSelfIsOpen: false
     };
   }
-
-  componentDidMount = () => {
-    this.mounted = true;
-
-    this.props.socket.on("update-room-chat-list", data => {
-      if (this.mounted) {
-        if (
-          (this.props.MemberID === data.MemberID &&
-            this.state.MemberChoiceChatID === data.MemberChatID) ||
-          (this.props.MemberID === data.MemberChatID &&
-            this.state.MemberChoiceChatID === data.MemberID)
-        )
-          this.setState({
-            CurrentTeamMemberRoomChatList: data.CurrentRoomChatContent,
-            checkNextRenderMemberChatContent: data.checkNextRenderChatContent
-          });
-      }
-    });
-  };
-
-  componentWillUnmount = () => {
-    this.mounted = false;
-  };
 
   openModalCheckChatWithSelfModal = () => {
     this.setState({ modalCheckChatWithSelfIsOpen: true });
@@ -55,26 +28,9 @@ export default class TeamDiscuss extends React.Component {
   setChoiceTeamMemberChatID = memberID => {
     if (this.props.MemberID !== memberID) {
       this.setState({
-        MemberChoiceChatID: memberID
+        MemberChoiceChatID: memberID,
+        chooseTeamMemberChat: true
       });
-
-      axios
-        .post("/getteamlist/getteammemberchatlist", {
-          MemberChatID: memberID,
-          TeamID: this.props.TeamID,
-          MemberID: this.props.MemberID
-        })
-        .then(res => {
-          console.log(res.data);
-
-          this.setState({
-            CurrentTeamMemberRoomChatList: res.data.CurrentRoomChatContent,
-            checkNextRenderMemberChatContent:
-              res.data.checkNextRenderChatContent
-          });
-        });
-
-      this.setChooseTeamMemberChat(true);
     } else {
       this.openModalCheckChatWithSelfModal();
     }
@@ -96,17 +52,20 @@ export default class TeamDiscuss extends React.Component {
           setChoiceTeamMemberChatID={this.setChoiceTeamMemberChatID}
           CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
         />
-        <TeamMemberChat
-          chooseTeamMemberChat={this.state.chooseTeamMemberChat}
-          MemberChoiceChatID={this.state.MemberChoiceChatID}
-          CurrentTeamMemberRoomChatList={
-            this.state.CurrentTeamMemberRoomChatList
-          }
-          setChooseTeamMemberChat={this.setChooseTeamMemberChat}
-          MemberID={this.props.MemberID}
-          TeamID={this.props.TeamID}
-          socket={this.props.socket}
-        />
+        {this.state.chooseTeamMemberChat === true ? (
+          <TeamMemberChat
+            MemberChoiceChatID={this.state.MemberChoiceChatID}
+            CurrentTeamMemberRoomChatList={
+              this.state.CurrentTeamMemberRoomChatList
+            }
+            setChooseTeamMemberChat={this.setChooseTeamMemberChat}
+            MemberID={this.props.MemberID}
+            TeamID={this.props.TeamID}
+            socket={this.props.socket}
+          />
+        ) : (
+          <div></div>
+        )}
         <TeamDiscussCreateNew
           MemberID={this.props.MemberID}
           TeamID={this.props.TeamID}

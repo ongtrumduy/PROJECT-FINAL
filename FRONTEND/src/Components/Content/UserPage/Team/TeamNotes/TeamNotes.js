@@ -54,6 +54,7 @@ export default class TeamNotes extends React.Component {
         >
           <i className="material-icons">{"create"}</i>
         </div>
+
         <Modal
           style={{
             content: {
@@ -65,7 +66,8 @@ export default class TeamNotes extends React.Component {
               marginRight: "-50%",
               transform: "translate(-50%, -50%)",
               backgroundColor: "dark-white",
-              zIndex: "2000"
+              zIndex: "2000",
+              userSelect: "none"
             }
           }}
           ariaHideApp={false}

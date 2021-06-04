@@ -1,4 +1,5 @@
 import StartBeginSocket from "../io-sockets/startbeginsocket";
+import zeamsTeams from "../services/zeamsTeams";
 import zeamsTeamsDiscuss from "../services/zeamsTeamsDiscuss";
 
 let AddNewMemberJoinTeam = io => {
@@ -23,6 +24,18 @@ let AddNewMemberJoinTeam = io => {
           MemberID: data.MemberID,
           TeamID: data.TeamID
         }
+      );
+
+      let resGetAllMemberInforOfTeam = zeamsTeams.resGetAllMemberInforOfTeam(
+        data
+      );
+
+      StartBeginSocket.emitAllSocketsOfMemberTeam(
+        membersocket,
+        data,
+        io,
+        "update-all-members-of-team",
+        resGetAllMemberInforOfTeam
       );
     });
 

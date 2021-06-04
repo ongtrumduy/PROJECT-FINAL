@@ -92,13 +92,13 @@ export default class TeamMainMenu extends React.Component {
           </button>
         </div>
         <div className="user-team_team-menu-and-content__callsetting">
-          <div className="user-team_team-menu-and-content__callsetting___call">
+          {/* <div className="user-team_team-menu-and-content__callsetting___call">
             <button onClick={() => this.startBeginCallVideoTeam()}>
               <i className="material-icons" style={{ fontSize: "32px" }}>
                 &#xe070;
               </i>
             </button>
-          </div>
+          </div> */}
           <div className="user-team_team-menu-and-content__callsetting___setting">
             <button
               style={

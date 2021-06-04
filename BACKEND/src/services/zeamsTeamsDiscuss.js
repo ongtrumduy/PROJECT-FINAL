@@ -143,26 +143,28 @@ class ZeamsTeamsDiscuss {
       return teamitem.TeamID === discuss.TeamID;
     });
 
-    let currentIndexToRenderDiscussContent = Number(
-      discuss.CurrentIndexToRenderDiscussContent
-    );
-
-    let numberRenderDiscussContent = Number(discuss.NumberRenderDiscussContent);
-
     let currentTeamDiscussContent = [];
 
-    let indexOfLastDiscuss = this.ZeamsTeamsDiscuss[teamindex]
-      .TeamDiscussContent.length;
-
-    let indexOfFirstDiscuss =
-      indexOfLastDiscuss -
-      currentIndexToRenderDiscussContent * numberRenderDiscussContent;
-
-    if (indexOfFirstDiscuss < 0) {
-      indexOfFirstDiscuss = 0;
-    }
-
     if (teamindex >= 0) {
+      let currentIndexToRenderDiscussContent = Number(
+        discuss.CurrentIndexToRenderDiscussContent
+      );
+
+      let numberRenderDiscussContent = Number(
+        discuss.NumberRenderDiscussContent
+      );
+
+      let indexOfLastDiscuss = this.ZeamsTeamsDiscuss[teamindex]
+        .TeamDiscussContent.length;
+
+      let indexOfFirstDiscuss =
+        indexOfLastDiscuss -
+        currentIndexToRenderDiscussContent * numberRenderDiscussContent;
+
+      if (indexOfFirstDiscuss < 0) {
+        indexOfFirstDiscuss = 0;
+      }
+
       currentTeamDiscussContent = this.ZeamsTeamsDiscuss[
         teamindex
       ].TeamDiscussContent.slice(indexOfFirstDiscuss, indexOfLastDiscuss);
@@ -180,12 +182,15 @@ class ZeamsTeamsDiscuss {
       return teamitem.TeamID === discuss.TeamID;
     });
 
-    let currentIndexToRenderDiscussContent = Number(
-      discuss.CurrentIndexToRenderDiscussContent
-    );
-
-    let numberRenderDiscussContent = Number(discuss.NumberRenderDiscussContent);
     if (teamindex >= 0) {
+      let currentIndexToRenderDiscussContent = Number(
+        discuss.CurrentIndexToRenderDiscussContent
+      );
+
+      let numberRenderDiscussContent = Number(
+        discuss.NumberRenderDiscussContent
+      );
+
       let numberOfDiscussContentList = this.ZeamsTeamsDiscuss[teamindex]
         .TeamDiscussContent.length;
 
