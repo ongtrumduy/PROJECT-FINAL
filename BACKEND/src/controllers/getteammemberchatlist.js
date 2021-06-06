@@ -1,10 +1,11 @@
-import zeamsRoomChats from "../services/zeamsRoomChats";
+import zeamsRoomChatsContents from "../services/zeamsRoomChatsContents";
 
 let GetTeamMemberChatList = async (req, res) => {
   // console.log(req.body);
-  let resMemberRoomChatList = zeamsRoomChats.responseMemberChatContent(
+  let resMemberRoomChatList = zeamsRoomChatsContents.responseMemberChatContent(
     req.body
   );
+  // console.log("dữ liệu gửi về", resMemberRoomChatList);
 
   res.send(resMemberRoomChatList);
 };

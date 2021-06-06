@@ -133,8 +133,6 @@ export default class TeamDiscussContent extends React.Component {
     });
 
     this.props.socket.on("update-delete-team-discuss-content", data => {
-      console.log("có dữ lieuj về cái delete này", data);
-
       if (this.demounted) {
         if (
           this.props.TeamDiscussID === data.TeamDiscussID &&
@@ -203,7 +201,10 @@ export default class TeamDiscussContent extends React.Component {
           <div className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime">
             <div
               onClick={() =>
-                this.props.setChoiceTeamMemberChatID(this.props.MemberDiscussID)
+                this.props.setChoiceTeamMemberChatID(
+                  this.props.MemberDiscussID,
+                  this.props.MemberDiscussFullName
+                )
               }
               className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________fullname"
             >

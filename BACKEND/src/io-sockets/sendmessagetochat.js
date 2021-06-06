@@ -1,5 +1,5 @@
 import StartBeginSocket from "./startbeginsocket";
-import zeamsRoomChats from "../services/zeamsRoomChats";
+import zeamsRoomChatsContents from "../services/zeamsRoomChatsContents";
 
 let GetTeamMemberChatList = io => {
   let membersocket = {};
@@ -11,25 +11,33 @@ let GetTeamMemberChatList = io => {
 
     //====================================================================================================
 
-    socket.on("sent-message-to-team-member-chat", data => {
-      console.log("Ra người dùng đã chọn ", data);
-      zeamsRoomChats.createNewMessageToRooomChat(data);
-      let resMemberRoomChatList = zeamsRoomChats.responseMemberRoomChat(data);
+    socket.on("send-message-to-member-chat", data => {
+      // console.log("Ra người dùng đã chọn send-message-to-member-chat", data);
+
+      zeamsRoomChatsContents.addNewMessageToMemberAndMemberChat(data);
 
       StartBeginSocket.emitAllSocketsOfMember(
         membersocket,
         data.MemberID,
         io,
-        "update-room-chat-list",
-        resMemberRoomChatList
+        "send-to-update-room-chat-list",
+        {
+          MemberChatID: data.MemberChatID,
+          TeamID: data.TeamID,
+          MemberID: data.MemberID
+        }
       );
 
       StartBeginSocket.emitAllSocketsOfMember(
         membersocket,
         data.MemberChatID,
         io,
-        "update-room-chat-list",
-        resMemberRoomChatList
+        "send-to-update-room-chat-list",
+        {
+          MemberChatID: data.MemberChatID,
+          TeamID: data.TeamID,
+          MemberID: data.MemberID
+        }
       );
     });
 

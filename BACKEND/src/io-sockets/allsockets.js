@@ -2,7 +2,9 @@ import createnewdiscussSocket from "./createnewdiscuss";
 import updateteamdicusscontentSocket from "./updateteamdicusscontent";
 import setstartvideocallSocket from "./setstartvideocall";
 import changeremindertounandfinishedSocket from "./changeremindertounandfinished";
-import updateteammemberchatlistSocket from "./updateteammemberchatlist";
+import sendmessagetochatSocket from "./sendmessagetochat";
+import updateroomchatlistSocket from "./updateroomchatlist";
+import unandbannedmemberchatSocket from "./unandbannedmemberchat";
 import updatestatusaddremoveexcerciseitemSocket from "./updatestatusaddremoveexcerciseitem";
 import addnewmembercreateteamSocket from "./addnewmembercreateteam";
 import addnewmemberjointeamSocket from "./addnewmemberjointeam";
@@ -33,8 +35,16 @@ let AllSockets = io => {
   changeremindertounandfinishedSocket(io);
   //--------------------------------------------------------------------------
 
-  // --------------------------GetTeamMemberChatList--------------------------------------
-  updateteammemberchatlistSocket(io);
+  // --------------------------SendMessageToChat--------------------------------------
+  sendmessagetochatSocket(io);
+  //--------------------------------------------------------------------------
+
+  // --------------------------UpdateRoomChatList--------------------------------------
+  updateroomchatlistSocket(io);
+  //--------------------------------------------------------------------------
+
+  // --------------------------UnAndBannedMemberChat--------------------------------------
+  unandbannedmemberchatSocket(io);
   //--------------------------------------------------------------------------
 
   // --------------------------UpdateStatusAddRemoveExcerciseItem--------------------------------------

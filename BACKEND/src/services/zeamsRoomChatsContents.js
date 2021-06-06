@@ -1,16 +1,17 @@
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+import zeamsRoomChats from "./zeamsRoomChats";
 
-class ZeamsRoomChats {
+class ZeamsRoomChatsContents {
   constructor() {
-    let roomchats = fs.readFileSync(
-      "../BACKEND/src/databases/zeamsRoomChats.json"
+    let roomchatscontents = fs.readFileSync(
+      "../BACKEND/src/databases/zeamsRoomChatsContents.json"
     );
-    if (roomchats.length > 0) {
-      this.ZeamsRoomChats = JSON.parse(roomchats);
+    if (roomchatscontents.length > 0) {
+      this.ZeamsRoomChatsContents = JSON.parse(roomchatscontents);
     } else {
-      this.ZeamsRoomChats = [];
+      this.ZeamsRoomChatsContents = [];
     }
   }
 
@@ -18,8 +19,8 @@ class ZeamsRoomChats {
 
   saveDataJSON() {
     fs.writeFileSync(
-      "../BACKEND/src/databases/zeamsRoomChats.json",
-      JSON.stringify(this.ZeamsRoomChats),
+      "../BACKEND/src/databases/zeamsRoomChatsContents.json",
+      JSON.stringify(this.ZeamsRoomChatsContents),
       err => {
         if (err) throw err;
         console.log("Complete!!!");
@@ -31,18 +32,29 @@ class ZeamsRoomChats {
 
   createNewMemberRoomChat(roomchatinfor) {
     let newroomchat = {
-      RoomChatID: uuidv4(),
-      MemberFirstChatID: roomchatinfor.MemberID,
-      MemberSecondChatID: roomchatinfor.MemberChatID,
-      BannedMemberFirstChat: false,
-      BannedMemberSecondChat: false,
-      DeletedMemberFirstChat: false,
-      DeletedMemberSecondChat: false,
-      RoomMemberFirstChatContent: [],
-      RoomMemberSecondChatContent: []
+      RoomChatID: zeamsRoomChats.createNewMemberRoomChat(roomchatinfor),
+      MemberID: roomchatinfor.MemberID,
+      MemberChatID: roomchatinfor.MemberChatID,
+      BannedMemberChat: false,
+      RoomMemberChatContent: []
     };
 
-    this.ZeamsRoomChats.push(newroomchat);
+    this.ZeamsRoomChatsContents.push(newroomchat);
+    this.saveDataJSON();
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  createNewMemberChatRoomChat(roomchatinfor) {
+    let newroomchat = {
+      RoomChatID: zeamsRoomChats.createNewMemberChatRoomChat(roomchatinfor),
+      MemberID: roomchatinfor.MemberChatID,
+      MemberChatID: roomchatinfor.MemberID,
+      BannedMemberChat: false,
+      RoomMemberChatContent: []
+    };
+
+    this.ZeamsRoomChatsContents.push(newroomchat);
     this.saveDataJSON();
   }
 
@@ -50,21 +62,16 @@ class ZeamsRoomChats {
 
   checkCreateNewMemberRoomChat(roomchatinfor) {
     let checkCreateNewRoom = false;
-    let roomchatfirstindex = this.ZeamsRoomChats.findIndex(roomchatitem => {
-      return (
-        roomchatitem.MemberFirstChatID === roomchatinfor.MemberID &&
-        roomchatitem.MemberSecondChatID === roomchatinfor.MemberChatID
-      );
-    });
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roommemberitem => {
+        return (
+          roommemberitem.MemberID === roomchatinfor.MemberID &&
+          roommemberitem.MemberChatID === roomchatinfor.MemberChatID
+        );
+      }
+    );
 
-    let roomchatsecondindex = this.ZeamsRoomChats.findIndex(roomchatitem => {
-      return (
-        roomchatitem.MemberFirstChatID === roomchatinfor.MemberChatID &&
-        roomchatitem.MemberSecondChatID === roomchatinfor.MemberID
-      );
-    });
-
-    if (roomchatfirstindex < 0 && roomchatsecondindex < 0) {
+    if (roommemberindex < 0) {
       checkCreateNewRoom = true;
     }
 
@@ -73,199 +80,195 @@ class ZeamsRoomChats {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  createNewMessageToRooomChat(roomchatinfor) {
-    let roomchatindex = this.ZeamsRoomChats.findIndex(roomchatitem => {
-      return roomchatitem.RoomChatID === roomchatinfor.RoomChatID;
-    });
+  checkCreateNewMemberChatRoomChat(roomchatinfor) {
+    let checkCreateNewRoom = false;
+    let roommemberchatindex = this.ZeamsRoomChatsContents.findIndex(
+      roommemberchatitem => {
+        return (
+          roommemberchatitem.MemberID === roomchatinfor.MemberChatID &&
+          roommemberchatitem.MemberChatID === roomchatinfor.MemberID
+        );
+      }
+    );
 
-    if (roomchatindex >= 0) {
-      let memberchatcontent = {
-        MemberID: roomchatinfor.MemberID,
-        MemberChatContent: roomchatinfor.MemberChatContent,
-        MemberChatDate: moment().format("HH:mm DD-MM-YYYY")
+    if (roommemberchatindex < 0) {
+      checkCreateNewRoom = true;
+    }
+
+    return checkCreateNewRoom;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  addNewMessageToMemberRoomChat(roomchatinfor) {
+    let checkCreateNewMemberRoom = this.checkCreateNewMemberRoomChat(
+      roomchatinfor
+    );
+
+    if (checkCreateNewMemberRoom) {
+      this.createNewMemberRoomChat(roomchatinfor);
+    }
+
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
+        );
+      }
+    );
+
+    if (roommemberindex >= 0) {
+      let roommembercontent = {
+        MemberChattedID: roomchatinfor.MemberID,
+        MemberChattedContent: roomchatinfor.MemberChatContent,
+        MemberChattedDate: moment().format("HH:mm DD-MM-YYYY")
       };
 
-      this.ZeamsRoomChats[roomchatindex].RoomMemberFirstChatContent.push(
-        memberchatcontent
+      this.ZeamsRoomChatsContents[roommemberindex].RoomMemberChatContent.push(
+        roommembercontent
       );
-
-      this.ZeamsRoomChats[roomchatindex].RoomMemberSecondChatContent.push(
-        memberchatcontent
-      );
-
-      this.saveDataJSON();
     }
+
+    this.saveDataJSON();
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  getMemberMessageToRoomChatIndex(roomchatinfor) {
-    let roomchatfirstindex = this.ZeamsRoomChats.findIndex(roomchatitem => {
-      return (
-        roomchatitem.MemberFirstChatID === roomchatinfor.MemberID &&
-        roomchatitem.MemberSecondChatID === roomchatinfor.MemberChatID
-      );
-    });
+  addNewMessageToMemberChatRoomChat(roomchatinfor) {
+    let checkCreateNewMemberChatRoom = this.checkCreateNewMemberChatRoomChat(
+      roomchatinfor
+    );
 
-    let roomchatsecondindex = this.ZeamsRoomChats.findIndex(roomchatitem => {
-      return (
-        roomchatitem.MemberFirstChatID === roomchatinfor.MemberChatID &&
-        roomchatitem.MemberSecondChatID === roomchatinfor.MemberID
-      );
-    });
-
-    if (roomchatfirstindex >= 0) {
-      return roomchatfirstindex;
-    } else if (roomchatsecondindex >= 0) {
-      return roomchatsecondindex;
+    if (checkCreateNewMemberChatRoom) {
+      this.createNewMemberChatRoomChat(roomchatinfor);
     }
-  }
 
-  //-----------------------------------------------------------------------------------------------------------------
-
-  checkBannedOfMember(roomchatinfor) {
-    let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
-
-    if (roomchatindex >= 0) {
-      if (
-        this.ZeamsRoomChats[roomchatindex].MemberFirstChatID ===
-        roomchatinfor.MemberID
-      ) {
-        return this.ZeamsRoomChats[roomchatindex].BannedMemberFirstChat;
-      } else if (
-        this.ZeamsRoomChats[roomchatindex].MemberSecondChatID ===
-        roomchatinfor.MemberID
-      ) {
-        return this.ZeamsRoomChats[roomchatindex].BannedMemberSecondChat;
+    let roommemberchatindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberChatID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberID
+        );
       }
+    );
+
+    if (roommemberchatindex >= 0) {
+      let roommemberchatcontent = {
+        MemberChattedID: roomchatinfor.MemberID,
+        MemberChattedContent: roomchatinfor.MemberChatContent,
+        MemberChattedDate: moment().format("HH:mm DD-MM-YYYY")
+      };
+
+      this.ZeamsRoomChatsContents[
+        roommemberchatindex
+      ].RoomMemberChatContent.push(roommemberchatcontent);
     }
+
+    this.saveDataJSON();
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  checkBannedOfMemberChatOfMember(roomchatinfor) {
-    let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
+  addNewMessageToMemberAndMemberChat(roomchatinfor) {
+    this.addNewMessageToMemberRoomChat(roomchatinfor);
+    this.addNewMessageToMemberChatRoomChat(roomchatinfor);
+  }
 
-    if (roomchatindex >= 0) {
-      if (
-        this.ZeamsRoomChats[roomchatindex].MemberFirstChatID ===
-        roomchatinfor.MemberChatID
-      ) {
-        return this.ZeamsRoomChats[roomchatindex].BannedMemberFirstChat;
-      } else if (
-        this.ZeamsRoomChats[roomchatindex].MemberSecondChatID ===
-        roomchatinfor.MemberChatID
-      ) {
-        return this.ZeamsRoomChats[roomchatindex].BannedMemberSecondChat;
+  //-----------------------------------------------------------------------------------------------------------------
+
+  getBannedStatusOfRoomMember(roomchatinfor) {
+    let bannedStatusOfRoomChat = false;
+
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
+        );
       }
+    );
+
+    if (roommemberindex >= 0) {
+      bannedStatusOfRoomChat = this.ZeamsRoomChatsContents[roommemberindex]
+        .BannedMemberChat;
     }
+
+    return bannedStatusOfRoomChat;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  checkDeletedOfMember(roomchatinfor) {
-    let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
+  getBannedStatusOfRoomMemberChat(roomchatinfor) {
+    let bannedStatusOfRoomChat = false;
 
-    if (roomchatindex >= 0) {
-      if (
-        this.ZeamsRoomChats[roomchatindex].MemberFirstChatID ===
-        roomchatinfor.MemberID
-      ) {
-        return this.ZeamsRoomChats[roomchatindex].DeletedMemberFirstChat;
-      } else if (
-        this.ZeamsRoomChats[roomchatindex].MemberSecondChatID ===
-        roomchatinfor.MemberID
-      ) {
-        return this.ZeamsRoomChats[roomchatindex].DeletedMemberSecondChat;
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberChatID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberID
+        );
       }
+    );
+
+    if (roommemberindex >= 0) {
+      bannedStatusOfRoomChat = this.ZeamsRoomChatsContents[roommemberindex]
+        .BannedMemberChat;
     }
+
+    return bannedStatusOfRoomChat;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  checkDeletedOfMemberChatOfMember(roomchatinfor) {
-    let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
-
-    if (roomchatindex >= 0) {
-      if (
-        this.ZeamsRoomChats[roomchatindex].MemberFirstChatID ===
-        roomchatinfor.MemberChatID
-      ) {
-        return this.ZeamsRoomChats[roomchatindex].DeletedMemberFirstChat;
-      } else if (
-        this.ZeamsRoomChats[roomchatindex].MemberSecondChatID ===
-        roomchatinfor.MemberChatID
-      ) {
-        return this.ZeamsRoomChats[roomchatindex].DeletedMemberSecondChat;
+  changeBannedOfRoomChatMember(roomchatinfor) {
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
+        );
       }
-    }
+    );
+
+    this.ZeamsRoomChatsContents[roommemberindex].BannedMemberChat = true;
+
+    this.saveDataJSON();
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  // checkDeleteMemberChatContent(roomchatinfor) {
-  //   let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
+  changeUnbannedOfRoomChatMember(roomchatinfor) {
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
+        );
+      }
+    );
 
-  //   if (roomchatindex >= 0) {
-  //     if (
-  //       this.ZeamsRoomChats[roomchatindex].MemberFirstChatID ===
-  //       roomchatinfor.MemberChatID
-  //     ) {
-  //       return this.ZeamsRoomChats[roomchatindex].BannedMemberFirstChat;
-  //     } else if (
-  //       this.ZeamsRoomChats[roomchatindex].MemberSecondChatID ===
-  //       roomchatinfor.MemberChatID
-  //     ) {
-  //       return this.ZeamsRoomChats[roomchatindex].BannedMemberSecondChat;
-  //     }
-  //   }
-  // }
+    this.ZeamsRoomChatsContents[roommemberindex].BannedMemberChat = false;
+
+    this.saveDataJSON();
+  }
 
   //-----------------------------------------------------------------------------------------------------------------
 
   deleteMemberChatContent(roomchatinfor) {
-    let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
+    zeamRoomChats.removeMemberOfAllMemberChatRoomList(roomchatinfor);
 
-    if (roomchatindex >= 0) {0
-      if (
-        this.ZeamsRoomChats[roomchatindex].MemberFirstChatID ===
-        roomchatinfor.MemberID
-      ) {
-        this.ZeamsRoomChats[roomchatindex].RoomMemberFirstChatContent = [];
-      } else if (
-        this.ZeamsRoomChats[roomchatindex].MemberSecondChatID ===
-        roomchatinfor.MemberID
-      ) {
-        return (this.ZeamsRoomChats[
-          roomchatindex
-        ].RoomMemberFirstChatContent = []);
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
+        );
       }
+    );
 
-      this.saveDataJSON();
-    }
-  }
-
-  //-----------------------------------------------------------------------------------------------------------------
-
-  unBannedAndBanMemberChat(roomchatinfor) {
-    let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
-
-    if (roomchatindex >= 0) {
-      if (
-        this.ZeamsRoomChats[roomchatindex].MemberFirstChatID ===
-        roomchatinfor.MemberChatID
-      ) {
-        this.ZeamsRoomChats[
-          roomchatindex
-        ].BannedMemberFirstChat = !roomchatinfor.BannedOfMember;
-      } else if (
-        this.ZeamsRoomChats[roomchatindex].MemberSecondChatID ===
-        roomchatinfor.MemberChatID
-      ) {
-        this.ZeamsRoomChats[
-          roomchatindex
-        ].BannedMemberSecondChat = !roomchatinfor.BannedOfMember;
-      }
+    if (roommemberindex >= 0) {
+      this.ZeamsRoomChatsContents.splice(roommemberindex, 1);
     }
 
     this.saveDataJSON();
@@ -274,23 +277,33 @@ class ZeamsRoomChats {
   //-----------------------------------------------------------------------------------------------------------------
 
   getRoomChatID(roomchatinfor) {
-    let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
+        );
+      }
+    );
 
-    return this.ZeamsRoomChats[roomchatindex].RoomChatID;
+    return this.ZeamsRoomChatsContents[roommemberindex].RoomChatID;
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
   getCurrentMemberRoomChatList(roomchatinfor) {
-    let checkrooomchat = this.checkCreateNewMemberRoomChat(roomchatinfor);
-    if (checkrooomchat) {
-      this.createNewMemberRoomChat(roomchatinfor);
-    }
     let currentTeamMemberRoomChat = [];
 
-    let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
+        );
+      }
+    );
 
-    if (roomchatindex >= 0) {
+    if (roommemberindex >= 0) {
       let currentIndexToRenderMemberChatContent = Number(
         roomchatinfor.CurrentIndexToRenderMemberChatContent
       );
@@ -299,8 +312,8 @@ class ZeamsRoomChats {
         roomchatinfor.NumberMemberChatContent
       );
 
-      let indexOfLastChat = this.ZeamsRoomChats[roomchatindex]
-        .TeamDiscussContent.length;
+      let indexOfLastChat = this.ZeamsRoomChatsContents[roommemberindex]
+        .RoomMemberChatContent.length;
 
       let indexOfFirstChat =
         indexOfLastChat -
@@ -310,9 +323,9 @@ class ZeamsRoomChats {
         indexOfFirstChat = 0;
       }
 
-      currentTeamMemberRoomChat = this.ZeamsRoomChats[
-        roomchatindex
-      ].RoomChatContent.slice(indexOfFirstChat, indexOfLastChat);
+      currentTeamMemberRoomChat = this.ZeamsRoomChatsContents[
+        roommemberindex
+      ].RoomMemberChatContent.slice(indexOfFirstChat, indexOfLastChat);
     }
 
     return currentTeamMemberRoomChat;
@@ -323,9 +336,16 @@ class ZeamsRoomChats {
   checkNextRenderMemberChatContent(roomchatinfor) {
     let checkNextRenderMemberChat = false;
 
-    let roomchatindex = this.getMemberMessageToRoomChatIndex(roomchatinfor);
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
+        );
+      }
+    );
 
-    if (roomchatindex >= 0) {
+    if (roommemberindex >= 0) {
       let currentIndexToRenderMemberChatContent = Number(
         roomchatinfor.CurrentIndexToRenderMemberChatContent
       );
@@ -334,8 +354,9 @@ class ZeamsRoomChats {
         roomchatinfor.NumberMemberChatContent
       );
 
-      let numberOfMemberChatContentList = this.ZeamsRoomChats[roomchatindex]
-        .TeamDiscussContent.length;
+      let numberOfMemberChatContentList = this.ZeamsRoomChatsContents[
+        roommemberindex
+      ].RoomMemberChatContent.length;
 
       let indexOfLastChat =
         currentIndexToRenderMemberChatContent * numberMemberChatContent;
@@ -364,15 +385,18 @@ class ZeamsRoomChats {
     );
 
     resmemberchatcontent = {
-      CurrentTeamMemberRoomChat: currentTeamMemberRoomChat,
-      CheckNextRenderDiscussContent: checkNextRenderMemberChat,
-      RoomChatID: this.getRoomChatID(roomchatinfor)
+      CurrentRoomChatContent: currentTeamMemberRoomChat,
+      CheckNextRenderChatContent: checkNextRenderMemberChat,
+      BannedOfMember: this.getBannedStatusOfRoomMember(roomchatinfor),
+      BannedOfMemberChat: this.getBannedStatusOfRoomMemberChat(roomchatinfor),
+      MemberID: roomchatinfor.MemberID,
+      MemberChatID: roomchatinfor.MemberChatID
     };
 
     return resmemberchatcontent;
   }
 }
 
-let zeamsRoomChats = new ZeamsRoomChats();
+let zeamsRoomChatsContents = new ZeamsRoomChatsContents();
 
-module.exports = zeamsRoomChats;
+module.exports = zeamsRoomChatsContents;

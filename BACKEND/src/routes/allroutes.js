@@ -20,6 +20,7 @@ import removeexcerciseitemtoownedlistRoutes from "./removeexcerciseitemtoownedli
 import getallquestionanswercontentRoutes from "./getallquestionanswercontent";
 import finishedexcercisechoiceanswerRoutes from "./finishedexcercisechoiceanswer";
 import getallmembersofteamRoutes from "./getallmembersofteam";
+import getallmemberchatroomlistRoutes from "./getallmemberchatroomlist";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -110,6 +111,10 @@ let AllRoutes = (app, corsOptions) => {
 
   // --------------------------GetAllMemberOfTeam---------------------------------------
   getallmembersofteamRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // --------------------------GetAllMemberChatRoomChatRoomList---------------------------------------
+  getallmemberchatroomlistRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
   //=========================================================================

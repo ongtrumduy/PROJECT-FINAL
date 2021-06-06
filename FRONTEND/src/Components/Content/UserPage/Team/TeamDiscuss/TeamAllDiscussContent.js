@@ -55,7 +55,6 @@ export default class TeamAllDiscussContent extends React.Component {
     this.props.socket.on("update-team-discuss-content", data => {
       if (this.mounted) {
         if (this.props.TeamID === data.TeamID) {
-          // console.log("Đổ về dữ lieuj cái này xem sao ", data);
           this.setState({
             CurrentTeamDiscussContent: data.CurrentTeamDiscussContent,
             CheckNextRenderDiscussContent: data.CheckNextRenderDiscussContent

@@ -173,6 +173,8 @@
     max-height: 140px;
     max-width: 570px;
     overflow: auto;
+    border-bottom: 1px solid rgb(216, 216, 216);
+    width: 100%;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content________edit-mode {
@@ -467,6 +469,7 @@
 
 .user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname______fullname p {
     font-weight: bold;
+    font-size: 10px;
 }
 
 .user-team_team-menu-and-content__content___discuss____member-chat______avatar-fullname______close-box {
@@ -485,7 +488,8 @@
     flex-direction: row; */
     border: groove;
     height: 240px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .user-team_team-menu-and-content__content___discuss____member-chat______send-message {
@@ -507,4 +511,54 @@
 
 .user-team_team-menu-and-content__content___discuss____member-chat______send-message i:hover {
     color: blue;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______member-team-chat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______member-team-chat-item div:first-child {
+    max-width: 84%;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______member-team-chat-item p {
+    background-color: rgb(245, 193, 180);
+    border: 1px solid rgb(245, 193, 180);
+    border-radius: 8px;
+    word-wrap: break-word;
+    word-break: break-word;
+    padding: 4px 4px 4px 4px;
+    text-align: right;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______member-team-chat-item div:last-child {
+    margin: -16px 0 0 0;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______member-chat-team-chat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______member-chat-team-chat-item div:first-child {
+    max-width: 84%;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______member-chat-team-chat-item p {
+    background-color: rgb(180, 180, 245);
+    border: 1px solid rgb(180, 180, 245);
+    border-radius: 8px;
+    word-wrap: break-word;
+    word-break: break-word;
+    padding: 4px 4px 4px 4px;
+    text-align: left;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______member-chat-team-chat-item div:last-child {
+    margin: -16px 0 0 0;
 }

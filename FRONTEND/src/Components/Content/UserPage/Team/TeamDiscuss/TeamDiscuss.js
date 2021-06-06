@@ -13,6 +13,7 @@ export default class TeamDiscuss extends React.Component {
     this.state = {
       chooseTeamMemberChat: false,
       MemberChoiceChatID: "",
+      MemberChoiceChatFullName: "",
       modalCheckChatWithSelfIsOpen: false
     };
   }
@@ -25,10 +26,11 @@ export default class TeamDiscuss extends React.Component {
     this.setState({ modalCheckChatWithSelfIsOpen: false });
   };
 
-  setChoiceTeamMemberChatID = memberID => {
+  setChoiceTeamMemberChatID = (memberID, memberFullName) => {
     if (this.props.MemberID !== memberID) {
       this.setState({
         MemberChoiceChatID: memberID,
+        MemberChoiceChatFullName: memberFullName,
         chooseTeamMemberChat: true
       });
     } else {
@@ -55,6 +57,7 @@ export default class TeamDiscuss extends React.Component {
         {this.state.chooseTeamMemberChat === true ? (
           <TeamMemberChat
             MemberChoiceChatID={this.state.MemberChoiceChatID}
+            MemberChoiceChatFullName={this.state.MemberChoiceChatFullName}
             CurrentTeamMemberRoomChatList={
               this.state.CurrentTeamMemberRoomChatList
             }

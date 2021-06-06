@@ -21,7 +21,7 @@ export default class ChatsContentMenu extends React.Component {
           <img src={defaultavatar} alt="default-avatar" />
         </div>
         <div className="user-chat_content__menu___fullname">
-          <p>Phạm Duy</p>
+          <p>{this.props.MemberChoiceChatFullName}</p>
         </div>
         <div>
           <button
@@ -78,7 +78,7 @@ export default class ChatsContentMenu extends React.Component {
           </button>
         </div>
         <div className="user-chat_content__callsetting">
-          <div className="user-chat_content__callsetting___call">
+          {/* <div className="user-chat_content__callsetting___call">
             <button>
               <i className="material-icons" style={{ fontSize: "32px" }}>
                 &#xe070;
@@ -91,7 +91,7 @@ export default class ChatsContentMenu extends React.Component {
                 &#xe0e2;
               </i>
             </button>
-          </div>
+          </div> */}
           <div className="user-chat_content__callsetting___setting">
             <button
               style={
