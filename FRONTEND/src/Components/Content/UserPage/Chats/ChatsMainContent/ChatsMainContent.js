@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import ChatsMainMenu from "./ChatsMainMenu";
 
 import ChatsMessage from "../ChatsMessage/ChatsMessage";
@@ -11,44 +10,9 @@ export default class ChatsMainContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ChatMessageContent: [],
       setSelectChatContent: "message"
     };
   }
-
-  componentDidMount = () => {
-    axios
-      .post("/getchatmessage", {
-        MemberID: this.props.MemberID,
-        MemberMessageID: this.props.MemberMessageID
-      })
-      .then(res => {
-        this.setState({
-          ChatMessageContent: res.data.ChatMessageContent
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    this.props.socket.on("update-chat-message-content", data => {
-      if (
-        this.props.MemberID === data.MemberID &&
-        this.props.MemberMessageID === data.MemberMessageID
-      ) {
-        this.setState({
-          ChatMessageContent: data.ChatMessageContent
-        });
-      } else if (
-        this.props.MemberID === data.MemberMessageID &&
-        this.props.MemberMessageID === data.MemberID
-      ) {
-        this.setState({
-          ChatMessageContent: data.ChatMessageContent
-        });
-      }
-    });
-  };
 
   setSelectChatContentClickChoose = setSelect => {
     this.setState({
@@ -56,46 +20,62 @@ export default class ChatsMainContent extends React.Component {
     });
   };
 
-  renderChatMainChooseContent = setSelectChatContent => {
-    switch (setSelectChatContent) {
+  renderChatOrNonChatMainChooseContent = () => {
+    if (this.props.CheckNonMemberToChat) {
+      return <div>{this.renderChatMainChooseContent()}</div>;
+    } else {
+      return (
+        <div style={{ fontWeight: "bold" }}>
+          <p>
+            Bạn chưa có trò chuyện với ai cả !!! Hãy liên lạc với các thành viên
+            trong nhóm mà bạn tham gia !!!
+          </p>
+        </div>
+      );
+    }
+  };
+
+  renderChatMainChooseContent = () => {
+    switch (this.state.setSelectChatContent) {
       case "message":
         return (
           <ChatsMessage
             MemberID={this.props.MemberID}
-            MemberMessageID={this.props.MemberMessageID}
             socket={this.props.socket}
+            MemberChoiceChatID={this.props.MemberChoiceChatID}
           />
         );
       case "files":
         return (
           <ChatsFiles
             MemberID={this.props.MemberID}
-            MemberMessageID={this.props.MemberMessageID}
             socket={this.props.socket}
+            MemberChoiceChatID={this.props.MemberChoiceChatID}
           />
         );
       case "setting":
         return (
           <ChatsSetting
             MemberID={this.props.MemberID}
-            MemberMessageID={this.props.MemberMessageID}
             socket={this.props.socket}
+            MemberChoiceChatID={this.props.MemberChoiceChatID}
+            MemberChoiceChatFullName={this.props.MemberChoiceChatFullName}
           />
         );
       case "notes":
         return (
           <ChatsNotes
             MemberID={this.props.MemberID}
-            MemberMessageID={this.props.MemberMessageID}
             socket={this.props.socket}
+            MemberChoiceChatID={this.props.MemberChoiceChatID}
           />
         );
       default:
         return (
           <ChatsMessage
             MemberID={this.props.MemberID}
-            MemberMessageID={this.props.MemberMessageID}
             socket={this.props.socket}
+            MemberChoiceChatID={this.props.MemberChoiceChatID}
           />
         );
     }
@@ -104,12 +84,19 @@ export default class ChatsMainContent extends React.Component {
   render() {
     return (
       <div className="user-chat_content">
-        <ChatsMainMenu
-          MemberID={this.props.MemberID}
-          socket={this.props.socket}
-          setSelectChatContentClickChoose={this.setSelectChatContentClickChoose}
-        />
-        {this.renderChatMainChooseContent(this.state.setSelectChatContent)}
+        {this.props.CheckNonMemberToChat === true ? (
+          <ChatsMainMenu
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+            setSelectChatContentClickChoose={
+              this.setSelectChatContentClickChoose
+            }
+            MemberChoiceChatFullName={this.props.MemberChoiceChatFullName}
+          />
+        ) : (
+          <div></div>
+        )}
+        {this.renderChatOrNonChatMainChooseContent()}
       </div>
     );
   }

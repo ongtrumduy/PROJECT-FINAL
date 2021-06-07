@@ -20,7 +20,14 @@ export default class ChatsList extends React.Component {
             Trò chuyện
           </p>
         </div>
-        <ChatsListContent />
+        <ChatsListContent
+          MemberID={this.props.MemberID}
+          socket={this.props.socket}
+          setMemberChoiceChatToChat={this.props.setMemberChoiceChatToChat}
+          setCheckNonMemberToChat={this.props.setCheckNonMemberToChat}
+          setMemberChoiceChatFullName={this.props.setMemberChoiceChatFullName}
+          setCheckBannedOfMemberChat={this.props.setCheckBannedOfMemberChat}
+        />
       </div>
     );
   }

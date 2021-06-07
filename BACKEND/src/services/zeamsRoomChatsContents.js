@@ -1,5 +1,4 @@
 import fs from "fs";
-import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import zeamsRoomChats from "./zeamsRoomChats";
 
@@ -35,7 +34,6 @@ class ZeamsRoomChatsContents {
       RoomChatID: zeamsRoomChats.createNewMemberRoomChat(roomchatinfor),
       MemberID: roomchatinfor.MemberID,
       MemberChatID: roomchatinfor.MemberChatID,
-      BannedMemberChat: false,
       RoomMemberChatContent: []
     };
 
@@ -50,7 +48,6 @@ class ZeamsRoomChatsContents {
       RoomChatID: zeamsRoomChats.createNewMemberChatRoomChat(roomchatinfor),
       MemberID: roomchatinfor.MemberChatID,
       MemberChatID: roomchatinfor.MemberID,
-      BannedMemberChat: false,
       RoomMemberChatContent: []
     };
 
@@ -129,6 +126,8 @@ class ZeamsRoomChatsContents {
         roommembercontent
       );
     }
+    zeamsRoomChats.changeFirstPositionMemberMessage(roomchatinfor);
+    zeamsRoomChats.unHiddenedMemberOfAllMemberChatRoomList(roomchatinfor);
 
     this.saveDataJSON();
   }
@@ -164,6 +163,8 @@ class ZeamsRoomChatsContents {
         roommemberchatindex
       ].RoomMemberChatContent.push(roommemberchatcontent);
     }
+    zeamsRoomChats.changeFirstPositionMemberChatMessage(roomchatinfor);
+    zeamsRoomChats.unHiddenedMemberChatOfAllMemberChatRoomList(roomchatinfor);
 
     this.saveDataJSON();
   }
@@ -171,93 +172,15 @@ class ZeamsRoomChatsContents {
   //-----------------------------------------------------------------------------------------------------------------
 
   addNewMessageToMemberAndMemberChat(roomchatinfor) {
-    this.addNewMessageToMemberRoomChat(roomchatinfor);
-    this.addNewMessageToMemberChatRoomChat(roomchatinfor);
-  }
-
-  //-----------------------------------------------------------------------------------------------------------------
-
-  getBannedStatusOfRoomMember(roomchatinfor) {
-    let bannedStatusOfRoomChat = false;
-
-    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
-      roomchatitem => {
-        return (
-          roomchatitem.MemberID === roomchatinfor.MemberID &&
-          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
-        );
-      }
-    );
-
-    if (roommemberindex >= 0) {
-      bannedStatusOfRoomChat = this.ZeamsRoomChatsContents[roommemberindex]
-        .BannedMemberChat;
+    if (Object.keys(roomchatinfor.MemberChatContent).length !== 0) {
+      this.addNewMessageToMemberRoomChat(roomchatinfor);
+      this.addNewMessageToMemberChatRoomChat(roomchatinfor);
     }
-
-    return bannedStatusOfRoomChat;
-  }
-
-  //-----------------------------------------------------------------------------------------------------------------
-
-  getBannedStatusOfRoomMemberChat(roomchatinfor) {
-    let bannedStatusOfRoomChat = false;
-
-    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
-      roomchatitem => {
-        return (
-          roomchatitem.MemberID === roomchatinfor.MemberChatID &&
-          roomchatitem.MemberChatID === roomchatinfor.MemberID
-        );
-      }
-    );
-
-    if (roommemberindex >= 0) {
-      bannedStatusOfRoomChat = this.ZeamsRoomChatsContents[roommemberindex]
-        .BannedMemberChat;
-    }
-
-    return bannedStatusOfRoomChat;
-  }
-
-  //-----------------------------------------------------------------------------------------------------------------
-
-  changeBannedOfRoomChatMember(roomchatinfor) {
-    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
-      roomchatitem => {
-        return (
-          roomchatitem.MemberID === roomchatinfor.MemberID &&
-          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
-        );
-      }
-    );
-
-    this.ZeamsRoomChatsContents[roommemberindex].BannedMemberChat = true;
-
-    this.saveDataJSON();
-  }
-
-  //-----------------------------------------------------------------------------------------------------------------
-
-  changeUnbannedOfRoomChatMember(roomchatinfor) {
-    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
-      roomchatitem => {
-        return (
-          roomchatitem.MemberID === roomchatinfor.MemberID &&
-          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
-        );
-      }
-    );
-
-    this.ZeamsRoomChatsContents[roommemberindex].BannedMemberChat = false;
-
-    this.saveDataJSON();
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
   deleteMemberChatContent(roomchatinfor) {
-    zeamRoomChats.removeMemberOfAllMemberChatRoomList(roomchatinfor);
-
     let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
       roomchatitem => {
         return (
@@ -373,6 +296,28 @@ class ZeamsRoomChatsContents {
 
   //-----------------------------------------------------------------------------------------------------------------
 
+  getLastMessageOfMemberChatOfRoomChat(roomchatinfor) {
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return roomchatitem.RoomChatID === roomchatinfor.RoomChatID;
+      }
+    );
+
+    let lastMessageOfMember = "";
+
+    if (roommemberindex >= 0) {
+      let lastmessageindex =
+        this.ZeamsRoomChatsContents[roommemberindex].RoomMemberChatContent
+          .length - 1;
+      lastMessageOfMember = this.ZeamsRoomChatsContents[roommemberindex]
+        .RoomMemberChatContent[lastmessageindex];
+    }
+
+    return lastMessageOfMember;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
   responseMemberChatContent(roomchatinfor) {
     let resmemberchatcontent;
 
@@ -387,14 +332,48 @@ class ZeamsRoomChatsContents {
     resmemberchatcontent = {
       CurrentRoomChatContent: currentTeamMemberRoomChat,
       CheckNextRenderChatContent: checkNextRenderMemberChat,
-      BannedOfMember: this.getBannedStatusOfRoomMember(roomchatinfor),
-      BannedOfMemberChat: this.getBannedStatusOfRoomMemberChat(roomchatinfor),
+      BannedOfMember: zeamsRoomChats.getBannedStatusOfRoomMember(roomchatinfor),
+      BannedOfMemberChat: zeamsRoomChats.getBannedStatusOfRoomMemberChat(
+        roomchatinfor
+      ),
       MemberID: roomchatinfor.MemberID,
       MemberChatID: roomchatinfor.MemberChatID
     };
 
     return resmemberchatcontent;
   }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  responseAllMemberChatRoomList(roomchatinfor) {
+    let allmemberroomlist = zeamsRoomChats.getAllMemberChatRoomList(
+      roomchatinfor
+    );
+    let resAllMemberChat = {};
+    let resAllMemberChatList = [];
+    allmemberroomlist.forEach(memberroomitem => {
+      let memberChatInfor = {
+        LastMessageOfMember: this.getLastMessageOfMemberChatOfRoomChat(
+          memberroomitem
+        ),
+        MemberChatInfor: memberroomitem
+      };
+
+      resAllMemberChatList.push(memberChatInfor);
+    });
+
+    resAllMemberChat = {
+      RoomChatMemberList: resAllMemberChatList,
+      FirstMemberChat: zeamsRoomChats.getFirstMemberChatOfRoomChat(
+        roomchatinfor
+      ),
+      MemberID: roomchatinfor.MemberID
+    };
+
+    return resAllMemberChat;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
 }
 
 let zeamsRoomChatsContents = new ZeamsRoomChatsContents();

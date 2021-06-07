@@ -1,7 +1,8 @@
 import StartBeginSocket from "./startbeginsocket";
-import zeamsRoomChatsContents from "../services/zeamsRoomChatsContents";
+import zeamsRoomChats from "../services/zeamsRoomChats";
+import zeamsRoomChatsContent from "../services/zeamsRoomChatsContents";
 
-let GetTeamMemberChatList = io => {
+let HiddenOrDeleteMemberChat = io => {
   let membersocket = {};
 
   io.on("connection", socket => {
@@ -11,10 +12,41 @@ let GetTeamMemberChatList = io => {
 
     //====================================================================================================
 
-    socket.on("send-message-to-member-chat", data => {
-      console.log("Ra người dùng đã chọn send-message-to-member-chat", data);
+    socket.on("send-to-hidden-member-chat", data => {
+      // console.log("dữ liệu send-to-hidden-member-chat gửi về đây", data);
 
-      zeamsRoomChatsContents.addNewMessageToMemberAndMemberChat(data);
+      zeamsRoomChats.hiddenedMemberOfAllMemberChatRoomList(data);
+
+      StartBeginSocket.emitAllSocketsOfMember(
+        membersocket,
+        data.MemberID,
+        io,
+        "send-to-update-all-member-of-chat-list",
+        {
+          MemberChatID: data.MemberChatID,
+          MemberID: data.MemberID
+        }
+      );
+    });
+
+    //====================================================================================================
+
+    socket.on("send-to-delete-member-chat", data => {
+      // console.log("dữ liệu send-to-delete-member-chat gửi về đây", data);
+      zeamsRoomChats.removeMemberOfAllMemberChatRoomList(data);
+
+      zeamsRoomChatsContent.deleteMemberChatContent(data);
+
+      StartBeginSocket.emitAllSocketsOfMember(
+        membersocket,
+        data.MemberID,
+        io,
+        "send-to-update-all-member-of-chat-list",
+        {
+          MemberChatID: data.MemberChatID,
+          MemberID: data.MemberID
+        }
+      );
 
       StartBeginSocket.emitAllSocketsOfMember(
         membersocket,
@@ -26,40 +58,9 @@ let GetTeamMemberChatList = io => {
           MemberID: data.MemberID
         }
       );
-
-      StartBeginSocket.emitAllSocketsOfMember(
-        membersocket,
-        data.MemberChatID,
-        io,
-        "send-to-update-room-chat-list",
-        {
-          MemberID: data.MemberChatID,
-          MemberChatID: data.MemberID
-        }
-      );
-
-      StartBeginSocket.emitAllSocketsOfMember(
-        membersocket,
-        data.MemberID,
-        io,
-        "send-to-update-all-member-of-chat-list",
-        {
-          MemberID: data.MemberID
-        }
-      );
-
-      StartBeginSocket.emitAllSocketsOfMember(
-        membersocket,
-        data.MemberChatID,
-        io,
-        "send-to-update-all-member-of-chat-list",
-        {
-          MemberID: data.MemberChatID
-        }
-      );
     });
     //====================================================================================================
   });
 };
 
-module.exports = GetTeamMemberChatList;
+module.exports = HiddenOrDeleteMemberChat;

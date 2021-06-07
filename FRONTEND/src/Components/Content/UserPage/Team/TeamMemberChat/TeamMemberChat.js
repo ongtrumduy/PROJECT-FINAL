@@ -13,7 +13,7 @@ export default class TeamMemberChat extends React.Component {
       CurrentTeamMemberRoomChatList: [],
       BannnedOfMember: false,
       BannnedOfMemberChat: false,
-      checkNextRenderMemberChatContent: false,
+      CheckNextRenderChatContent: false,
       CurrentIndexToRenderMemberChatContent: "1",
       NumberMemberChatContent: "5",
       checkBannedOfMemberIsOpen: false,
@@ -62,7 +62,6 @@ export default class TeamMemberChat extends React.Component {
     axios
       .post("/getteamlist/getteammemberchatlist", {
         MemberChatID: this.props.MemberChoiceChatID,
-        TeamID: this.props.TeamID,
         MemberID: this.props.MemberID,
         CurrentIndexToRenderMemberChatContent: this.state
           .CurrentIndexToRenderMemberChatContent,
@@ -71,7 +70,7 @@ export default class TeamMemberChat extends React.Component {
       .then(res => {
         this.setState({
           CurrentTeamMemberRoomChatList: res.data.CurrentRoomChatContent,
-          checkNextRenderMemberChatContent: res.data.checkNextRenderChatContent,
+          CheckNextRenderChatContent: res.data.CheckNextRenderChatContent,
           BannnedOfMember: res.data.BannnedOfMember,
           BannnedOfMemberChat: res.data.BannnedOfMemberChat
         });
@@ -83,14 +82,11 @@ export default class TeamMemberChat extends React.Component {
     this.props.socket.on("send-to-update-room-chat-list", data => {
       if (this.semounted) {
         if (
-          (this.props.MemberID === data.MemberID &&
-            this.props.MemberChoiceChatID === data.MemberChatID) ||
-          (this.props.MemberID === data.MemberChatID &&
-            this.props.MemberChoiceChatID === data.MemberID)
+          this.props.MemberID === data.MemberID &&
+          this.props.MemberChoiceChatID === data.MemberChatID
         ) {
           this.props.socket.emit("receive-to-update-room-chat-list", {
             MemberChatID: this.props.MemberChoiceChatID,
-            TeamID: this.props.TeamID,
             MemberID: this.props.MemberID,
             CurrentIndexToRenderMemberChatContent: "1",
             NumberMemberChatContent: this.state.NumberMemberChatContent
@@ -105,14 +101,12 @@ export default class TeamMemberChat extends React.Component {
     this.props.socket.on("update-room-chat-list", data => {
       if (this.mounted) {
         if (
-          (this.props.MemberID === data.MemberID &&
-            this.props.MemberChoiceChatID === data.MemberChatID) ||
-          (this.props.MemberID === data.MemberChatID &&
-            this.props.MemberChoiceChatID === data.MemberID)
+          this.props.MemberID === data.MemberID &&
+          this.props.MemberChoiceChatID === data.MemberChatID
         ) {
           this.setState({
             CurrentTeamMemberRoomChatList: data.CurrentRoomChatContent,
-            checkNextRenderMemberChatContent: data.checkNextRenderChatContent,
+            CheckNextRenderChatContent: data.CheckNextRenderChatContent,
             BannnedOfMember: data.BannnedOfMember,
             BannnedOfMemberChat: data.BannnedOfMemberChat
           });
@@ -126,7 +120,6 @@ export default class TeamMemberChat extends React.Component {
       axios
         .post("/getteamlist/getteammemberchatlist", {
           MemberChatID: nextProps.MemberChoiceChatID,
-          TeamID: this.props.TeamID,
           MemberID: this.props.MemberID,
           CurrentIndexToRenderMemberChatContent: this.state
             .CurrentIndexToRenderMemberChatContent,
@@ -135,8 +128,7 @@ export default class TeamMemberChat extends React.Component {
         .then(res => {
           this.setState({
             CurrentTeamMemberRoomChatList: res.data.CurrentRoomChatContent,
-            checkNextRenderMemberChatContent:
-              res.data.checkNextRenderChatContent,
+            CheckNextRenderChatContent: res.data.CheckNextRenderChatContent,
             BannnedOfMember: res.data.BannnedOfMember,
             BannnedOfMemberChat: res.data.BannnedOfMemberChat
           });
@@ -171,7 +163,6 @@ export default class TeamMemberChat extends React.Component {
     } else {
       this.props.socket.emit("send-message-to-member-chat", {
         MemberChatID: this.props.MemberChoiceChatID,
-        TeamID: this.props.TeamID,
         MemberID: this.props.MemberID,
         MemberChatContent: this.state.TeamMemberChatContent
       });
@@ -236,7 +227,7 @@ export default class TeamMemberChat extends React.Component {
             <input
               type="text"
               placeholder="Nhập tin nhắn..."
-              maxLength="4000"
+              maxLength="2000"
               onChange={event => this.handleTeamMemberChatContent(event)}
               onKeyPress={event => this.pressEnterSendMessageContent(event)}
               value={this.state.TeamMemberChatContent}
@@ -276,7 +267,7 @@ export default class TeamMemberChat extends React.Component {
           }}
           ariaHideApp={false}
           isOpen={this.state.checkBannedOfMemberIsOpen}
-          onRequestClose={() => this.closeCheckBannedOfMemberModal()}
+          onRequestClose={this.closeCheckBannedOfMemberModal}
         >
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>
@@ -317,7 +308,7 @@ export default class TeamMemberChat extends React.Component {
           }}
           ariaHideApp={false}
           isOpen={this.state.checkBannedOfMemberChatIsOpen}
-          onRequestClose={() => this.closeCheckBannedOfMemberChatModal()}
+          onRequestClose={this.closeCheckBannedOfMemberChatModal}
         >
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>
@@ -331,7 +322,7 @@ export default class TeamMemberChat extends React.Component {
             style={{ float: "right", cursor: "pointer" }}
             onClick={() => this.closeCheckBannedOfMemberChatModal()}
           >
-            Đã hỉu!!!+
+            Đã hỉu!!!
           </button>
         </Modal>
 
@@ -352,7 +343,7 @@ export default class TeamMemberChat extends React.Component {
           }}
           ariaHideApp={false}
           isOpen={this.state.checkUnBannedOfMemberIsOpen}
-          onRequestClose={() => this.closeCheckUnBannedOfMemberModal()}
+          onRequestClose={this.closeCheckUnBannedOfMemberModal}
         >
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>

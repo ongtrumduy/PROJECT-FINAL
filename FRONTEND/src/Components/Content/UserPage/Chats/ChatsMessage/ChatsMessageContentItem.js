@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class ChatsMessageItem extends React.Component {
+export default class ChatsMessageContentItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -10,14 +10,16 @@ export default class ChatsMessageItem extends React.Component {
     return (
       <div
         className={
-          this.props.userid === this.props.userchatid
-            ? "user-chat_content__message___content____member-right-message"
-            : "user-chat_content__message___content____member-left-message"
+          this.props.MemberChattedID === this.props.MemberID
+            ? "user-chat_content__message___content____member-message"
+            : "user-chat_content__message___content____member-chat-message"
         }
       >
-        <div className="user-chat_content__message___content____member-message_____message-item">
-          <p>&nbsp;&nbsp;{this.props.MessageContent}&nbsp;&nbsp;</p>
-          <p>{this.props.MessageDate}</p>
+        <div>
+          <p>&nbsp;&nbsp;{this.props.MemberChattedContent}&nbsp;&nbsp;</p>
+        </div>
+        <div>
+          <small>{this.props.MemberChattedDate}</small>
         </div>
       </div>
     );

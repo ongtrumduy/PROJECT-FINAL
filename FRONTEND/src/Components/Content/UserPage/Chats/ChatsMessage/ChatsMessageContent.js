@@ -1,5 +1,5 @@
 import React from "react";
-// import ChatsMessageItem from "./ChatsMessageItem";
+import ChatsMessageContentItem from "./ChatsMessageContentItem";
 
 export default class ChatsMessageContent extends React.Component {
   constructor(props) {
@@ -10,16 +10,19 @@ export default class ChatsMessageContent extends React.Component {
   render() {
     return (
       <div className="user-chat_content__message___content">
-        {/* {this.props.ChatMessageContent.map((membermessageitem, memberindex) => (
-          <div key={memberindex}>
-            <ChatsMessageItem
-              MemberMessageID={membermessageitem.MemberID}
-              MemberID={this.props.MemberID}
-              MessageDate={membermessageitem.MessageDate}
-              MessageContent={membermessageitem.MessageContent}
-            />
-          </div>
-        ))} */}
+        {this.props.CurrentRoomChatContent.map(
+          (membermessageitem, membermessageindex) => (
+            <div key={membermessageindex}>
+              <ChatsMessageContentItem
+                MemberChattedID={membermessageitem.MemberChattedID}
+                MemberChattedContent={membermessageitem.MemberChattedContent}
+                MemberChattedDate={membermessageitem.MemberChattedDate}
+                MemberID={this.props.MemberID}
+                MemberChoiceChatID={this.props.MemberChoiceChatID}
+              />
+            </div>
+          )
+        )}
       </div>
     );
   }

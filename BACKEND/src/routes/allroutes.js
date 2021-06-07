@@ -21,6 +21,7 @@ import getallquestionanswercontentRoutes from "./getallquestionanswercontent";
 import finishedexcercisechoiceanswerRoutes from "./finishedexcercisechoiceanswer";
 import getallmembersofteamRoutes from "./getallmembersofteam";
 import getallmemberchatroomlistRoutes from "./getallmemberchatroomlist";
+import getmemberchatcontentRoutes from "./getmemberchatcontent";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -115,6 +116,10 @@ let AllRoutes = (app, corsOptions) => {
 
   // --------------------------GetAllMemberChatRoomChatRoomList---------------------------------------
   getallmemberchatroomlistRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // --------------------------GetMemberChatContent---------------------------------------
+  getmemberchatcontentRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
   //=========================================================================

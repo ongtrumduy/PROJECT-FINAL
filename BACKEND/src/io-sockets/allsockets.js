@@ -13,8 +13,9 @@ import editanddeleteteamdiscussSocket from "./editanddeleteteamdiscuss";
 import editallinforteamSocket from "./editallinforteam";
 import updateallinforteamSocket from "./updateallinforteam";
 import addandremovememberSocket from "./addandremovemember";
-// import changeinforSocket from "./changeinfor";
-// import adminseeonlineSocket from "./adminseefriendonline";
+import updateallmemberofchatlistSocket from "./updateallmemberofchatlist";
+import changetoseenmemberoflistSocket from "./changetoseenmemberoflist";
+import hiddenordeletememberchatoflistSocket from "./hiddenordeletememberchatoflist";
 
 let AllSockets = io => {
   //============================Socket======================================
@@ -79,18 +80,17 @@ let AllSockets = io => {
   addandremovememberSocket(io);
   //--------------------------------------------------------------------------
 
-  // // --------------------------UpdateIndexFriend--------------------------------------
-  // indexfriendSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------UpdateAllMemberOfChatList--------------------------------------
+  updateallmemberofchatlistSocket(io);
+  //--------------------------------------------------------------------------
 
-  // // --------------------------ChangeInfor--------------------------------------
-  // changeinforSocket(io);
-  // //--------------------------------------------------------------------------
+  // --------------------------ChangeToSeenMemberOfList--------------------------------------
+  changetoseenmemberoflistSocket(io);
+  //--------------------------------------------------------------------------
 
-  // // --------------------------AdminSeeOnline--------------------------------------
-  // adminseeonlineSocket(io);
-  // //--------------------------------------------------------------------------
-
+  // --------------------------HiddenOrDeleteMemberChatOfList--------------------------------------
+  hiddenordeletememberchatoflistSocket(io);
+  //--------------------------------------------------------------------------
   //=========================================================================
 };
 

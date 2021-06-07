@@ -1,11 +1,11 @@
-import zeamsRoomChats from "../services/zeamsRoomChats";
+import zeamsRoomChatsContents from "../services/zeamsRoomChatsContents";
 
 let GetAllMemberChatRoomList = async (req, res) => {
-  console.log(req.body);
-  let resGetAllMemberChatRoom = await zeamsRoomChats.responseAllMemberChatRoomList(
+//   console.log(req.body);
+  let resGetAllMemberChatRoom = await zeamsRoomChatsContents.responseAllMemberChatRoomList(
     req.body
   );
-  console.log(resGetAllMemberChatRoom);
+//   console.log(resGetAllMemberChatRoom);
   res.send(resGetAllMemberChatRoom);
 };
 
