@@ -1,6 +1,6 @@
 import React from "react";
-import axios from "axios";
 import Modal from "react-modal";
+import axios from "axios";
 import ChatsListContentItem from "./ChatsListContentItem";
 
 export default class ChatsListContent extends React.Component {
@@ -88,8 +88,13 @@ export default class ChatsListContent extends React.Component {
           if (this.state.MemberChoiceToChatID === "") {
             this.setMemberChoiceToChatID(
               res.data.FirstMemberChat.MemberID,
-              res.data.FirstMemberChat.MemberFullName
+              res.data.FirstMemberChat.MemberFullName,
+              res.data.FirstMemberChat.BannedMemberChat
             );
+            // this.props.socket.emit("send-to-change-seen-member-of-list", {
+            //   MemberID: this.props.MemberID,
+            //   MemberChatID: res.data.FirstMemberChat.MemberID
+            // });
             this.props.setCheckBannedOfMemberChat(
               res.data.FirstMemberChat.BannedMemberChat
             );
@@ -97,11 +102,6 @@ export default class ChatsListContent extends React.Component {
         } else {
           this.props.setCheckNonMemberToChat(false);
         }
-
-        this.props.socket.emit("send-to-change-seen-member-of-list", {
-          MemberID: this.props.MemberID,
-          MemberChatID: res.data.FirstMemberChat.MemberID
-        });
 
         this.setState({
           RoomChatMemberList: res.data.RoomChatMemberList
@@ -122,6 +122,7 @@ export default class ChatsListContent extends React.Component {
     });
 
     this.props.socket.on("update-all-member-of-chat-list", data => {
+      console.log("Lấy dữ liệu về đây ", data);
       if (this.mounted) {
         if (this.props.MemberID === data.MemberID) {
           if (data.RoomChatMemberList.length !== 0) {
@@ -130,20 +131,20 @@ export default class ChatsListContent extends React.Component {
             if (this.state.MemberChoiceToChatID === "") {
               this.setMemberChoiceToChatID(
                 data.FirstMemberChat.MemberID,
-                data.FirstMemberChat.MemberFullName
+                data.FirstMemberChat.MemberFullName,
+                data.FirstMemberChat.BannedMemberChat
               );
             }
+            // this.props.socket.emit("send-to-change-seen-member-of-list", {
+            //   MemberID: this.props.MemberID,
+            //   MemberChatID: this.state.MemberChoiceToChatID
+            // });
             this.props.setCheckBannedOfMemberChat(
               data.FirstMemberChat.BannedMemberChat
             );
           } else {
             this.props.setCheckNonMemberToChat(false);
           }
-
-          this.props.socket.emit("send-to-change-seen-member-of-list", {
-            MemberID: this.props.MemberID,
-            MemberChatID: this.state.MemberChoiceToChatID
-          });
 
           this.setState({
             RoomChatMemberList: data.RoomChatMemberList
@@ -176,44 +177,75 @@ export default class ChatsListContent extends React.Component {
     this.props.setCheckBannedOfMemberChat(checkBannedMemberChat);
   };
 
-  render() {
+  renderRoomChatMemberContent = () => {
     return (
-      <div className="user-chat_list__content">
+      <div>
         {this.state.RoomChatMemberList.map(
           (chatmemberitem, chatmemberindex) => (
             <div key={chatmemberindex}>
-              <ChatsListContentItem
-                MemberChoiceToChatID={this.state.MemberChoiceToChatID}
-                MemberID={this.props.MemberID}
-                socket={this.props.socket}
-                MemberChatID={chatmemberitem.MemberChatInfor.MemberID}
-                MemberChatFullName={
-                  chatmemberitem.MemberChatInfor.MemberFullName
-                }
-                SeenMemberChat={chatmemberitem.MemberChatInfor.SeenMemberChat}
-                BannedMemberChat={
-                  chatmemberitem.MemberChatInfor.BannedMemberChat
-                }
-                MemberChattedID={
-                  chatmemberitem.LastMessageOfMember.MemberChattedID
-                }
-                MemberChattedContent={
-                  chatmemberitem.LastMessageOfMember.MemberChattedContent
-                }
-                setMemberChoiceToChatID={this.setMemberChoiceToChatID}
-                openCheckDeleteMemberChatModal={
-                  this.openCheckDeleteMemberChatModal
-                }
-                openCheckHiddenMemberChatModal={
-                  this.openCheckHiddenMemberChatModal
-                }
-              />
+              {chatmemberitem.LastMessageOfMember.MemberChattedContent ===
+              "" ? (
+                <ChatsListContentItem
+                  MemberChoiceToChatID={this.state.MemberChoiceToChatID}
+                  MemberID={this.props.MemberID}
+                  socket={this.props.socket}
+                  MemberChatID={chatmemberitem.MemberChatInfor.MemberID}
+                  MemberChatFullName={
+                    chatmemberitem.MemberChatInfor.MemberFullName
+                  }
+                  SeenMemberChat={chatmemberitem.MemberChatInfor.SeenMemberChat}
+                  BannedMemberChat={
+                    chatmemberitem.MemberChatInfor.BannedMemberChat
+                  }
+                  setMemberChoiceToChatID={this.setMemberChoiceToChatID}
+                  openCheckDeleteMemberChatModal={
+                    this.openCheckDeleteMemberChatModal
+                  }
+                  openCheckHiddenMemberChatModal={
+                    this.openCheckHiddenMemberChatModal
+                  }
+                />
+              ) : (
+                <ChatsListContentItem
+                  MemberChoiceToChatID={this.state.MemberChoiceToChatID}
+                  MemberID={this.props.MemberID}
+                  socket={this.props.socket}
+                  MemberChatID={chatmemberitem.MemberChatInfor.MemberID}
+                  MemberChatFullName={
+                    chatmemberitem.MemberChatInfor.MemberFullName
+                  }
+                  SeenMemberChat={chatmemberitem.MemberChatInfor.SeenMemberChat}
+                  BannedMemberChat={
+                    chatmemberitem.MemberChatInfor.BannedMemberChat
+                  }
+                  MemberChattedID={
+                    chatmemberitem.LastMessageOfMember.MemberChattedID
+                  }
+                  MemberChattedContent={
+                    chatmemberitem.LastMessageOfMember.MemberChattedContent
+                  }
+                  setMemberChoiceToChatID={this.setMemberChoiceToChatID}
+                  openCheckDeleteMemberChatModal={
+                    this.openCheckDeleteMemberChatModal
+                  }
+                  openCheckHiddenMemberChatModal={
+                    this.openCheckHiddenMemberChatModal
+                  }
+                />
+              )}
             </div>
           )
         )}
+      </div>
+    );
+  };
+
+  render() {
+    return (
+      <div className="user-chat_list__content">
+        {this.renderRoomChatMemberContent()}
 
         {/*============================================================================================================================= */}
-
         <Modal
           style={{
             content: {
@@ -250,9 +282,7 @@ export default class ChatsListContent extends React.Component {
             Chuẩn!!!
           </button>
         </Modal>
-
         {/*============================================================================================================================= */}
-
         <Modal
           style={{
             content: {
@@ -289,7 +319,6 @@ export default class ChatsListContent extends React.Component {
             Chuẩn rồi!!!
           </button>
         </Modal>
-
         {/*============================================================================================================================= */}
       </div>
     );

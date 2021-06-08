@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 
-import ChatsMessageContent from "./ChatsMessageContent";
-import ChatsMessageSend from "./ChatsMessageSend";
+import ChatsMessagesContent from "./ChatsMessagesContent";
+import ChatsMessagesSend from "./ChatsMessagesSend";
 
 export default class ChatsMessage extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class ChatsMessage extends React.Component {
       BannedOfMember: false,
       BannedOfMemberChat: false,
       CurrentIndexToRenderMemberChatContent: "1",
-      NumberMemberChatContent: "10"
+      NumberMemberChatContent: "15"
     };
   }
 
@@ -48,7 +48,7 @@ export default class ChatsMessage extends React.Component {
           this.props.MemberID === data.MemberID &&
           this.props.MemberChoiceChatID === data.MemberChatID
         ) {
-          console.log("Đã vào đây cái đậu mé sao lại được");
+          // console.log("Đã vào đây cái đậu mé sao lại được");
           this.props.socket.emit("receive-to-update-room-chat-list", {
             MemberChatID: this.props.MemberChoiceChatID,
             TeamID: this.props.TeamID,
@@ -72,8 +72,8 @@ export default class ChatsMessage extends React.Component {
           this.setState({
             CurrentRoomChatContent: data.CurrentRoomChatContent,
             CheckNextRenderChatContent: data.CheckNextRenderChatContent,
-            BannnedOfMember: data.BannnedOfMember,
-            BannnedOfMemberChat: data.BannnedOfMemberChat
+            BannedOfMember: data.BannedOfMember,
+            BannedOfMemberChat: data.BannedOfMemberChat
           });
         }
       }
@@ -88,9 +88,8 @@ export default class ChatsMessage extends React.Component {
   UNSAFE_componentWillReceiveProps = nextProps => {
     if (nextProps.MemberChoiceChatID !== this.props.MemberChoiceChatID) {
       axios
-        .post("/getteamlist/getteammemberchatlist", {
+        .post("/getchatmessagecontent", {
           MemberChatID: nextProps.MemberChoiceChatID,
-          TeamID: this.props.TeamID,
           MemberID: this.props.MemberID,
           CurrentIndexToRenderMemberChatContent: this.state
             .CurrentIndexToRenderMemberChatContent,
@@ -100,29 +99,45 @@ export default class ChatsMessage extends React.Component {
           this.setState({
             CurrentRoomChatContent: res.data.CurrentRoomChatContent,
             CheckNextRenderChatContent: res.data.CheckNextRenderChatContent,
-            BannnedOfMember: res.data.BannnedOfMember,
-            BannnedOfMemberChat: res.data.BannnedOfMemberChat
+            BannedOfMember: res.data.BannedOfMember,
+            BannedOfMemberChat: res.data.BannedOfMemberChat
           });
         });
     }
   };
 
+  sendToSeeOldMemberChatContent = () => {
+    this.props.socket.emit("receive-to-update-room-chat-list", {
+      MemberID: this.props.MemberID,
+      MemberChatID: this.props.MemberChoiceChatID,
+      CurrentIndexToRenderMemberChatContent:
+        Number(this.state.CurrentIndexToRenderMemberChatContent) + 1 + "",
+      NumberMemberChatContent: this.state.NumberMemberChatContent
+    });
+    this.setState({
+      CurrentIndexToRenderMemberChatContent:
+        Number(this.state.CurrentIndexToRenderMemberChatContent) + 1 + ""
+    });
+  };
+
   render() {
     return (
       <div className="user-chat_content__message">
-        <ChatsMessageContent
+        <ChatsMessagesContent
           MemberID={this.props.MemberID}
           MemberChoiceChatID={this.props.MemberChoiceChatID}
           socket={this.props.socket}
           CurrentRoomChatContent={this.state.CurrentRoomChatContent}
           CheckNextRenderChatContent={this.state.CheckNextRenderChatContent}
+          sendToSeeOldMemberChatContent={this.sendToSeeOldMemberChatContent}
         />
-        <ChatsMessageSend
+        <ChatsMessagesSend
           MemberID={this.props.MemberID}
           MemberChoiceChatID={this.props.MemberChoiceChatID}
           socket={this.props.socket}
-          BannnedOfMember={this.state.BannnedOfMember}
-          BannnedOfMemberChat={this.state.BannnedOfMemberChat}
+          BannedOfMember={this.state.BannedOfMember}
+          BannedOfMemberChat={this.state.BannedOfMemberChat}
+          MemberChoiceChatFullName={this.props.MemberChoiceChatFullName}
         />
       </div>
     );

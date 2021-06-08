@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class ChatsMessageContentItem extends React.Component {
+export default class ChatsMessagesContentItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -16,7 +16,11 @@ export default class ChatsMessageContentItem extends React.Component {
         }
       >
         <div>
-          <p>&nbsp;&nbsp;{this.props.MemberChattedContent}&nbsp;&nbsp;</p>
+          {this.props.MemberChattedContent === "" ? (
+            <small></small>
+          ) : (
+            <p>&nbsp;&nbsp;{this.props.MemberChattedContent}&nbsp;&nbsp;</p>
+          )}
         </div>
         <div>
           <small>{this.props.MemberChattedDate}</small>

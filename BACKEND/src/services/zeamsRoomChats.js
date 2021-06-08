@@ -463,7 +463,7 @@ class ZeamsRoomChats {
   changeBannedOfRoomChatMember(roomchatinfor) {
     let memberroomchatindex = this.ZeamsRoomChats.findIndex(
       memberroomchatitem => {
-        return memberroomchatitem.MemberID === roomchatinfor.MemberChatID;
+        return memberroomchatitem.MemberID === roomchatinfor.MemberID;
       }
     );
 
@@ -471,7 +471,7 @@ class ZeamsRoomChats {
       let memberofchatlistindex = this.ZeamsRoomChats[
         memberroomchatindex
       ].RoomChatMemberList.findIndex(membetofchatlistitem => {
-        return membetofchatlistitem.MemberID === roomchatinfor.MemberID;
+        return membetofchatlistitem.MemberID === roomchatinfor.MemberChatID;
       });
 
       if (memberofchatlistindex >= 0) {

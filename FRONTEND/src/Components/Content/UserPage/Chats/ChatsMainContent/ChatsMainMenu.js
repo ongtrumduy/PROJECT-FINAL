@@ -21,9 +21,12 @@ export default class ChatsMainMenu extends React.Component {
           <img src={defaultavatar} alt="default-avatar" />
         </div>
         <div className="user-chat_content__menu___fullname">
-          <p>{this.props.MemberChoiceChatFullName}</p>
+          <p>
+            {this.props.MemberChoiceChatFullName}-
+            {this.props.MemberChoiceChatID}
+          </p>
         </div>
-        <div>
+        <div style={{ width: "20%" }}>
           <button
             style={
               this.state.setSelectChat === "message"
@@ -59,7 +62,7 @@ export default class ChatsMainMenu extends React.Component {
             Tệp
           </button>
         </div>
-        <div>
+        {/* <div>
           <button
             style={
               this.state.setSelectChat === "notes"
@@ -76,7 +79,7 @@ export default class ChatsMainMenu extends React.Component {
           >
             Ghi chú
           </button>
-        </div>
+        </div> */}
         <div className="user-chat_content__callsetting">
           {/* <div className="user-chat_content__callsetting___call">
             <button>

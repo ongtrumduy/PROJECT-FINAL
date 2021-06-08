@@ -33,9 +33,8 @@ let HiddenOrDeleteMemberChat = io => {
 
     socket.on("send-to-delete-member-chat", data => {
       // console.log("dữ liệu send-to-delete-member-chat gửi về đây", data);
-      zeamsRoomChats.removeMemberOfAllMemberChatRoomList(data);
 
-      zeamsRoomChatsContent.deleteMemberChatContent(data);
+      zeamsRoomChatsContent.deleteAndRemoveMemberChatContentFromList(data);
 
       StartBeginSocket.emitAllSocketsOfMember(
         membersocket,

@@ -16,7 +16,7 @@
     position: absolute;
     text-align: center;
     border: 1px solid black;
-    z-index: 1000;
+    /* z-index: 0.5; */
     height: 24px;
     width: 71%;
     background-color: rgb(235, 205, 151, 0.3);
@@ -438,7 +438,7 @@
     width: 400px;
     cursor: move;
     background-color: rgb(226, 225, 225);
-    z-index: 1000;
+    /* z-index: 1; */
     border-radius: 4px;
     /* display: none; */
 }
@@ -490,6 +490,23 @@
     height: 240px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______seen-old-member-chat {
+    position: absolute;
+    font-size: 12px;
+    border: 1px solid black;
+    font-weight: bold;
+    height: 20px;
+    width: 98%;
+    background-color: pink;
+    cursor: pointer;
+}
+
+.user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______seen-old-member-chat p {
+    font-size: 12px;
+    height: 20px;
+    margin: -0.2px 0 0 0;
 }
 
 .user-team_team-menu-and-content__content___discuss____member-chat______send-message {

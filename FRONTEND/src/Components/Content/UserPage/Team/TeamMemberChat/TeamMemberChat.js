@@ -11,8 +11,8 @@ export default class TeamMemberChat extends React.Component {
     this.state = {
       TeamMemberChatContent: "",
       CurrentTeamMemberRoomChatList: [],
-      BannnedOfMember: false,
-      BannnedOfMemberChat: false,
+      BannedOfMember: false,
+      BannedOfMemberChat: false,
       CheckNextRenderChatContent: false,
       CurrentIndexToRenderMemberChatContent: "1",
       NumberMemberChatContent: "5",
@@ -71,8 +71,8 @@ export default class TeamMemberChat extends React.Component {
         this.setState({
           CurrentTeamMemberRoomChatList: res.data.CurrentRoomChatContent,
           CheckNextRenderChatContent: res.data.CheckNextRenderChatContent,
-          BannnedOfMember: res.data.BannnedOfMember,
-          BannnedOfMemberChat: res.data.BannnedOfMemberChat
+          BannedOfMember: res.data.BannedOfMember,
+          BannedOfMemberChat: res.data.BannedOfMemberChat
         });
       });
 
@@ -107,8 +107,8 @@ export default class TeamMemberChat extends React.Component {
           this.setState({
             CurrentTeamMemberRoomChatList: data.CurrentRoomChatContent,
             CheckNextRenderChatContent: data.CheckNextRenderChatContent,
-            BannnedOfMember: data.BannnedOfMember,
-            BannnedOfMemberChat: data.BannnedOfMemberChat
+            BannedOfMember: data.BannedOfMember,
+            BannedOfMemberChat: data.BannedOfMemberChat
           });
         }
       }
@@ -129,8 +129,8 @@ export default class TeamMemberChat extends React.Component {
           this.setState({
             CurrentTeamMemberRoomChatList: res.data.CurrentRoomChatContent,
             CheckNextRenderChatContent: res.data.CheckNextRenderChatContent,
-            BannnedOfMember: res.data.BannnedOfMember,
-            BannnedOfMemberChat: res.data.BannnedOfMemberChat
+            BannedOfMember: res.data.BannedOfMember,
+            BannedOfMemberChat: res.data.BannedOfMemberChat
           });
         });
     }
@@ -148,17 +148,18 @@ export default class TeamMemberChat extends React.Component {
   };
 
   sendToUnBannedOfMemberToChat = () => {
-    this.props.socket.emit("send-to-unbanned-of-member", {
+    this.props.socket.emit("send-to-unbanned-of-member-chat", {
       MemberChatID: this.props.MemberChoiceChatID,
-      TeamID: this.props.TeamID,
       MemberID: this.props.MemberID
     });
+    this.closeCheckBannedOfMemberModal();
+    this.openCheckUnBannedOfMemberModal();
   };
 
-  sentMessageToTeamMemberChat = () => {
-    if (this.state.BannnedOfMember === true) {
+  sendMessageToTeamMemberChat = () => {
+    if (this.state.BannedOfMember === true) {
       this.openCheckBannedOfMemberModal();
-    } else if (this.state.BannnedOfMemberChat === true) {
+    } else if (this.state.BannedOfMemberChat === true) {
       this.openCheckBannedOfMemberChatModal();
     } else {
       this.props.socket.emit("send-message-to-member-chat", {
@@ -174,8 +175,22 @@ export default class TeamMemberChat extends React.Component {
 
   pressEnterSendMessageContent = event => {
     if (event.key === "Enter") {
-      this.sentMessageToTeamMemberChat();
+      this.sendMessageToTeamMemberChat();
     }
+  };
+
+  sendToSeeOldMemberChatContent = () => {
+    this.props.socket.emit("receive-to-update-room-chat-list", {
+      MemberID: this.props.MemberID,
+      MemberChatID: this.props.MemberChoiceChatID,
+      CurrentIndexToRenderMemberChatContent:
+        Number(this.state.CurrentIndexToRenderMemberChatContent) + 1 + "",
+      NumberMemberChatContent: this.state.NumberMemberChatContent
+    });
+    this.setState({
+      CurrentIndexToRenderMemberChatContent:
+        Number(this.state.CurrentIndexToRenderMemberChatContent) + 1 + ""
+    });
   };
 
   renderTeamMemberChat = () => {
@@ -206,6 +221,17 @@ export default class TeamMemberChat extends React.Component {
             </p>
           ) : (
             <div>
+              <div
+                style={
+                  this.state.CheckNextRenderChatContent
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+                onClick={() => this.sendToSeeOldMemberChatContent()}
+                className="user-team_team-menu-and-content__content___discuss____member-chat______team-chat-content_______seen-old-member-chat"
+              >
+                <p>Xem thêm các Tin nhắn cũ !!!</p>
+              </div>
               {this.state.CurrentTeamMemberRoomChatList.map(
                 (roomchatitem, roomchatindex) => (
                   <div key={roomchatindex}>
@@ -233,7 +259,7 @@ export default class TeamMemberChat extends React.Component {
               value={this.state.TeamMemberChatContent}
             />
           </div>
-          <div onClick={() => this.sentMessageToTeamMemberChat()}>
+          <div onClick={() => this.sendMessageToTeamMemberChat()}>
             <i className="material-icons">&#xe163;</i>
           </div>
         </div>
@@ -262,7 +288,8 @@ export default class TeamMemberChat extends React.Component {
               marginRight: "-50%",
               transform: "translate(-50%, -50%)",
               backgroundColor: "#ecf0f1",
-              userSelect: "none"
+              userSelect: "none",
+              zIndex: "3"
             }
           }}
           ariaHideApp={false}
@@ -272,16 +299,19 @@ export default class TeamMemberChat extends React.Component {
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>
             <p style={{ fontWeight: "bold" }}>
-              Bạn không thể nhắn tin với {this.props.MemberChoiceChatFullName}-
-              {this.props.MemberChoiceChatID}
-              vì BẠN đã chặn mất roàii!!! Bạn cần bỏ chặn để nhắn tin!!!
+              Bạn không thể nhắn tin với{" "}
+              <span style={{ color: "blue" }}>
+                {this.props.MemberChoiceChatFullName}-
+                {this.props.MemberChoiceChatID}
+              </span>
+              &nbsp; vì BẠN đã chặn mất roàii!!! Bạn cần bỏ chặn để nhắn tin!!!
             </p>
           </div>
           <button
             style={{ float: "right", cursor: "pointer" }}
             onClick={() => this.closeCheckBannedOfMemberModal()}
           >
-            Không mở chặn!!!
+            Đã hiểu!!!
           </button>
           <button
             style={{ float: "right", cursor: "pointer" }}
@@ -303,7 +333,8 @@ export default class TeamMemberChat extends React.Component {
               marginRight: "-50%",
               transform: "translate(-50%, -50%)",
               backgroundColor: "#ecf0f1",
-              userSelect: "none"
+              userSelect: "none",
+              zIndex: "3"
             }
           }}
           ariaHideApp={false}
@@ -313,9 +344,12 @@ export default class TeamMemberChat extends React.Component {
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>
             <p style={{ fontWeight: "bold" }}>
-              Bạn không thể nhắn tin với {this.props.MemberChoiceChatFullName}-
-              {this.props.MemberChoiceChatID}
-              vì người đó đã chặn bạn mất roàii!!!
+              Bạn không thể nhắn tin với{" "}
+              <span style={{ color: "blue" }}>
+                {this.props.MemberChoiceChatFullName}-
+                {this.props.MemberChoiceChatID}
+              </span>
+              &nbsp; vì người đó đã chặn bạn mất roàii!!!
             </p>
           </div>
           <button
@@ -330,6 +364,7 @@ export default class TeamMemberChat extends React.Component {
 
         <Modal
           style={{
+            overlay: { position: "fixed", zIndex: "1000" },
             content: {
               top: "50%",
               left: "50%",
@@ -338,7 +373,8 @@ export default class TeamMemberChat extends React.Component {
               marginRight: "-50%",
               transform: "translate(-50%, -50%)",
               backgroundColor: "#ecf0f1",
-              userSelect: "none"
+              userSelect: "none",
+              zIndex: "3"
             }
           }}
           ariaHideApp={false}

@@ -1,14 +1,13 @@
 import React from "react";
 import Modal from "react-modal";
 
-export default class ChatsMessageSend extends React.Component {
+export default class ChatsMessagesSend extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       MemberMessageChat: "",
       checkBannedOfMemberIsOpen: false,
-      checkBannedOfMemberChatIsOpen: false,
-      checkUnBannedOfMemberIsOpen: false
+      checkBannedOfMemberChatIsOpen: false
     };
   }
 
@@ -42,22 +41,10 @@ export default class ChatsMessageSend extends React.Component {
     });
   };
 
-  openCheckUnBannedOfMemberModal = () => {
-    this.setState({
-      checkUnBannedOfMemberIsOpen: true
-    });
-  };
-
-  closeCheckUnBannedOfMemberModal = () => {
-    this.setState({
-      checkUnBannedOfMemberIsOpen: false
-    });
-  };
-
-  sentNewMessageChat = () => {
-    if (this.props.BannnedOfMember === true) {
+  sendNewMessageChat = () => {
+    if (this.props.BannedOfMember === true) {
       this.openCheckBannedOfMemberModal();
-    } else if (this.props.BannnedOfMemberChat === true) {
+    } else if (this.props.BannedOfMemberChat === true) {
       this.openCheckBannedOfMemberChatModal();
     } else {
       this.props.socket.emit("send-message-to-member-chat", {
@@ -73,10 +60,7 @@ export default class ChatsMessageSend extends React.Component {
 
   pressEnterNewMessage = event => {
     if (event.key === "Enter") {
-      this.sentNewMessageChat();
-      this.setState({
-        MemberMessageChat: ""
-      });
+      this.sendNewMessageChat();
     }
   };
 
@@ -93,7 +77,7 @@ export default class ChatsMessageSend extends React.Component {
             onKeyPress={event => this.pressEnterNewMessage(event)}
           />
         </div>
-        <div onClick={() => this.sentNewMessageChat()}>
+        <div onClick={() => this.sendNewMessageChat()}>
           <i className="material-icons">&#xe163;</i>
         </div>
 
@@ -119,9 +103,12 @@ export default class ChatsMessageSend extends React.Component {
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>
             <p style={{ fontWeight: "bold" }}>
-              Bạn không thể nhắn tin với {this.props.MemberChoiceChatFullName}-
-              {this.props.MemberChoiceChatID}
-              vì BẠN đã chặn mất roàii!!! Bạn cần bỏ chặn để nhắn tin!!!
+              Bạn không thể nhắn tin với{" "}
+              <span style={{ color: "red" }}>
+                {this.props.MemberChoiceChatFullName}-
+                {this.props.MemberChoiceChatID}
+              </span>
+              &nbsp; vì BẠN đã chặn mất roàii!!! Bạn cần bỏ chặn để nhắn tin!!!
             </p>
           </div>
 
@@ -155,9 +142,12 @@ export default class ChatsMessageSend extends React.Component {
           <div>
             <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>
             <p style={{ fontWeight: "bold" }}>
-              Bạn không thể nhắn tin với {this.props.MemberChoiceChatFullName}-
-              {this.props.MemberChoiceChatID}
-              vì người đó đã chặn bạn mất roàii!!!
+              Bạn không thể nhắn tin với{" "}
+              <span style={{ color: "blue" }}>
+                {this.props.MemberChoiceChatFullName}-
+                {this.props.MemberChoiceChatID}
+              </span>
+              &nbsp; vì người đó đã chặn bạn mất roàii!!!
             </p>
           </div>
           <button
@@ -169,37 +159,6 @@ export default class ChatsMessageSend extends React.Component {
         </Modal>
 
         {/*============================================================================================================================= */}
-
-        <Modal
-          style={{
-            content: {
-              top: "50%",
-              left: "50%",
-              right: "auto",
-              bottom: "auto",
-              marginRight: "-50%",
-              transform: "translate(-50%, -50%)",
-              backgroundColor: "#ecf0f1",
-              userSelect: "none"
-            }
-          }}
-          ariaHideApp={false}
-          isOpen={this.state.checkUnBannedOfMemberIsOpen}
-          onRequestClose={() => this.closeCheckUnBannedOfMemberModal()}
-        >
-          <div>
-            <p style={{ fontWeight: "bold", color: "red" }}>THÔNG BÁO</p>
-            <p style={{ fontWeight: "bold" }}>
-              Bạn đã mở chặn người đó rồi !!!
-            </p>
-          </div>
-          <button
-            style={{ float: "right", cursor: "pointer" }}
-            onClick={() => this.closeCheckUnBannedOfMemberModal()}
-          >
-            QUá OKiii
-          </button>
-        </Modal>
       </div>
     );
   }

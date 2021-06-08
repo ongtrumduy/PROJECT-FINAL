@@ -1,9 +1,9 @@
 import React from "react";
 import ChatsMainMenu from "./ChatsMainMenu";
 
-import ChatsMessage from "../ChatsMessage/ChatsMessage";
+import ChatsMessages from "../ChatsMessages/ChatsMessages";
 import ChatsNotes from "../ChatsNotes/ChatsNotes";
-import ChatsSetting from "../ChatsSetting/ChatsSetting";
+import ChatsSettings from "../ChatsSettings/ChatsSettings";
 import ChatsFiles from "../ChatsFiles/ChatsFiles";
 
 export default class ChatsMainContent extends React.Component {
@@ -39,10 +39,11 @@ export default class ChatsMainContent extends React.Component {
     switch (this.state.setSelectChatContent) {
       case "message":
         return (
-          <ChatsMessage
+          <ChatsMessages
             MemberID={this.props.MemberID}
             socket={this.props.socket}
             MemberChoiceChatID={this.props.MemberChoiceChatID}
+            MemberChoiceChatFullName={this.props.MemberChoiceChatFullName}
           />
         );
       case "files":
@@ -55,11 +56,12 @@ export default class ChatsMainContent extends React.Component {
         );
       case "setting":
         return (
-          <ChatsSetting
+          <ChatsSettings
             MemberID={this.props.MemberID}
             socket={this.props.socket}
             MemberChoiceChatID={this.props.MemberChoiceChatID}
             MemberChoiceChatFullName={this.props.MemberChoiceChatFullName}
+            CheckBannedOfMemberChat={this.props.CheckBannedOfMemberChat}
           />
         );
       case "notes":
@@ -72,7 +74,7 @@ export default class ChatsMainContent extends React.Component {
         );
       default:
         return (
-          <ChatsMessage
+          <ChatsMessages
             MemberID={this.props.MemberID}
             socket={this.props.socket}
             MemberChoiceChatID={this.props.MemberChoiceChatID}
@@ -91,6 +93,7 @@ export default class ChatsMainContent extends React.Component {
             setSelectChatContentClickChoose={
               this.setSelectChatContentClickChoose
             }
+            MemberChoiceChatID={this.props.MemberChoiceChatID}
             MemberChoiceChatFullName={this.props.MemberChoiceChatFullName}
           />
         ) : (

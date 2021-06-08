@@ -180,7 +180,30 @@ class ZeamsRoomChatsContents {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  deleteMemberChatContent(roomchatinfor) {
+  deleteAndNoRemoveMemberChatContentFromList(roomchatinfor) {
+    let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
+      roomchatitem => {
+        return (
+          roomchatitem.MemberID === roomchatinfor.MemberID &&
+          roomchatitem.MemberChatID === roomchatinfor.MemberChatID
+        );
+      }
+    );
+
+    this.ZeamsRoomChatsContents[roommemberindex].RoomMemberChatContent = [
+      {
+        MemberChattedContent: ""
+      }
+    ];
+
+    this.saveDataJSON();
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  deleteAndRemoveMemberChatContentFromList(roomchatinfor) {
+    zeamsRoomChats.removeMemberOfAllMemberChatRoomList(data);
+
     let roommemberindex = this.ZeamsRoomChatsContents.findIndex(
       roomchatitem => {
         return (
@@ -303,7 +326,9 @@ class ZeamsRoomChatsContents {
       }
     );
 
-    let lastMessageOfMember = "";
+    let lastMessageOfMember = {
+      MemberChattedContent: ""
+    };
 
     if (roommemberindex >= 0) {
       let lastmessageindex =
