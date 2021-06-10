@@ -56,7 +56,10 @@ class ZeamsReminders {
       ReminderCreateDate: moment().format("HH:mm DD-MM-YYYY"),
       ReminderEndDate: moment(reminderinfor.ReminderEndDate).format(
         "DD-MM-YYYY"
-      )
+      ),
+      ReminderRemoveDate: moment(reminderinfor.ReminderEndDate)
+        .add(15, "days")
+        .format("DD-MM-YYYY")
     };
 
     this.ZeamsReminders[reminderindex].MemberReminderUnfinishedList.unshift(

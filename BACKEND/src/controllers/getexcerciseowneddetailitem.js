@@ -1,7 +1,7 @@
-import zeamsExcerciseLists from "../services/zeamsExcerciseLists";
+import zeamsExcercisesLists from "../services/zeamsExcercisesLists";
 
 let GetExcerciseOwnedDetailItem = async (req, res) => {
-  let getExcerciseOwnedDetailItem = await zeamsExcerciseLists.responseMemberChoiceExcerciseOwnedItemContent(
+  let getExcerciseOwnedDetailItem = await zeamsExcercisesLists.responseMemberChoiceExcerciseOwnedItemContent(
     req.body
   );
   res.send(getExcerciseOwnedDetailItem);

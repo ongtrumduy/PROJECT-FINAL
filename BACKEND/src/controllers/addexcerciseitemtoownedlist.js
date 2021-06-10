@@ -1,8 +1,8 @@
-import zeamsExcerciseLists from "../services/zeamsExcerciseLists";
+import zeamsExcercisesLists from "../services/zeamsExcercisesLists";
 
 let AddNewExcerciseItem = async (req, res) => {
   // console.log(req.body);
-  let resAddNewExcerciseItem = await zeamsExcerciseLists.responseAddNewExcerciseItemToMemberOwnedList(
+  let resAddNewExcerciseItem = await zeamsExcercisesLists.responseAddNewExcerciseItemToMemberOwnedList(
     req.body
   );
   // console.log(resCancelCreateNewExcerciseContent);

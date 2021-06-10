@@ -2,7 +2,7 @@ import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 
-import zeamsExcerciseLists from "./zeamsExcerciseLists";
+import zeamsExcercisesLists from "./zeamsExcercisesLists";
 
 class ZeamsExcercises {
   constructor() {
@@ -54,7 +54,7 @@ class ZeamsExcercises {
       ExcerciseNumberQuestion: excerciseinfor.ExcerciseNumberQuestion
     };
 
-    zeamsExcerciseLists.createNewExcercisesListItemContent(
+    zeamsExcercisesLists.createNewExcercisesListItemContent(
       newexcercisetolistcontent
     );
 
@@ -111,8 +111,9 @@ class ZeamsExcercises {
       return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
     });
 
-    let ExcerciseAllQAContent = excerciseinfor.ExcerciseAllQAContent;
     if (excerciseidindex >= 0) {
+      let ExcerciseAllQAContent = excerciseinfor.ExcerciseAllQAContent;
+
       this.ZeamsExcercises[
         excerciseidindex
       ].ExcerciseAllQAContent = ExcerciseAllQAContent;
@@ -128,14 +129,19 @@ class ZeamsExcercises {
       return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
     });
 
-    this.ZeamsExcercises.splice(excerciseidindex, 1);
-    this.saveDataJSON();
+    let resCancelCreateNewExcerciseContent = { checkValidate: "" };
 
-    zeamsExcerciseLists.removeCreateExcerciseFromList(excerciseinfor);
+    if (excerciseidindex >= 0) {
+      this.ZeamsExcercises.splice(excerciseidindex, 1);
+      this.saveDataJSON();
 
-    let resCancelCreateNewExcerciseContent = {
-      checkValidate: "remove-success"
-    };
+      zeamsExcercisesLists.removeCreateExcerciseFromList(excerciseinfor);
+
+      resCancelCreateNewExcerciseContent = {
+        checkValidate: "remove-success"
+      };
+    }
+
     return resCancelCreateNewExcerciseContent;
   }
 
@@ -170,6 +176,35 @@ class ZeamsExcercises {
     }
 
     return resAllQuestionAnswerContent;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  responseExcerciseInforToCreateTeamNote(excerciseinfor) {
+    let excerciseindex = this.ZeamsExcercises.findIndex(excerciseitem => {
+      return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseTeamNoteID;
+    });
+    let resExcerciseInforToCreateTeamNote = {};
+
+    if (excerciseindex >= 0) {
+      let excerciseinfor = this.ZeamsExcercises[excerciseindex];
+
+      resExcerciseInforToCreateTeamNote = {
+        ExcerciseName: excerciseinfor.ExcerciseName,
+        ExcerciseNumberQuestion: excerciseinfor.ExcerciseNumberQuestion,
+        ExcerciseType: excerciseinfor.ExcerciseType,
+        ExcerciseLogo: excerciseinfor.ExcerciseLogo,
+        returnExcerciseInfor: "exist-excercise"
+      };
+    } else {
+      resExcerciseInforToCreateTeamNote = {
+        returnExcerciseInfor: "non-exist-excercise"
+      };
+    }
+
+    return resExcerciseInforToCreateTeamNote;
   }
 
   //-----------------------------------------------------------------------------------------------------------------

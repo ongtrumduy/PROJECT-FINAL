@@ -1,6 +1,7 @@
 .user-team_team-menu-and-content__content___discuss_____alldiscuss {
     height: 456px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
 }
 
@@ -18,7 +19,7 @@
     border: 1px solid black;
     /* z-index: 0.5; */
     height: 24px;
-    width: 71%;
+    width: 67%;
     background-color: rgb(235, 205, 151, 0.3);
     cursor: pointer;
     border-radius: 8px;
@@ -91,7 +92,8 @@
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content {
-    max-width: 600px;
+    /* max-width: 600px; */
+    /* width: 100%; */
     max-height: 240px;
     overflow: auto;
     margin: 8px 0 0 0;
@@ -100,6 +102,8 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content p {
     text-align: left;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete {
@@ -125,7 +129,7 @@
     position: relative;
     top: 14px;
     right: 44px;
-    z-index: 1000;
+    /* z-index: 1000; */
     font-weight: bold;
     user-select: none;
 }
@@ -134,7 +138,7 @@
     position: relative;
     top: 14px;
     right: 24px;
-    z-index: 1000;
+    /* z-index: 1000; */
     font-weight: bold;
     user-select: none;
     height: 20px;
@@ -166,15 +170,6 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________nameandtime_________edit-and-delete________edit-and-delete-button p:last-child:hover {
     color: rgb(0, 255, 0);
-}
-
-.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content {
-    margin: 4px 0 8px 4px;
-    max-height: 140px;
-    max-width: 570px;
-    overflow: auto;
-    border-bottom: 1px solid rgb(216, 216, 216);
-    width: 100%;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content________edit-mode {
@@ -363,7 +358,7 @@
     position: relative;
     top: 40px;
     right: 37px;
-    z-index: 1000;
+    /* z-index: 1000; */
     font-weight: bold;
     user-select: none;
 }
@@ -372,7 +367,7 @@
     position: relative;
     top: 12px;
     right: 21px;
-    z-index: 1000;
+    /* z-index: 1000; */
     font-weight: bold;
     user-select: none;
     height: 20px;
@@ -408,8 +403,15 @@
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content {
     margin: 4px 0 8px 4px;
     max-height: 140px;
-    max-width: 570px;
+    /* max-width: 570px; */
+    width: 99%;
     overflow: auto;
+}
+
+.user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content p {
+    width: 98%;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content________edit-mode {

@@ -22,6 +22,11 @@ import finishedexcercisechoiceanswerRoutes from "./finishedexcercisechoiceanswer
 import getallmembersofteamRoutes from "./getallmembersofteam";
 import getallmemberchatroomlistRoutes from "./getallmemberchatroomlist";
 import getmemberchatcontentRoutes from "./getmemberchatcontent";
+import getexcerciseinfortocreateteamnoteRoutes from "./getexcerciseinfortocreateteamnote";
+import createnewteamnotecontentRoutes from "./createnewteamnotecontent";
+import getteamnotenonoutdatelistRoutes from "./getteamnotenonoutdatelist";
+import getteamnoteoutdatelistRoutes from "./getteamnoteoutdatelist";
+import getallassignmentofmemberRoutes from "./getallassignmentofmember";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -120,6 +125,26 @@ let AllRoutes = (app, corsOptions) => {
 
   // --------------------------GetMemberChatContent---------------------------------------
   getmemberchatcontentRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // --------------------------GetExcerciseInforToCreateTeamNote---------------------------------------
+  getexcerciseinfortocreateteamnoteRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // --------------------------CreateNewTeamNoteContent---------------------------------------
+  createnewteamnotecontentRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // --------------------------GetTeamNoteNonOutDateList---------------------------------------
+  getteamnotenonoutdatelistRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // --------------------------GetTeamNoteOutDateList---------------------------------------
+  getteamnoteoutdatelistRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // --------------------------GetAllAssignmentOfMember---------------------------------------
+  getallassignmentofmemberRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
   //=========================================================================

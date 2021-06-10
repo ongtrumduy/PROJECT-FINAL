@@ -205,8 +205,6 @@ export default class TeamDiscussCommentContent extends React.Component {
                   this.props.TeamChoiceCommentID === this.props.TeamCommentID
                     ? { display: "inline" }
                     : { display: "none" }
-                    ? { display: "inline" }
-                    : { display: "none" }
                 }
                 className="user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox___________delete-button"
               >

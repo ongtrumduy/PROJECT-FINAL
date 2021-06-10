@@ -1,6 +1,6 @@
 import React from "react";
-import axios from "axios";
 import Modal from "react-modal";
+import Draggable from "react-draggable";
 
 import "./TeamNotes.css";
 import TeamNotesContent from "./TeamNotesContent";
@@ -10,26 +10,9 @@ export default class TeamNotes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      TeamNoteContent: [],
-      MemberChoiceChatID: "",
       checkCreateNewNoteIsOpen: false
     };
   }
-
-  componentDidMount = () => {
-    axios
-      .post("/getteamlist/getteamnotes", {
-        TeamID: this.props.TeamID
-      })
-      .then(res => {
-        this.setState({
-          TeamDiscussContent: res.data.TeamDiscussContent
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
 
   openCheckCreateNewNoteModal = () => {
     this.setState({ checkCreateNewNoteIsOpen: true });
@@ -46,14 +29,26 @@ export default class TeamNotes extends React.Component {
           MemberID={this.props.MemberID}
           TeamID={this.props.TeamID}
           socket={this.props.socket}
-          TeamNoteContent={this.state.TeamNoteContent}
+          CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
         />
-        <div
-          className="user-team_team-menu-and-content__content___notes____create-new-button"
-          onClick={() => this.openCheckCreateNewNoteModal()}
-        >
-          <i className="material-icons">{"create"}</i>
-        </div>
+
+        <Draggable bounds={{ top: -300, left: -600, right: 0, bottom: 0 }}>
+          <div
+            style={
+              this.props.CheckMemberIsAdmin
+                ? { display: "inline" }
+                : { display: "none" }
+            }
+            className="user-team_team-menu-and-content__content___notes____create-new-button"
+          >
+            <i
+              onClick={() => this.openCheckCreateNewNoteModal()}
+              className="material-icons"
+            >
+              {"create"}
+            </i>
+          </div>
+        </Draggable>
 
         <Modal
           style={{
@@ -65,7 +60,7 @@ export default class TeamNotes extends React.Component {
               width: "440px",
               marginRight: "-50%",
               transform: "translate(-50%, -50%)",
-              backgroundColor: "dark-white",
+              border: "2px solid black",
               zIndex: "2000",
               userSelect: "none"
             }
@@ -79,6 +74,7 @@ export default class TeamNotes extends React.Component {
               MemberID={this.props.MemberID}
               TeamID={this.props.TeamID}
               socket={this.props.socket}
+              closeCheckCreateNewNoteModal={this.closeCheckCreateNewNoteModal}
             />
           </div>
           <button

@@ -1,8 +1,6 @@
 import React from "react";
 import axios from "axios";
 
-import de111 from "../../../../Main/Image-Icons/de111.PNG";
-
 export default class TeamNotesCreateNewNote extends React.Component {
   constructor(props) {
     super(props);
@@ -10,13 +8,14 @@ export default class TeamNotesCreateNewNote extends React.Component {
       TeamNoteName: "",
       TeamNoteDescription: "",
       TeamNoteEndDate: "",
-      TeamNoteExcerciseID: "",
-      checkValidate: "",
-      checkWithExcercise: false,
-      checkTrueExcerciseWithNote: false,
-      TeamNoteExcerciseName: "",
-      TeamNoteExcerciseLogo: null,
-      TeamNoteExcerciseNumberQuestion: ""
+      CheckWithExcercise: false,
+      CheckTrueExcerciseWithNote: false,
+      CheckChooseExcicseWithNote: false,
+      ExcerciseTeamNoteID: "",
+      ExcerciseTeamNoteName: "",
+      ExcerciseTeamNoteLogo: null,
+      ExcerciseTeamNoteNumberQuestion: "",
+      ExcerciseChooseTeamNoteID: ""
     };
   }
 
@@ -24,62 +23,64 @@ export default class TeamNotesCreateNewNote extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     });
-    if (event.target.name === "TeamNoteExcerciseID") {
-      this.props.socket.emit("sent-to-check-with-excercise", {
-        MemberID: this.props.MemberID,
-        TeamID: this.props.TeamID,
-        TeamNoteExcerciseID: event.target.value
-      });
+    if (event.target.name === "ExcerciseTeamNoteID") {
+      let excerciseTeamNoteID = event.target.value;
+      if (excerciseTeamNoteID.length >= 30) {
+        if (this.textExcerciseIdRef.current) {
+          clearTimeout(this.textExcerciseIdRef.current);
+        }
+
+        this.textExcerciseIdRef.current = setTimeout(() => {
+          this.sendToFindTrueExcerciseInforToTeamNote(excerciseTeamNoteID);
+        }, 800);
+      }
     }
   };
 
-  componentDidMount = () => {
-    this.props.socket.on("receive-excercise-infor", data => {
-      if (
-        data.TeamID === this.props.TeamID &&
-        data.MemberID === this.props.MemberID
-      ) {
-        this.setState({
-          checkTrueExcerciseWithNote: true,
-          TeamNoteExcerciseName: data.TeamNoteExcerciseName,
-          TeamNoteExcerciseLogo: data.TeamNoteExcerciseLogo,
-          TeamNoteExcerciseNumberQuestion: data.TeamNoteExcerciseNumberQuestion
-        });
-      }
-    });
-  };
-
   handleValueCheckWithExcercise = event => {
-    if (!this.state.checkWithExcercise) {
+    if (!this.state.CheckWithExcercise) {
       this.setState({
         [event.target.name]: event.target.value,
-        checkWithExcercise: true
+        CheckWithExcercise: true,
+        checkValidate: ""
       });
     } else {
       this.setState({
         [event.target.name]: "none-with-excercise",
-        checkWithExcercise: false
+        CheckWithExcercise: false,
+        CheckTrueExcerciseWithNote: false,
+        CheckChooseExcicseWithNote: false,
+        ExcerciseTeamNoteID: "",
+        checkValidate: ""
       });
     }
   };
 
-  sentToCreateNewTeamNote = () => {
+  sendToFindTrueExcerciseInforToTeamNote = excerciseTeamNoteID => {
     axios
-      .post("/createnewteamnote", {
-        ReminderName: this.state.ReminderName,
-        ReminderDescription: this.state.ReminderDescription,
-        ReminderEndDate: this.state.ReminderEndDate,
-        MemberID: this.props.MemberID
+      .post("./getexcerciseinfortocreateteamnote", {
+        ExcerciseTeamNoteID: excerciseTeamNoteID
       })
       .then(res => {
-        // console.log(res.data);
-        this.setState({
-          checkValidate: res.data.checkValidate
-        });
-        if (res.data.checkValidate === "success-create-note") {
-          setTimeout(() => {
-            this.props.updateRenderReminderControl("reminderall");
-          }, 1000);
+        console.log("data gửi về đây ", res.data);
+
+        if (res.data.returnExcerciseInfor === "exist-excercise") {
+          this.setState({
+            ExcerciseTeamNoteName: res.data.ExcerciseName,
+            ExcerciseTeamNoteLogo: res.data.ExcerciseLogo,
+            ExcerciseTeamNoteNumberQuestion: res.data.ExcerciseNumberQuestion,
+            CheckTrueExcerciseWithNote: true,
+            checkValidate: ""
+          });
+        } else if (res.data.returnExcerciseInfor === "non-exist-excercise") {
+          this.setState({
+            ExcerciseTeamNoteName: "",
+            ExcerciseTeamNoteLogo: "",
+            ExcerciseTeamNoteNumberQuestion: "",
+            CheckTrueExcerciseWithNote: false,
+            CheckChooseExcicseWithNote: false,
+            checkValidate: "non-exist-excercise"
+          });
         }
       })
       .catch(error => {
@@ -87,8 +88,47 @@ export default class TeamNotesCreateNewNote extends React.Component {
       });
   };
 
+  sendToCreateNewTeamNote = () => {
+    if (
+      this.state.TeamNoteType === "with-excercise" &&
+      this.state.CheckChooseExcicseWithNote === false
+    ) {
+      this.setState({
+        checkValidate: "add-choose-excercise"
+      });
+    } else {
+      axios
+        .post("/createnewteamnotecontent", {
+          TeamNoteName: this.state.TeamNoteName,
+          TeamNoteDescription: this.state.TeamNoteDescription,
+          TeamNoteEndDate: this.state.TeamNoteEndDate,
+          TeamNoteType: this.state.TeamNoteType,
+          TeamID: this.props.TeamID,
+          ExcerciseTeamNoteID: this.state.ExcerciseChooseTeamNoteID
+        })
+        .then(res => {
+          console.log("Đổ dữ liệu để tạo", res.data);
+          this.setState({
+            checkValidate: res.data.checkValidate
+          });
+          if (res.data.checkValidate === "success-create-note") {
+            this.props.socket.emit("receive-to-update-new-team-note-content", {
+              TeamID: this.props.TeamID
+            });
+
+            setTimeout(() => {
+              this.props.closeCheckCreateNewNoteModal();
+            }, 1000);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
   handleCreateNewTeamNote = event => {
-    this.sentToCreateNewTeamNote();
+    this.sendToCreateNewTeamNote();
 
     event.preventDefault();
   };
@@ -99,10 +139,16 @@ export default class TeamNotesCreateNewNote extends React.Component {
         return <span>Ghi chú của bạn đã được tạo thành công !!!</span>;
       case "non-pass-end-date":
         return <small>Ngày hết hạn của bạn không hợp lệ </small>;
-      case "noteenddate":
+      case "note-end-date":
         return <small>Ngày hết hạn không được để trống </small>;
-      case "teamnotename":
+      case "team-note-name":
         return <small>Tên ghi chú không được để trống </small>;
+      case "add-choose-excercise":
+        return <small>Bạn chưa thêm Bộ đề lựa chọn !!!!!</small>;
+      case "non-exist-excercise":
+        return <small>Không có bộ đề nào trùng khớp !!!!!</small>;
+      case "exist-excercise-name":
+        return <small>Tên của Ghi chú này đã tồn tại rồi !!!!!</small>;
       default:
     }
   };
@@ -111,6 +157,20 @@ export default class TeamNotesCreateNewNote extends React.Component {
     if (this.state.checkValidate === type) {
       return <div>{this.checkValidateCreateNewTeamNote(type)}</div>;
     }
+  };
+
+  addChooseExcerciseToTeamNote = () => {
+    this.setState({
+      CheckChooseExcicseWithNote: true,
+      ExcerciseChooseTeamNoteID: this.state.ExcerciseTeamNoteID
+    });
+  };
+
+  removeChooseExcerciseToTeamNote = () => {
+    this.setState({
+      CheckChooseExcicseWithNote: false,
+      ExcerciseChooseTeamNoteID: ""
+    });
   };
 
   createNewTeamNoteForm = () => {
@@ -124,16 +184,23 @@ export default class TeamNotesCreateNewNote extends React.Component {
                 <input
                   type="text"
                   name="TeamNoteName"
+                  maxLength="120"
                   onChange={event => this.handleValueCreateNewTeamNote(event)}
                   placeholder="Nhập tên ghi chú..."
                 />
+                <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______response-create-note_______validate">
+                  {this.renderValidateNotify("team-note-name")}
+                </div>
+
                 <p>Mô tả nội dung </p>
                 <input
                   type="text"
                   name="TeamNoteDescription"
+                  maxLength="200"
                   onChange={event => this.handleValueCreateNewTeamNote(event)}
                   placeholder="Nhập mô tả..."
                 />
+
                 <p>Ngày hết hạn </p>
                 <input
                   type="date"
@@ -142,9 +209,14 @@ export default class TeamNotesCreateNewNote extends React.Component {
                   value={this.state.ReminderEndDate}
                 />
               </div>
+              <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______response-create-note_______validate">
+                {this.renderValidateNotify("note-end-date")}
+                {this.renderValidateNotify("non-pass-end-date")}
+              </div>
 
               <div>
                 <input
+                  style={{ cursor: "pointer" }}
                   type="checkbox"
                   name="TeamNoteType"
                   value="with-excercise"
@@ -162,39 +234,67 @@ export default class TeamNotesCreateNewNote extends React.Component {
               >
                 <input
                   type="text"
-                  name="TeamNoteExcerciseID"
+                  name="ExcerciseTeamNoteID"
                   placeholder="Nhập ID của Bộ đề - Bài tập"
-                  value={this.state.TeamNoteExcerciseID}
+                  ref={ref => {
+                    this.textExcerciseIdRef = ref;
+                  }}
+                  maxLength="50"
+                  value={this.state.ExcerciseTeamNoteID}
                   onChange={event => this.handleValueCreateNewTeamNote(event)}
                 />
               </div>
-              <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______excercise-content">
-                {/* <p>{this.state.TeamNoteExcerciseLogo}</p>
-                <p>{this.state.TeamNoteExcerciseName}</p>
-                <p>{this.state.TeamNoteExcerciseNumberQuestion}</p> */}
+              <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______response-create-note_______validate">
+                {this.renderValidateNotify("non-exist-excercise")}
+              </div>
+
+              <div
+                style={
+                  this.state.CheckTrueExcerciseWithNote
+                    ? { display: "flex" }
+                    : { display: "none" }
+                }
+                className="user-team_team-menu-and-content__content___notes____create-new_____create-form______excercise-content"
+              >
                 <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______excercise-content_______content">
                   <div>
-                    <img src={de111} alt="excercise-logo" />
+                    <img
+                      src={this.state.ExcerciseTeamNoteLogo}
+                      alt="excercise-logo"
+                    />
                   </div>
                   <div>
-                    <span>Công nghệ Web</span>
+                    <span>{this.state.ExcerciseTeamNoteName}</span>
                   </div>
                   <div>
-                    <span>5 Câu</span>
+                    <span>{this.state.ExcerciseTeamNoteNumberQuestion}</span>
                   </div>
                 </div>
-                <div>
-                  <i className="material-icons">{"add"}</i>
+                <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______excercise-content_______add-and-remove-button">
+                  {this.state.CheckChooseExcicseWithNote ? (
+                    <i
+                      onClick={() => this.removeChooseExcerciseToTeamNote()}
+                      className="material-icons"
+                    >
+                      {"check"}
+                    </i>
+                  ) : (
+                    <i
+                      onClick={() => this.addChooseExcerciseToTeamNote()}
+                      className="material-icons"
+                    >
+                      {"add"}
+                    </i>
+                  )}
                 </div>
               </div>
             </div>
+            <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______response-create-note_______validate">
+              {this.renderValidateNotify("add-choose-excercise")}
+            </div>
             <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______response-create-note">
-              <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______response-create-note_______validate">
-                {this.renderValidateNotify("teamnotename")}
-                {this.renderValidateNotify("noteenddate")}
-                {this.renderValidateNotify("non-pass-end-date")}
-              </div>
               {this.renderValidateNotify("success-create-note")}
+              {this.renderValidateNotify("exist-excercise-name")}
             </div>
             <div className="user-team_team-menu-and-content__content___notes____create-new_____create-form______submit-create-note">
               <input type="submit" value="Tạo Ghi chú" />

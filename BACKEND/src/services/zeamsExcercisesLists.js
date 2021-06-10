@@ -2,16 +2,16 @@ import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 
-class ZeamsExcerciseLists {
+class ZeamsExcercisesLists {
   constructor() {
     let excerciselists = fs.readFileSync(
-      "../BACKEND/src/databases/zeamsExcerciseLists.json"
+      "../BACKEND/src/databases/zeamsExcercisesLists.json"
     );
     // console.log("Ra cái excerciselists", excerciselists.length);
     if (excerciselists.length > 0) {
-      this.ZeamsExcerciseLists = JSON.parse(excerciselists);
+      this.ZeamsExcercisesLists = JSON.parse(excerciselists);
     } else {
-      this.ZeamsExcerciseLists = [];
+      this.ZeamsExcercisesLists = [];
     }
   }
 
@@ -19,8 +19,8 @@ class ZeamsExcerciseLists {
 
   saveDataJSON() {
     fs.writeFileSync(
-      "../BACKEND/src/databases/zeamsExcerciseLists.json",
-      JSON.stringify(this.ZeamsExcerciseLists),
+      "../BACKEND/src/databases/zeamsExcercisesLists.json",
+      JSON.stringify(this.ZeamsExcercisesLists),
       err => {
         if (err) throw err;
         console.log("Complete!!!");
@@ -37,14 +37,14 @@ class ZeamsExcerciseLists {
       ExcerciseOwnedList: []
     };
 
-    this.ZeamsExcerciseLists.push(excerciselistcontent);
+    this.ZeamsExcercisesLists.push(excerciselistcontent);
     this.saveDataJSON();
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
   checkCreateNewExcerciseListContent() {
-    let getlength = this.ZeamsExcerciseLists.length;
+    let getlength = this.ZeamsExcercisesLists.length;
     if (getlength <= 0) {
       return false;
     } else {
@@ -58,16 +58,16 @@ class ZeamsExcerciseLists {
     let checkcreatenew = this.checkCreateNewExcerciseListContent();
     if (checkcreatenew) {
       if (excerciseinfor.ExcerciseType === "public") {
-        this.ZeamsExcerciseLists[0].ExcercisePubliclist.push(excerciseinfor);
+        this.ZeamsExcercisesLists[0].ExcercisePubliclist.push(excerciseinfor);
       } else if (excerciseinfor.ExcerciseType === "private") {
-        this.ZeamsExcerciseLists[0].ExcercisePrivateList.push(excerciseinfor);
+        this.ZeamsExcercisesLists[0].ExcercisePrivateList.push(excerciseinfor);
       }
     } else {
       this.createNewExcerciseListContent();
       if (excerciseinfor.ExcerciseType === "public") {
-        this.ZeamsExcerciseLists[0].ExcercisePubliclist.push(excerciseinfor);
+        this.ZeamsExcercisesLists[0].ExcercisePubliclist.push(excerciseinfor);
       } else if (excerciseinfor.ExcerciseType === "private") {
-        this.ZeamsExcerciseLists[0].ExcercisePrivateList.push(excerciseinfor);
+        this.ZeamsExcercisesLists[0].ExcercisePrivateList.push(excerciseinfor);
       }
     }
     this.addNewExcerciseOwnedItemContent(excerciseinfor);
@@ -78,7 +78,7 @@ class ZeamsExcerciseLists {
   //-----------------------------------------------------------------------------------------------------------------
 
   addNewExcerciseOwnedItemContent(excerciseinfor) {
-    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+    let memberExcerciseIndex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList.findIndex(
       memberexcerciseitem => {
         return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
       }
@@ -102,9 +102,9 @@ class ZeamsExcerciseLists {
         excerciseinforcontent
       );
 
-      this.ZeamsExcerciseLists[0].ExcerciseOwnedList.push(memberexcerciseinfor);
+      this.ZeamsExcercisesLists[0].ExcerciseOwnedList.push(memberexcerciseinfor);
     } else {
-      this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+      this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
         memberExcerciseIndex
       ].ExcerciseMemberAllOwnedList.push(excerciseinforcontent);
     }
@@ -116,22 +116,22 @@ class ZeamsExcerciseLists {
 
   removeCreateExcerciseFromList(excerciseinfor) {
     if (excerciseinfor.ExcerciseType === "public") {
-      let excerciseidindex = this.ZeamsExcerciseLists[0].ExcercisePubliclist.findIndex(
+      let excerciseidindex = this.ZeamsExcercisesLists[0].ExcercisePubliclist.findIndex(
         excerciseitem => {
           return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
         }
       );
-      this.ZeamsExcerciseLists[0].ExcercisePubliclist.splice(
+      this.ZeamsExcercisesLists[0].ExcercisePubliclist.splice(
         excerciseidindex,
         1
       );
     } else if (excerciseinfor.ExcerciseType === "private") {
-      let excerciseidindex = this.ZeamsExcerciseLists[0].ExcercisePrivateList.findIndex(
+      let excerciseidindex = this.ZeamsExcercisesLists[0].ExcercisePrivateList.findIndex(
         excerciseitem => {
           return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
         }
       );
-      this.ZeamsExcerciseLists[0].ExcercisePubliclist.splice(
+      this.ZeamsExcercisesLists[0].ExcercisePubliclist.splice(
         excerciseidindex,
         1
       );
@@ -143,18 +143,18 @@ class ZeamsExcerciseLists {
   //-----------------------------------------------------------------------------------------------------------------
 
   removeExcerciseOwnedItemContent(excerciseinfor) {
-    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+    let memberExcerciseIndex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList.findIndex(
       memberexcerciseitem => {
         return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
       }
     );
-    let memberExcerciseItemIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+    let memberExcerciseItemIndex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
       memberExcerciseIndex
     ].ExcerciseMemberAllOwnedList.findIndex(memberexcerciseitem => {
       return memberexcerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
     });
 
-    this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+    this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
       memberExcerciseIndex
     ].ExcerciseMemberAllOwnedList.splice(memberExcerciseItemIndex, 1);
 
@@ -199,13 +199,13 @@ class ZeamsExcerciseLists {
 
     let currentChoiceIndexExcerciseList = [];
 
-    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+    let memberExcerciseIndex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList.findIndex(
       memberexcerciseitem => {
         return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
       }
     );
 
-    currentChoiceIndexExcerciseList = this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+    currentChoiceIndexExcerciseList = this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
       memberExcerciseIndex
     ].ExcerciseMemberAllOwnedList.slice(
       indexOfFirstExcercise,
@@ -221,7 +221,7 @@ class ZeamsExcerciseLists {
     let resMemberChoiceExcercise = {};
 
     resMemberChoiceExcercise = {
-      AllNumberExcercise: this.ZeamsExcerciseLists[0].ExcercisePubliclist
+      AllNumberExcercise: this.ZeamsExcercisesLists[0].ExcercisePubliclist
         .length,
       CurrentExcercisePublicPageOnList: this.getCurrentExcerciseChoicePublicPageOnList(
         excerciseinfor
@@ -241,7 +241,7 @@ class ZeamsExcerciseLists {
       this.createNewExcerciseListContent();
     }
 
-    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+    let memberExcerciseIndex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList.findIndex(
       memberexcerciseitem => {
         return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
       }
@@ -249,7 +249,7 @@ class ZeamsExcerciseLists {
 
     if (memberExcerciseIndex >= 0) {
       resMemberChoiceExcercise = {
-        AllNumberExcercise: this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+        AllNumberExcercise: this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
           memberExcerciseIndex
         ].ExcerciseMemberAllOwnedList.length,
         CurrentExcerciseChoiceOwnedList: this.getCurrentExcerciseChoiceOwnedPageOnList(
@@ -273,19 +273,19 @@ class ZeamsExcerciseLists {
   responseMemberChoiceExcerciseOwnedItemContent(excerciseinfor) {
     let resMemberChoiceExcerciseItem = {};
 
-    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+    let memberExcerciseIndex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList.findIndex(
       memberexcerciseitem => {
         return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
       }
     );
 
-    let excercisechoiceindex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+    let excercisechoiceindex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
       memberExcerciseIndex
     ].ExcerciseMemberAllOwnedList.findIndex(excerciseitem => {
       return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
     });
 
-    resMemberChoiceExcerciseItem = this.ZeamsExcerciseLists[0]
+    resMemberChoiceExcerciseItem = this.ZeamsExcercisesLists[0]
       .ExcerciseOwnedList[memberExcerciseIndex].ExcerciseMemberAllOwnedList[
       excercisechoiceindex
     ];
@@ -296,13 +296,13 @@ class ZeamsExcerciseLists {
   //-----------------------------------------------------------------------------------------------------------------
 
   addNewExcerciseItemToMemberOwnedList(excerciseinfor) {
-    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+    let memberExcerciseIndex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList.findIndex(
       memberexcerciseitem => {
         return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
       }
     );
 
-    let checkmemberexcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+    let checkmemberexcerciseIndex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
       memberExcerciseIndex
     ].ExcerciseMemberAllOwnedList.findIndex(excerciseitem => {
       return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
@@ -310,13 +310,13 @@ class ZeamsExcerciseLists {
 
     if (checkmemberexcerciseIndex < 0) {
       if (excerciseinfor.ExcerciseType === "public") {
-        let excerciseidindex = this.ZeamsExcerciseLists[0].ExcercisePubliclist.findIndex(
+        let excerciseidindex = this.ZeamsExcercisesLists[0].ExcercisePubliclist.findIndex(
           excerciseitem => {
             return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
           }
         );
 
-        let excerciseiteminfor = this.ZeamsExcerciseLists[0]
+        let excerciseiteminfor = this.ZeamsExcercisesLists[0]
           .ExcercisePubliclist[excerciseidindex];
 
         let excerciseaddinfor = {
@@ -328,17 +328,17 @@ class ZeamsExcerciseLists {
           ExcerciseNumberQuestion: excerciseiteminfor.ExcerciseNumberQuestion
         };
 
-        this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+        this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
           memberExcerciseIndex
         ].ExcerciseMemberAllOwnedList.push(excerciseaddinfor);
       } else if (excerciseinfor.ExcerciseType === "private") {
-        let excerciseidindex = this.ZeamsExcerciseLists[0].ExcercisePrivateList.findIndex(
+        let excerciseidindex = this.ZeamsExcercisesLists[0].ExcercisePrivateList.findIndex(
           excerciseitem => {
             return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
           }
         );
 
-        let excerciseiteminfor = this.ZeamsExcerciseLists[0]
+        let excerciseiteminfor = this.ZeamsExcercisesLists[0]
           .ExcercisePrivateList[excerciseidindex];
 
         let excerciseaddinfor = {
@@ -350,7 +350,7 @@ class ZeamsExcerciseLists {
           ExcerciseNumberQuestion: excerciseiteminfor.ExcerciseNumberQuestion
         };
 
-        this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+        this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
           memberExcerciseIndex
         ].ExcerciseMemberAllOwnedList.push(excerciseaddinfor);
       }
@@ -362,20 +362,20 @@ class ZeamsExcerciseLists {
   //-----------------------------------------------------------------------------------------------------------------
 
   removeNewExcerciseItemToMemberOwnedList(excerciseinfor) {
-    let memberExcerciseIndex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList.findIndex(
+    let memberExcerciseIndex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList.findIndex(
       memberexcerciseitem => {
         return memberexcerciseitem.MemberID === excerciseinfor.MemberID;
       }
     );
 
-    let excerciseidindex = this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+    let excerciseidindex = this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
       memberExcerciseIndex
     ].ExcerciseMemberAllOwnedList.findIndex(excerciseitem => {
       return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
     });
 
     if (excerciseidindex >= 0) {
-      this.ZeamsExcerciseLists[0].ExcerciseOwnedList[
+      this.ZeamsExcercisesLists[0].ExcerciseOwnedList[
         memberExcerciseIndex
       ].ExcerciseMemberAllOwnedList.splice(excerciseidindex, 1);
     }
@@ -415,6 +415,6 @@ class ZeamsExcerciseLists {
   //-----------------------------------------------------------------------------------------------------------------
 }
 
-let zeamsExcerciseLists = new ZeamsExcerciseLists();
+let zeamsExcercisesLists = new ZeamsExcercisesLists();
 
-module.exports = zeamsExcerciseLists;
+module.exports = zeamsExcercisesLists;

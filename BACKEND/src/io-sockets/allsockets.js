@@ -16,6 +16,7 @@ import addandremovememberSocket from "./addandremovemember";
 import updateallmemberofchatlistSocket from "./updateallmemberofchatlist";
 import changetoseenmemberoflistSocket from "./changetoseenmemberoflist";
 import hiddenordeletememberchatoflistSocket from "./hiddenordeletememberchatoflist";
+import updateanddeleteteamnotecontentSocket from "./updateanddeleteteamnotecontent";
 
 let AllSockets = io => {
   //============================Socket======================================
@@ -90,6 +91,10 @@ let AllSockets = io => {
 
   // --------------------------HiddenOrDeleteMemberChatOfList--------------------------------------
   hiddenordeletememberchatoflistSocket(io);
+  //--------------------------------------------------------------------------
+
+  // --------------------------UpdateAndDeleteTeamNoteContent--------------------------------------
+  updateanddeleteteamnotecontentSocket(io);
   //--------------------------------------------------------------------------
   //=========================================================================
 };

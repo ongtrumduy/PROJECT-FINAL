@@ -1,5 +1,5 @@
 import StartBeginSocket from "../io-sockets/startbeginsocket";
-import zeamsExcerciseLists from "../services/zeamsExcerciseLists";
+import zeamsExcercisesLists from "../services/zeamsExcercisesLists";
 
 let UpdateStatusExcericseItem = io => {
   let membersocket = {};
@@ -12,7 +12,7 @@ let UpdateStatusExcericseItem = io => {
     //====================================================================================================
 
     socket.on("add-new-excercise-item", data => {
-      let resUpdateStatusExcerciseItem = zeamsExcerciseLists.responseAddNewExcerciseItemToMemberOwnedList(
+      let resUpdateStatusExcerciseItem = zeamsExcercisesLists.responseAddNewExcerciseItemToMemberOwnedList(
         data
       );
 
@@ -38,7 +38,7 @@ let UpdateStatusExcericseItem = io => {
     //====================================================================================================
 
     socket.on("remove-owned-excercise-item", data => {
-      let resUpdateStatusExcerciseItem = zeamsExcerciseLists.responseRemoveNewExcerciseItemToMemberOwnedList(
+      let resUpdateStatusExcerciseItem = zeamsExcercisesLists.responseRemoveNewExcerciseItemToMemberOwnedList(
         data
       );
 
@@ -64,7 +64,7 @@ let UpdateStatusExcericseItem = io => {
     //====================================================================================================
 
     socket.on("receive-to-update-excercise-owned-list", data => {
-      let resUpdateExcerciseOwnedList = zeamsExcerciseLists.responseMemberChoiceIndexExcerciseOwnedListContent(
+      let resUpdateExcerciseOwnedList = zeamsExcercisesLists.responseMemberChoiceIndexExcerciseOwnedListContent(
         data
       );
 
