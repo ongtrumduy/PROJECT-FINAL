@@ -2,20 +2,13 @@ import React from "react";
 import axios from "axios";
 import TeamNotesOutDateContentItem from "./TeamNotesOutDateContentItem";
 
-export default class TeamNotesNonOutDateContent extends React.Component {
+export default class TeamNotesOutDateContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      TeamNoteChoiceID: "",
       TeamNoteOutDateContentList: []
     };
   }
-
-  setChooseTeamNoteToChangeIcon = teamNoteChoiceID => {
-    this.setState({
-      TeamNoteChoiceID: teamNoteChoiceID
-    });
-  };
 
   componentDidMount = () => {
     axios
@@ -23,7 +16,7 @@ export default class TeamNotesNonOutDateContent extends React.Component {
         TeamID: this.props.TeamID
       })
       .then(res => {
-        console.log("Ra data tao xem nafo", res.data);
+        // console.log("Ra data tao xem nafo", res.data);
         this.setState({
           TeamNoteOutDateContentList: res.data.TeamNoteOutDateContentList
         });
@@ -56,11 +49,10 @@ export default class TeamNotesNonOutDateContent extends React.Component {
           {this.state.TeamNoteOutDateContentList.map(
             (teamnoteitem, teamnoteindex) => (
               <div key={teamnoteindex}>
-                {teamnoteitem.TeamNoteTypeContent.map(teamnotetypeitem => {
+                {teamnoteitem.TeamNoteTypeContent.map(teamnotetypeitem =>
                   teamnotetypeitem.TeamNoteType === "with-excercise" ? (
                     <TeamNotesOutDateContentItem
                       TeamNoteID={teamnoteitem.TeamNoteID}
-                      TeamNoteChoiceID={this.state.TeamNoteChoiceID}
                       TeamNoteType={teamnotetypeitem.TeamNoteType}
                       TeamNoteName={teamnoteitem.TeamNoteName}
                       TeamNoteDescription={teamnoteitem.TeamNoteDescription}
@@ -70,6 +62,9 @@ export default class TeamNotesNonOutDateContent extends React.Component {
                       setChooseTeamNoteToChangeIcon={
                         this.setChooseTeamNoteToChangeIcon
                       }
+                      MemberID={this.props.MemberID}
+                      TeamID={this.props.TeamID}
+                      socket={this.props.socket}
                       CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
                     />
                   ) : (
@@ -84,10 +79,13 @@ export default class TeamNotesNonOutDateContent extends React.Component {
                       setChooseTeamNoteToChangeIcon={
                         this.setChooseTeamNoteToChangeIcon
                       }
+                      MemberID={this.props.MemberID}
+                      TeamID={this.props.TeamID}
+                      socket={this.props.socket}
                       CheckMemberIsAdmin={this.props.CheckMemberIsAdmin}
                     />
-                  );
-                })}
+                  )
+                )}
               </div>
             )
           )}
@@ -100,7 +98,7 @@ export default class TeamNotesNonOutDateContent extends React.Component {
           <p>Chưa có Ghi chú nào Quá hạn cả !!!</p>
         </div>
       );
-      // }, 1000);
+      // },1000);
     }
   };
 

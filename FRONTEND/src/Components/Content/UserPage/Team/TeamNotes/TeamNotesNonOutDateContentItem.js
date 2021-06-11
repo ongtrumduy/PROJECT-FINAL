@@ -34,7 +34,7 @@ export default class TeamNotesNonOutDateContentItem extends React.Component {
           ExcerciseTeamNoteID: this.props.ExcerciseTeamNoteID
         })
         .then(res => {
-          console.log("data gửi về đây ", res.data);
+          // console.log("data gửi về đây ", res.data);
 
           if (res.data.returnExcerciseInfor === "exist-excercise") {
             this.setState({
@@ -127,7 +127,9 @@ export default class TeamNotesNonOutDateContentItem extends React.Component {
                   <i className="material-icons"> {"link"} </i>
                 </div>
                 <div>
-                  <span>Kèm: </span>
+                  <span style={{ color: "blue", fontWeight: "bold" }}>
+                    Kèm:{" "}
+                  </span>
                 </div>
                 <div className="user-team_team-menu-and-content__content___notes____content_____non-out-date______content_______non-out-date-item_______excercise-with-infor">
                   <div>

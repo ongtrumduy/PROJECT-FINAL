@@ -210,7 +210,7 @@ class ZeamsTeamsNotes {
       let nowdate = moment().format("DD-MM-YYYY");
 
       this.ZeamsTeamsNotes[teamnoteindex].TeamNoteNonOutDateList.forEach(
-        (teamnoteitem, teamnoteindex) => {
+        teamnoteitem => {
           if (teamnoteitem.TeamNoteEndDate === nowdate) {
             allTeamNoteIDOutDateList.push(teamnoteitem.TeamNoteID);
             this.ZeamsTeamsNotes[teamnoteindex].TeamNoteOutDateList.push(
@@ -250,7 +250,7 @@ class ZeamsTeamsNotes {
       let nowdate = moment().format("DD-MM-YYYY");
 
       this.ZeamsTeamsNotes[teamnoteindex].TeamNoteOutDateList.forEach(
-        (teamnoteitem, teamnoteindex) => {
+        teamnoteitem => {
           if (teamnoteitem.TeamNoteRemoveDate === nowdate) {
             allTeamNoteIDRemoveDateList.push(teamnoteitem.TeamNoteID);
             this.ZeamsTeamsNotes[teamnoteindex].TeamNoteOutDateList.push(
