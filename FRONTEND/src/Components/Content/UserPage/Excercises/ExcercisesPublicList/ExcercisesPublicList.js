@@ -2,6 +2,7 @@ import React from "react";
 
 import ExcercisesPublicListContent from "./ExcercisesPublicListContent";
 import ExcercisesPublicDetailItem from "./ExcercisesPublicDetailItem";
+import ExcercisesPublicItemScoreBoard from "./ExcercisesPublicItemScoreBoard";
 
 export default class ExcercisesPublicList extends React.Component {
   constructor(props) {
@@ -31,6 +32,9 @@ export default class ExcercisesPublicList extends React.Component {
             updateRenderExcercisePublicControl={
               this.updateRenderExcercisePublicControl
             }
+            getExcercisePublicIDMemberChoice={
+              this.getExcercisePublicIDMemberChoice
+            }
           />
         );
       case "publicitem":
@@ -42,6 +46,29 @@ export default class ExcercisesPublicList extends React.Component {
               this.updateRenderExcercisePublicControl
             }
             ExcerciseID={this.state.ExcerciseID}
+            getExcercisePublicIDMemberChoice={
+              this.getExcercisePublicIDMemberChoice
+            }
+          />
+        );
+      case "publicitemscoreboard":
+        return (
+          <ExcercisesPublicItemScoreBoard
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+            updateRenderExcercisePublicControl={
+              this.updateRenderExcercisePublicControl
+            }
+            ExcerciseID={this.state.ExcerciseID}
+            getExcerciseIDAndTimeMemberChoice={
+              this.props.getExcerciseIDAndTimeMemberChoice
+            }
+            updateRenderExcerciseControl={
+              this.props.updateRenderExcerciseControls
+            }
+            getExcercisePublicIDMemberChoice={
+              this.getExcercisePublicIDMemberChoice
+            }
           />
         );
       default:
@@ -51,6 +78,9 @@ export default class ExcercisesPublicList extends React.Component {
             socket={this.props.socket}
             updateRenderExcercisePublicControl={
               this.updateRenderExcercisePublicControl
+            }
+            getExcercisePublicIDMemberChoice={
+              this.getExcercisePublicIDMemberChoice
             }
           />
         );

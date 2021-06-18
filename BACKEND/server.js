@@ -7,11 +7,11 @@ import events from "events";
 // import path from "path";
 // import fs from "fs";
 
-import allRoutes from "./src/routes/allroutes";
+import allRoutes from "./source/routes/allroutes";
 
-import allSockets from "./src/io-sockets/allsockets";
+import allSockets from "./source/io-sockets/allsockets";
 
-import portRoutes from "./src/routes/port";
+import portRoutes from "./source/routes/port";
 
 let app = express();
 let server = http.createServer(app);

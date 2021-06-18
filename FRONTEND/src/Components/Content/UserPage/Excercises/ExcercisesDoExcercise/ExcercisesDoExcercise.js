@@ -29,6 +29,10 @@ export default class ExcercisesDoExcercise extends React.Component {
         ExcerciseID: this.props.ExcerciseID
       })
       .then(res => {
+        console.log(
+          "Ra dữ liệu cái NumberQuestion cho tao ",
+          res.data.ExcerciseNumberQuestion
+        );
         this.setState({
           ExcerciseAllQAContent: res.data.ExcerciseAllQAContent,
           ExcerciseName: res.data.ExcerciseName,

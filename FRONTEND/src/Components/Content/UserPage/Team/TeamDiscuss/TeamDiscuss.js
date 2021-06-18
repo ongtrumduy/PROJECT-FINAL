@@ -1,11 +1,10 @@
 import React from "react";
-import axios from "axios";
 import Modal from "react-modal";
-
-import "./TeamDiscuss.css";
-import TeamDiscussContent from "./TeamAllDiscussContent";
-import TeamDiscussCreateNew from "./TeamDiscussCreateNew";
 import TeamMemberChat from "../TeamMemberChat/TeamMemberChat";
+import TeamDiscussContent from "./TeamAllDiscussContent";
+import "./TeamDiscuss.css";
+import TeamDiscussCreateNew from "./TeamDiscussCreateNew";
+
 
 export default class TeamDiscuss extends React.Component {
   constructor(props) {

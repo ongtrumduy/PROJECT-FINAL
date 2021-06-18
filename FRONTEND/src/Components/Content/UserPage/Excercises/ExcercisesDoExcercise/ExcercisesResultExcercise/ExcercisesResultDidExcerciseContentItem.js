@@ -1,9 +1,9 @@
 import React from "react";
-import Modal from "react-modal";
 
 export default class ExcercisesResultDidExcerciseContentItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state={}
   }
 
   openNonValueCheckModal = () => {
@@ -33,10 +33,21 @@ export default class ExcercisesResultDidExcerciseContentItem extends React.Compo
                 name="ExcerciseChoiceAnswer"
                 value="A"
                 checked={this.props.ExcerciseChoiceAnswer === "A"}
+                readOnly
               />
             </div>
             <div className="user-excercises_do-excercise__QandA___content____answer_____A______answer-content">
-              <span>Đáp án A: </span>
+              <span
+                style={
+                  this.props.ExcerciseCorrectAnswer === "A"
+                    ? { color: "red" }
+                    : this.props.ExcerciseChoiceAnswer === "A"
+                    ? { color: "green" }
+                    : { color: "black" }
+                }
+              >
+                Đáp án A:{" "}
+              </span>
               <span
                 style={
                   this.props.ExcerciseCorrectAnswer === "A"
@@ -57,10 +68,21 @@ export default class ExcercisesResultDidExcerciseContentItem extends React.Compo
                 name="ExcerciseChoiceAnswer"
                 value="B"
                 checked={this.props.ExcerciseChoiceAnswer === "B"}
+                readOnly
               />
             </div>
             <div className="user-excercises_do-excercise__QandA___content____answer_____B______answer-content">
-              <span>Đáp án B: </span>
+              <span
+                style={
+                  this.props.ExcerciseCorrectAnswer === "B"
+                    ? { color: "red" }
+                    : this.props.ExcerciseChoiceAnswer === "B"
+                    ? { color: "green" }
+                    : { color: "black" }
+                }
+              >
+                Đáp án B:{" "}
+              </span>
               <span
                 style={
                   this.props.ExcerciseCorrectAnswer === "B"
@@ -81,10 +103,21 @@ export default class ExcercisesResultDidExcerciseContentItem extends React.Compo
                 name="ExcerciseChoiceAnswer"
                 value="C"
                 checked={this.props.ExcerciseChoiceAnswer === "C"}
+                readOnly
               />
             </div>
             <div className="user-excercises_do-excercise__QandA___content____answer_____C______answer-content">
-              <span>Đáp án C: </span>
+              <span
+                style={
+                  this.props.ExcerciseCorrectAnswer === "C"
+                    ? { color: "red" }
+                    : this.props.ExcerciseChoiceAnswer === "C"
+                    ? { color: "green" }
+                    : { color: "black" }
+                }
+              >
+                Đáp án C:{" "}
+              </span>
               <span
                 style={
                   this.props.ExcerciseCorrectAnswer === "C"
@@ -105,10 +138,21 @@ export default class ExcercisesResultDidExcerciseContentItem extends React.Compo
                 name="ExcerciseChoiceAnswer"
                 value="D"
                 checked={this.props.ExcerciseChoiceAnswer === "D"}
+                readOnly
               />
             </div>
             <div className="user-excercises_do-excercise__QandA___content____answer_____D______answer-content">
-              <span>Đáp án D: </span>
+              <span
+                style={
+                  this.props.ExcerciseCorrectAnswer === "D"
+                    ? { color: "red" }
+                    : this.props.ExcerciseChoiceAnswer === "D"
+                    ? { color: "green" }
+                    : { color: "black" }
+                }
+              >
+                Đáp án D:{" "}
+              </span>
               <span
                 style={
                   this.props.ExcerciseCorrectAnswer === "D"

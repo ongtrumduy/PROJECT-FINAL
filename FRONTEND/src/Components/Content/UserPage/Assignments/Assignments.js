@@ -8,15 +8,27 @@ export default class Assignments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      setAssignmentRender: "doexcercise",
+      setAssignmentRender: "assignmentall",
       ExcerciseID: "",
-      TimeToDoExcercise: ""
+      TimeToDoExcercise: "",
+      AssignmentChoiceID: "",
+      ExcerciseChoiceID: ""
     };
   }
 
   updateRenderAssignmentsControl = state => {
     this.setState({
       setAssignmentRender: state
+    });
+  };
+
+  setChooseAssignmentAndExcerciseToDoExcericse = (
+    assignmentID,
+    excerciseID
+  ) => {
+    this.setState({
+      AssignmentChoiceID: assignmentID,
+      ExcercieChoiceID: excerciseID
     });
   };
 
@@ -29,7 +41,7 @@ export default class Assignments extends React.Component {
             socket={this.props.socket}
             updateRenderAssignmentsControl={this.updateRenderAssignmentsControl}
             TimeToDoExcercise={this.state.TimeToDoExcercise}
-            ExcerciseID={this.state.ExcerciseID}
+            ExcerciseID={this.state.ExcercieChoiceID}
           />
         );
       case "assignmentall":
@@ -38,26 +50,20 @@ export default class Assignments extends React.Component {
             MemberID={this.props.MemberID}
             socket={this.props.socket}
             updateRenderAssignmentsControl={this.updateRenderAssignmentsControl}
+            setChooseAssignmentAndExcerciseToDoExcericse={
+              this.setChooseAssignmentAndExcerciseToDoExcericse
+            }
           />
         );
       default:
-        // return (
-        //   <AssignmentsAllContent
-        //     MemberID={this.props.MemberID}
-        //     socket={this.props.socket}
-        //     updateRenderAssignmentsControl={this.updateRenderAssignmentsControl}
-        //     getExcerciseIDAndTimeMemberChoice={
-        //       this.getExcerciseIDAndTimeMemberChoice
-        //     }
-        //   />
-        // );
         return (
-          <AssignmentsDoExcercise
+          <AssignmentsAllContent
             MemberID={this.props.MemberID}
             socket={this.props.socket}
             updateRenderAssignmentsControl={this.updateRenderAssignmentsControl}
-            TimeToDoExcercise={this.state.TimeToDoExcercise}
-            ExcerciseID={this.state.ExcerciseID}
+            setChooseAssignmentAndExcerciseToDoExcericse={
+              this.setChooseAssignmentAndExcerciseToDoExcericse
+            }
           />
         );
     }

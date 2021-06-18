@@ -132,7 +132,7 @@ export default class TeamSettingTeamName extends React.Component {
 
   componentDidMount = () => {
     this.props.ChooseTeamInfor.map(teaminforitem => {
-      this.setState({
+      return this.setState({
         TeamName: teaminforitem.TeamName,
         TeamDescription: teaminforitem.TeamDescription,
         TeamType: teaminforitem.TeamType

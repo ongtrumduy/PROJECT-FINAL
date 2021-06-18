@@ -16,7 +16,7 @@ export default class TeamNotesNonOutDateContent extends React.Component {
         TeamID: this.props.TeamID
       })
       .then(res => {
-        console.log("Ra data tao xem nafo", res.data);
+        // console.log("Ra data tao xem nafo", res.data);
         this.setState({
           TeamNoteNonOutDateContentList: res.data.TeamNoteNonOutDateContentList
         });

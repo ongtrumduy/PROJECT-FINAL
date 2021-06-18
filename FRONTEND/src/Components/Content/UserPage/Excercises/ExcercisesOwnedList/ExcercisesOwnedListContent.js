@@ -102,9 +102,26 @@ export default class ExcercisesOwnedListContent extends React.Component {
   };
 
   chooseIndexExcercisePage = event => {
-    this.setState({
-      CurrentIndexExcercisePage: event.target.id
-    });
+    // console.log(" Ra cái này coi ", event.target.id);
+    let currentIndexExcercisePage = event.target.id;
+
+    axios
+      .post("./getexcerciseownedlist", {
+        MemberID: this.props.MemberID,
+        CurrentIndexExcercisePage: currentIndexExcercisePage,
+        NumberExcerciseOnPage: this.state.NumberExcerciseOnPage,
+        NumberIndexExcerciseOnPage: this.state.NumberIndexExcerciseOnPage
+      })
+      .then(res => {
+        this.setState({
+          CurrentIndexExcercisePage: currentIndexExcercisePage,
+          CurrentExcerciseChoiceOwnedList:
+            res.data.CurrentExcerciseChoiceOwnedList
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   choiceExcerciseOwnedItemToDetail = excerciseID => {

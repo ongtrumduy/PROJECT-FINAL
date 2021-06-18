@@ -7,827 +7,7 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      AllExcerciseItemResultList: [
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        },
-        {
-          MemberDidExcerciseName: "Phạm Duy",
-          MemberDidExcerciseID: "lghklhlhdskhosohkohks",
-          TimeDidExcercise: "20",
-          DateDidExcercise: "16:30 21-05-2021",
-          ResultDidExcercise: "15",
-          NumberQuestionDidExcercise: "20",
-          NumberTimesDidExcercise: "2"
-        }
-      ],
+      CurrentExcerciseItemResultList: [],
       NumberScoreItemOnPage: "6",
       NumberIndexScoreItemOnPage: "5",
       CurrentIndexScoreItemPage: "1",
@@ -852,26 +32,35 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
   };
 
   componentDidMount = () => {
-    // axios
-    //   .post("/getexcericseitemscoreboard", {
-    //     ExcerciseID: this.props.ExcerciseID
-    //   })
-    //   .then(res => console.log(res.data))
-    //   .catch(error => console.log(error));
+    axios
+      .post("/getexcericseitemscoreboard", {
+        ExcerciseID: this.props.ExcerciseID,
+        NumberScoreItemOnPage: this.state.NumberScoreItemOnPage,
+        NumberIndexScoreItemOnPage: this.state.NumberIndexScoreItemOnPage,
+        CurrentIndexScoreItemPage: this.state.CurrentIndexScoreItemPage,
+        CurrentIndexOfIndexScoreItemPage: this.state
+          .CurrentIndexOfIndexScoreItemPage
+      })
+      .then(res => {
+        console.log(res.data);
 
-    const allNumberOfScoreItemOnPageList = [];
-    const scoreItemListLength = this.state.AllExcerciseItemResultList.length;
+        const allNumberOfScoreItemOnPageList = [];
+        const scoreItemListLength = res.data.AllNumberExcerciseResult;
 
-    const allNumberOfScoreItem = Math.ceil(
-      scoreItemListLength / Number(this.state.NumberScoreItemOnPage)
-    );
+        const allNumberOfScoreItem = Math.ceil(
+          scoreItemListLength / Number(this.state.NumberScoreItemOnPage)
+        );
 
-    for (let i = 1; i <= allNumberOfScoreItem; i++) {
-      allNumberOfScoreItemOnPageList.push(i + "");
-    }
-    this.setState({
-      AllNumberOfScoreItemOnPageList: allNumberOfScoreItemOnPageList
-    });
+        for (let i = 1; i <= allNumberOfScoreItem; i++) {
+          allNumberOfScoreItemOnPageList.push(i + "");
+        }
+        this.setState({
+          AllNumberOfScoreItemOnPageList: allNumberOfScoreItemOnPageList,
+          CurrentExcerciseItemResultList:
+            res.data.CurrentExcerciseItemResultList
+        });
+      })
+      .catch(error => console.log(error));
   };
 
   renderIndexOfScoreItemList = () => {
@@ -906,7 +95,7 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
       currentIndexOfChoiceIndexScoreItemList.length < 5
     ) {
       return (
-        <div className="user-excercises_all__public-list___control____index-item">
+        <div className="user-excercises_all__owned-list___control____index-item">
           {currentIndexOfChoiceIndexScoreItemList.map(numberindexitem => (
             <div
               style={
@@ -925,7 +114,7 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
       );
     } else {
       return (
-        <div className="user-excercises_all__public-list___control____index-item">
+        <div className="user-excercises_all__owned-list___control____index-item">
           {currentIndexOfChoiceIndexScoreItemList.map(numberindexitem => (
             <div
               style={
@@ -946,16 +135,34 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
     }
   };
 
-  chooseIndexScoreItemPage = event => {
-    this.setState({
-      CurrentIndexScoreItemPage: event.target.id
-    });
+   chooseIndexScoreItemPage = event => {
+    let currentIndexScoreItemPage = event.target.id;
+
+    axios
+      .post("./getexcericseitemscoreboard", {
+        ExcerciseID: this.props.ExcerciseID,
+        NumberScoreItemOnPage: this.state.NumberScoreItemOnPage,
+        NumberIndexScoreItemOnPage: this.state.NumberIndexScoreItemOnPage,
+        CurrentIndexScoreItemPage: currentIndexScoreItemPage,
+        CurrentIndexOfIndexScoreItemPage: this.state
+          .CurrentIndexOfIndexScoreItemPage
+      })
+      .then(res => {
+        this.setState({
+          CurrentIndexScoreItemPage: currentIndexScoreItemPage,
+          CurrentExcerciseItemResultList:
+            res.data.CurrentExcerciseItemResultList
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   selectIndexForRenderExcerciseScoreItem = () => {
     return (
       <div
-        className="user-excercises_all__public-list___control"
+        className="user-excercises_all__owned-list___control"
         style={{ margin: "40px 0 0 0" }}
       >
         <div>
@@ -1057,34 +264,8 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
   };
 
   renderExcerciseItemScoreBoard = () => {
-    const currentIndexScoreItemPage = Number(
-      this.state.CurrentIndexScoreItemPage
-    );
-    const numberScoreItemOnPage = Number(this.state.NumberScoreItemOnPage);
-
-    const indexOfLastScoreItem =
-      currentIndexScoreItemPage * numberScoreItemOnPage;
-
-    const indexOfFirstScoreItem = indexOfLastScoreItem - numberScoreItemOnPage;
-
-    const currentChoiceIndexScoreItemList = this.state.AllExcerciseItemResultList.slice(
-      indexOfFirstScoreItem,
-      indexOfLastScoreItem
-    );
-
     return (
       <div>
-        <div
-          className="user-excercises_all-list__owned-list___owned-item_____backtoowneditem"
-          onClick={() => this.returnExcerciseItemDetailContent()}
-        >
-          <div>
-            <i className="material-icons"> &#xe5c4;</i>
-          </div>
-          <div>
-            <span>Quay lại</span>
-          </div>
-        </div>
         <div className="user-excercises_all-list__owned-list___owned-item_____table-list">
           <table>
             <thead>
@@ -1096,21 +277,20 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
               <th>Số lần làm</th>
             </thead>
             <tbody>
-              {currentChoiceIndexScoreItemList.map(
+              {this.state.CurrentExcerciseItemResultList.map(
                 (excerciseitem, excerciseindex) => (
                   <tr>
                     <td>{Number(excerciseindex) + 1}</td>
                     <td>
-                      {excerciseitem.MemberDidExcerciseName} -&nbsp;
-                      {excerciseitem.MemberDidExcerciseID}
+                      {excerciseitem.MemberFullName}-{excerciseitem.MemberID}
                     </td>
-                    <td>{excerciseitem.DateDidExcercise}</td>
-                    <td>{excerciseitem.TimeDidExcercise} phút</td>
+                    <td>{excerciseitem.MemberDidExcerciseDate}</td>
+                    <td>{excerciseitem.MemberDidExcerciseMinute} phút</td>
                     <td>
-                      {excerciseitem.ResultDidExcercise} /&nbsp;
-                      {excerciseitem.NumberQuestionDidExcercise}
+                      {excerciseitem.MemberDidHighestScore}/
+                      {excerciseitem.MemberDidExcerciseNumberQuestion} câu
                     </td>
-                    <td> {excerciseitem.NumberTimesDidExcercise}</td>
+                    <td> {excerciseitem.MemberDidExcerciseTimes}</td>
                   </tr>
                 )
               )}
@@ -1124,9 +304,27 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
   render() {
     return (
       <div>
-        {this.renderExcerciseItemScoreBoard()}
-        {this.selectIndexForRenderExcerciseScoreItem()}
-
+        <div
+          className="user-excercises_all-list__owned-list___owned-item_____backtoowneditem"
+          onClick={() => this.returnExcerciseItemDetailContent()}
+        >
+          <div>
+            <i className="material-icons"> &#xe5c4;</i>
+          </div>
+          <div>
+            <span>Quay lại</span>
+          </div>
+        </div>
+        {this.state.CurrentExcerciseItemResultList.length !== 0 ? (
+          <di>
+            {this.renderExcerciseItemScoreBoard()}
+            {this.selectIndexForRenderExcerciseScoreItem()}
+          </di>
+        ) : (
+          <div style={{ fontWeight: "bold" }}>
+            <p>Chưa có ai làm bài tập bộ đề này!!!!!</p>
+          </div>
+        )}
         <Modal
           style={{
             content: {

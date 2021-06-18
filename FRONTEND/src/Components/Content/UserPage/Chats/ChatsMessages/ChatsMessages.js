@@ -4,7 +4,7 @@ import axios from "axios";
 import ChatsMessagesContent from "./ChatsMessagesContent";
 import ChatsMessagesSend from "./ChatsMessagesSend";
 
-export default class ChatsMessage extends React.Component {
+export default class ChatsMessages extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

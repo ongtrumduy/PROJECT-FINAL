@@ -1,13 +1,60 @@
 import React from "react";
-import AssignmentsUnfinishedItem from "./AssignmentsUnfinishedItem";
+import axios from "axios";
+
+import AssignmentsFinishedItem from "./AssignmentsFinishedItem";
 
 export default class AssignmentsAllUnfinishedList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ReminderChoiceID: ""
+      ReminderChoiceID: "",
+      AllAssignmentFinishedList: []
     };
   }
+
+  componentDidMount = () => {
+    axios
+      .post("/getassignmentfinishedlist", {
+        MemberID: this.props.MemberID
+      })
+      .then(res => {
+        console.log("bắn về thằng getassginmentfinishedlist", res.data);
+        this.setState({
+          AllAssignmentFinishedList: res.data.AllAssignmentFinishedList
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    this.semounted = true;
+    this.mounted = true;
+
+    this.props.socket.on("send-to-update-assignment-unfinished-list", data => {
+      if (this.semounted) {
+        if (data.MemberID === this.props.MemberID) {
+          this.props.socket.on("receive-to-update-assignment-unfinished-list", {
+            MemberID: this.props.MemberID
+          });
+        }
+      }
+    });
+
+    this.props.socket.on("update-assignment-finished-list", data => {
+      if (this.mounted) {
+        if (data.MemberID === this.props.MemberID) {
+          this.setState({
+            AllAssignmentFinishedList: data.AllAssignmentFinishedList
+          });
+        }
+      }
+    });
+  };
+
+  componentWillUnmount = () => {
+    this.semounted = false;
+    this.mounted = false;
+  };
 
   setChooseAssignmentToChangeIcon = assigmentChoiceID => {
     this.setState({
@@ -18,30 +65,27 @@ export default class AssignmentsAllUnfinishedList extends React.Component {
   render() {
     return (
       <div className="user-assignments_all__list___finished">
-        <p style={{ fontWeight: "bold" }}>Đã hoàn thành hoặc hết hạn</p>
-        {/* {this.props.AllAssignmentFinishedList.map(
+        {this.state.AllAssignmentFinishedList.map(
           (assignmentitem, assignmentindex) => (
-            <AssignmentsUnfinishedItem
-              key={assignmentindex}
-              AssignmentID={assignmentitem.AssignmentID}
-              AssignmentChoiceID={this.state.AssignmentChoiceID}
-              AssignmentName={assignmentitem.AssignmentName}
-              AssignmentDescription={assignmentitem.AssignmentDescription}
-              AssignmentEndDate={assignmentitem.AssignmentEndDate}
-              AssignmentCreateDate={assignmentitem.AssignmentCreateDate}
-              setChooseAssignmentToCompelete={
-                this.props.setChooseAssignmentToCompelete
-              }
-              setChooseAssignmentToChangeIcon={
-                this.setChooseAssignmentToChangeIcon
-              }
-              setCheckToChangeUnOrFinished={
-                this.props.setCheckToChangeUnOrFinished
-              }
-              checkToChangeUnOrFinished={this.props.checkToChangeUnOrFinished}
-            />
+            <div key={assignmentindex}>
+              <AssignmentsFinishedItem
+                TeamNoteName={assignmentitem.TeamNoteName}
+                TeamNoteCreateDate={assignmentitem.TeamNoteCreateDate}
+                TeamNoteEndDate={assignmentitem.TeamNoteEndDate}
+                TeamID={assignmentitem.TeamID}
+                ExcerciseID={assignmentitem.ExcerciseID}
+                MemberID={this.props.MemberID}
+                socket={this.props.socket}
+                updateRenderAssignmentsControl={
+                  this.props.updateRenderAssignmentsControl
+                }
+                setChooseAssignmentAndExcerciseToDoExcericse={
+                  this.props.setChooseAssignmentAndExcerciseToDoExcericse
+                }
+              />
+            </div>
           )
-        )} */}
+        )}
       </div>
     );
   }

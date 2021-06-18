@@ -1,7 +1,5 @@
 import React from "react";
 import Modal from "react-modal";
-import axios from "axios";
-
 import ExcercisesResultDidExcerciseContentItem from "./ExcercisesResultDidExcerciseContentItem";
 import ExcercisesResultDidExcerciseMainInfor from "./ExcercisesResultDidExcerciseMainInfor";
 
@@ -23,20 +21,26 @@ export default class ExcercisesResultDidExcerciseContent extends React.Component
   }
 
   componentDidMount = () => {
-    console.log("Cho sang bên này cái đi ", this.props.ExcerciseAllQAContent);
-    console.log(
-      "Cho sang bên này tiếp thử phát cái đi ",
-      this.props.ExcerciseAllAnswerContent
-    );
-
-    this.setState({
-      ExcerciseAllQAContent: this.props.ExcerciseAllQAContent,
-      ExcerciseAllAnswerContent: this.props.ExcerciseAllAnswerContent,
-      ExcerciseName: this.props.ExcerciseName,
-      ExcerciseNumberQuestion: this.props.ExcerciseNumberQuestion,
-      ExcerciseType: this.props.ExcerciseType,
-      ExcerciseLogo: this.props.ExcerciseLogo
-    });
+    if (this.props.ExcerciseNumberQuestion === "1") {
+      this.setState({
+        checkValidateNextRight: true,
+        ExcerciseAllQAContent: this.props.ExcerciseAllQAContent,
+        ExcerciseAllAnswerContent: this.props.ExcerciseAllAnswerContent,
+        ExcerciseName: this.props.ExcerciseName,
+        ExcerciseNumberQuestion: this.props.ExcerciseNumberQuestion,
+        ExcerciseType: this.props.ExcerciseType,
+        ExcerciseLogo: this.props.ExcerciseLogo
+      });
+    } else {
+      this.setState({
+        ExcerciseAllQAContent: this.props.ExcerciseAllQAContent,
+        ExcerciseAllAnswerContent: this.props.ExcerciseAllAnswerContent,
+        ExcerciseName: this.props.ExcerciseName,
+        ExcerciseNumberQuestion: this.props.ExcerciseNumberQuestion,
+        ExcerciseType: this.props.ExcerciseType,
+        ExcerciseLogo: this.props.ExcerciseLogo
+      });
+    }
   };
 
   openOverNumberQuestionModal = () => {

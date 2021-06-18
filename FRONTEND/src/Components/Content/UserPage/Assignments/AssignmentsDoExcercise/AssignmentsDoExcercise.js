@@ -2,6 +2,7 @@ import React from "react";
 
 import ExcercisesDoExcercise from "../../Excercises/ExcercisesDoExcercise/ExcercisesDoExcercise";
 import AssignmentsExcerciseDetailItem from "./AssignmentsExcerciseDetailItem";
+import AssignmentsExcerciseItemScoreBoard from "./AssignmentsExcerciseItemScoreBoard";
 
 export default class AssignmentsDoExcercise extends React.Component {
   constructor(props) {
@@ -26,6 +27,10 @@ export default class AssignmentsDoExcercise extends React.Component {
       this.props.updateRenderAssignmentsControl("assignmentall");
     } else if (state === "excercisedoexcercise") {
       this.updateRenderAssignmentDoExcercise("doexcercise");
+    } else if (state === "owneditem") {
+      this.setState({
+        renderAssignmentDoExcercise: "excercisedetail"
+      });
     }
   };
 
@@ -38,6 +43,12 @@ export default class AssignmentsDoExcercise extends React.Component {
   updateRenderAssignmentDoExcercise = state => {
     this.setState({
       renderAssignmentDoExcercise: state
+    });
+  };
+
+  getExcerciseOwnedIDMemberChoice = excerciseID => {
+    this.setState({
+      ExcerciseID: excerciseID
     });
   };
 
@@ -66,6 +77,26 @@ export default class AssignmentsDoExcercise extends React.Component {
               this.getExcerciseIDAndTimeMemberChoice
             }
             updateRenderExcerciseControl={this.updateRenderExcerciseControl}
+          />
+        );
+      case "excercisedetail":
+        return (
+          <AssignmentsExcerciseItemScoreBoard
+            MemberID={this.props.MemberID}
+            socket={this.props.socket}
+            updateRenderExcerciseOwnedControl={
+              this.updateRenderExcerciseOwnedControl
+            }
+            ExcerciseID={this.state.ExcerciseID}
+            getExcerciseIDAndTimeMemberChoice={
+              this.props.getExcerciseIDAndTimeMemberChoice
+            }
+            updateRenderExcerciseControl={
+              this.props.updateRenderExcerciseControls
+            }
+            getExcerciseOwnedIDMemberChoice={
+              this.getExcerciseOwnedIDMemberChoice
+            }
           />
         );
       default:

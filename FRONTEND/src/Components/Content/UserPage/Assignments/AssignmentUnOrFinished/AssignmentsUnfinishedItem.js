@@ -1,79 +1,178 @@
 import React from "react";
-import AssignmentsItemDetailContent from "./AssignmentsItemDetailContent";
+import axios from "axios";
 
-export default class AssignmentsUnfinishedItem extends React.Component {
+export default class AssignmentsFinishedItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkRenderDetail: false
+      checkRenderDetail: "0",
+      TeamLogo: "",
+      TeamName: "",
+      ExcerciseName: "",
+      ExcerciseLogo: "",
+      MemberDidHighestScore: "",
+      ExcerciseNumberQuestion: ""
     };
   }
 
-  setChooseAssignmentItem = (assignmentID, assignmentType) => {
-    this.props.setChooseAssignmentToChangeIcon(assignmentID);
-    this.props.setChooseAssignmentToChange(assignmentID, assignmentType);
-    this.props.setCheckToChangeUnOrFinished("unfinished");
+  componentDidMount = () => {
+    axios
+      .post("./getteamofassignsmentinfor", {
+        TeamID: this.props.TeamID
+      })
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          TeamName: res.data.TeamName,
+          TeamLogo: res.data.TeamLogo
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
+      .post("./getexcerciseofassignmentinfor", {
+        ExcerciseID: this.props.ExcerciseID
+      })
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          ExcerciseName: res.data.ExcerciseName,
+          ExcerciseLogo: res.data.ExcerciseLogo,
+          MemberDidHighestScore: res.data.MemberDidHighestScore,
+          ExcerciseNumberQuestion: res.data.ExcerciseNumberQuestion
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  setChooseAssignmentItem = (assignmentID, excerciseID) => {
+    this.props.setChooseAssignmentAndExcerciseToDoExcericse(
+      assignmentID,
+      excerciseID
+    );
+    this.props.updateRenderAssignmentsControl("doexcercise");
   };
 
   setChangeRenderDetail = () => {
-    if (this.state.checkRenderDetail === false) {
+    if (this.state.checkRenderDetail === "1") {
       this.setState({
-        checkRenderDetail: true
+        checkRenderDetail: "2"
       });
-    } else if (this.state.checkRenderDetail === true) {
+    } else if (this.state.checkRenderDetail === "2") {
       this.setState({
-        checkRenderDetail: false
+        checkRenderDetail: "3"
+      });
+    } else if (this.state.checkRenderDetail === "3") {
+      this.setState({
+        checkRenderDetail: "0"
+      });
+    } else if (this.state.checkRenderDetail === "0") {
+      this.setState({
+        checkRenderDetail: "1"
       });
     }
   };
 
-  renderAssignmentItemDetailContent = () => {
-    if (this.state.checkRenderDetail === true) {
-      return (
-        <AssignmentsItemDetailContent
-          AssignmentCreateDate={this.props.AssignmentCreateDate}
-          AssignmentDescription={this.props.AssignmentDescription}
-          AssignmentEndDate={this.props.AssignmentEndDate}
-        />
-      );
+  renderAllAssignmentFinishedItem = () => {
+    switch (this.state.checkRenderDetail) {
+      case "0":
+        return (
+          <div>
+            <div>
+              <p>{this.props.TeamNoteName}</p>
+            </div>
+            <div>
+              <div>
+                <span>Ngày tạo: {this.props.TeamNoteCreateDate}</span>
+              </div>
+              <div>
+                <span>Hết hạn: {this.props.TeamNoteEndDate}</span>
+              </div>
+            </div>
+          </div>
+        );
+      case "1":
+        return (
+          <div>
+            <div>
+              <img src={this.state.ExcerciseLogo} alt="excercise-logo" />
+            </div>
+            <div>
+              <p>{this.state.ExcerciseName}</p>
+            </div>
+            <div>
+              <span>{this.state.MemberDidHighestScore}</span>/
+              <span>{this.state.ExcerciseNumberQuestion}</span>
+              &nbsp; câu
+            </div>
+          </div>
+        );
+      case "2":
+        return (
+          <div>
+            <div>
+              <p>{this.state.TeamName}</p>
+            </div>
+          </div>
+        );
+      case "3":
+        return (
+          <div>
+            <div>
+              <p>{this.state.TeamNoteDescription}</p>
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <div>
+            <div>
+              <p>{this.props.TeamNoteName}</p>
+            </div>
+            <div>
+              <div>
+                <span>Ngày tạo: {this.props.TeamNoteCreateDate}</span>
+              </div>
+              <div>
+                <span>Hết hạn: {this.props.TeamNoteEndDate}</span>
+              </div>
+            </div>
+          </div>
+        );
     }
   };
 
   render() {
     return (
       <div
-        className="user-assignments_all__list___un-finished____assignment-item"
+        className="user-assignments_all__list___finished____assignment-item"
         onClick={() =>
           this.setChooseAssignmentItem(
             this.props.AssignmentID,
-            this.props.AssignmentType
+            this.props.ExcerciseID
           )
         }
       >
-        <div className="user-assignments_all__list___un-finished____assignment-item_____content">
+        <div className="user-assignments_all__list___finished____assignment-item_____content">
           <div>
-            <i className="material-icons">
-              {this.props.AssignmentChoiceID === this.props.AssignmentID &&
-              this.props.checkToChangeUnOrFinished === "unfinished"
-                ? "radio_button_checked"
-                : "radio_button_unchecked"}
+            <img alt="team-logo" src={this.state.TeamLogo} />
+          </div>
+          {this.renderAllAssignmentFinishedItem()}
+          {/* <div>
+            <i className="material-icons" style={{ fontWeight: "bold" }}>
+              {"all_check"}
             </i>
-          </div>
-          <div>
-            <img alt="assignment-warning" src={this.props.AssignmentWarning} />
-          </div>
-          <div>
-            <p>{this.props.AssignmentName}</p>
-          </div>
+          </div> */}
           <div onClick={() => this.setChangeRenderDetail()}>
             <i className="material-icons" style={{ fontWeight: "bold" }}>
-              {this.state.checkRenderDetail === true
-                ? "expand_more"
-                : "chevron_right"}
+              {"arrow_forward"}
             </i>
           </div>
         </div>
-        {this.renderAssignmentItemDetailContent(this.props.AssignmentID)}
       </div>
     );
   }

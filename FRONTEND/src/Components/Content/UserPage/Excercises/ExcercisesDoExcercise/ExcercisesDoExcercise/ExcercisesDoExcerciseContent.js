@@ -23,7 +23,18 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
   }
 
   componentDidMount = () => {
+    // console.log("Sang số câu hỏi ", this.props.ExcerciseNumberQuestion);
     if (this.props.ExcerciseNumberQuestion === "1") {
+      this.setState({
+        checkValidateNextRight: true
+      });
+    }
+  };
+
+  UNSAFE_componentWillReceiveProps = nextProps => {
+    // console.log("Sang số câu hỏi ", nextProps.ExcerciseNumberQuestion);
+
+    if (nextProps.ExcerciseNumberQuestion === "1") {
       this.setState({
         checkValidateNextRight: true
       });
@@ -157,10 +168,11 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
         ExcerciseID: this.props.ExcerciseID,
         MemberID: this.props.MemberID,
         TimeToDoExcercise: this.props.TimeToDoExcercise,
-        ExcerciseAllAnswerContent: this.state.ExcerciseAllAnswerContent
+        ExcerciseAllAnswerContent: this.state.ExcerciseAllAnswerContent,
+        ExcerciseNumberQuestion: this.props.ExcerciseNumberQuestion
       })
       .then(res => {
-        console.log("Ra data về ", res.data);
+        // console.log("Ra data về ", res.data);
         this.setState({
           checkValidate: res.data.checkValidate
         });
@@ -168,6 +180,12 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
           this.props.getExcerciseMemberDidResultOfThisExcercise(
             res.data.ExcerciseMemberDidResult
           );
+
+          this.props.socket.emit("receive-to-update-excercise-of-assignment", {
+            MemberID: this.props.MemberID,
+            ExcerciseID: this.props.ExcerciseID
+          });
+
           setTimeout(() => {
             this.props.updateRenderExcerciseDoExcerciseControl(
               "finishexcercise"

@@ -93,7 +93,7 @@
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________content {
     /* max-width: 600px; */
-    /* width: 100%; */
+    width: 100%;
     max-height: 240px;
     overflow: auto;
     margin: 8px 0 0 0;
@@ -405,6 +405,7 @@
     max-height: 140px;
     /* max-width: 570px; */
     width: 99%;
+    text-align: left;
     overflow: auto;
 }
 
@@ -412,6 +413,7 @@
     width: 98%;
     word-wrap: break-word;
     word-break: break-word;
+    text-align: left;
 }
 
 .user-team_team-menu-and-content__content___discuss_____alldiscuss_____discuss_______discussbox________discussreplyinput_________comment_____________commentbox__________content________edit-mode {
