@@ -23,11 +23,13 @@ let SetStartVideoCall = async io => {
     //====================================================================================================
 
     await socket.on("start-begin-call-video", data => {
-      console.log("==========================================================");
-      let checkjoinedcall = StartBeginSocket.checkJoinedMemberCall(
-        membercallsocket,
-        data.MemberID
+      console.log(
+        "====================start-begin-call-video======================================"
       );
+      // let checkjoinedcall = StartBeginSocket.checkJoinedMemberCall(
+      //   membercallsocket,
+      //   data.MemberID
+      // );
 
       allteamcall = StartBeginSocket.getAllTeamStartCall(
         allteamcall,
@@ -45,27 +47,27 @@ let SetStartVideoCall = async io => {
       // let MemberJoinedCallCount = {
       //   MemberPeerCount: allteamcall[data.TeamID].length
       // };
-      if (!checkjoinedcall) {
-        StartBeginSocket.emitAllSocketsOfMemberTeam(
-          membersocket,
-          data,
-          io,
-          "connection-call-success",
-          "MemberJoinedCallCount"
-        );
+      // if (!checkjoinedcall) {
+      StartBeginSocket.emitAllSocketsOfMemberTeam(
+        membersocket,
+        data,
+        io,
+        "connection-call-success",
+        "MemberJoinedCallCount"
+      );
 
-        StartBeginSocket.emitAllSocketsOfMember(
-          membercallsocket,
-          data.MemberID,
-          io,
-          "confirm-joined-call-team",
-          {
-            MemberID: data.MemberID,
-            MemberSocketID: socket.id,
-            TeamCallID: data.TeamID
-          }
-        );
-      }
+      StartBeginSocket.emitAllSocketsOfMember(
+        membercallsocket,
+        data.MemberID,
+        io,
+        "confirm-joined-call-team",
+        {
+          MemberID: data.MemberID,
+          MemberSocketID: socket.id,
+          TeamCallID: data.TeamID
+        }
+      );
+      // }
 
       // console.log("membercallsocket", membercallsocket);
       // console.log("allteamcall", allteamcall);

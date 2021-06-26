@@ -21,7 +21,7 @@ let UpdateExcerciseOfAssignment = io => {
           membersocket,
           memberiditem.MemberID,
           io,
-          "send-to-update-assignment-finished-list",
+          "send-to-update-assignment-unfinished-list",
           membersocket.MemberID
         );
       }

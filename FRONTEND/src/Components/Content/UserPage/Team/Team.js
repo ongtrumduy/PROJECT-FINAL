@@ -117,6 +117,7 @@ export default class Team extends React.Component {
               setSelectTeamContentClickChoose={
                 this.setSelectTeamContentClickChoose
               }
+              CheckMemberIsAdmin={this.state.CheckMemberIsAdmin}
               updateRenderTeamControl={this.props.updateRenderTeamControl}
             />
           </div>

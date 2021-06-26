@@ -1,5 +1,6 @@
 import fs from "fs";
 import { v1 as uuidv1 } from "uuid";
+import moment from "moment";
 
 import zeamsExcercisesMemberResults from "../zeamsExcercises/zeamsExcercisesMemberResults";
 
@@ -53,6 +54,7 @@ class ZeamsAssignments {
   //-----------------------------------------------------------------------------------------------------------------
 
   addNewAssignmentOfMember(assignmentinfor) {
+    // console.log("vào đây để tạo ra assignment ", assignmentinfor);
     this.createNewAssignmentsForMember(assignmentinfor);
 
     let memberassignmentindex = this.ZeamsAssignments.findIndex(
@@ -68,29 +70,78 @@ class ZeamsAssignments {
       TeamNoteName: assignmentinfor.TeamNoteName,
       TeamNoteCreateDate: assignmentinfor.TeamNoteCreateDate,
       TeamNoteEndDate: assignmentinfor.TeamNoteEndDate,
-      ExcerciseID: assignmentinfor.ExcerciseID
+      TeamLogo: assignmentinfor.TeamLogo,
+      ExcerciseID: assignmentinfor.ExcerciseID,
+      CheckOverTimeToFinished: false
     };
 
-    let checkFinishedExcercise = zeamsExcercisesMemberResults.checkMemberHaveDoneExcericse(
-      assignmentinfor
-    );
+    // let checkFinishedExcercise = zeamsExcercisesMemberResults.checkMemberHaveDoneExcericse(
+    //   assignmentinfor
+    // );
 
-    if (checkFinishedExcercise) {
-      this.ZeamsAssignments[
-        memberassignmentindex
-      ].AssignmentMemberFinishedList.unshift(assignmentmemberinfor);
-    } else {
-      this.ZeamsAssignments[
-        memberassignmentindex
-      ].AssignmentMemberUnfinishedList.unshift(assignmentmemberinfor);
-    }
+    // if (checkFinishedExcercise) {
+    this.ZeamsAssignments[
+      memberassignmentindex
+    ].AssignmentMemberUnfinishedList.unshift(assignmentmemberinfor);
+    // } else {
+    //   this.ZeamsAssignments[
+    //     memberassignmentindex
+    //   ].AssignmentMemberFinishedList.unshift(assignmentmemberinfor);
+    // }
 
     this.saveDataJSON();
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  setAssignmentOfMemberToFinished(assignmentinfor) {
+  // setAssignmentOfMemberToFinished(assignmentinfor) {
+  //   let memberassignmentindex = this.ZeamsAssignments.findIndex(
+  //     memberassignmentitem => {
+  //       return memberassignmentitem.MemberID === assignmentinfor.MemberID;
+  //     }
+  //   );
+
+  //   if (memberassignmentindex >= 0) {
+  //     let allAssignmentIDToFinishedList = [];
+
+  //     this.ZeamsAssignments[
+  //       memberassignmentindex
+  //     ].AssignmentMemberUnfinishedList.forEach(assignmentitem => {
+  //       let memberexcerciseinfor = {
+  //         MemberID: assignmentinfor.MemberID,
+  //         ExcerciseID: assignmentitem.ExcerciseID
+  //       };
+  //       let checkFinishedExcercise = zeamsExcercisesMemberResults.checkMemberHaveDoneExcericse(
+  //         memberexcerciseinfor
+  //       );
+  //       if (checkFinishedExcercise) {
+  //         allAssignmentIDToFinishedList.push(assignmentitem.AssignmentID);
+
+  //         this.ZeamsAssignments[
+  //           memberassignmentindex
+  //         ].AssignmentMemberFinishedList.unshift(assignmentitem);
+  //       }
+  //     });
+
+  //     allAssignmentIDToFinishedList.forEach(assignmentiditem => {
+  //       let assignmentidindex = this.ZeamsAssignments[
+  //         memberassignmentindex
+  //       ].AssignmentMemberUnfinishedList.findIndex(assignmentitem => {
+  //         return assignmentitem.AssignmentID == assignmentiditem.AssignmentID;
+  //       });
+
+  //       this.ZeamsAssignments[
+  //         memberassignmentindex
+  //       ].AssignmentMemberUnfinishedList.splice(assignmentidindex, 1);
+  //     });
+
+  //     this.saveDataJSON();
+  //   }
+  // }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  setAssignmentOfMemberOverTimeToFinished(assignmentinfor) {
     let memberassignmentindex = this.ZeamsAssignments.findIndex(
       memberassignmentitem => {
         return memberassignmentitem.MemberID === assignmentinfor.MemberID;
@@ -98,37 +149,19 @@ class ZeamsAssignments {
     );
 
     if (memberassignmentindex >= 0) {
-      let allAssignmentIDToFinishedList = [];
-
       this.ZeamsAssignments[
         memberassignmentindex
       ].AssignmentMemberUnfinishedList.forEach(assignmentitem => {
-        let memberexcerciseinfor = {
-          MemberID: assignmentinfor.MemberID,
-          ExcerciseID: assignmentitem.ExcerciseID
+        let assignmentEndTimeInfor = {
+          TeamNoteEndDate: assignmentitem.TeamNoteEndDate
         };
-        let checkFinishedExcercise = zeamsExcercisesMemberResults.checkMemberHaveDoneExcericse(
-          memberexcerciseinfor
+        let checkOverTime = this.checkOverTimeToFinished(
+          assignmentEndTimeInfor
         );
-        if (checkFinishedExcercise) {
-          allAssignmentIDFinished.push(assignmentitem.AssignmentID);
 
-          this.ZeamsAssignments[
-            memberassignmentindex
-          ].AssignmentMemberFinishedList.unshift(assignmentitem);
+        if (checkOverTime) {
+          assignmentitem.CheckOverTimeToFinished = checkOverTime;
         }
-      });
-
-      allAssignmentIDToFinishedList.forEach(assignmentiditem => {
-        let assignmentidindex = this.ZeamsAssignments[
-          memberassignmentindex
-        ].AssignmentMemberUnfinishedList.findIndex(assignmentitem => {
-          return assignmentitem.AssignmentID == assignmentiditem.AssignmentID;
-        });
-
-        this.ZeamsAssignments[
-          memberassignmentindex
-        ].AssignmentMemberUnfinishedList.splice(assignmentidindex, 1);
       });
 
       this.saveDataJSON();
@@ -137,30 +170,117 @@ class ZeamsAssignments {
 
   //-----------------------------------------------------------------------------------------------------------------
 
-  getAllAssignmentUnfinishedList(assignmentinfor) {
-    this.setAssignmentOfMemberToFinished(assignmentinfor);
+  checkOverTimeToFinished(assignmentinfor) {
+    let checkOverTime = false;
+    if (
+      moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").year() <
+      moment(moment(), "DD/MM/YYYY").year()
+    ) {
+      checkOverTime = true;
+    } else if (
+      moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").year() ===
+      moment(moment(), "DD/MM/YYYY").year()
+    ) {
+      if (
+        moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").month() <
+        moment(moment(), "DD/MM/YYYY").month()
+      ) {
+        checkOverTime = true;
+      } else if (
+        moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").month() ===
+        moment(moment(), "DD/MM/YYYY").month()
+      ) {
+        if (
+          moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").date() <
+          moment(moment(), "DD/MM/YYYY").date()
+        ) {
+          checkOverTime = true;
+        }
+      }
+    }
+    return checkOverTime;
+  }
 
+  //-----------------------------------------------------------------------------------------------------------------
+
+  checkTurnInFinishedLateTime(assignmentinfor) {
+    let checkTurnInFinishedTime = false;
+    if (
+      moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").year() <
+      moment(moment(), "DD/MM/YYYY").year()
+    ) {
+      checkTurnInFinishedTime = true;
+    } else if (
+      moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").year() ===
+      moment(moment(), "DD/MM/YYYY").year()
+    ) {
+      if (
+        moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").month() <
+        moment(moment(), "DD/MM/YYYY").month()
+      ) {
+        checkTurnInFinishedTime = true;
+      } else if (
+        moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").month() ===
+        moment(moment(), "DD/MM/YYYY").month()
+      ) {
+        if (
+          moment(assignmentinfor.TeamNoteEndDate, "YYYY/MM/DD").date() <
+          moment(moment(), "DD/MM/YYYY").date()
+        ) {
+          checkTurnInFinishedTime = true;
+        }
+      }
+    }
+    return checkTurnInFinishedTime;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
+
+  setAssignmentTurnInOfMember(assignmentinfor, currentexcercisescore) {
+    // console.log("ảo vão lozzzzzzzzzzzz ", assignmentinfor);
     let memberassignmentindex = this.ZeamsAssignments.findIndex(
       memberassignmentitem => {
         return memberassignmentitem.MemberID === assignmentinfor.MemberID;
       }
     );
 
-    let allAssignmentUnfinishedList = [];
-
     if (memberassignmentindex >= 0) {
-      allAssignmentUnfinishedList = this.ZeamsAssignments[memberassignmentindex]
-        .AssignmentMemberUnfinishedList;
-    }
+      let assignmentofinishindex = this.ZeamsAssignments[
+        memberassignmentindex
+      ].AssignmentMemberUnfinishedList.findIndex(assignmenttofinishitem => {
+        return (
+          assignmenttofinishitem.AssignmentID === assignmentinfor.AssignmentID
+        );
+      });
 
-    return allAssignmentUnfinishedList;
+      if (assignmentofinishindex >= 0) {
+        // console.log("Như buoi aaaaaaaaaaaaaaaa");
+        let assignmenttofinishitem = this.ZeamsAssignments[
+          memberassignmentindex
+        ].AssignmentMemberUnfinishedList[assignmentofinishindex];
+
+        assignmenttofinishitem.AssignmentExcerciseScore = currentexcercisescore;
+        assignmenttofinishitem.CheckTurnInFinishedLate = this.checkTurnInFinishedLateTime(
+          assignmentinfor
+        );
+
+        this.ZeamsAssignments[
+          memberassignmentindex
+        ].AssignmentMemberFinishedList.unshift(assignmenttofinishitem);
+
+        this.ZeamsAssignments[
+          memberassignmentindex
+        ].AssignmentMemberUnfinishedList.splice(assignmentofinishindex, 1);
+
+        this.saveDataJSON();
+      }
+    }
   }
 
   //-----------------------------------------------------------------------------------------------------------------
 
   getAllAssignmentUnfinishedList(assignmentinfor) {
-    this.setAssignmentOfMemberToFinished(assignmentinfor);
-
+    this.setAssignmentOfMemberOverTimeToFinished(assignmentinfor);
     let memberassignmentindex = this.ZeamsAssignments.findIndex(
       memberassignmentitem => {
         return memberassignmentitem.MemberID === assignmentinfor.MemberID;
@@ -180,7 +300,7 @@ class ZeamsAssignments {
   //-----------------------------------------------------------------------------------------------------------------
 
   getAllAssignmentFinishedList(assignmentinfor) {
-    this.setAssignmentOfMemberToFinished(assignmentinfor);
+    // this.setAssignmentOfMemberToFinished(assignmentinfor);
 
     let memberassignmentindex = this.ZeamsAssignments.findIndex(
       memberassignmentitem => {
@@ -238,8 +358,7 @@ class ZeamsAssignments {
         memberassignmentindex
       ].AssignmentMemberUnfinishedList.findIndex(assignmentunfinisheditem => {
         return (
-          assignmentunfinisheditem.TeamNoteID ===
-          assignmentinfor.TeamNoteID
+          assignmentunfinisheditem.TeamNoteID === assignmentinfor.TeamNoteID
         );
       });
 
@@ -252,9 +371,7 @@ class ZeamsAssignments {
       let assignmentfinishedindex = this.ZeamsAssignments[
         memberassignmentindex
       ].AssignmentMemberFinishedList.findIndex(assignmentfinisheditem => {
-        return (
-          assignmentfinisheditem.TeamNoteID === assignmentinfor.TeamNoteID
-        );
+        return assignmentfinisheditem.TeamNoteID === assignmentinfor.TeamNoteID;
       });
 
       if (assignmentfinishedindex >= 0) {
@@ -283,8 +400,7 @@ class ZeamsAssignments {
         memberassignmentindex
       ].AssignmentMemberUnfinishedList.findIndex(assignmentfinisheditem => {
         return (
-          assignmentfinisheditem.ExcerciseID ===
-          assignmentinfor.ExcerciseID
+          assignmentfinisheditem.ExcerciseID === assignmentinfor.ExcerciseID
         );
       });
 
@@ -297,7 +413,136 @@ class ZeamsAssignments {
   }
 
   //-----------------------------------------------------------------------------------------------------------------
+
+  responseTurnInAssignmentOfMember(assignmentinfor) {
+    // console.log(
+    //   "vào trong cái responseTurnInAssignmentOfMember ",
+    //   assignmentinfor
+    // );
+    let memberassignmentindex = this.ZeamsAssignments.findIndex(
+      memberassignmentitem => {
+        return memberassignmentitem.MemberID === assignmentinfor.MemberID;
+      }
+    );
+
+    let resTurnIn = {
+      checkResTurnIn: ""
+    };
+
+    if (memberassignmentindex >= 0) {
+      let assignmentofinishindex = this.ZeamsAssignments[
+        memberassignmentindex
+      ].AssignmentMemberUnfinishedList.findIndex(assignmenttofinishitem => {
+        return (
+          assignmenttofinishitem.AssignmentID === assignmentinfor.AssignmentID
+        );
+      });
+
+      if (assignmentofinishindex >= 0) {
+        let memberexcerciseinfor = {
+          MemberID: assignmentinfor.MemberID,
+          ExcerciseID: this.ZeamsAssignments[memberassignmentindex]
+            .AssignmentMemberUnfinishedList[assignmentofinishindex].ExcerciseID
+        };
+
+        // console.log("Ra cái thằng memberexcerciseinfor ", memberexcerciseinfor);
+
+        let checkFinishedExcercise = zeamsExcercisesMemberResults.checkMemberHaveDoneExcericse(
+          memberexcerciseinfor
+        );
+
+        // console.log(
+        //   "Ra cái thằng checkFinishedExcercise ",
+        //   checkFinishedExcercise
+        // );
+
+        if (checkFinishedExcercise) {
+          let currentExcerciseScore = zeamsExcercisesMemberResults.getTheHighestScoreOfMember(
+            memberexcerciseinfor
+          );
+
+          // console.log(
+          //   "ra thawfng currentExcerciseScore",
+          //   currentExcerciseScore
+          // );
+
+          if (currentExcerciseScore === "0") {
+            resTurnIn = {
+              checkResTurnIn: "have-zero-score"
+            };
+          } else {
+            resTurnIn = {
+              checkResTurnIn: "turn-in-success"
+            };
+            this.setAssignmentTurnInOfMember(
+              assignmentinfor,
+              currentExcerciseScore
+            );
+          }
+        } else {
+          resTurnIn = {
+            checkResTurnIn: "non-did-excercise"
+          };
+        }
+      }
+    }
+    return resTurnIn;
+  }
+
   //-----------------------------------------------------------------------------------------------------------------
+
+  responseTurnInAssignmentOfMemberWithZeroScore(assignmentinfor) {
+    let memberassignmentindex = this.ZeamsAssignments.findIndex(
+      memberassignmentitem => {
+        return memberassignmentitem.MemberID === assignmentinfor.MemberID;
+      }
+    );
+    let resTurnIn = {
+      checkResTurnIn: ""
+    };
+
+    if (memberassignmentindex >= 0) {
+      let assignmentofinishindex = this.ZeamsAssignments[
+        memberassignmentindex
+      ].AssignmentMemberUnfinishedList.findIndex(assignmenttofinishitem => {
+        return (
+          assignmenttofinishitem.AssignmentID === assignmentinfor.AssignmentID
+        );
+      });
+
+      if (assignmentofinishindex >= 0) {
+        let memberexcerciseinfor = {
+          MemberID: assignmentinfor.MemberID,
+          ExcerciseID: this.ZeamsAssignments[memberassignmentindex]
+            .AssignmentMemberUnfinishedList[assignmentofinishindex].ExcerciseID
+        };
+
+        let checkFinishedExcercise = zeamsExcercisesMemberResults.checkMemberHaveDoneExcericse(
+          memberexcerciseinfor
+        );
+
+        if (checkFinishedExcercise) {
+          let currentExcerciseScore = zeamsExcercisesMemberResults.getTheHighestScoreOfMember(
+            memberexcerciseinfor
+          );
+
+          resTurnIn = {
+            checkResTurnIn: "turn-in-success"
+          };
+          this.setAssignmentTurnInOfMember(
+            assignmentinfor,
+            currentExcerciseScore
+          );
+        } else {
+          resTurnIn = {
+            checkResTurnIn: "non-did-excercise"
+          };
+        }
+      }
+    }
+    return resTurnIn;
+  }
+
   //-----------------------------------------------------------------------------------------------------------------
 
   //-----------------------------------------------------------------------------------------------------------------

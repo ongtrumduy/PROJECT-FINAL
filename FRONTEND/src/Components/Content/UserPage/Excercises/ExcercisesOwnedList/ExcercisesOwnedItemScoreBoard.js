@@ -135,7 +135,7 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
     }
   };
 
-   chooseIndexScoreItemPage = event => {
+  chooseIndexScoreItemPage = event => {
     let currentIndexScoreItemPage = event.target.id;
 
     axios
@@ -279,7 +279,7 @@ export default class ExcercisesOwnedItemScoreBoard extends React.Component {
             <tbody>
               {this.state.CurrentExcerciseItemResultList.map(
                 (excerciseitem, excerciseindex) => (
-                  <tr>
+                  <tr key={excerciseindex}>
                     <td>{Number(excerciseindex) + 1}</td>
                     <td>
                       {excerciseitem.MemberFullName}-{excerciseitem.MemberID}

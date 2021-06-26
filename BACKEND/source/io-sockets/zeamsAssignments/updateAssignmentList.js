@@ -20,7 +20,7 @@ let GetAllAssignmentList = io => {
         membersocket,
         data.MemberID,
         io,
-        "update-assignment-finished-list",
+        "update-assignment-unfinished-list",
         resAllAssignmentUnfinishedList
       );
     });

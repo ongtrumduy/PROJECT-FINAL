@@ -211,11 +211,21 @@ class ZeamsExcercises {
   //-----------------------------------------------------------------------------------------------------------------
 
   getAllExcerciseInforForAssignment(excerciseinfor) {
+    console.log("Dữ liệu vào đây ", excerciseinfor);
     let excerciseindex = this.ZeamsExcercises.findIndex(excerciseitem => {
       return excerciseitem.ExcerciseID === excerciseinfor.ExcerciseID;
     });
 
     let excerciseofassignmentinfor = this.ZeamsExcercises[excerciseindex];
+
+    let memberDidHighestScoreInfor = zeamsExcercisesMemberResults.getMemberDidHighestScoreForAssignment(
+      excerciseinfor
+    );
+
+    console.log(
+      "RA thử kết quả memberDidHighestScoreInfor",
+      memberDidHighestScoreInfor
+    );
 
     let getAllExcerciseInfor = {
       ExcerciseName: excerciseofassignmentinfor.ExcerciseName,
@@ -223,10 +233,10 @@ class ZeamsExcercises {
         excerciseofassignmentinfor.ExcerciseNumberQuestion,
       ExcerciseType: excerciseofassignmentinfor.ExcerciseType,
       ExcerciseLogo: excerciseofassignmentinfor.ExcerciseLogo,
-      MemberDidHighestScore: zeamsExcercisesMemberResults.getMemberDidHighestScoreForAssignment(
-        excerciseinfor
-      ).MemberDidHighestScore
+      MemberDidHighestScore: memberDidHighestScoreInfor.MemberDidHighestScore
     };
+
+    console.log("RA thử kết quả", getAllExcerciseInfor);
 
     return getAllExcerciseInfor;
   }

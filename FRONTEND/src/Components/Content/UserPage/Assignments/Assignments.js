@@ -28,7 +28,7 @@ export default class Assignments extends React.Component {
   ) => {
     this.setState({
       AssignmentChoiceID: assignmentID,
-      ExcercieChoiceID: excerciseID
+      ExcerciseChoiceID: excerciseID
     });
   };
 
@@ -41,7 +41,7 @@ export default class Assignments extends React.Component {
             socket={this.props.socket}
             updateRenderAssignmentsControl={this.updateRenderAssignmentsControl}
             TimeToDoExcercise={this.state.TimeToDoExcercise}
-            ExcerciseID={this.state.ExcercieChoiceID}
+            ExcerciseID={this.state.ExcerciseChoiceID}
           />
         );
       case "assignmentall":

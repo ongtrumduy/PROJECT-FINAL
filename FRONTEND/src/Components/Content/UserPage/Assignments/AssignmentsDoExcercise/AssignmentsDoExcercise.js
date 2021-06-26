@@ -37,6 +37,14 @@ export default class AssignmentsDoExcercise extends React.Component {
   updateRenderExcerciseOwnedControl = state => {
     if (state === "ownedlist") {
       this.props.updateRenderAssignmentsControl("assignmentall");
+    } else if (state === "owneditemscoreboard") {
+      this.setState({
+        renderAssignmentDoExcercise: "excerciseitemscoreboard"
+      });
+    } else if (state === "owneditem") {
+      this.setState({
+        renderAssignmentDoExcercise: "excercisedetail"
+      });
     }
   };
 
@@ -76,10 +84,13 @@ export default class AssignmentsDoExcercise extends React.Component {
             getExcerciseIDAndTimeMemberChoice={
               this.getExcerciseIDAndTimeMemberChoice
             }
+            getExcerciseOwnedIDMemberChoice={
+              this.getExcerciseOwnedIDMemberChoice
+            }
             updateRenderExcerciseControl={this.updateRenderExcerciseControl}
           />
         );
-      case "excercisedetail":
+      case "excerciseitemscoreboard":
         return (
           <AssignmentsExcerciseItemScoreBoard
             MemberID={this.props.MemberID}
@@ -110,6 +121,9 @@ export default class AssignmentsDoExcercise extends React.Component {
             ExcerciseID={this.props.ExcerciseID}
             getExcerciseIDAndTimeMemberChoice={
               this.getExcerciseIDAndTimeMemberChoice
+            }
+            getExcerciseOwnedIDMemberChoice={
+              this.getExcerciseOwnedIDMemberChoice
             }
             updateRenderExcerciseControl={this.updateRenderExcerciseControl}
           />

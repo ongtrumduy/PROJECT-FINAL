@@ -436,14 +436,12 @@ class ZeamsTeams {
       return teamitem.TeamID === teaminfor.TeamID;
     });
 
-    let teamInfor = {};
+    console.log("Dữ liệu đổ vào ", teaminfor);
+
+    let teamInfor = { TeamLogo: "" };
 
     if (teamindex >= 0) {
       teamInfor = {
-        TeamName: this.ZeamsTeams[teamindex].TeamInfor[0].TeamName,
-        TeamType: this.ZeamsTeams[teamindex].TeamInfor[0].TeamType,
-        TeamDescription: this.ZeamsTeams[teamindex].TeamInfor[0]
-          .TeamDescription,
         TeamLogo: this.ZeamsTeams[teamindex].TeamInfor[0].TeamLogo
       };
     }

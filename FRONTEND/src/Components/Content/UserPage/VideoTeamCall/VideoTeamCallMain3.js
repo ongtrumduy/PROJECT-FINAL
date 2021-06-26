@@ -118,11 +118,18 @@ export default class VideoTeamCallMain extends React.Component {
       }
     };
 
-    (async () => {
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    navigator.mediaDevices
+      .getDisplayMedia(constraints)
+      .then(success)
+      .catch(failure);
 
-      success(stream);
-    })().catch(failure);
+    //  (async () => {
+    //    const stream = await navigator.mediaDevices.getUserMedia(
+    //      constraints
+    //    );
+
+    //    success(stream);
+    //  })().catch(failure);
   };
 
   createPeerConnection = async (

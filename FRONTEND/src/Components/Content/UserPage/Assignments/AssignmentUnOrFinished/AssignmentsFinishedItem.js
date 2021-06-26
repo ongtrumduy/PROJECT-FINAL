@@ -15,14 +15,6 @@ export default class AssignmentsFinishedItem extends React.Component {
     };
   }
 
-  setChooseAssignmentItem = (assignmentID, excerciseID) => {
-    this.props.setChooseAssignmentAndExcerciseToDoExcericse(
-      assignmentID,
-      excerciseID
-    );
-    this.props.updateRenderAssignmentsControl("doexcercise");
-  };
-
   componentDidMount = () => {
     axios
       .post("./getteamofassignsmentinfor", {
@@ -41,7 +33,8 @@ export default class AssignmentsFinishedItem extends React.Component {
 
     axios
       .post("./getexcerciseofassignmentinfor", {
-        ExcerciseID: this.props.ExcerciseID
+        ExcerciseID: this.props.ExcerciseID,
+        MemberID: this.props.MemberID
       })
       .then(res => {
         console.log(res.data);
@@ -55,6 +48,14 @@ export default class AssignmentsFinishedItem extends React.Component {
       .catch(error => {
         console.log(error);
       });
+  };
+
+  setChooseAssignmentItem = (assignmentID, excerciseID) => {
+    this.props.setChooseAssignmentAndExcerciseToDoExcericse(
+      assignmentID,
+      excerciseID
+    );
+    this.props.updateRenderAssignmentsControl("doexcercise");
   };
 
   setChangeRenderDetail = () => {
@@ -81,11 +82,11 @@ export default class AssignmentsFinishedItem extends React.Component {
     switch (this.state.checkRenderDetail) {
       case "0":
         return (
-          <div>
-            <div>
-              <p>{this.props.TeamNoteName}</p>
+          <div className="user-assignments_all__list___content_____finished______assignment-item_______content_______first-item">
+            <div style={{ height: "40px", fontWeight: "bold" }}>
+              <p style={{ lineHeight: "0px" }}>{this.props.TeamNoteName}</p>
             </div>
-            <div>
+            <div style={{ color: "red", margin: "-8px 0 0 0" }}>
               <div>
                 <span>Ngày tạo: {this.props.TeamNoteCreateDate}</span>
               </div>
@@ -97,15 +98,19 @@ export default class AssignmentsFinishedItem extends React.Component {
         );
       case "1":
         return (
-          <div>
+          <div className="user-assignments_all__list___content_____finished______assignment-item_______content_______second-item">
             <div>
-              <img src={this.state.ExcerciseLogo} alt="excercise-logo" />
+              <img
+                style={{ width: "48px", height: "48px" }}
+                src={this.state.ExcerciseLogo}
+                alt="excercise-logo"
+              />
             </div>
-            <div>
+            <div style={{ fontWeight: "bold" }}>
               <p>{this.state.ExcerciseName}</p>
             </div>
-            <div>
-              <span>{this.state.MemberDidHighestScore}</span>/
+            <div style={{ fontWeight: "bold" }}>
+              <span>{this.props.AssignmentExcerciseScore}</span>/
               <span>{this.state.ExcerciseNumberQuestion}</span>
               &nbsp; câu
             </div>
@@ -113,23 +118,33 @@ export default class AssignmentsFinishedItem extends React.Component {
         );
       case "2":
         return (
-          <div>
+          <div className="user-assignments_all__list___content_____finished______assignment-item_______content_______third-item">
             <div>
-              <p>{this.state.TeamName}</p>
+              <p>
+                <span style={{ margin: "0 0 0 12px" }}>Tên nhóm:&nbsp;</span>
+                <span style={{ fontWeight: "bold" }}>
+                  {this.state.TeamName}
+                </span>
+              </p>
             </div>
           </div>
         );
       case "3":
         return (
-          <div>
+          <div className="user-assignments_all__list___content_____finished______assignment-item_______content_______fourth-item">
             <div>
-              <p>{this.state.TeamNoteDescription}</p>
+              <p>
+                <span style={{ margin: "0 0 0 12px" }}>Mô tả: &nbsp;</span>
+                <span style={{ fontWeight: "bold" }}>
+                  {this.state.TeamNoteDescription}
+                </span>
+              </p>
             </div>
           </div>
         );
       default:
         return (
-          <div>
+          <div className="user-assignments_all__list___content_____finished______assignment-item_______content_______first-item">
             <div>
               <p>{this.props.TeamNoteName}</p>
             </div>
@@ -148,26 +163,28 @@ export default class AssignmentsFinishedItem extends React.Component {
 
   render() {
     return (
-      <div
-        className="user-assignments_all__list___finished____assignment-item"
-        onClick={() =>
-          this.setChooseAssignmentItem(
-            this.props.AssignmentID,
-            this.props.ExcerciseID
-          )
-        }
-      >
-        <div className="user-assignments_all__list___finished____assignment-item_____content">
+      <div className="user-assignments_all__list___content_____finished______assignment-item">
+        <div className="user-assignments_all__list___content_____finished______assignment-item_______content">
           <div>
-            <img alt="team-logo" src={this.state.TeamLogo} />
+            <img
+              style={{ width: "60px", height: "60px" }}
+              alt="team-logo"
+              src={this.props.TeamLogo}
+            />
           </div>
           {this.renderAllAssignmentFinishedItem()}
-          <div>
-            <i className="material-icons" style={{ fontWeight: "bold" }}>
-              {"all_check"}
-            </i>
+          <div style={{ fontWeight: "bold" }}>
+            {this.props.CheckTurnInFinishedLate ? (
+              <span style={{ color: "red" }}>Nộp muộn</span>
+            ) : (
+              <span style={{ color: "blue" }}>Hoàn thành</span>
+            )}
           </div>
-          <div onClick={() => this.setChangeRenderDetail()}>
+
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => this.setChangeRenderDetail()}
+          >
             <i className="material-icons" style={{ fontWeight: "bold" }}>
               {"arrow_forward"}
             </i>

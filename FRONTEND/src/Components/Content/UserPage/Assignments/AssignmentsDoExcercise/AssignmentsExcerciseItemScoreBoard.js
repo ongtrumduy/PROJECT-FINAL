@@ -279,7 +279,7 @@ export default class AssignmentsExcerciseItemScoreBoard extends React.Component 
             <tbody>
               {this.state.CurrentExcerciseItemResultList.map(
                 (excerciseitem, excerciseindex) => (
-                  <tr>
+                  <tr key={excerciseindex}>
                     <td>{Number(excerciseindex) + 1}</td>
                     <td>
                       {excerciseitem.MemberFullName}-{excerciseitem.MemberID}

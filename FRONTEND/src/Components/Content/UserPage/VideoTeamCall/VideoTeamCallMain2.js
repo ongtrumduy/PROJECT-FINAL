@@ -127,18 +127,14 @@ export default class VideoTeamCallMain extends Component {
 
     (async () => {
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      // const stream = await navigator.mediaDevices.getDisplayMedia(constraints);
+      // const stream =  navigator.mediaDevices.getDisplayMedia(constraints);
       // success(screenTrack);
       // console.log("stream đó là: ", stream);
       success(stream);
     })().catch(failure);
   };
 
-  createPeerConnection = async (
-    RemoteMemberID,
-    RemoteMemberSocketID,
-    callback
-  ) => {
+  createPeerConnection = (RemoteMemberID, RemoteMemberSocketID, callback) => {
     try {
       let pc = new RTCPeerConnection(this.state.pc_config);
 
@@ -251,8 +247,8 @@ export default class VideoTeamCallMain extends Component {
     });
   };
 
-  connectCallSuccess = async () => {
-    await this.props.socket.on("connection-call-success", data => {
+  connectCallSuccess = () => {
+    this.props.socket.on("connection-call-success", data => {
       console.log("Đã kết nối !!!!");
       this.getLocalStream();
 
@@ -267,8 +263,8 @@ export default class VideoTeamCallMain extends Component {
     });
   };
 
-  peerMemberCallDisconnect = async () => {
-    await this.props.socket.on("peer-member-call-disconnected", data => {
+  peerMemberCallDisconnect = () => {
+    this.props.socket.on("peer-member-call-disconnected", data => {
       const remoteStreams = this.state.remoteStreams.filter(
         stream => stream.id !== data.RemoteMemberID
       );
@@ -288,8 +284,8 @@ export default class VideoTeamCallMain extends Component {
     });
   };
 
-  connectAllMemberCall = async () => {
-    await this.props.socket.on("connect-all-member-call", data => {
+  connectAllMemberCall = () => {
+    this.props.socket.on("connect-all-member-call", data => {
       // console.log("Nhận kết nối từ thằng ", data.RemoteMemberID);
       this.createPeerConnection(
         data.RemoteMemberID,
@@ -313,8 +309,8 @@ export default class VideoTeamCallMain extends Component {
     });
   };
 
-  offerForConnectTeamCall = async () => {
-    await this.props.socket.on("offer-for-connect-team-call", data => {
+  offerForConnectTeamCall = () => {
+    this.props.socket.on("offer-for-connect-team-call", data => {
       // console.log(
       //   "Ra offer-for-connect-team-call từ thằng ",
       //   data.RemoteMemberID
@@ -346,8 +342,8 @@ export default class VideoTeamCallMain extends Component {
     });
   };
 
-  answerForConnectTeamCall = async () => {
-    await this.props.socket.on("answer-for-connect-team-call", data => {
+  answerForConnectTeamCall = () => {
+    this.props.socket.on("answer-for-connect-team-call", data => {
       // console.log(
       //   "Ra answer-for-connect-team-call từ thằng ",
       //   data.RemoteMemberID
@@ -369,8 +365,8 @@ export default class VideoTeamCallMain extends Component {
     });
   };
 
-  getCandidateForConnect = async () => {
-    await this.props.socket.on("get-candidate-for-connect", data => {
+  getCandidateForConnect = () => {
+    this.props.socket.on("get-candidate-for-connect", data => {
       // console.log(
       //   "Ra get-candidate-for-connect từ thằng ",
       //   data.RemoteMemberID
@@ -393,8 +389,8 @@ export default class VideoTeamCallMain extends Component {
     });
   };
 
-  reconnectWhenHaveErrorConnect = async () => {
-    await this.props.socket.on("reconnect-to-call-when-error", data => {
+  reconnectWhenHaveErrorConnect = () => {
+    this.props.socket.on("reconnect-to-call-when-error", data => {
       console.log("Có vẻ như lại bị lỗi từ thằng ", data.RemoteMemberID);
       const remoteStreams = this.state.remoteStreams.filter(
         stream => stream.id !== data.RemoteMemberID
@@ -425,8 +421,8 @@ export default class VideoTeamCallMain extends Component {
     });
   };
 
-  removeErrorPeerConnection = async () => {
-    await this.props.socket.on("remove-error-peer-connection", data => {
+  removeErrorPeerConnection = () => {
+    this.props.socket.on("remove-error-peer-connection", data => {
       console.log("bắt vào đây rồi ");
       const peerconnection = Object.assign({}, this.state.peerConnections);
       delete peerconnection[data.RemoteMemberID];

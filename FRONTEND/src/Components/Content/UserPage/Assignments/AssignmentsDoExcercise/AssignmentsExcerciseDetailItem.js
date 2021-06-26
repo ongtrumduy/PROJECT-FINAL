@@ -8,7 +8,7 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkOwnedExcerciseItem: true,
+      checkPublicExcerciseItem: true,
       checkConfirmDoExcercisesChoiceIsOpen: false,
       checkAddSuccessExcerciseItemIsOpen: false,
       checkRemoveSuccesExcerciseItemIsOpen: false,
@@ -25,20 +25,34 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
 
   componentDidMount = () => {
     axios
-      .post("/getexcerciseownedetailitem", {
+      .post("/getexcercisepublicdetailitem", {
         ExcerciseID: this.props.ExcerciseID,
         MemberID: this.props.MemberID
       })
       .then(res => {
-        this.setState({
-          ExcerciseName: res.data.ExcerciseInfor.ExcerciseName,
-          ExcerciseDescription: res.data.ExcerciseInfor.ExcerciseDescription,
-          ExcerciseLogo: res.data.ExcerciseInfor.ExcerciseLogo,
-          ExcerciseType: res.data.ExcerciseInfor.ExcerciseType,
-          ExcerciseNumberQuestion:
-            res.data.ExcerciseInfor.ExcerciseNumberQuestion,
-          ExcerciseID: res.data.ExcerciseInfor.ExcerciseID
-        });
+        if (res.data.CheckExcerciseItemInOwned) {
+          this.setState({
+            ExcerciseName: res.data.ExcerciseInfor.ExcerciseName,
+            ExcerciseDescription: res.data.ExcerciseInfor.ExcerciseDescription,
+            ExcerciseLogo: res.data.ExcerciseInfor.ExcerciseLogo,
+            ExcerciseType: res.data.ExcerciseInfor.ExcerciseType,
+            ExcerciseNumberQuestion:
+              res.data.ExcerciseInfor.ExcerciseNumberQuestion,
+            ExcerciseID: res.data.ExcerciseInfor.ExcerciseID,
+            checkPublicExcerciseItem: true
+          });
+        } else {
+          this.setState({
+            ExcerciseName: res.data.ExcerciseInfor.ExcerciseName,
+            ExcerciseDescription: res.data.ExcerciseInfor.ExcerciseDescription,
+            ExcerciseLogo: res.data.ExcerciseInfor.ExcerciseLogo,
+            ExcerciseType: res.data.ExcerciseInfor.ExcerciseType,
+            ExcerciseNumberQuestion:
+              res.data.ExcerciseInfor.ExcerciseNumberQuestion,
+            ExcerciseID: res.data.ExcerciseInfor.ExcerciseID,
+            checkPublicExcerciseItem: false
+          });
+        }
       })
       .catch(error => console.log(error));
 
@@ -98,15 +112,15 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
     });
   };
 
-  changeCheckOwnedExcerciseItem = () => {
-    if (this.state.checkOwnedExcerciseItem) {
-      this.removeExcerciseItemToOwnedList();
+  changeCheckPublicExcerciseItem = () => {
+    if (this.state.checkPublicExcerciseItem) {
+      this.removeExcerciseItemToPublicList();
     } else {
-      this.addExcerciseItemToOwnedList();
+      this.addExcerciseItemToPublicList();
     }
   };
 
-  addExcerciseItemToOwnedList = () => {
+  addExcerciseItemToPublicList = () => {
     axios
       .post("/addexcerciseitemtoownedlist", {
         ExcerciseID: this.state.ExcerciseID,
@@ -117,7 +131,7 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
         // console.log(res.data);
         if (res.data.checkValidate === "add-success") {
           this.setState({
-            checkOwnedExcerciseItem: true
+            checkPublicExcerciseItem: true
           });
           this.openCheckAddSuccessExcerciseItemModal();
         }
@@ -131,7 +145,7 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
     });
   };
 
-  removeExcerciseItemToOwnedList = () => {
+  removeExcerciseItemToPublicList = () => {
     axios
       .post("/removeexcerciseitemtoownedlist", {
         ExcerciseID: this.state.ExcerciseID,
@@ -142,7 +156,7 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
         // console.log(res.data);
         if (res.data.checkValidate === "remove-success") {
           this.setState({
-            checkOwnedExcerciseItem: false
+            checkPublicExcerciseItem: false
           });
           this.openCheckRemoveSuccessExcerciseItemModal();
         }
@@ -162,7 +176,7 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
     });
   };
 
-  sentToBeginStartDoExcercise = () => {
+  sendToBeginStartDoExcercise = () => {
     if (this.state.TimeToDoExcercise === "0") {
       this.setState({
         checkTimeToDoExcercise: true
@@ -246,14 +260,14 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
             <div>
               <button
                 style={
-                  this.state.checkOwnedExcerciseItem
+                  this.state.checkPublicExcerciseItem
                     ? { backgroundColor: "chocolate" }
                     : { backgroundColor: "white" }
                 }
-                onClick={() => this.changeCheckOwnedExcerciseItem()}
+                onClick={() => this.changeCheckPublicExcerciseItem()}
               >
-                {(this.state.checkOwnedExcerciseItem && (
-                  <div className="user-excercises_all-list__owned-list___owned-item____button-choose">
+                {(this.state.checkPublicExcerciseItem && (
+                  <div className="user-excercises_all-list__public-list___public-item____button-choose">
                     <div>
                       <i className="material-icons">{"done"}</i>
                     </div>
@@ -262,7 +276,7 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
                     </div>
                   </div>
                 )) || (
-                  <div className="user-excercises_all-list__owned-list___owned-item____button-choose">
+                  <div className="user-excercises_all-list__public-list___public-item____button-choose">
                     <div>
                       <i className="material-icons">{"add"}</i>
                     </div>
@@ -272,9 +286,10 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
                   </div>
                 )}
               </button>
+
               <button
                 style={
-                  this.state.checkOwnedExcerciseItem
+                  this.state.checkPublicExcerciseItem
                     ? {
                         backgroundColor: "white",
                         margin: "0 0 0 60px"
@@ -394,7 +409,7 @@ export default class AssignmentsExcerciseDetailItem extends React.Component {
           </button>
           <button
             style={{ float: "right", cursor: "pointer" }}
-            onClick={() => this.sentToBeginStartDoExcercise()}
+            onClick={() => this.sendToBeginStartDoExcercise()}
           >
             Bắt đầu làm bài!!!
           </button>

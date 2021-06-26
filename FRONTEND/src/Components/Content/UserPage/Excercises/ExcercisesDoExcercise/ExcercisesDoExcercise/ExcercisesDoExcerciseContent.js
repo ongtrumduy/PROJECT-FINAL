@@ -181,10 +181,10 @@ export default class ExcercisesDoExcerciseContent extends React.Component {
             res.data.ExcerciseMemberDidResult
           );
 
-          this.props.socket.emit("receive-to-update-excercise-of-assignment", {
-            MemberID: this.props.MemberID,
-            ExcerciseID: this.props.ExcerciseID
-          });
+          // this.props.socket.emit("receive-to-update-excercise-of-assignment", {
+          //   MemberID: this.props.MemberID,
+          //   ExcerciseID: this.props.ExcerciseID
+          // });
 
           setTimeout(() => {
             this.props.updateRenderExcerciseDoExcerciseControl(

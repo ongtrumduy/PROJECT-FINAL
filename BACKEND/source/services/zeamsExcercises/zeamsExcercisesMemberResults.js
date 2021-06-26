@@ -395,13 +395,14 @@ class ZeamsExcercisesMemberResults {
   //-----------------------------------------------------------------------------------------------------------------
 
   getMemberDidHighestScoreForAssignment(finishedanswerinfor) {
+    console.log("vào đây lấy điểm cao nhất ", finishedanswerinfor);
     let excerciseDidIndex = this.ZeamsExcercisesMemberResults.findIndex(
       excercisediditem => {
         return excercisediditem.ExcerciseID === finishedanswerinfor.ExcerciseID;
       }
     );
 
-    let getMemberDidHighestScore = {};
+    let getMemberDidHighestScore = { MemberDidHighestScore: "0" };
 
     if (excerciseDidIndex >= 0) {
       let memberDidExcerciseIndex = this.ZeamsExcercisesMemberResults[
@@ -418,9 +419,9 @@ class ZeamsExcercisesMemberResults {
             .MemberDidHighestScore
         };
       }
-
-      return getMemberDidHighestScore;
     }
+
+    return getMemberDidHighestScore;
   }
 
   //-----------------------------------------------------------------------------------------------------------------

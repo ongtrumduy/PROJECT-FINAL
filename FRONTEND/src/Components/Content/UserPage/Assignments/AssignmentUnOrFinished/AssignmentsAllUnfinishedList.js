@@ -33,9 +33,12 @@ export default class AssignmentsAllUnfinishedList extends React.Component {
     this.props.socket.on("send-to-update-assignment-unfinished-list", data => {
       if (this.semounted) {
         if (data.MemberID === this.props.MemberID) {
-          this.props.socket.on("receive-to-update-assignment-unfinished-list", {
-            MemberID: this.props.MemberID
-          });
+          this.props.socket.emit(
+            "receive-to-update-assignment-unfinished-list",
+            {
+              MemberID: this.props.MemberID
+            }
+          );
         }
       }
     });
@@ -56,37 +59,54 @@ export default class AssignmentsAllUnfinishedList extends React.Component {
     this.mounted = false;
   };
 
-  setChooseAssignmentToChangeIcon = assigmentChoiceID => {
-    this.setState({
-      AssigmentChoiceID: assigmentChoiceID
-    });
+  renderAllAssignmentUnfinishedList = () => {
+    if (this.state.AllAssignmentUnfinishedList.length !== 0) {
+      return (
+        <div className="user-assignments_all__list___content_____unfinished______content">
+          {this.state.AllAssignmentUnfinishedList.map(
+            (assignmentitem, assignmentindex) => (
+              <div key={assignmentindex}>
+                <AssignmentsUnfinishedItem
+                  AssignmentID={assignmentitem.AssignmentID}
+                  TeamNoteName={assignmentitem.TeamNoteName}
+                  TeamNoteCreateDate={assignmentitem.TeamNoteCreateDate}
+                  TeamNoteEndDate={assignmentitem.TeamNoteEndDate}
+                  TeamID={assignmentitem.TeamID}
+                  TeamLogo={assignmentitem.TeamLogo}
+                  ExcerciseID={assignmentitem.ExcerciseID}
+                  CheckOverTimeToFinished={
+                    assignmentitem.CheckOverTimeToFinished
+                  }
+                  MemberID={this.props.MemberID}
+                  socket={this.props.socket}
+                  updateRenderAssignmentsControl={
+                    this.props.updateRenderAssignmentsControl
+                  }
+                  setChooseAssignmentAndExcerciseToDoExcericse={
+                    this.props.setChooseAssignmentAndExcerciseToDoExcericse
+                  }
+                  setChooseAssignmentToTurnIn={
+                    this.props.setChooseAssignmentToTurnIn
+                  }
+                  AssignmentChoiceID={this.props.AssignmentChoiceID}
+                />
+              </div>
+            )
+          )}
+        </div>
+      );
+    } else {
+      // setTimeout(() => {
+      return (
+        <div style={{ fontWeight: "bold" }}>
+          <p>Chưa có Bài tập nào chưa hoàn thành giao cả !!!</p>
+        </div>
+      );
+      // },1000);
+    }
   };
 
   render() {
-    return (
-      <div className="user-assignments_all__list___unfinished">
-        {this.state.AllAssignmentUnfinishedList.map(
-          (assignmentitem, assignmentindex) => (
-            <div key={assignmentindex}>
-              <AssignmentsUnfinishedItem
-                TeamNoteName={assignmentitem.TeamNoteName}
-                TeamNoteCreateDate={assignmentitem.TeamNoteCreateDate}
-                TeamNoteEndDate={assignmentitem.TeamNoteEndDate}
-                TeamID={assignmentitem.TeamID}
-                ExcerciseID={assignmentitem.ExcerciseID}
-                MemberID={this.props.MemberID}
-                socket={this.props.socket}
-                updateRenderAssignmentsControl={
-                  this.props.updateRenderAssignmentsControl
-                }
-                setChooseAssignmentAndExcerciseToDoExcericse={
-                  this.props.setChooseAssignmentAndExcerciseToDoExcericse
-                }
-              />
-            </div>
-          )
-        )}
-      </div>
-    );
+    return <div>{this.renderAllAssignmentUnfinishedList()}</div>;
   }
 }

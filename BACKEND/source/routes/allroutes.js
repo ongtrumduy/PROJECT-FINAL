@@ -33,6 +33,8 @@ import getassignmentunfinishedlistRoutes from "./zeamsAssignments/getAssignmentU
 import getassignmentfinishedlistRoutes from "./zeamsAssignments/getAssignmentFinishedList";
 import getexcerciseofassignmentinforRoutes from "./zeamsExcercises/getExcerciseOfAssignmentInfor";
 import getteamofassignsmentinforRoutes from "./zeamsTeams/getTeamOfAssignsmentInfor";
+import sendToTurnInAssignmentOfMemberRoutes from "./zeamsAssignments/sendToTurnInAssignmentOfMember";
+import sendToTurnInAssignmentOfMemberWithZeroScoreRoutes from "./zeamsAssignments/sendToTurnInAssignmentOfMemberWithZeroScore";
 
 let AllRoutes = (app, corsOptions) => {
   //========================Routes=========================================
@@ -177,6 +179,13 @@ let AllRoutes = (app, corsOptions) => {
   getteamofassignsmentinforRoutes(app, corsOptions);
   //-----------------------------------------------------------------------
 
+  // -------------------------- SendToTurnInAssignmentOfMember---------------------------------------
+  sendToTurnInAssignmentOfMemberRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
+
+  // -------------------------- SendToTurnInAssignmentOfMemberWithZeroScore---------------------------------------
+  sendToTurnInAssignmentOfMemberWithZeroScoreRoutes(app, corsOptions);
+  //-----------------------------------------------------------------------
   //=========================================================================
 };
 

@@ -46,7 +46,7 @@ class ZeamsTeamsNotes {
   //-----------------------------------------------------------------------------------------------------------------
 
   createNewTeamNote(teamnoteinfor) {
-    console.log("Lấy dữ liệu vào trong đây", teamnoteinfor);
+    // console.log("Lấy dữ liệu vào trong đây", teamnoteinfor);
 
     let teamindex = this.ZeamsTeamsNotes.findIndex(teamitem => {
       return teamitem.TeamID === teamnoteinfor.TeamID;
@@ -111,6 +111,10 @@ class ZeamsTeamsNotes {
   ) {
     let allMemberOfTeam = zeamsTeams.getAllMemberIDsOfTeam(teamnoteinfor);
 
+    let teamforassignmentinfor = zeamsTeams.getTeamInforOfTeam(teamnoteinfor);
+
+    // console.log("ra teamforassignmentinfor ", teamforassignmentinfor);
+
     allMemberOfTeam.forEach(memberitem => {
       let assignmentinfor = {
         MemberID: memberitem.MemberID,
@@ -122,8 +126,7 @@ class ZeamsTeamsNotes {
           "DD-MM-YYYY"
         ),
         TeamID: teamnoteinfor.TeamID,
-        // TeamName: zeamsTeams.getTeamInforOfTeam(teamnoteinfor)[0].TeamName,
-        // TeamLogo: zeamsTeams.getTeamInforOfTeam(teamnoteinfor)[0].TeamLogo,
+        TeamLogo: teamforassignmentinfor.TeamLogo,
         ExcerciseID: teamnoteinfor.ExcerciseTeamNoteID
       };
 
@@ -440,6 +443,7 @@ class ZeamsTeamsNotes {
   //-----------------------------------------------------------------------------------------------------------------
 
   removeTeamNoteItemFromOutDateList(teamnoteinfor) {
+    // console.log("Dữ liệu vào trong này", teamnoteinfor);
     let teamnoteindex = this.ZeamsTeamsNotes.findIndex(teamnoteitem => {
       return teamnoteitem.TeamID === teamnoteinfor.TeamID;
     });
@@ -451,7 +455,7 @@ class ZeamsTeamsNotes {
         return teamnoteitem.TeamNoteID === teamnoteinfor.TeamNoteID;
       });
 
-      if (teamnotenonoutdateindex >= 0) {
+      if (teamnoteoutdateindex >= 0) {
         this.ZeamsTeamsNotes[teamnoteindex].TeamNoteOutDateList.splice(
           teamnoteoutdateindex,
           1
