@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Chat from "./Components/Chat";
-import Daggable from "./Components/Draggable";
+// import Chat from "./Components/Chat";
+// import Daggable from "./Components/Draggable";
 import Videos from "./Components/Videos";
 import Video from "./Components/Video";
 
@@ -453,14 +453,14 @@ export default class VideoTeamCallMain extends Component {
 
     return (
       <div>
-        <Daggable
+        {/* <Daggable
           style={{
             zIndex: 101,
             position: "absolute",
             right: 0,
             cursor: "move"
           }}
-        >
+        > */}
           <Video
             videoStyle={{
               // zIndex: 2,
@@ -482,7 +482,7 @@ export default class VideoTeamCallMain extends Component {
             autoPlay
             muted
           ></Video>
-        </Daggable>
+        {/* </Daggable> */}
         <Video
           videoStyle={{
             zIndex: 1,
